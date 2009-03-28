@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using Pieces.Interfaces;
 
-namespace Pieces
+namespace Pieces.Types
 {
-    public class King : IPiece
+    public class King : BasePiece
     {
     }
 }

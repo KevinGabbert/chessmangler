@@ -5,9 +5,9 @@ using System.Text;
 
 using Pieces.Interfaces;
 
-namespace Pieces
+namespace Pieces.Types
 {
-    public class Rook: IPiece
+    public class Rook: BasePiece
     {
     }
 }
