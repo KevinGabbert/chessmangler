@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pieces.Interfaces
 {
-    public interface IPiece
+    public interface IConfigurablePiece
     {
         Int64 Location
         {
@@ -14,6 +14,12 @@ namespace Pieces.Interfaces
         }
 
         Color Color
+        {
+            get;
+            set;
+        }
+
+        string Name
         {
             get;
             set;

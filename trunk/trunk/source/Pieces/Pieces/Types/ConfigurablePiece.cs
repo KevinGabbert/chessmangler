@@ -6,9 +6,9 @@ using Pieces.Interfaces;
 
 namespace Pieces.Types
 {
-    public abstract class BasePiece:IPiece
+    public abstract class ChessPiece:IConfigurablePiece
     {
-        public long Location
+        public string Name
         {
             get
             {
@@ -20,6 +20,17 @@ namespace Pieces.Types
             }
         }
         public Color Color
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public long Location
         {
             get
             {

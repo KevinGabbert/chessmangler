@@ -46,13 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Types\AllPieces.cs" />
-    <Compile Include="Types\Bishop.cs" />
-    <Compile Include="Types\King.cs" />
-    <Compile Include="Types\Knight.cs" />
-    <Compile Include="Types\Pawn.cs" />
-    <Compile Include="Types\Queen.cs" />
-    <Compile Include="Types\Rook.cs" />
+    <Compile Include="Types\ConfigurablePiece.cs" />
     <Compile Include="Interfaces\IPiece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
