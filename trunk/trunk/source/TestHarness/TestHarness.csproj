@@ -22,7 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <StartAction>Program</StartAction>
-    <StartProgram>..\..\Tools\NUnit\NUnit-2.4.8-net-2.0\bin\nunit.exe</StartProgram>
+    <StartProgram>..\Tools\NUnit\NUnit-2.4.8-net-2.0\bin\nunit.exe</StartProgram>
     <StartArguments>/run TestHarness.dll</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
