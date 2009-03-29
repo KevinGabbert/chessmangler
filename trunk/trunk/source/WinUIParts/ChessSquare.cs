@@ -6,18 +6,20 @@ using System.ComponentModel;
 using System.IO;
 using System.Drawing;
 
+using Pieces.Interfaces;
+
 namespace WinUIParts
 {
-    public enum StatusImage
+    public enum ChessPiece
     {
         Green,
         Yellow,
         Red
     }
 
-    public class StatusCell : DataGridViewImageCell
+    public class ChessSquare : DataGridViewImageCell
     {
-        public StatusCell()
+        public ChessSquare()
         {
             this.ImageLayout = DataGridViewImageCellLayout.Zoom;
         }
@@ -29,31 +31,17 @@ namespace WinUIParts
            DataGridViewDataErrorContexts context)
         {
 
-            string resource = "Pawn.jpeg";
-            StatusImage status = StatusImage.Red;
-            // Try to get the default value from the containing column
-            StatusColumn owningCol = OwningColumn as StatusColumn;
+            IConfigurablePiece pieceOnSquare;
+
+            // Try to get the piece value from the containing column
+            ChessColumn owningCol = OwningColumn as ChessColumn;
             if (owningCol != null)
             {
-                status = owningCol.DefaultStatus;
+                pieceOnSquare = owningCol.ChessPiece;
             }
-            if (value is StatusImage || value is int)
+            if (value is IConfigurablePiece || value is int)
             {
-                status = (StatusImage)value;
-            }
-            switch (status)
-            {
-                case StatusImage.Green:
-                    resource = "Pawn.jpeg";
-                    break;
-                case StatusImage.Yellow:
-                    resource = "Pawn.jpeg";
-                    break;
-                case StatusImage.Red:
-                    resource = "Pawn.jpeg";
-                    break;
-                default:
-                    break;
+                pieceOnSquare = (IConfigurablePiece)value;
             }
 
             Image img = new System.Drawing.Bitmap(Environment.CurrentDirectory + "\\images\\pawn.jpeg");
