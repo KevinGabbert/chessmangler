@@ -30,7 +30,7 @@ namespace Pieces.Types
                 throw new NotImplementedException();
             }
         }
-        public long Location
+        public long CurrentLocation
         {
             get
             {
@@ -41,10 +41,22 @@ namespace Pieces.Types
                 throw new NotImplementedException();
             }
         }
+        public long DefaultLocation
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public void CheckMy_MovementRule()
         {
             //blah blah blah, call a command in the rules library (which checks xml file with rules in it)
-            //MovementRule x = RuleLibrary.GetRule(this.GetType());
+            //Rules.MovementRule x = RuleLibrary.GetRule(this.GetType());
         }
         public void Move(long from, long to)
         {

@@ -7,7 +7,12 @@ namespace Pieces.Interfaces
 {
     public interface IConfigurablePiece
     {
-        Int64 Location
+        Int64 CurrentLocation
+        {
+            get;
+            set;
+        }
+        Int64 DefaultLocation
         {
             get;
             set;
