@@ -29,7 +29,7 @@ namespace WinUIParts
            DataGridViewDataErrorContexts context)
         {
 
-            string resource = "CustomColumnAndCell.Red.bmp";
+            string resource = "Pawn.jpeg";
             StatusImage status = StatusImage.Red;
             // Try to get the default value from the containing column
             StatusColumn owningCol = OwningColumn as StatusColumn;
@@ -44,20 +44,20 @@ namespace WinUIParts
             switch (status)
             {
                 case StatusImage.Green:
-                    resource = "CustomColumnAndCell.Green.bmp";
+                    resource = "Pawn.jpeg";
                     break;
                 case StatusImage.Yellow:
-                    resource = "CustomColumnAndCell.Yellow.bmp";
+                    resource = "Pawn.jpeg";
                     break;
                 case StatusImage.Red:
-                    resource = "CustomColumnAndCell.Red.bmp";
+                    resource = "Pawn.jpeg";
                     break;
                 default:
                     break;
             }
-            Assembly loadedAssembly = Assembly.GetExecutingAssembly();
-            Stream stream = loadedAssembly.GetManifestResourceStream(resource);
-            Image img = Image.FromStream(stream);
+
+            Image img = new System.Drawing.Bitmap(Environment.CurrentDirectory + "\\images\\pawn.jpeg");
+
             cellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
             return img;
         }
