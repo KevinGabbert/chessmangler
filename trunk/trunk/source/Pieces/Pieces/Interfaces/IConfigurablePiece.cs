@@ -24,6 +24,13 @@ namespace Pieces.Interfaces
             set;
         }
 
+        //Do we want to use a string for this?  I guess we'd have to, as this would be pulled from the rules file (piece config section)
+        string Type
+        {
+            get;
+            set;
+        }
+
         string Name
         {
             get;

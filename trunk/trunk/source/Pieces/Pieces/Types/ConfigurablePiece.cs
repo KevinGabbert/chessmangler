@@ -8,6 +8,9 @@ namespace Pieces.Types
 {
     public abstract class ChessPiece:IConfigurablePiece
     {
+        public const string NOT_ASSIGNED = "Not Assigned";
+
+
         public string Name
         {
             get
@@ -61,6 +64,19 @@ namespace Pieces.Types
         public void Move(long from, long to)
         {
             this.CheckMy_MovementRule();
+        }
+
+        public string _type = NOT_ASSIGNED;
+        public string Type
+        {
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+            }
         }
     }
 }

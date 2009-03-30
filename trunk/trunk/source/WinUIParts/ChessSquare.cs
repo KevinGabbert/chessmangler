@@ -10,13 +10,6 @@ using Pieces.Interfaces;
 
 namespace WinUIParts
 {
-    public enum ChessPiece
-    {
-        Green,
-        Yellow,
-        Red
-    }
-
     public class ChessSquare : DataGridViewImageCell
     {
         public ChessSquare()
@@ -30,11 +23,11 @@ namespace WinUIParts
            TypeConverter formattedValueTypeConverter,
            DataGridViewDataErrorContexts context)
         {
-
             IConfigurablePiece pieceOnSquare;
 
             // Try to get the piece value from the containing column
-            ChessColumn owningCol = OwningColumn as ChessColumn;
+            ChessColumn owningCol = this.OwningColumn as ChessColumn;
+
             if (owningCol != null)
             {
                 pieceOnSquare = owningCol.ChessPiece;
@@ -44,9 +37,19 @@ namespace WinUIParts
                 pieceOnSquare = (IConfigurablePiece)value;
             }
 
+            //what's my location?
+
+            //get piece image path from rules file? or a cache somewhere? or is it assigned somewhere else?
+
             Image img = new System.Drawing.Bitmap(Environment.CurrentDirectory + "\\images\\pawn.jpeg");
 
-            cellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
+            //move this. This only needs to be done once per column
+            owningCol.Width = img.Width;
+
+            cellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            cellStyle.BackColor = System.Drawing.Color.Black; //assign based on location
+            cellStyle.Padding = Padding.Empty;
+
             return img;
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Windows.Forms;
 
-namespace OChess
+namespace SKChess
 {
     static class Program
     {

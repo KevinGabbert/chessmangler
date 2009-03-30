@@ -1,4 +1,4 @@
-﻿namespace OChess
+﻿namespace SKChess
 {
     partial class Form1
     {
@@ -42,7 +42,13 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowDrop = true;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.ColumnHeadersVisible = false;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
@@ -53,16 +59,22 @@
             this.Column7,
             this.Column8});
             this.dataGridView1.Location = new System.Drawing.Point(1, 2);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 4;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(558, 415);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseUp);
+            this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
+            this.dataGridView1.CellMouseMove += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseMove);
             // 
             // Column1
             // 
-            //this.Column1.ChessPiece = WinUIParts.ChessPiece.Red;
+            this.Column1.ChessPiece = null;
             this.Column1.HeaderText = "Column1";
             this.Column1.Name = "Column1";
             this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -70,7 +82,7 @@
             // 
             // Column2
             // 
-            //this.Column2.ChessPiece = WinUIParts.ChessPiece.Red;
+            this.Column2.ChessPiece = null;
             this.Column2.HeaderText = "Column2";
             this.Column2.Name = "Column2";
             this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -78,7 +90,7 @@
             // 
             // Column3
             // 
-            //this.Column3.ChessPiece = WinUIParts.ChessPiece.Red;
+            this.Column3.ChessPiece = null;
             this.Column3.HeaderText = "Column3";
             this.Column3.Name = "Column3";
             this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -86,7 +98,7 @@
             // 
             // Column4
             // 
-            //this.Column4.ChessPiece = WinUIParts.ChessPiece.Red;
+            this.Column4.ChessPiece = null;
             this.Column4.HeaderText = "Column4";
             this.Column4.Name = "Column4";
             this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -94,7 +106,7 @@
             // 
             // Column5
             // 
-            //this.Column5.ChessPiece = WinUIParts.ChessPiece.Red;
+            this.Column5.ChessPiece = null;
             this.Column5.HeaderText = "Column5";
             this.Column5.Name = "Column5";
             this.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -102,7 +114,7 @@
             // 
             // Column6
             // 
-            ///this.Column6.ChessPiece = WinUIParts.ChessPiece.Red;
+            this.Column6.ChessPiece = null;
             this.Column6.HeaderText = "Column6";
             this.Column6.Name = "Column6";
             this.Column6.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -110,7 +122,7 @@
             // 
             // Column7
             // 
-            //this.Column7.ChessPiece = WinUIParts.ChessPiece.Red;
+            this.Column7.ChessPiece = null;
             this.Column7.HeaderText = "Column7";
             this.Column7.Name = "Column7";
             this.Column7.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -118,7 +130,7 @@
             // 
             // Column8
             // 
-            //this.Column8.ChessPiece = WinUIParts.ChessPiece.Red;
+            this.Column8.ChessPiece = null;
             this.Column8.HeaderText = "Column8";
             this.Column8.Name = "Column8";
             this.Column8.Resizable = System.Windows.Forms.DataGridViewTriState.True;

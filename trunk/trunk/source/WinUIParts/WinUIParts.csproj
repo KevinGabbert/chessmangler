@@ -50,6 +50,7 @@
     <Compile Include="ChessSquare.cs" />
     <Compile Include="ChessColumn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="images\Pawn.jpeg">

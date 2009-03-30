@@ -10,13 +10,16 @@ namespace WinUIParts
         {
         }
 
-        private IConfigurablePiece _chessPiece;
+        #region Properties
 
+        private IConfigurablePiece _chessPiece;
         public IConfigurablePiece ChessPiece
         {
             get { return _chessPiece; }
             set { _chessPiece = value; }
         }
+
+        #endregion
 
         public override object Clone()
         {
@@ -24,7 +27,6 @@ namespace WinUIParts
             col.ChessPiece = _chessPiece;
             return col;
         }
-
         public override DataGridViewCell CellTemplate
         {
             get { return base.CellTemplate; }

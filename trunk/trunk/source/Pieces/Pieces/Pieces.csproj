@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Types\ConfigurablePiece.cs" />
-    <Compile Include="Interfaces\IPiece.cs" />
+    <Compile Include="Interfaces\IConfigurablePiece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
