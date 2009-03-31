@@ -1,0 +1,1 @@
+NCover\ncover.console.exe //reg //x SKChess_TestHarnessCoverage.xml Gallio\Gallio.Echo.exe ..\Source\TestHarness\bin\Debug\TestHarness.dll /r:Local
