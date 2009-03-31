@@ -1,0 +1,5 @@
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Pieces\Pieces\bin\Debug\Pieces.dll
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Pieces\Pieces\bin\Debug\Pieces.pdb
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Pieces\Pieces\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Pieces\Pieces\obj\Debug\Pieces.dll
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Pieces\Pieces\obj\Debug\Pieces.pdb

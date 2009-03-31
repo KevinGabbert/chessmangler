@@ -1,0 +1,5 @@
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Engine\Engine\bin\Debug\Engine.dll
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Engine\Engine\bin\Debug\Engine.pdb
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Engine\Engine\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Engine\Engine\obj\Debug\Engine.dll
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Engine\Engine\obj\Debug\Engine.pdb

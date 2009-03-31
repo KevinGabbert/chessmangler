@@ -1,0 +1,5 @@
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\TestHarness\bin\Debug\TestHarness.dll
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\TestHarness\bin\Debug\TestHarness.pdb
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\TestHarness\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\TestHarness\obj\Debug\TestHarness.dll
+C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\TestHarness\obj\Debug\TestHarness.pdb
