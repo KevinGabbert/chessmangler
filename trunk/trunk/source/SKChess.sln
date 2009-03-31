@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine\Eng
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIParts", "WinUIParts\WinUIParts.csproj", "{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Steve", "ClassLibrary1\Steve.csproj", "{51155B86-79D7-402E-9531-62B9F20A7541}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51155B86-79D7-402E-9531-62B9F20A7541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51155B86-79D7-402E-9531-62B9F20A7541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51155B86-79D7-402E-9531-62B9F20A7541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51155B86-79D7-402E-9531-62B9F20A7541}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
