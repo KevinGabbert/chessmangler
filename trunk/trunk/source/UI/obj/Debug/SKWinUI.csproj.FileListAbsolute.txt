@@ -11,3 +11,5 @@ C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\UI\obj\
 C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\UI\obj\Debug\SKWinUI.csproj.GenerateResource.Cache
 C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\UI\obj\Debug\SKChess.exe
 C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\UI\obj\Debug\SKChess.pdb
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\UI\obj\Debug\SKChess.exe
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\UI\obj\Debug\SKChess.pdb
