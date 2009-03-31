@@ -3,35 +3,37 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
+using Pieces.Types;
+using Engine.Board;
+
 namespace Pieces.Interfaces
 {
     public interface IConfigurablePiece
     {
-        Int64 CurrentLocation
+        Location Location
         {
             get;
             set;
         }
-        Int64 DefaultLocation
-        {
-            get;
-            set;
-        }
-
         Color Color
         {
             get;
             set;
         }
 
-        //Do we want to use a string for this?  I guess we'd have to, as this would be pulled from the rules file (piece config section)
-        string Type
+        //This might be helpful for versions of chess where you can keep an opponents pieces.
+        List<Color> Team
         {
             get;
             set;
         }
 
         string Name
+        {
+            get;
+            set;
+        }
+        List<Square> Attacking
         {
             get;
             set;

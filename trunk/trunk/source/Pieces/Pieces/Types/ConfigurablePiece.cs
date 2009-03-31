@@ -3,14 +3,30 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Text;
 using Pieces.Interfaces;
+using Engine.Board;
 
 namespace Pieces.Types
 {
     public abstract class ChessPiece:IConfigurablePiece
     {
+        #region Properties
+
         public const string NOT_ASSIGNED = "Not Assigned";
+        public Location _location = new Location();
+        public List<Square> _attacking = new List<Square>();
+        public List<Color> _team = new List<Color>();
 
-
+        public Location Location
+        {
+            get
+            {
+                return _location;
+            }
+            set
+            {
+                _location = value;
+            }
+        }
         public string Name
         {
             get
@@ -33,28 +49,34 @@ namespace Pieces.Types
                 throw new NotImplementedException();
             }
         }
-        public long CurrentLocation
+
+        public List<Color> Team
         {
             get
             {
-                throw new NotImplementedException();
+                return _team;
             }
             set
             {
-                throw new NotImplementedException();
+                _team = value;
             }
         }
-        public long DefaultLocation
+
+        //prop MyMovementRule
+
+        public List<Square> Attacking
         {
             get
             {
-                throw new NotImplementedException();
+                return _attacking;
             }
             set
             {
-                throw new NotImplementedException();
+                _attacking = value;
             }
         }
+
+        #endregion
 
         public void CheckMy_MovementRule()
         {

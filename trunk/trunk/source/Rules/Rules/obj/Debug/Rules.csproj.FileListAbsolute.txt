@@ -3,3 +3,12 @@ C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Rules\R
 C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Rules\Rules\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Rules\Rules\obj\Debug\Rules.dll
 C:\Documents and Settings\Steve 2\Desktop\sigma-kappa-chess\trunk\source\Rules\Rules\obj\Debug\Rules.pdb
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\Rules\Rules\bin\Debug\Rules.dll
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\Rules\Rules\bin\Debug\Rules.pdb
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\Rules\Rules\bin\Debug\Engine.dll
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\Rules\Rules\bin\Debug\Pieces.dll
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\Rules\Rules\bin\Debug\Pieces.pdb
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\Rules\Rules\bin\Debug\Engine.pdb
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\Rules\Rules\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\Rules\Rules\obj\Debug\Rules.dll
+C:\Documents and Settings\user\Desktop\sigma-kappa-chessSVN\trunk\trunk\source\Rules\Rules\obj\Debug\Rules.pdb
