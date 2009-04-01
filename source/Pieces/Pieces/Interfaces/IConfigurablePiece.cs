@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Text;
 
 using Pieces.Types;
-using Engine.Board;
+
 
 namespace Pieces.Interfaces
 {
@@ -33,11 +33,11 @@ namespace Pieces.Interfaces
             get;
             set;
         }
-        List<Square> Attacking
-        {
-            get;
-            set;
-        }
+        //List<Square> Attacking
+        //{
+        //    get;
+        //    set;
+        //}
 
         void CheckMy_MovementRule();
         void Move(Int64 from, Int64 to);
