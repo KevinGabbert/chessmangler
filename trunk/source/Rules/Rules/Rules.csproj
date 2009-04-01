@@ -51,6 +51,7 @@
     <Compile Include="Notes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\AttackPackage.cs" />
+    <Compile Include="Types\ChessPiece.cs" />
     <Compile Include="Types\MovementPackage.cs" />
     <Compile Include="Types\Rules.cs" />
     <Compile Include="Types\RulesPackageBase.cs" />
