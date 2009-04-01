@@ -80,9 +80,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pieces\Pieces\Pieces.csproj">
-      <Project>{334D7126-A3A2-4A8A-956A-2301D1E5D675}</Project>
-      <Name>Pieces</Name>
+    <ProjectReference Include="..\Engine\Engine\Engine.csproj">
+      <Project>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</Project>
+      <Name>Engine</Name>
     </ProjectReference>
     <ProjectReference Include="..\WinUIParts\WinUIParts.csproj">
       <Project>{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}</Project>

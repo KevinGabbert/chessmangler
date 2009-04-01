@@ -1,69 +1,12 @@
 ﻿using System;
 using System.Drawing;
-using Pieces.Interfaces;
 using System.Collections.Generic;
 using System.Collections;
 
+using Engine.Interfaces;
+
 namespace Engine.Board
 {
-    //public class Square
-    //{
-    //    public Square(UInt16 x, UInt16 y)
-    //    {
-    //        UInt16[] position = new UInt16[2] { x, y };
-    //    }
-
-    //    Color _color;
-    //    int _number;
-    //    string _name;
-    //    IConfigurablePiece _piece;
-
-    //    public string Name
-    //    {
-    //        get
-    //        { 
-    //            return _name; 
-    //        }
-    //        set
-    //        { 
-    //            _name = value; 
-    //        }
-    //    }
-    //    public int Number
-    //    {
-    //        get
-    //        { 
-    //            return _number; 
-    //        }
-    //        set
-    //        { 
-    //            _number = value; 
-    //        }
-    //    }
-    //    public Color Color
-    //    {
-    //        get
-    //        {
-    //            return _color;
-    //        }
-    //        set
-    //        {
-    //            _color = value;
-    //        }
-    //    }
-    //    public IConfigurablePiece Piece
-    //    {
-    //        get
-    //        { 
-    //            return _piece; 
-    //        }
-    //        set
-    //        { 
-    //            _piece = value; 
-    //        }
-    //    }
-    //}
-
     public class Square
     {
         public Square()
@@ -181,7 +124,7 @@ namespace Engine.Board
         public Square GetByName(string squareName)
         {
             //look up the square by its name.  ex. name:  "A2"
-            this._findSquareName = squareName;
+            this._findSquareName = squareName.ToLower();
             Square foundSquare = this.Squares.Find(foundByName);
 
             return foundSquare;

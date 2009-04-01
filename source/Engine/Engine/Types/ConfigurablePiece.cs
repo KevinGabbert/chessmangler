@@ -2,10 +2,10 @@
 using System.Drawing;
 using System.Collections.Generic;
 using System.Text;
-using Pieces.Interfaces;
 
+using Engine.Interfaces;
 
-namespace Pieces.Types
+namespace Engine.Types
 {
     public abstract class ChessPiece:IConfigurablePiece
     {

@@ -47,18 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="Interfaces\IConfigurablePiece.cs" />
     <Compile Include="Notes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Pieces\Pieces\Pieces.csproj">
-      <Project>{334D7126-A3A2-4A8A-956A-2301D1E5D675}</Project>
-      <Name>Pieces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\WinUIParts\WinUIParts.csproj">
-      <Project>{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}</Project>
-      <Name>WinUIParts</Name>
-    </ProjectReference>
+    <Compile Include="Types\ConfigurablePiece.cs" />
+    <Compile Include="Types\Location.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

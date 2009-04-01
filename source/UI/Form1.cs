@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using WinUIParts;
-using Pieces.Interfaces;
+using Engine.Interfaces;
 
 namespace SKChess
 {

@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-using Pieces.Types;
+using Engine.Types;
 
-
-namespace Pieces.Interfaces
+namespace Engine.Interfaces
 {
     public interface IConfigurablePiece
     {
