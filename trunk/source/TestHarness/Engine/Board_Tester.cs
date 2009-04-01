@@ -46,7 +46,6 @@ namespace TestHarness.Engine
 
         }
 
-        [Ignore("Doesn't work. Not implemented yet  Delete this ignore line to make test active")]
         [Test(Description = "So what is this for??")]
         public void VerifySquareNumbers()
         {
@@ -54,7 +53,7 @@ namespace TestHarness.Engine
  
             //verify that x square has the intended number
 
-            Assert.AreEqual("????", testBoard.Squares[1].Number);
+            Assert.AreEqual(27, testBoard.Squares[27].Number);
         }
 
         [Test(Description = "Verify Square Names ")]
@@ -66,8 +65,8 @@ namespace TestHarness.Engine
             
 
             //ok.. lets pick a couple and make sure they match up..
-            Assert.AreEqual("A2", testBoard.Squares[1].Name);
-            Assert.AreEqual("H8", testBoard.Squares[63].Name);
+            Assert.AreEqual("b1", testBoard.Squares[1].Name);
+            Assert.AreEqual("h8", testBoard.Squares[63].Name);
         }
 
         [Test(Description = "Put this in your pipe & smoke it")]
@@ -76,7 +75,7 @@ namespace TestHarness.Engine
             Board testBoard = new Board(8, 8);
 
             //verify that x square has the intended Name
-            Assert.AreEqual("E5", testBoard.GetByName("E5").Name);
+            Assert.AreEqual("e5", testBoard.GetByName("E5").Name);
 
             //and yes.. we can do it so we look up by number.. you want that?
         }

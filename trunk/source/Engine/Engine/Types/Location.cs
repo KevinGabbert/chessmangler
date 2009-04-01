@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pieces.Types
+namespace Engine.Types
 {
     public class Location
     {
