@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
+using Rules.Types;
 using Engine.Types;
 
-namespace Engine.Interfaces
+namespace Rules.Interfaces
 {
     public interface IConfigurablePiece
     {
@@ -27,16 +28,22 @@ namespace Engine.Interfaces
             set;
         }
 
+        AttackPackage Attacking
+        {
+            get;
+            set;
+        }
+        MovementPackage Moves
+        {
+            get;
+            set;
+        }
+
         string Name
         {
             get;
             set;
         }
-        //List<Square> Attacking
-        //{
-        //    get;
-        //    set;
-        //}
 
         void CheckMy_MovementRule();
         void Move(Int64 from, Int64 to);

@@ -6,7 +6,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Drawing;
 
-using Engine.Interfaces;
+//using System.Windows.Media;
+
+
+using Rules.Interfaces;
 
 namespace WinUIParts
 {
@@ -40,6 +43,19 @@ namespace WinUIParts
             //what's my location?
 
             //get piece image path from rules file? or a cache somewhere? or is it assigned somewhere else?
+
+            //// Open a Stream and decode a PNG image
+            //Stream imageStreamSource = new FileStream(Environment.CurrentDirectory + "\\images\\pawn.jpeg", FileMode.Open, FileAccess.Read, FileShare.Read);
+            //PngBitmapDecoder decoder = new PngBitmapDecoder(imageStreamSource, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+            //BitmapSource bitmapSource = decoder.Frames[0];
+
+            //// Draw the Image
+            //Image myImage = new Image();
+            //myImage.Source = bitmapSource;
+            ////myImage.Stretch = Stretch.None;
+            ////myImage.Margin = new Thickness(20);
+
+
 
             Image img = new System.Drawing.Bitmap(Environment.CurrentDirectory + "\\images\\pawn.jpeg");
 

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using NUnit.Framework;
-using Engine.Board;
+using Engine.Types;
 
 namespace TestHarness.Engine
 {

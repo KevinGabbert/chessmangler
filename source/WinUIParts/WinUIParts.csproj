@@ -62,6 +62,10 @@
       <Project>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</Project>
       <Name>Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rules\Rules\Rules.csproj">
+      <Project>{6CB2BFBA-0A2A-4CC4-BAE7-21E0EDE1E090}</Project>
+      <Name>Rules</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
