@@ -3,103 +3,8 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Collections;
 
-using Engine.Interfaces;
-
-namespace Engine.Board
+namespace Engine.Types
 {
-    public class Square
-    {
-        public Square()
-        {
-            
-        }
-
-        Color _color;
-        int _number;
-        string _name;
-        IConfigurablePiece _piece;
-
-        int[] _position = new int[2]{0,0};
-        public int x
-        {
-            get
-            {
-                return _position[0];
-            }
-            set
-            {
-                _position[0] = value;
-            }
-        }
-        public int y
-        {
-            get
-            {
-                return _position[1];
-            }
-            set
-            {
-                _position[1] = value;
-            }
-        }
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
-        }
-        public int Number
-        {
-            get
-            {
-                return _number;
-            }
-            set
-            {
-                _number = value;
-            }
-        }
-        public Color Color
-        {
-            get
-            {
-                return _color;
-            }
-            set
-            {
-                _color = value;
-            }
-        }
-        public IConfigurablePiece Piece
-        {
-            get
-            {
-                return _piece;
-            }
-            set
-            {
-                _piece = value;
-            }
-        }
-
-        public static void SetColor(Square squareToColor, int column, int row)
-        {
-            if (((squareToColor.Number) % 2) == 0)
-            {
-                squareToColor.Color = Color.White;
-            }
-            else
-            {
-                squareToColor.Color = Color.Black;
-            }
-        }
-    }
-
     public class Board
     {
         #region Properties
@@ -140,6 +45,7 @@ namespace Engine.Board
                 return false;
             }
         }
+
         // Had a big mistake here, mine, you followed suit.  X axis should be columns,
         // as in the a column, b column, etc.. rows or ranks are Y axis, and head upwards.
         // All references to either (row, column) or (rows, columns) have been flipped
@@ -176,12 +82,12 @@ namespace Engine.Board
                 for (int j = 0; j < column; j++)
                 {
                     Square newSquare = new Square();
-                    newSquare.Number = (column * i) + j; //corrected equation... my bad.
+                    newSquare.Number = (column * i) + j; 
                     newSquare.Name = (char)(97 + j) + (i + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
                     Square.SetColor(newSquare, column, row);
                     this.Squares.Add(newSquare);
                 }
             }
         }
-    }
+    }   
 }

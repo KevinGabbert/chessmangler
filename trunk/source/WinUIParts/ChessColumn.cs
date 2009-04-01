@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 using System;
-using Engine.Interfaces;
+using Rules.Interfaces;
 
 namespace WinUIParts
 {
