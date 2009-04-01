@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Text;
 using Pieces.Interfaces;
-using Engine.Board;
+
 
 namespace Pieces.Types
 {
@@ -13,7 +13,7 @@ namespace Pieces.Types
 
         public const string NOT_ASSIGNED = "Not Assigned";
         public Location _location = new Location();
-        public List<Square> _attacking = new List<Square>();
+        //public List<Square> _attacking = new List<Square>();
         public List<Color> _team = new List<Color>();
 
         public Location Location
@@ -64,17 +64,17 @@ namespace Pieces.Types
 
         //prop MyMovementRule
 
-        public List<Square> Attacking
-        {
-            get
-            {
-                return _attacking;
-            }
-            set
-            {
-                _attacking = value;
-            }
-        }
+        //public List<Square> Attacking
+        //{
+        //    get
+        //    {
+        //        return _attacking;
+        //    }
+        //    set
+        //    {
+        //        _attacking = value;
+        //    }
+        //}
 
         #endregion
 
