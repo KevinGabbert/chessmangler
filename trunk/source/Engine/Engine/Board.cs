@@ -76,16 +76,27 @@ namespace Engine.Board
         string _name;
         IConfigurablePiece _piece;
 
-        int _position;
-        public int Position
+        int[] _position = new int[2]{0,0};
+        public int x
         {
             get
             {
-                return _position;
+                return _position[0];
             }
             set
             {
-                _position = value;
+                _position[0] = value;
+            }
+        }
+        public int y
+        {
+            get
+            {
+                return _position[1];
+            }
+            set
+            {
+                _position[1] = value;
             }
         }
         public string Name
@@ -133,7 +144,7 @@ namespace Engine.Board
             }
         }
 
-        public static void SetColor(Square squareToColor, int row, int column)
+        public static void SetColor(Square squareToColor, int column, int row)
         {
             if (((squareToColor.Number) % 2) == 0)
             {
@@ -186,36 +197,45 @@ namespace Engine.Board
                 return false;
             }
         }
+        // Had a big mistake here, mine, you followed suit.  X axis should be columns,
+        // as in the a column, b column, etc.. rows or ranks are Y axis, and head upwards.
+        // All references to either (row, column) or (rows, columns) have been flipped
+        // because of this error.  Also, corrected some bad math on my part as far as 
+        // correctly labeling each square with their number... that could be very important
+        // as their color is based on that and movement could be as well.
 
-        public Board(UInt16 rows, UInt16 columns)
+        public Board(UInt16 columns, UInt16 rows)
         {
-            this.CreateBoard(rows, columns);
+            this.CreateBoard(columns, rows);
         }
-        private void CreateBoard(UInt16 rows, UInt16 columns)
+        private void CreateBoard(UInt16 columns, UInt16 rows)
         {
-            this.InitializeSquares(rows, columns);
+            this.InitializeSquares(columns, rows);
         }
+
+        // corrected this as well, the lowest left square should be black, and will be 0,0..
+        // 0,1 next to it is white, so I switched the definitions below to reflect that correctly.
         private static void SetSquareColor(Square squareToColor)
         {
             if (((squareToColor.Number) % 2) == 0)
             {
-                squareToColor.Color = Color.White;
+                squareToColor.Color = Color.Black;
             }
             else
             {
-                squareToColor.Color = Color.Black;
+                squareToColor.Color = Color.White;
             }
         }
-        private void InitializeSquares(int row, int column)
+        private void InitializeSquares(int column, int row)
         {
             for (int i = 0; i < row; i++)
             {
                 for (int j = 0; j < column; j++)
                 {
                     Square newSquare = new Square();
-                    newSquare.Number = (i * j) + i;
-                    newSquare.Name = (char)(65 + i) + (j + 1).ToString(); //What is this about?
-                    Square.SetColor(newSquare, row, column);
+                    newSquare.Number = (column * i) + j; //corrected equation... my bad.
+                    newSquare.Name = (char)(97 + j) + (i + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
+                    Square.SetColor(newSquare, column, row);
                     this.Squares.Add(newSquare);
                 }
             }
