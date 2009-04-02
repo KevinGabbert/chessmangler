@@ -56,8 +56,10 @@ namespace WinUIParts
             ////myImage.Margin = new Thickness(20);
 
 
+            string path = Environment.CurrentDirectory + "\\images\\wp.jpeg";
+            bool exists = File.Exists(path);
 
-            Image img = new System.Drawing.Bitmap(Environment.CurrentDirectory + "\\images\\pawn.jpeg");
+            Image img = new System.Drawing.Bitmap(path);
 
             //move this. This only needs to be done once per column
             owningCol.Width = img.Width;
