@@ -94,5 +94,21 @@ namespace Rules.Types
         }
 
         #endregion
+
+        #region IConfigurablePiece Members
+
+        public System.Drawing.Image Image
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
     }
 }

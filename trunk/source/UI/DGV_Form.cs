@@ -11,12 +11,21 @@ using WinUIParts;
 
 namespace SKChess
 {
-    public partial class Form1 : Form
+    public partial class DGV_Form : Form
     {
-        public Form1()
+        public DGV_Form()
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.dataGridView1.Rows.Add(7);
+        }
+
+
+
+        #region Mouse Stuff
 
         private DataGridViewCellMouseEventArgs _dragStart;
         private DataGridViewCellMouseEventArgs _dragEnd;
@@ -29,7 +38,6 @@ namespace SKChess
             _mouseDown = true;
             _dragStart = e;
         }
-
         private void dataGridView1_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
         {
             _isDragging = _mouseDown;
@@ -41,15 +49,14 @@ namespace SKChess
                 //    picture needs to be animated and attached to the cursor.  (is this a windows function?)
             }
         }
-
         private void dataGridView1_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
             _dragEnd = e;
             _isDragging = false;
 
             //get start & end locations
-            ChessSquare startSquare = (ChessSquare)dataGridView1[_dragStart.ColumnIndex, _dragStart.RowIndex];
-            ChessSquare endSquare = (ChessSquare)dataGridView1[_dragEnd.ColumnIndex, _dragEnd.RowIndex];
+            DGV_ChessSquare startSquare = (DGV_ChessSquare)dataGridView1[_dragStart.ColumnIndex, _dragStart.RowIndex];
+            DGV_ChessSquare endSquare = (DGV_ChessSquare)dataGridView1[_dragEnd.ColumnIndex, _dragEnd.RowIndex];
             
             //run rules
 
@@ -72,5 +79,9 @@ namespace SKChess
                 //    set the picture back in its old place
             }
         }
+
+        #endregion
+
+
     }
 }
