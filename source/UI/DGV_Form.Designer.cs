@@ -1,6 +1,6 @@
 ﻿namespace SKChess
 {
-    partial class Form1
+    partial class DGV_Form
     {
         /// <summary>
         /// Required designer variable.
@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new WinUIParts.ChessColumn();
-            this.Column2 = new WinUIParts.ChessColumn();
-            this.Column3 = new WinUIParts.ChessColumn();
-            this.Column4 = new WinUIParts.ChessColumn();
-            this.Column5 = new WinUIParts.ChessColumn();
-            this.Column6 = new WinUIParts.ChessColumn();
-            this.Column7 = new WinUIParts.ChessColumn();
-            this.Column8 = new WinUIParts.ChessColumn();
+            this.Column1 = new WinUIParts.DGV_ChessColumn();
+            this.Column2 = new WinUIParts.DGV_ChessColumn();
+            this.Column3 = new WinUIParts.DGV_ChessColumn();
+            this.Column4 = new WinUIParts.DGV_ChessColumn();
+            this.Column5 = new WinUIParts.DGV_ChessColumn();
+            this.Column6 = new WinUIParts.DGV_ChessColumn();
+            this.Column7 = new WinUIParts.DGV_ChessColumn();
+            this.Column8 = new WinUIParts.DGV_ChessColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,16 +58,19 @@
             this.Column6,
             this.Column7,
             this.Column8});
+            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView1.Location = new System.Drawing.Point(1, 2);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 4;
+            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(558, 415);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.TabStop = false;
             this.dataGridView1.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseUp);
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
             this.dataGridView1.CellMouseMove += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseMove);
@@ -79,6 +82,7 @@
             this.Column1.Name = "Column1";
             this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column1.Width = 45;
             // 
             // Column2
             // 
@@ -87,6 +91,7 @@
             this.Column2.Name = "Column2";
             this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column2.Width = 45;
             // 
             // Column3
             // 
@@ -95,6 +100,7 @@
             this.Column3.Name = "Column3";
             this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column3.Width = 45;
             // 
             // Column4
             // 
@@ -103,6 +109,7 @@
             this.Column4.Name = "Column4";
             this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column4.Width = 45;
             // 
             // Column5
             // 
@@ -111,6 +118,7 @@
             this.Column5.Name = "Column5";
             this.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column5.Width = 45;
             // 
             // Column6
             // 
@@ -119,6 +127,7 @@
             this.Column6.Name = "Column6";
             this.Column6.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column6.Width = 45;
             // 
             // Column7
             // 
@@ -127,6 +136,7 @@
             this.Column7.Name = "Column7";
             this.Column7.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column7.Width = 45;
             // 
             // Column8
             // 
@@ -135,6 +145,7 @@
             this.Column8.Name = "Column8";
             this.Column8.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column8.Width = 45;
             // 
             // Form1
             // 
@@ -144,6 +155,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
@@ -152,14 +164,14 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private WinUIParts.ChessColumn Column1;
-        private WinUIParts.ChessColumn Column2;
-        private WinUIParts.ChessColumn Column3;
-        private WinUIParts.ChessColumn Column4;
-        private WinUIParts.ChessColumn Column5;
-        private WinUIParts.ChessColumn Column6;
-        private WinUIParts.ChessColumn Column7;
-        private WinUIParts.ChessColumn Column8;
+        private WinUIParts.DGV_ChessColumn Column1;
+        private WinUIParts.DGV_ChessColumn Column2;
+        private WinUIParts.DGV_ChessColumn Column3;
+        private WinUIParts.DGV_ChessColumn Column4;
+        private WinUIParts.DGV_ChessColumn Column5;
+        private WinUIParts.DGV_ChessColumn Column6;
+        private WinUIParts.DGV_ChessColumn Column7;
+        private WinUIParts.DGV_ChessColumn Column8;
     }
 }
 

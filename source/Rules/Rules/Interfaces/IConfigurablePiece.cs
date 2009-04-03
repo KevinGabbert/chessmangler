@@ -39,6 +39,12 @@ namespace Rules.Interfaces
             set;
         }
 
+        Image Image
+        {
+            get;
+            set;
+        }
+
         string Name
         {
             get;

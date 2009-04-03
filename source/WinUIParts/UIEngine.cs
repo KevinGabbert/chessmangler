@@ -7,7 +7,7 @@ namespace WinUIParts
 {
     public class UIEngine
     {
-        public static bool IsThisMoveOkay(ChessSquare startSquare, ChessSquare endSquare)
+        public static bool IsThisMoveOkay(DGV_ChessSquare startSquare, DGV_ChessSquare endSquare)
         {
             //get start chesspiecetype
             //string xxx = ((IConfigurablePiece)startSquare.Value).Type;

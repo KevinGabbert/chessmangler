@@ -4,9 +4,9 @@ using Rules.Interfaces;
 
 namespace WinUIParts
 {
-    public class ChessColumn : DataGridViewColumn
+    public class DGV_ChessColumn : DataGridViewColumn
     {
-        public ChessColumn(): base(new ChessSquare())
+        public DGV_ChessColumn(): base(new DGV_ChessSquare())
         {
         }
 
@@ -23,7 +23,7 @@ namespace WinUIParts
 
         public override object Clone()
         {
-            ChessColumn col = base.Clone() as ChessColumn;
+            DGV_ChessColumn col = base.Clone() as DGV_ChessColumn;
             col.ChessPiece = _chessPiece;
             return col;
         }
@@ -32,7 +32,7 @@ namespace WinUIParts
             get { return base.CellTemplate; }
             set
             {
-                if ((value == null) || !(value is ChessSquare))
+                if ((value == null) || !(value is DGV_ChessSquare))
                 {
                     throw new ArgumentException("Invalid cell type, ChessColumns can only contain ChessSquares");
                 }
