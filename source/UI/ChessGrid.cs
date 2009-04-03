@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -43,23 +45,22 @@ namespace SKChess
 
                     PictureBox newBox = new PictureBox();
                     newBox.Location = new System.Drawing.Point(i, j);
-                    newBox.Name = "pictureBox" + (i + j).ToString();
+                    newBox.Name = "Square" + (i + j).ToString();
                     newBox.Size = new System.Drawing.Size(72, 72);
+
+                    //it would be nice to enable keyboard support (depending on an option in the config file)
                     //newBox.pictureBox1.TabIndex = 0;
                     //newBox.pictureBox1.TabStop = false;
 
-                    if (this.squareColor)
-                    {
-                        newBox.BackColor = Color.White;
-                        //newBox.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\wr.gif");
-                    }
-                    else
-                    {
-                        newBox.BackColor = Color.Gray;
-                        ///newBox.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\bp.gif");
-                    }
-
                     newBox.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\wr.gif");
+
+
+                    //Graphics gfx = Graphics.FromImage(newBox.Image);
+
+                    //clean up the image (take care of any image loss from resizing)
+
+                    //gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
                     newBox.SizeMode = PictureBoxSizeMode.CenterImage;
                     newBox.BorderStyle = BorderStyle.FixedSingle;
 
