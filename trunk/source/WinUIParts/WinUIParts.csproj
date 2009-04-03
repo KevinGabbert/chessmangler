@@ -62,13 +62,6 @@
       <Name>Rules</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="images\bp.gif" />
-    <Content Include="images\Pawn.jpg" />
-    <Content Include="images\wp.jpeg" />
-    <Content Include="images\wr.gif" />
-    <Content Include="images\wr.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
