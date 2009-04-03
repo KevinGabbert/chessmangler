@@ -84,7 +84,7 @@ namespace Engine.Types
                     Square newSquare = new Square();
                     newSquare.Number = (column * i) + j; 
                     newSquare.Name = (char)(97 + j) + (i + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
-                    Square.SetColor(newSquare, column, row);
+                    Square.SetColor(newSquare, column, row); //square.SetColor can go back to using 1's and zeroes for its squarecolor.  There is no need for that color crap here.  I don't know what I was thinking..
                     this.Squares.Add(newSquare);
                 }
             }

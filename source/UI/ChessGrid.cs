@@ -51,18 +51,22 @@ namespace SKChess
                     if (this.squareColor)
                     {
                         newBox.BackColor = Color.White;
+                        //newBox.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\wr.gif");
                     }
                     else
                     {
                         newBox.BackColor = Color.Gray;
+                        ///newBox.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\bp.gif");
                     }
 
-                    this.squareColor = !this.squareColor;
-
+                    newBox.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\wr.gif");
+                    newBox.SizeMode = PictureBoxSizeMode.CenterImage;
                     newBox.BorderStyle = BorderStyle.FixedSingle;
 
                     this.Controls.Add(newBox);
+                    this.squareColor = !this.squareColor;
                 }
+                this.squareColor = !this.squareColor;
             }
         }
     }
