@@ -6,25 +6,78 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 
+using Engine.Interfaces;
+using Rules.Interfaces;
+
 namespace WinUIParts
 {
-    public class UISquare : PictureBox
+    public class UISquare : PictureBox, ISquare 
     {
         private UISquare()
         {
 
         }
 
-        public UISquare(int row, int column, int size, string picture)
+        public UISquare(Point formlocation, int size, string picture)
         {
-            //this = (UISquare) new PictureBox();
-            this.MakeSquare(row, column, size, picture);
+            this.MakeSquare(formlocation, size, picture);
         }
 
-        private void MakeSquare(int row, int column, int size, string picture)
+        #region ISquare Members
+
+        public int x
         {
-            this.Location = new System.Drawing.Point(row, column);
-            this.Name = "Square" + (row + column).ToString();
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public int y
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public int Number
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
+
+        protected IConfigurablePiece _piece;
+        public IConfigurablePiece Piece
+        {
+            get
+            {
+                return _piece;
+            }
+            set
+            {
+                _piece = value;
+            }
+        }
+
+        private void MakeSquare(Point formlocation, int size, string picture)
+        {
+            this.Location = formlocation;
+            this.Name = "Square" + (formlocation.X + formlocation.Y).ToString();
             this.Size = new System.Drawing.Size(size, size); //this *is* a square after all
 
             //it would be nice to enable keyboard support (depending on an option in the config file)

@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 
 using System.Windows.Forms;
+using System.Drawing;
+
+using Engine.Interfaces;
+using Rules.Interfaces;
+
+using System.Configuration;
 
 namespace WinUIParts
 {
@@ -11,30 +17,89 @@ namespace WinUIParts
     {
         public bool squareColor = false;
 
-        public void CreateBoard(Form formtoPlaceBoard)
+        int _rows;
+        public int Rows
+        {
+            get
+            {
+                return _rows;
+            }
+            set
+            {
+                _rows = value;
+            }
+        }
+
+        int _columns;
+        public int Columns
+        {
+            get
+            {
+                return _columns;
+            }
+            set
+            {
+                _columns = value;
+            }
+        }
+
+        int _name;
+        public int Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+
+        List<UISquare> _squares = new List<UISquare>();
+        public List<UISquare> Squares
+        {
+            get
+            {
+                return _squares;
+            }
+            set
+            {
+                _squares = value;
+            }
+        }
+
+        public void CreateBoard(Form formForBoard, int rows, int columns, int squareSize)
         {
             //throw down a bunch of pictureboxen
 
             //*** mod Engine.CreateBoard so that it will use the same code to create this board ***
 
-            //This grid needs to bound to Board.
+            //This grid needs to bound to Engine.Board somehow.
+            //I guess we could have an Engine.Board prop..  (this.RawBoard)
 
-            //Create a new class called square that inherits from picturebox, and adds 2 props
-            //1. Engine.Board.Square
-            //2. IConfigurablePiece
+            formForBoard.Width = (squareSize * columns) + 12;
+            formForBoard.Height = (squareSize * rows) + 30;
 
-            formtoPlaceBoard.Width = 584;
-            formtoPlaceBoard.Height = 606;
-
-
-            //Temporary hardcode
-            for (int i = 0; i < 576; i = i + 72)
+            //Rows
+            for (int i = 0; i < squareSize * rows; i = i + squareSize)
             {
-                for (int j = 0; j < 576; j = j + 72)
+                //Columns
+                for (int j = 0; j < squareSize * columns; j = j + squareSize)
                 {
-                    PictureBox newBox = new UISquare(i, j, 72, Environment.CurrentDirectory + "\\images\\wr.gif");
+                    //The picture passed here needs to be a property of the ChessPiece for this square
+                    UISquare newSquare = new UISquare(new Point(i, j), squareSize, Environment.CurrentDirectory + "\\images\\wr.gif");
+                    
+                    //What is this square's address?
 
-                    formtoPlaceBoard.Controls.Add(newBox);
+                    //When you get that, then go look up the address in the config file's Starting position for this board.
+                    
+                    //Something like this?? ChessPiece pieceForThisSquare = new ChessPiece(ConfigurationManager.AppSettings["BoardName_DefaultSetup_SquareAddress"]);
+                    //(inside ChessPiece:   this.Image = Environment.CurrentDirectory + "\\images\\wr.gif"; //obviously here pull from XML
+
+                    //newSquare.Piece = pieceForThisSquare
+
+                    formForBoard.Controls.Add(newSquare);
                     this.squareColor = !this.squareColor;
                 }
                 this.squareColor = !this.squareColor;
