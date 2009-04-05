@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
+using Engine.Types;
 using Engine.Interfaces;
 using Rules.Interfaces;
 
@@ -81,28 +82,47 @@ namespace WinUIParts
             formForBoard.Width = (squareSize * columns) + 12;
             formForBoard.Height = (squareSize * rows) + 30;
 
-            //Rows
-            for (int i = 0; i < squareSize * rows; i = i + squareSize)
+            BuildSquares(formForBoard, rows, columns, squareSize);
+        }
+
+        private void BuildSquares(Form formForBoard, int rows, int columns, int squareSize)
+        {
+            int squareR = 0;
+            int squareC = 0;
+
+            //Use board logic to iterate through the board.
+            //(meaning:  Board.InitializeSquares() helps make the UI board)
+            foreach (BoardIterator currentSquare in Board.SquarePositionLogic(columns, rows))
             {
-                //Columns
-                for (int j = 0; j < squareSize * columns; j = j + squareSize)
+                //The picture passed here needs to be a property of the ChessPiece for this square
+                UISquare newSquare = new UISquare(new Point(squareR, squareC), squareSize, Environment.CurrentDirectory + "\\images\\wr.gif");
+
+                //What is this square's address?
+
+                //When you get that, then go look up the address in the config file's Starting position for this board.
+
+                //Something like this?? ChessPiece pieceForThisSquare = new ChessPiece(ConfigurationManager.AppSettings["BoardName_DefaultSetup_SquareAddress"]);
+                //(inside ChessPiece:   this.Image = Environment.CurrentDirectory + "\\images\\wr.gif"; //obviously here pull from XML
+
+                //newSquare.Piece = pieceForThisSquare
+
+                formForBoard.Controls.Add(newSquare);
+                this.squareColor = !this.squareColor;
+
+                if (currentSquare.Col == 0)
                 {
-                    //The picture passed here needs to be a property of the ChessPiece for this square
-                    UISquare newSquare = new UISquare(new Point(i, j), squareSize, Environment.CurrentDirectory + "\\images\\wr.gif");
-                    
-                    //What is this square's address?
-
-                    //When you get that, then go look up the address in the config file's Starting position for this board.
-                    
-                    //Something like this?? ChessPiece pieceForThisSquare = new ChessPiece(ConfigurationManager.AppSettings["BoardName_DefaultSetup_SquareAddress"]);
-                    //(inside ChessPiece:   this.Image = Environment.CurrentDirectory + "\\images\\wr.gif"; //obviously here pull from XML
-
-                    //newSquare.Piece = pieceForThisSquare
-
-                    formForBoard.Controls.Add(newSquare);
                     this.squareColor = !this.squareColor;
                 }
-                this.squareColor = !this.squareColor;
+
+
+                //Set the position of our new square
+                if (currentSquare.Col == columns - 1)
+                {
+                    squareC = squareC + squareSize;
+                    squareR = 0 - squareSize;
+                }
+
+                squareR = squareR + squareSize;
             }
         }
     }

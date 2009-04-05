@@ -59,6 +59,18 @@ namespace WinUIParts
             }
         }
 
+        public Color Color
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         #endregion
 
         protected IConfigurablePiece _piece;

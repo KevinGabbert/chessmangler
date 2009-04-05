@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
+using Engine.Interfaces;
+
 namespace Engine.Types
 {
-    public class Square
+    public class Square: ISquare
     {
         public Square()
         {

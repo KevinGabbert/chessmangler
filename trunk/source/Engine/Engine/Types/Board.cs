@@ -46,13 +46,6 @@ namespace Engine.Types
             }
         }
 
-        // Had a big mistake here, mine, you followed suit.  X axis should be columns,
-        // as in the a column, b column, etc.. rows or ranks are Y axis, and head upwards.
-        // All references to either (row, column) or (rows, columns) have been flipped
-        // because of this error.  Also, corrected some bad math on my part as far as 
-        // correctly labeling each square with their number... that could be very important
-        // as their color is based on that and movement could be as well.
-
         public Board(UInt16 columns, UInt16 rows)
         {
             this.CreateBoard(columns, rows);
@@ -62,8 +55,6 @@ namespace Engine.Types
             this.InitializeSquares(columns, rows);
         }
 
-        // corrected this as well, the lowest left square should be black, and will be 0,0..
-        // 0,1 next to it is white, so I switched the definitions below to reflect that correctly.
         private static void SetSquareColor(Square squareToColor)
         {
             if (((squareToColor.Number) % 2) == 0)
@@ -75,19 +66,39 @@ namespace Engine.Types
                 squareToColor.Color = Color.White;
             }
         }
-        private void InitializeSquares(int column, int row)
+
+
+        public void InitializeSquares(int column, int row)
         {
-            for (int i = 0; i < row; i++)
+            foreach (BoardIterator currentSquare in Board.SquarePositionLogic(column, row))
             {
-                for (int j = 0; j < column; j++)
+                this.AddNewSquare(column, row, currentSquare.Row, currentSquare.Col);
+            }
+        }
+
+        private void AddNewSquare(int column, int row, int r, int c)
+        {
+            Square newSquare = new Square();
+            newSquare.Number = (column * r) + c;
+            newSquare.Name = (char)(97 + c) + (r + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
+            Square.SetColor(newSquare, column, row); //square.SetColor can go back to using 1's and zeroes for its squarecolor.  There is no need for that color crap here.  I don't know what I was thinking..
+            this.Squares.Add(newSquare);
+        }
+
+        //Expose our inner board logic so the UI can use it.
+        public static IEnumerable SquarePositionLogic(int column, int row)
+        {
+            for (int r = 0; r < row; r++)
+            {
+                for (int c = 0; c < column; c++)
                 {
-                    Square newSquare = new Square();
-                    newSquare.Number = (column * i) + j; 
-                    newSquare.Name = (char)(97 + j) + (i + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
-                    Square.SetColor(newSquare, column, row); //square.SetColor can go back to using 1's and zeroes for its squarecolor.  There is no need for that color crap here.  I don't know what I was thinking..
-                    this.Squares.Add(newSquare);
+                    BoardIterator returnIterator = new BoardIterator();
+                    returnIterator.Col = c;
+                    returnIterator.Row = r;
+
+                    yield return returnIterator;
                 }
             }
         }
-    }   
+    }
 }
