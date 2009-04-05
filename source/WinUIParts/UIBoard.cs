@@ -97,22 +97,30 @@ namespace WinUIParts
                 //The picture passed here needs to be a property of the ChessPiece for this square
                 UISquare newSquare = new UISquare(new Point(squareR, squareC), squareSize, Environment.CurrentDirectory + "\\images\\wr.gif");
 
-                //What is this square's address?
+                /* -----------------------------------------------------------------------------------------
+                 * all this should come from (a yet unmade) Board.SquareLogic
+                 * 
+                 * 
+                 * 
+                 * What is this square's address?
+                 * When you get that, then go look up the address in the config file's Starting position for this board.
+                 * 
+                 * Something like this?? ChessPiece pieceForThisSquare = new ChessPiece(ConfigurationManager.AppSettings["BoardName_DefaultSetup_SquareAddress"]);
+                 * (inside ChessPiece:   this.Image = Environment.CurrentDirectory + "\\images\\wr.gif"; //obviously here pull from XML
+                 * 
+                 * you know.. I'd like to get the Piece from Engine.Board.SquarePositionLogic...
+                 * newSquare.Piece = pieceForThisSquare
+                 * ----------------------------------------------------------------------------------------- */
 
-                //When you get that, then go look up the address in the config file's Starting position for this board.
-
-                //Something like this?? ChessPiece pieceForThisSquare = new ChessPiece(ConfigurationManager.AppSettings["BoardName_DefaultSetup_SquareAddress"]);
-                //(inside ChessPiece:   this.Image = Environment.CurrentDirectory + "\\images\\wr.gif"; //obviously here pull from XML
-
-                //newSquare.Piece = pieceForThisSquare
-
-                formForBoard.Controls.Add(newSquare);
+                //you know.. I'd like to get the squareColor from Engine.Board.SquarePositionLogic...
                 this.squareColor = !this.squareColor;
 
                 if (currentSquare.Col == 0)
                 {
                     this.squareColor = !this.squareColor;
                 }
+
+                formForBoard.Controls.Add(newSquare);
 
 
                 //Set the position of our new square
