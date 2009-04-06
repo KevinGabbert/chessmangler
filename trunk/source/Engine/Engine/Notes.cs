@@ -18,5 +18,16 @@ namespace Engine
         //foreach piece in gotPieces
         //  this.SetPiece(piece, piece.DefaultLocation) //defaultLocation will of course be part of the piece definition
 
+        //Rules dll will:
+
+        //create files, 
+
+        //read/write files
+
+        //Read:
+
+        //Will be passed pieces to load
+ 
+
     }
 }

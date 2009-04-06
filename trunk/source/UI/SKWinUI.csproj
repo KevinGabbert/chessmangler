@@ -49,19 +49,10 @@
     <Compile Include="ChessGrid.Designer.cs">
       <DependentUpon>ChessGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="DGV_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DGV_Form.Designer.cs">
-      <DependentUpon>DGV_Form.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ChessGrid.resx">
       <DependentUpon>ChessGrid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DGV_Form.resx">
-      <DependentUpon>DGV_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -88,10 +79,6 @@
     <ProjectReference Include="..\Engine\Engine\Engine.csproj">
       <Project>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</Project>
       <Name>Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rules\Rules\Rules.csproj">
-      <Project>{6CB2BFBA-0A2A-4CC4-BAE7-21E0EDE1E090}</Project>
-      <Name>Rules</Name>
     </ProjectReference>
     <ProjectReference Include="..\WinUIParts\WinUIParts.csproj">
       <Project>{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}</Project>
