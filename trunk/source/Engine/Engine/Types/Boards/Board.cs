@@ -6,14 +6,14 @@ using System.Xml;
 
 namespace Engine.Types
 {
-    public class Board
+    public class Board2D
     {
         #region Properties
 
         public string _findSquareName;
 
-        List<Square> _squares = new List<Square>();
-        public List<Square> Squares
+        List<Square2D> _squares = new List<Square2D>();
+        public List<Square2D> Squares
         {
             get
             {
@@ -40,15 +40,15 @@ namespace Engine.Types
 
         #endregion
 
-        public Square GetByName(string squareName)
+        public Square2D GetByName(string squareName)
         {
             //look up the square by its name.  ex. name:  "A2"
             this._findSquareName = squareName.ToLower();
-            Square foundSquare = this.Squares.Find(foundByName);
+            Square2D foundSquare = this.Squares.Find(foundByName);
 
             return foundSquare;
         }
-        protected bool foundByName(Square find)
+        protected bool foundByName(Square2D find)
         {
             if (find.Name == this._findSquareName)
             {
@@ -60,11 +60,11 @@ namespace Engine.Types
             }
         }
 
-        public Board(UInt16 columns, UInt16 rows, XmlDocument startingPosition)
+        public Board2D(UInt16 columns, UInt16 rows, XmlDocument startingPosition)
         {
             this.CreateBoard(columns, rows);
         }
-        public Board(UInt16 columns, UInt16 rows)
+        public Board2D(UInt16 columns, UInt16 rows)
         {
             this.CreateBoard(columns, rows);
         }
@@ -79,7 +79,7 @@ namespace Engine.Types
             this.SquareLogicWithTestPiece(columns, rows);
         }
 
-        protected static void SetSquareColor(Square squareToColor)
+        protected static void SetSquareColor(Square2D squareToColor)
         {
             if (((squareToColor.Number) % 2) == 0)
             {
@@ -91,12 +91,12 @@ namespace Engine.Types
             }
         }
 
-        public void AddNewSquare(BoardDef boardDef, int col, int row, out Square newlyAddedSquare)
+        public void AddNewSquare(BoardDef boardDef, int col, int row, out Square2D newlyAddedSquare)
         {
-            Square newSquare = new Square();
+            Square2D newSquare = new Square2D();
             newSquare.Number = (boardDef.Columns * row) + col;
             newSquare.Name = (char)(97 + col) + (row + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
-            Square.SetColor(newSquare, boardDef.Columns, boardDef.Rows);
+            Square2D.SetColor(newSquare, boardDef.Columns, boardDef.Rows);
             
             this.Squares.Add(newSquare);
             newlyAddedSquare = newSquare;
@@ -114,7 +114,7 @@ namespace Engine.Types
                     newBoardDef.Columns = columns;
                     newBoardDef.Rows = rows;
 
-                    Square newSquare;
+                    Square2D newSquare;
                     this.AddNewSquare(newBoardDef, currentColumn, currentRow, out newSquare);
 
                     newSquare.Column = currentColumn;

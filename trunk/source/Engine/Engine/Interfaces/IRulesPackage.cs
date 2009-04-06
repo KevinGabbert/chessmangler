@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Rules.Interfaces
 {
+    //This will be used by all sets of rules
     public interface IRulesPackage
     {
         //List<Square> Attacking

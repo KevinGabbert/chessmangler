@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Rules.Types
 {
-    public class Rules
+    public class Board2DRules
     {
     }
 }

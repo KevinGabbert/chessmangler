@@ -6,6 +6,9 @@ using System.Drawing;
 
 namespace Engine.Interfaces
 {
+    /// <summary>
+    /// Attributes common to all Pieces and Squares
+    /// </summary>
     public interface IChessObject
     {
         int Row
@@ -23,8 +26,12 @@ namespace Engine.Interfaces
             get;
             set;
         }
-
         int Number
+        {
+            get;
+            set;
+        }
+        bool Disabled
         {
             get;
             set;
@@ -35,13 +42,6 @@ namespace Engine.Interfaces
             get;
             set;
         }
-
-        bool Disabled
-        {
-            get;
-            set;
-        }
-
         Image Image
         {
             get;

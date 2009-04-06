@@ -15,8 +15,8 @@ namespace Rules.Types
     {
         #region Properties
 
-        List<Rules> _rules = new List<Rules>();
-        public List<Rules> Rules
+        List<Board2DRules> _rules = new List<Board2DRules>();
+        public List<Board2DRules> Rules
         {
             get
             {
@@ -28,8 +28,8 @@ namespace Rules.Types
             }
         }
 
-        List<Square> _squares = new List<Square>();
-        public List<Square> Squares
+        List<Square2D> _squares = new List<Square2D>();
+        public List<Square2D> Squares
         {
             get
             {

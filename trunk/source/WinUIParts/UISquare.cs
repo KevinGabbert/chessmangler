@@ -11,6 +11,9 @@ using Rules.Interfaces;
 
 namespace WinUIParts
 {
+    /// <summary>
+    /// This object simply does what is needed 
+    /// </summary>
     public class UISquare : PictureBox, ISquare 
     {
         protected const string SQUARE = "Square";
@@ -19,16 +22,13 @@ namespace WinUIParts
         {
 
         }
-        //public UISquare(Point formlocation, int size, IConfigurablePiece piece)
-        //{
-        //    this.MakeSquare(formlocation, size, piece);
-        //}
 
         public UISquare(Point formlocation, int size)
         {
             this.MakeSquare(formlocation, size);
         }
 
+        #region Properties
         #region ISquare Members
 
         public int Row
@@ -117,25 +117,6 @@ namespace WinUIParts
             }
         }
 
-        private void MakeSquare(Point formLocation, int size)
-        {
-            this.Location = formLocation;
-            this.Name = SQUARE + (formLocation.X + formLocation.Y).ToString();
-            this.Size = new System.Drawing.Size(size, size); //this *is* a square after all
-
-            //it would be nice to enable keyboard support (depending on an option in the config file)
-            //newBox.pictureBox1.TabIndex = 0;
-            //newBox.pictureBox1.TabStop = false;
-
-            //What is this square's address?
-            //When you get that, then go look up the address in the config file's Starting position for this board.
-
-
-            //this.Piece = piece;
-            //this.Image = this.Piece.Image;
-            this.SizeMode = PictureBoxSizeMode.CenterImage;
-            this.BorderStyle = BorderStyle.FixedSingle;
-        }
 
         #region IChessObject Members
 
@@ -224,5 +205,27 @@ namespace WinUIParts
         }
 
         #endregion
+
+        #endregion
+
+        private void MakeSquare(Point formLocation, int size)
+        {
+            this.Location = formLocation;
+            this.Name = SQUARE + (formLocation.X + formLocation.Y).ToString();
+            this.Size = new System.Drawing.Size(size, size); //this *is* a square after all
+
+            //it would be nice to enable keyboard support (depending on an option in the config file)
+            //newBox.pictureBox1.TabIndex = 0;
+            //newBox.pictureBox1.TabStop = false;
+
+            //What is this square's address?
+            //When you get that, then go look up the address in the config file's Starting position for this board.
+
+
+            //this.Piece = piece;
+            //this.Image = this.Piece.Image;
+            this.SizeMode = PictureBoxSizeMode.CenterImage;
+            this.BorderStyle = BorderStyle.FixedSingle;
+        }
     }
 }

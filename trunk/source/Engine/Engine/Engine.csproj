@@ -48,17 +48,17 @@
     <Compile Include="Interfaces\IPiece.cs" />
     <Compile Include="Interfaces\IRulesPackage.cs" />
     <Compile Include="Interfaces\ISquare.cs" />
-    <Compile Include="Types\AttackPackage.cs" />
-    <Compile Include="Types\Board.cs" />
+    <Compile Include="Types\Pieces\AttackPackage.cs" />
+    <Compile Include="Types\Boards\Board.cs" />
     <Compile Include="Notes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\BoardDefinition.cs" />
-    <Compile Include="Types\MovementPackage.cs" />
-    <Compile Include="Types\Piece.cs" />
-    <Compile Include="Types\Rules.cs" />
-    <Compile Include="Types\RulesPackageBase.cs" />
-    <Compile Include="Types\Square.cs" />
-    <Compile Include="Types\Location.cs" />
+    <Compile Include="Types\Boards\BoardDefinition.cs" />
+    <Compile Include="Types\Pieces\MovementPackage.cs" />
+    <Compile Include="Types\Pieces\Piece.cs" />
+    <Compile Include="Types\Rules\Board2DRules.cs" />
+    <Compile Include="Types\Rules\RulesPackageBase.cs" />
+    <Compile Include="Types\Boards\Square2D.cs" />
+    <Compile Include="Types\Pieces\Location.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

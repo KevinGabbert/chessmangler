@@ -10,6 +10,9 @@ using Engine.Types;
 
 namespace WinUIParts
 {
+    /// <summary>
+    /// This board does not enforce rules, it simply draws the board and moves pieces where it is told to..
+    /// </summary>
     public class UIBoard
     {
         #region Properties
@@ -66,8 +69,8 @@ namespace WinUIParts
             }
         }
 
-        Board _engineBoard;
-        public Board EngineBoard
+        Board2D _engineBoard;
+        public Board2D EngineBoard
         {
             get
             {
@@ -88,7 +91,7 @@ namespace WinUIParts
             formForBoard.Width = (squareSize * columns) + 12;
             formForBoard.Height = (squareSize * rows) + 30;
 
-            this.EngineBoard = new Board(columns, rows, startingPosition);
+            this.EngineBoard = new Board2D(columns, rows, startingPosition);
             this.BuildUISquares(formForBoard, rows, columns, squareSize);
         }
 
@@ -100,7 +103,7 @@ namespace WinUIParts
 
             //Use board logic to iterate through the board.
             //Translates Engine stuff to UI Stuff
-            foreach (Square currentSquare in this.EngineBoard.SquareLogicWithTestPiece(columns, rows))
+            foreach (Square2D currentSquare in this.EngineBoard.SquareLogicWithTestPiece(columns, rows))
             {
                 #region Temporary UI Code
                 ////**** This is disposable test code, as the pieces will be set in Engine.Board (XmlDocument) *****
