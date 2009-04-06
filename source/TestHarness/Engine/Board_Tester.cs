@@ -10,11 +10,11 @@ namespace TestHarness.Engine
         [Test(Description = "Lets see if we can kick out a board of the size we want")]
         public void Verify_Square_Count()
         {
-            Board testBoard = new Board(4, 3);
+            Board2D testBoard = new Board2D(4, 3);
 
             Assert.AreEqual(12, testBoard.Squares.Count);
 
-            foreach(Square currentSquare in testBoard.Squares)
+            foreach(Square2D currentSquare in testBoard.Squares)
             {
                 if (((currentSquare.Number) % 2) == 0)
                 {
@@ -30,9 +30,9 @@ namespace TestHarness.Engine
         [Test(Description = "Verifies the default colors of a chessboard")]
         public void VerifyDefaultColors()
         {
-            Board testBoard = new Board(7, 4);
+            Board2D testBoard = new Board2D(7, 4);
 
-            foreach (Square currentSquare in testBoard.Squares)
+            foreach (Square2D currentSquare in testBoard.Squares)
             {
                 if (((currentSquare.Number) % 2) == 0)
                 {
@@ -49,7 +49,7 @@ namespace TestHarness.Engine
         [Test(Description = "So what is this for??")]
         public void VerifySquareNumbers()
         {
-            Board testBoard = new Board(8, 8);
+            Board2D testBoard = new Board2D(8, 8);
  
             //verify that x square has the intended number
 
@@ -59,7 +59,7 @@ namespace TestHarness.Engine
         [Test(Description = "Verify Square Names ")]
         public void VerifySquareNames()
         {
-            Board testBoard = new Board(8, 8);
+            Board2D testBoard = new Board2D(8, 8);
 
             //This so.. sucks.. zero-based arrays.  you want to look up pieces this way?? screw that..
             
@@ -72,7 +72,7 @@ namespace TestHarness.Engine
         [Test(Description = "Put this in your pipe & smoke it")]
         public void VerifyGetByName()
         {
-            Board testBoard = new Board(8, 8);
+            Board2D testBoard = new Board2D(8, 8);
 
             //verify that x square has the intended Name
             Assert.AreEqual("e5", testBoard.GetByName("E5").Name);

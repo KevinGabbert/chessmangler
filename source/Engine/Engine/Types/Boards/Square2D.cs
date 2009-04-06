@@ -7,9 +7,9 @@ using Engine.Interfaces;
 
 namespace Engine.Types
 {
-    public class Square: ISquare
+    public class Square2D: ISquare
     {
-        public Square()
+        public Square2D()
         {
 
         }
@@ -115,7 +115,7 @@ namespace Engine.Types
             }
         }
 
-        public static void SetColor(Square squareToColor, int column, int row)
+        public static void SetColor(Square2D squareToColor, int column, int row)
         {
             if (((squareToColor.Number) % 2) == 0)
             {

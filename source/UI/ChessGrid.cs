@@ -15,6 +15,9 @@ using System.Configuration;
 
 namespace SKChess
 {
+    /// <summary>
+    /// This form only captures events from the form & scripts WinUIParts.  Nothing else.
+    /// </summary>
     public partial class ChessGrid : Form
     {
         public ChessGrid()
