@@ -65,11 +65,12 @@ namespace Engine.Types
         }
         private void CreateBoard(UInt16 columns, UInt16 rows)
         {
-            BoardDef newBoardDef = new BoardDef();
-            newBoardDef.Columns = columns;
-            newBoardDef.Rows = rows;
+            //BoardDef newBoardDef = new BoardDef();
+            //newBoardDef.Columns = columns;
+            //newBoardDef.Rows = rows;
 
-            this.InitializeSquares(newBoardDef);
+            //this.InitializeSquares(newBoardDef);
+            this.SquareLogic(columns, rows);
         }
 
         private static void SetSquareColor(Square squareToColor)
@@ -84,15 +85,7 @@ namespace Engine.Types
             }
         }
 
-        public void InitializeSquares(BoardDef boardDef)
-        {
-            foreach (BoardIterator currentSquare in Board.SquarePositionLogic(boardDef.Columns, boardDef.Rows))
-            {
-                this.AddNewSquare(boardDef, currentSquare.Col, currentSquare.Row);
-            }
-        }
-
-        private void AddNewSquare(BoardDef boardDef, int col, int row)
+        private void AddNewSquare(BoardDef boardDef, int col, int row, out Square newlyAddedSquare)
         {
             Square newSquare = new Square();
             newSquare.Number = (boardDef.Columns * row) + col;
@@ -100,27 +93,28 @@ namespace Engine.Types
             Square.SetColor(newSquare, boardDef.Columns, boardDef.Rows); //square.SetColor can go back to using 1's and zeroes for its squarecolor.  There is no need for that color crap here.  I don't know what I was thinking..
             
             this.Squares.Add(newSquare);
+
+            newlyAddedSquare = newSquare;
         }
 
         //Expose our inner board logic so the UI can use it.
-        //Right now we are only exposing board coordinates, but soon we will expose the piece as well
-        //This function should probably be copied (as some functions might just want to iterate the board only?
-        public static IEnumerable SquarePositionLogic(int columns, int rows)
+        public IEnumerable SquareLogic(int columns, int rows)
         {
             for (int currentRow = 0; currentRow < rows; currentRow++)
             {
                 for (int currentColumn = 0; currentColumn < columns; currentColumn++)
                 {
-                    //Replace BoardIterator with a a Square object
-                    //so we can expose the Square object (so the UI board can get all that data too!
-                    BoardIterator returnIterator = new BoardIterator();
-                    returnIterator.Col = currentColumn;
-                    returnIterator.Row = currentRow;
+                    BoardDef newBoardDef = new BoardDef();
+                    newBoardDef.Columns = columns;
+                    newBoardDef.Rows = rows;
 
-                    //Add a new square here (once you add it, then change the name of this function to SquareLogic)
-                    //this.AddNewSquare(boardDef, currentSquare.Col, currentSquare.Row);
+                    Square newSquare;
+                    this.AddNewSquare(newBoardDef, currentColumn, currentRow, out newSquare);
 
-                    yield return returnIterator;
+                    newSquare.Col = currentColumn;
+                    newSquare.Row = currentRow;
+
+                    yield return newSquare; //Hand out this current square to those who want it..
                 }
             }
         }

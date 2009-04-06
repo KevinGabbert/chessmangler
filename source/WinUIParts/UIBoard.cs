@@ -70,7 +70,20 @@ namespace WinUIParts
             }
         }
 
-        public void CreateBoard(Form formForBoard, int rows, int columns, int squareSize)
+        Board _engineBoard;
+        public Board EngineBoard
+        {
+            get
+            {
+                return _engineBoard;
+            }
+            set
+            {
+                _engineBoard = value;
+            }
+        }
+
+        public void CreateBoard(Form formForBoard, ushort rows, ushort columns, int squareSize)
         {
             //throw down a bunch of pictureboxen
 
@@ -82,7 +95,8 @@ namespace WinUIParts
             formForBoard.Width = (squareSize * columns) + 12;
             formForBoard.Height = (squareSize * rows) + 30;
 
-            BuildSquares(formForBoard, rows, columns, squareSize);
+            this.EngineBoard = new Board(columns, rows);
+            this.BuildSquares(formForBoard, rows, columns, squareSize);
         }
 
         private void BuildSquares(Form formForBoard, int rows, int columns, int squareSize)
@@ -92,7 +106,7 @@ namespace WinUIParts
 
             //Use board logic to iterate through the board.
             //(meaning:  Board.InitializeSquares() helps make the UI board)
-            foreach (BoardIterator currentSquare in Board.SquarePositionLogic(columns, rows))
+            foreach (Square currentSquare in this.EngineBoard.SquareLogic(columns, rows))
             {
                 //The picture passed here needs to be a property of the ChessPiece for this square
                 UISquare newSquare = new UISquare(new Point(squareR, squareC), squareSize, Environment.CurrentDirectory + "\\images\\wr.gif");
@@ -123,7 +137,7 @@ namespace WinUIParts
                 formForBoard.Controls.Add(newSquare);
 
 
-                //Set the position of our new square
+                //Set the position of our new square to be drawn
                 if (currentSquare.Col == columns - 1)
                 {
                     squareC = squareC + squareSize;

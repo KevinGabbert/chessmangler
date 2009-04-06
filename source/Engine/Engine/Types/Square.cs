@@ -19,7 +19,7 @@ namespace Engine.Types
         string _name;
 
         int[] _position = new int[2] { 0, 0 };
-        public int x
+        public int Row
         {
             get
             {
@@ -30,7 +30,7 @@ namespace Engine.Types
                 _position[0] = value;
             }
         }
-        public int y
+        public int Col
         {
             get
             {

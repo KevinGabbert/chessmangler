@@ -25,7 +25,7 @@ namespace WinUIParts
 
         #region ISquare Members
 
-        public int x
+        public int Row
         {
             get
             {
@@ -36,7 +36,7 @@ namespace WinUIParts
                 throw new NotImplementedException();
             }
         }
-        public int y
+        public int Col
         {
             get
             {

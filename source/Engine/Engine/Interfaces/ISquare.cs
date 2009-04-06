@@ -7,12 +7,12 @@ namespace Engine.Interfaces
 {
     public interface ISquare
     {
-        int x
+        int Row
         {
             get;
             set;
         }
-        int y
+        int Col
         {
             get;
             set;

@@ -22,8 +22,8 @@ namespace SKChess
 
         private void ChessGrid_Load(object sender, EventArgs e)
         {
-            int rows = 8;
-            int columns = 8;
+            ushort rows = 8;
+            ushort columns = 8;
             int squareSize = 72;
 
             //ConfigurationManager.OpenExeConfiguration(System.Environment.CurrentDirectory
