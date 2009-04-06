@@ -1,17 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
+using System.Drawing;
+
+using Engine.Types;
+using Rules.Types;
 using Rules.Interfaces;
 
-namespace Rules.Types
+namespace WinUIParts
 {
-    public class ChessPiece: IConfigurablePiece
+    public class UIPiece: IConfigurablePiece
     {
-        #region IConfigurablePiece Members
+        public UIPiece()
+        {
 
-        public Engine.Types.Location Location
+        }
+
+        public UIPiece(string name)
+        {
+            this.Name = name;
+        }
+
+        public Location Location
         {
             get
             {
@@ -23,19 +34,7 @@ namespace Rules.Types
             }
         }
 
-        public System.Drawing.Color Color
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public List<System.Drawing.Color> Team
+        public List<Color> Team
         {
             get
             {
@@ -71,15 +70,16 @@ namespace Rules.Types
             }
         }
 
-        public string Name
+        protected Image _image;
+        public Image Image
         {
             get
             {
-                throw new NotImplementedException();
+                return this._image;
             }
             set
             {
-                throw new NotImplementedException();
+                this._image = value;
             }
         }
 
@@ -93,11 +93,7 @@ namespace Rules.Types
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region IConfigurablePiece Members
-
-        public System.Drawing.Image Image
+        public int Row
         {
             get
             {
@@ -109,6 +105,65 @@ namespace Rules.Types
             }
         }
 
-        #endregion
+        public int Column
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int Number
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        protected string _name;
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                this._name = value;
+            }
+        }
+
+        public Color Color
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool Disabled
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

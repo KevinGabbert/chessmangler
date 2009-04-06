@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Drawing;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Xml;
 
 namespace Engine.Types
 {
@@ -47,7 +48,7 @@ namespace Engine.Types
 
             return foundSquare;
         }
-        private bool foundByName(Square find)
+        protected bool foundByName(Square find)
         {
             if (find.Name == this._findSquareName)
             {
@@ -59,21 +60,26 @@ namespace Engine.Types
             }
         }
 
+        public Board(UInt16 columns, UInt16 rows, XmlDocument startingPosition)
+        {
+            this.CreateBoard(columns, rows);
+        }
         public Board(UInt16 columns, UInt16 rows)
         {
             this.CreateBoard(columns, rows);
         }
-        private void CreateBoard(UInt16 columns, UInt16 rows)
+
+        protected void CreateBoard(UInt16 columns, UInt16 rows)
         {
             //BoardDef newBoardDef = new BoardDef();
             //newBoardDef.Columns = columns;
             //newBoardDef.Rows = rows;
 
             //this.InitializeSquares(newBoardDef);
-            this.SquareLogic(columns, rows);
+            this.SquareLogicWithTestPiece(columns, rows);
         }
 
-        private static void SetSquareColor(Square squareToColor)
+        protected static void SetSquareColor(Square squareToColor)
         {
             if (((squareToColor.Number) % 2) == 0)
             {
@@ -85,20 +91,20 @@ namespace Engine.Types
             }
         }
 
-        private void AddNewSquare(BoardDef boardDef, int col, int row, out Square newlyAddedSquare)
+        public void AddNewSquare(BoardDef boardDef, int col, int row, out Square newlyAddedSquare)
         {
             Square newSquare = new Square();
             newSquare.Number = (boardDef.Columns * row) + col;
             newSquare.Name = (char)(97 + col) + (row + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
-            Square.SetColor(newSquare, boardDef.Columns, boardDef.Rows); //square.SetColor can go back to using 1's and zeroes for its squarecolor.  There is no need for that color crap here.  I don't know what I was thinking..
+            Square.SetColor(newSquare, boardDef.Columns, boardDef.Rows);
             
             this.Squares.Add(newSquare);
-
             newlyAddedSquare = newSquare;
         }
 
         //Expose our inner board logic so the UI can use it.
-        public IEnumerable SquareLogic(int columns, int rows)
+        //Remove "withTestPiece" once XML file is parsed.
+        public IEnumerable SquareLogicWithTestPiece(int columns, int rows)
         {
             for (int currentRow = 0; currentRow < rows; currentRow++)
             {
@@ -111,8 +117,15 @@ namespace Engine.Types
                     Square newSquare;
                     this.AddNewSquare(newBoardDef, currentColumn, currentRow, out newSquare);
 
-                    newSquare.Col = currentColumn;
+                    newSquare.Column = currentColumn;
                     newSquare.Row = currentRow;
+
+
+                    //**** This is disposable test code, as the pieces will be set in Engine.Board (XmlDocument) *****
+                    newSquare.CurrentPiece = new Piece("Rook");
+                    newSquare.CurrentPiece.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\wr.gif");
+                    //**** This is disposable test code, as the pieces will be set in Engine.Board (XmlDocument) *****
+
 
                     yield return newSquare; //Hand out this current square to those who want it..
                 }

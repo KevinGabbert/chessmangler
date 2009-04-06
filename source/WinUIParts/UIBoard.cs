@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
+using System.Xml;
 
-using Engine.Types;
-using Engine.Interfaces;
 using Rules.Interfaces;
+using Engine.Interfaces;
+using Engine.Types;
 
-using System.Configuration;
 
 namespace WinUIParts
 {
     public class UIBoard
     {
-        public bool squareColor = false;
+        #region Properties
 
         int _rows;
         public int Rows
@@ -83,69 +79,62 @@ namespace WinUIParts
             }
         }
 
-        public void CreateBoard(Form formForBoard, ushort rows, ushort columns, int squareSize)
+        #endregion
+
+        public void CreateBoard(Form formForBoard, ushort rows, ushort columns, int squareSize, XmlDocument startingPosition)
         {
-            //throw down a bunch of pictureboxen
-
-            //*** mod Engine.CreateBoard so that it will use the same code to create this board ***
-
-            //This grid needs to bound to Engine.Board somehow.
-            //I guess we could have an Engine.Board prop..  (this.RawBoard)
+            //pull the following info from XMLDocument
 
             formForBoard.Width = (squareSize * columns) + 12;
             formForBoard.Height = (squareSize * rows) + 30;
 
-            this.EngineBoard = new Board(columns, rows);
-            this.BuildSquares(formForBoard, rows, columns, squareSize);
+            this.EngineBoard = new Board(columns, rows, startingPosition);
+            this.BuildUISquares(formForBoard, rows, columns, squareSize);
         }
 
-        private void BuildSquares(Form formForBoard, int rows, int columns, int squareSize)
+
+        private void BuildUISquares(Form formForBoard, int rows, int columns, int squareSize)
         {
             int squareR = 0;
             int squareC = 0;
 
             //Use board logic to iterate through the board.
-            //(meaning:  Board.InitializeSquares() helps make the UI board)
-            foreach (Square currentSquare in this.EngineBoard.SquareLogic(columns, rows))
+            //Translates Engine stuff to UI Stuff
+            foreach (Square currentSquare in this.EngineBoard.SquareLogicWithTestPiece(columns, rows))
             {
-                //The picture passed here needs to be a property of the ChessPiece for this square
-                UISquare newSquare = new UISquare(new Point(squareR, squareC), squareSize, Environment.CurrentDirectory + "\\images\\wr.gif");
+                #region Temporary UI Code
+                ////**** This is disposable test code, as the pieces will be set in Engine.Board (XmlDocument) *****
+                //UIPiece newUIPiece = new UIPiece("Rook");
+                //newUIPiece.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\wr.gif");
 
-                /* -----------------------------------------------------------------------------------------
-                 * all this should come from (a yet unmade) Board.SquareLogic
-                 * 
-                 * 
-                 * 
-                 * What is this square's address?
-                 * When you get that, then go look up the address in the config file's Starting position for this board.
-                 * 
-                 * Something like this?? ChessPiece pieceForThisSquare = new ChessPiece(ConfigurationManager.AppSettings["BoardName_DefaultSetup_SquareAddress"]);
-                 * (inside ChessPiece:   this.Image = Environment.CurrentDirectory + "\\images\\wr.gif"; //obviously here pull from XML
-                 * 
-                 * you know.. I'd like to get the Piece from Engine.Board.SquarePositionLogic...
-                 * newSquare.Piece = pieceForThisSquare
-                 * ----------------------------------------------------------------------------------------- */
+                UISquare newUISquare = new UISquare(new Point(squareR, squareC), squareSize);
+                //**** This is disposable test code, as the Squares will be set in Engine.Board (XmlDocument) *****
 
-                //you know.. I'd like to get the squareColor from Engine.Board.SquarePositionLogic...
-                this.squareColor = !this.squareColor;
+                #endregion
 
-                if (currentSquare.Col == 0)
-                {
-                    this.squareColor = !this.squareColor;
-                }
+                UIBoard.TranslateEngineStuffToUI(currentSquare, newUISquare);
 
-                formForBoard.Controls.Add(newSquare);
+                formForBoard.Controls.Add(newUISquare); //Place our newly built square on the grid
 
-
+                //**** This is disposable test code, as the UI SquarePositions will be set in Engine.Board (XmlDocument) *****
                 //Set the position of our new square to be drawn
-                if (currentSquare.Col == columns - 1)
+                if (currentSquare.Column == columns - 1)
                 {
                     squareC = squareC + squareSize;
                     squareR = 0 - squareSize;
                 }
 
                 squareR = squareR + squareSize;
+                //**** This is disposable test code, as the UI SquarePositions will be set in Engine.Board (XmlDocument) *****
             }
+        }
+
+        //These should all map 1 to 1..
+        protected static void TranslateEngineStuffToUI(ISquare currentSquare, UISquare newUISquare)
+        {
+            //This is the only code that will remain in this loop when we are done.
+            newUISquare.Color = currentSquare.Color;
+            newUISquare.Piece = currentSquare.CurrentPiece; //Ah, the power of interfaces..
         }
     }
 }
