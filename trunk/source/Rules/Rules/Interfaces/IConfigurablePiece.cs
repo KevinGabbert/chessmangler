@@ -5,17 +5,13 @@ using System.Text;
 
 using Rules.Types;
 using Engine.Types;
+using Engine.Interfaces;
 
 namespace Rules.Interfaces
 {
-    public interface IConfigurablePiece
+    public interface IConfigurablePiece: IChessObject
     {
         Location Location
-        {
-            get;
-            set;
-        }
-        Color Color
         {
             get;
             set;
@@ -28,24 +24,14 @@ namespace Rules.Interfaces
             set;
         }
 
+        //Who is going to used these packages? the engine??
+
         AttackPackage Attacking
         {
             get;
             set;
         }
         MovementPackage Moves
-        {
-            get;
-            set;
-        }
-
-        Image Image
-        {
-            get;
-            set;
-        }
-
-        string Name
         {
             get;
             set;

@@ -13,14 +13,20 @@ namespace WinUIParts
 {
     public class UISquare : PictureBox, ISquare 
     {
-        private UISquare()
+        protected const string SQUARE = "Square";
+        
+        protected UISquare()
         {
 
         }
+        //public UISquare(Point formlocation, int size, IConfigurablePiece piece)
+        //{
+        //    this.MakeSquare(formlocation, size, piece);
+        //}
 
-        public UISquare(Point formlocation, int size, string picture)
+        public UISquare(Point formlocation, int size)
         {
-            this.MakeSquare(formlocation, size, picture);
+            this.MakeSquare(formlocation, size);
         }
 
         #region ISquare Members
@@ -36,7 +42,7 @@ namespace WinUIParts
                 throw new NotImplementedException();
             }
         }
-        public int Col
+        public int Column
         {
             get
             {
@@ -63,6 +69,18 @@ namespace WinUIParts
         {
             get
             {
+                return this.BackColor;
+            }
+            set
+            {
+                this.BackColor = value;
+            }
+        }
+
+        public bool Disabled
+        {
+            get
+            {
                 throw new NotImplementedException();
             }
             set
@@ -73,8 +91,8 @@ namespace WinUIParts
 
         #endregion
 
-        protected IConfigurablePiece _piece;
-        public IConfigurablePiece Piece
+        protected IChessObject _piece;
+        public IChessObject Piece
         {
             get
             {
@@ -83,22 +101,128 @@ namespace WinUIParts
             set
             {
                 _piece = value;
+                this.Image = value.Image;
             }
         }
 
-        private void MakeSquare(Point formlocation, int size, string picture)
+        public IPiece CurrentPiece
         {
-            this.Location = formlocation;
-            this.Name = "Square" + (formlocation.X + formlocation.Y).ToString();
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private void MakeSquare(Point formLocation, int size)
+        {
+            this.Location = formLocation;
+            this.Name = SQUARE + (formLocation.X + formLocation.Y).ToString();
             this.Size = new System.Drawing.Size(size, size); //this *is* a square after all
 
             //it would be nice to enable keyboard support (depending on an option in the config file)
             //newBox.pictureBox1.TabIndex = 0;
             //newBox.pictureBox1.TabStop = false;
 
-            this.Image = new Bitmap(picture);
+            //What is this square's address?
+            //When you get that, then go look up the address in the config file's Starting position for this board.
+
+
+            //this.Piece = piece;
+            //this.Image = this.Piece.Image;
             this.SizeMode = PictureBoxSizeMode.CenterImage;
             this.BorderStyle = BorderStyle.FixedSingle;
         }
+
+        #region IChessObject Members
+
+        int IChessObject.Row
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        int IChessObject.Column
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        string IChessObject.Name
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        int IChessObject.Number
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        Color IChessObject.Color
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        bool IChessObject.Disabled
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        Image IChessObject.Image
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
     }
 }

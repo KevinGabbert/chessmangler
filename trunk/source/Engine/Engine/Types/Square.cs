@@ -30,7 +30,7 @@ namespace Engine.Types
                 _position[0] = value;
             }
         }
-        public int Col
+        public int Column
         {
             get
             {
@@ -41,6 +41,46 @@ namespace Engine.Types
                 _position[1] = value;
             }
         }
+
+        protected IPiece _currentPiece;
+        public IPiece CurrentPiece
+        {
+            get
+            {
+                return _currentPiece;
+            }
+            set
+            {
+                _currentPiece = value;
+            }
+        }
+
+        protected bool _disabled = false;
+        public bool Disabled
+        {
+            get
+            {
+                return _disabled;
+            }
+            set
+            {
+                _disabled = value;
+            }
+        }
+
+        //There are plans to implement this later
+        public Image Image
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public string Name
         {
             get

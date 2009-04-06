@@ -3,32 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
+using Engine.Types;
+
 namespace Engine.Interfaces
 {
-    public interface ISquare
+    public interface ISquare : IChessObject
     {
-        int Row
-        {
-            get;
-            set;
-        }
-        int Col
-        {
-            get;
-            set;
-        }
-        string Name
-        {
-            get;
-            set;
-        }
-        int Number
-        {
-            get;
-            set;
-        }
-
-        Color Color
+        IPiece CurrentPiece
         {
             get;
             set;
