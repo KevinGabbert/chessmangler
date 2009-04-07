@@ -60,16 +60,16 @@ namespace Engine.Types
             }
         }
 
-        public Board2D(UInt16 columns, UInt16 rows, XmlDocument startingPosition)
+        public Board2D(Int16 columns, Int16 rows, XmlDocument startingPosition)
         {
             this.CreateBoard(columns, rows);
         }
-        public Board2D(UInt16 columns, UInt16 rows)
+        public Board2D(Int16 columns, Int16 rows)
         {
             this.CreateBoard(columns, rows);
         }
 
-        protected void CreateBoard(UInt16 columns, UInt16 rows)
+        protected void CreateBoard(Int16 columns, Int16 rows)
         {
             //BoardDef newBoardDef = new BoardDef();
             //newBoardDef.Columns = columns;
@@ -78,6 +78,12 @@ namespace Engine.Types
             //this.InitializeSquares(newBoardDef);
             this.SquareLogicWithTestPiece(columns, rows);
         }
+
+        protected void CreateBoardFromConfig(XmlDocument configFile)
+        {
+            //This is where all the Board and piece setup (from config file) needs to be done!
+        }
+
 
         protected static void SetSquareColor(Square2D squareToColor)
         {
@@ -91,7 +97,7 @@ namespace Engine.Types
             }
         }
 
-        public void AddNewSquare(BoardDef boardDef, int col, int row, out Square2D newlyAddedSquare)
+        public void AddNewSquare(BoardDef boardDef, Int16 col, Int16 row, out Square2D newlyAddedSquare)
         {
             Square2D newSquare = new Square2D();
             newSquare.Number = (boardDef.Columns * row) + col;
@@ -104,11 +110,11 @@ namespace Engine.Types
 
         //Expose our inner board logic so the UI can use it.
         //Remove "withTestPiece" once XML file is parsed.
-        public IEnumerable SquareLogicWithTestPiece(int columns, int rows)
+        public IEnumerable SquareLogicWithTestPiece(Int16 columns, Int16 rows)
         {
-            for (int currentRow = 0; currentRow < rows; currentRow++)
+            for (Int16 currentRow = 0; currentRow < rows; currentRow++)
             {
-                for (int currentColumn = 0; currentColumn < columns; currentColumn++)
+                for (Int16 currentColumn = 0; currentColumn < columns; currentColumn++)
                 {
                     BoardDef newBoardDef = new BoardDef();
                     newBoardDef.Columns = columns;
@@ -120,7 +126,7 @@ namespace Engine.Types
                     newSquare.Column = currentColumn;
                     newSquare.Row = currentRow;
 
-
+                    //TODO:  This needs to be set up from XML file
                     //**** This is disposable test code, as the pieces will be set in Engine.Board (XmlDocument) *****
                     newSquare.CurrentPiece = new Piece("Rook");
                     newSquare.CurrentPiece.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\wr.gif");
