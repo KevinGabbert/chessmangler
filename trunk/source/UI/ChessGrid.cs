@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Text;
 using System.Windows.Forms;
 
+using System.IO;
 using System.Xml;
 
 using WinUIParts;
@@ -27,20 +28,33 @@ namespace SKChess
 
         private void ChessGrid_Load(object sender, EventArgs e)
         {
-            ushort rows = 8;
-            ushort columns = 8;
-            int squareSize = 72;
+            //A test file so we can have something to develop with..
+            XmlDocument testSetup = new XmlDocument();
 
-            //ConfigurationManager.OpenExeConfiguration(System.Environment.CurrentDirectory
+            //The App should start up with a blank form and a combobox showing what boards are available to load up.
+            //If there are none, then the combobox should not be there.  Instead there will be a "Browse" button so
+            //the user can point to a directory with config files.
 
-            //int rows = Convert.ToInt16(ConfigurationManager.AppSettings["DefaultBoard_Rows"]);
-            //int columns = Convert.ToInt16(ConfigurationManager.AppSettings["DefaultBoard_Columns"]);
-            //int squareSize = Convert.ToInt16(ConfigurationManager.AppSettings["DefaultBoard_SquareSize"]);
+            string configPath = System.Environment.CurrentDirectory + "\\Board2D.config"; //have it copy local
 
-            XmlDocument defaultSetup = new XmlDocument();
+            bool exists = false;
 
-            UIBoard newBoard = new UIBoard();
-            newBoard.CreateBoard(this, rows, columns, squareSize, defaultSetup); //get these from XML file  
+            exists = File.Exists(configPath);
+
+            if (exists)
+            {
+                testSetup = Config.LoadXML(configPath);
+
+                UIBoard newBoard = new UIBoard();
+                newBoard.CreateBoard(this, testSetup); //get these from XML file 
+ 
+                //Steve, see those screwed up cell colors?? that's you..
+            }
+            else
+            {
+                //Whine pitifully..
+                MessageBox.Show("Default Board Setup file not found");
+            }
         }
     }
 }

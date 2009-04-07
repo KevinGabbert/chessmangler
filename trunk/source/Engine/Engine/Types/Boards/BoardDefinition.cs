@@ -7,8 +7,8 @@ namespace Engine.Types
 {
     public class BoardDef
     {
-        int _rows;
-        public int Rows
+        Int16 _rows;
+        public Int16 Rows
         {
             get
             {
@@ -20,8 +20,8 @@ namespace Engine.Types
             }
         }
 
-        int _cols;
-        public int Columns
+        Int16 _cols;
+        public Int16 Columns
         {
             get
             {

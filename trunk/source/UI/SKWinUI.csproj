@@ -49,6 +49,7 @@
     <Compile Include="ChessGrid.Designer.cs">
       <DependentUpon>ChessGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Config.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ChessGrid.resx">
@@ -64,7 +65,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="app.config" />
+    <None Include="Board2D.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

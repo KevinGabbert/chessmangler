@@ -3,10 +3,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 
+using System;
+
 using Rules.Interfaces;
 using Engine.Interfaces;
 using Engine.Types;
-
 
 namespace WinUIParts
 {
@@ -84,19 +85,22 @@ namespace WinUIParts
 
         #endregion
 
-        public void CreateBoard(Form formForBoard, ushort rows, ushort columns, int squareSize, XmlDocument startingPosition)
+        public void CreateBoard(Form formForBoard, XmlDocument configFile)
         {
-            //pull the following info from XMLDocument
+            //*****  This should probably be Done in Engine.Board and not here!
+            BoardDef boardDef = this.GetBoardDef(configFile); // TODO: if BoardDef is null then throw custom exception
+            Int16 squareSize = this.GetSquareSize(configFile); //TODO: if squaresize is -1 then throw custom exception
+            //*****  This should probably be Done in Engine.Board and not here!
 
-            formForBoard.Width = (squareSize * columns) + 12;
-            formForBoard.Height = (squareSize * rows) + 30;
 
-            this.EngineBoard = new Board2D(columns, rows, startingPosition);
-            this.BuildUISquares(formForBoard, rows, columns, squareSize);
+            formForBoard.Width = (squareSize * boardDef.Columns) + 12;
+            formForBoard.Height = (squareSize * boardDef.Rows) + 30;
+
+            this.EngineBoard = new Board2D(boardDef.Columns, boardDef.Rows, configFile);
+            this.BuildUISquares(formForBoard, boardDef.Rows, boardDef.Columns, squareSize);
         }
 
-
-        private void BuildUISquares(Form formForBoard, int rows, int columns, int squareSize)
+        protected void BuildUISquares(Form formForBoard, Int16 rows, Int16 columns, Int16 squareSize)
         {
             int squareR = 0;
             int squareC = 0;
@@ -139,5 +143,87 @@ namespace WinUIParts
             newUISquare.Color = currentSquare.Color;
             newUISquare.Piece = currentSquare.CurrentPiece; //Ah, the power of interfaces..
         }
+
+        #region Xml
+
+        public Int16 GetSquareSize(XmlDocument configFile)
+        {
+            XmlNode defNode = this.GetDefNode(configFile, "UIDef");
+
+            Int16 gotSquareSize = -1;
+
+            if (defNode != null)
+            {
+                foreach (XmlNode squareLayoutNode in defNode)
+                {
+                    if (squareLayoutNode.Name == "UISquareLayout")
+                    {
+                        XmlAttributeCollection attributes = squareLayoutNode.Attributes;
+                        foreach (XmlAttribute currentAttribute in attributes)
+                        {
+                            string currentName = currentAttribute.Name;
+
+                            if (currentName == "SquareSize")
+                            {
+                                gotSquareSize = Convert.ToInt16(currentAttribute.Value);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return gotSquareSize;
+        }
+        public BoardDef GetBoardDef(XmlDocument configFile)
+        {
+            BoardDef gotBoardDef = null;
+
+            XmlNode boardDefNode = this.GetDefNode(configFile, "BoardDef");
+
+            if (boardDefNode != null)
+            {
+                gotBoardDef = new BoardDef();
+
+                XmlAttributeCollection attributes = boardDefNode.Attributes;
+                foreach (XmlAttribute currentAttribute in attributes)
+                {
+                    string currentName = currentAttribute.Name;
+
+                    if (currentName == "rows")
+                    {
+                        gotBoardDef.Rows = Convert.ToInt16(currentAttribute.Value);
+                    }
+
+                    if (currentName == "columns")
+                    {
+                        gotBoardDef.Columns = Convert.ToInt16(currentAttribute.Value);
+                    }
+                }
+            }
+
+            return gotBoardDef;
+        }
+        public XmlNode GetDefNode(XmlDocument configFile, string defNode)
+        {
+            XmlNode gotDefNode = null;
+
+            foreach (XmlNode xmlNode in configFile)
+            {
+                if (xmlNode.Name == "ChessConfig")
+                {
+                    foreach (XmlNode childNode in xmlNode)
+                    {
+                        if (childNode.Name == defNode)
+                        {
+                            gotDefNode = childNode;
+                        }
+                    }
+                }
+            }
+
+            return gotDefNode;
+        }
+
+        #endregion
     }
 }
