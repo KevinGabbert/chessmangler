@@ -5,6 +5,7 @@ using System.Text;
 
 using System.Drawing;
 
+using Engine.Types.Rules;
 using Engine.Interfaces;
 
 namespace Engine.Types
@@ -14,6 +15,8 @@ namespace Engine.Types
         public Piece(string name)
         {
             this.Name = name;
+
+            //Look up attributes in passed config file and assign (such as image, and movement rules, etc..)
         }
 
         public int Row
@@ -99,6 +102,32 @@ namespace Engine.Types
             set
             {
                 _image = value;
+            }
+        }
+
+        protected Movement _movement;
+        public Movement Movement
+        {
+            get
+            {
+                return _movement;
+            }
+            set
+            {
+                _movement = value;
+            }
+        }
+
+        protected Capture _capture;
+        public Capture Capture
+        {
+            get
+            {
+                return _capture;
+            }
+            set
+            {
+                _capture = value;
             }
         }
     }

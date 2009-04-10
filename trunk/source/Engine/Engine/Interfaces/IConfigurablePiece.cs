@@ -26,12 +26,12 @@ namespace Rules.Interfaces
 
         //Who is going to used these packages? the engine??
 
-        AttackPackage Attacking
+        BoardAttackPackage Attacking
         {
             get;
             set;
         }
-        MovementPackage Moves
+        BoardMovementPackage Moves
         {
             get;
             set;

@@ -15,16 +15,16 @@ namespace Rules.Types
     {
         #region Properties
 
-        List<Board2DRules> _rules = new List<Board2DRules>();
-        public List<Board2DRules> Rules
+        List<Board2DRules> _boardRules = new List<Board2DRules>();
+        public List<Board2DRules> BoardRules
         {
             get
             {
-                return _rules;
+                return _boardRules;
             }
             set
             {
-                _rules = value;
+                _boardRules = value;
             }
         }
 
