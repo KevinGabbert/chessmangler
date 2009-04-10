@@ -40,7 +40,6 @@ namespace Engine.Types
             }
         }
 
-
         protected string _name;
         public string Name
         {
