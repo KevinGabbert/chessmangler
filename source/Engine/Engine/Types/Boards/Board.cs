@@ -78,14 +78,16 @@ namespace Engine.Types
         {
             //This is where all the Board and piece setup (from config file) needs to be done!
         }
-        private void SetPieces(XmlDocument startingPosition)
+        private void SetPieces(XmlDocument configFile)
         {
-            List<PieceDef> piecesToSet = this.GetPieces(startingPosition);
+            List<PieceDef> piecesToSet = this.GetPieces(configFile);
 
             foreach (PieceDef piece in piecesToSet)
             {
                 Square2D squareForPiece = this.GetByName(piece.StartingLocation);
                 squareForPiece.CurrentPiece = new Piece(piece.Name);
+
+                //this needs to be set up in Piece..
                 squareForPiece.CurrentPiece.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\" + piece.ImageName);
             }
         }

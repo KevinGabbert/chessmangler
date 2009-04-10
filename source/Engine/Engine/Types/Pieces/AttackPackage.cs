@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Rules.Types
 {
-    public class AttackPackage : RulesPackageBase
+    //this concept may be deprecated by the "Capture" class
+    public class BoardAttackPackage : RulesPackageBase
     {
     }
 }

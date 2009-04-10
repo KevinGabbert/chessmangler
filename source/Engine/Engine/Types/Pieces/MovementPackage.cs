@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Rules.Types
 {
-    public class MovementPackage : RulesPackageBase
+    //this concept may be deprecated by the "Movement" class
+    public class BoardMovementPackage : RulesPackageBase
     {
-
         //Methods that read rules and set squares
+
     }
 }

@@ -46,7 +46,7 @@ namespace WinUIParts
             }
         }
 
-        public AttackPackage Attacking
+        public BoardAttackPackage Attacking
         {
             get
             {
@@ -58,7 +58,7 @@ namespace WinUIParts
             }
         }
 
-        public MovementPackage Moves
+        public BoardMovementPackage Moves
         {
             get
             {
