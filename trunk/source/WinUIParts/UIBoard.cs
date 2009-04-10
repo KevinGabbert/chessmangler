@@ -85,9 +85,9 @@ namespace WinUIParts
 
         #endregion
 
-        public void CreateBoard(Form formForBoard, XmlDocument configFile)
+        public void CreateBoard(Form formForBoard, XmlDocument configFile, string directory)
         {
-            this.EngineBoard = new Board2D(configFile);
+            this.EngineBoard = new Board2D(configFile, directory);
             Int16 squareSize = this.GetSquareSize(configFile); //TODO: if squaresize is -1 then throw custom exception
 
             formForBoard.Width = (squareSize * this.EngineBoard.Definition.Columns) + 12;

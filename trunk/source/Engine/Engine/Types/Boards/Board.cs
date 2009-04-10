@@ -56,10 +56,10 @@ namespace Engine.Types
 
         #endregion
 
-        public Board2D(XmlDocument configFile)
+        public Board2D(XmlDocument configFile, string directory)
         {
             this.CreateBoard(configFile);
-            this.SetPieces(configFile);
+            this.SetPieces(configFile, directory);
         }
 
         protected void CreateBoard(XmlDocument configFile)
@@ -78,7 +78,7 @@ namespace Engine.Types
         {
             //This is where all the Board and piece setup (from config file) needs to be done!
         }
-        private void SetPieces(XmlDocument configFile)
+        private void SetPieces(XmlDocument configFile, string directory)
         {
             List<PieceDef> piecesToSet = this.GetPieces(configFile);
 
@@ -88,7 +88,7 @@ namespace Engine.Types
                 squareForPiece.CurrentPiece = new Piece(piece.Name);
 
                 //this needs to be set up in Piece..
-                squareForPiece.CurrentPiece.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\" + piece.ImageName);
+                squareForPiece.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + piece.ImageName);
             }
         }
 
