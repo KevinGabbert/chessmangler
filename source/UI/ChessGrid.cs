@@ -46,7 +46,7 @@ namespace SKChess
                 testSetup = Config.LoadXML(configPath);
 
                 UIBoard newBoard = new UIBoard();
-                newBoard.CreateBoard(this, testSetup); //get these from XML file 
+                newBoard.CreateBoard(this, testSetup, System.Environment.CurrentDirectory); //get these from XML file 
  
                 //Steve, see those screwed up cell colors?? that's you..
             }
