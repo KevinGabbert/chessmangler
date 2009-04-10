@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-namespace Engine.Types.Rules
+namespace Engine.Interfaces
 {
-    public class ConditionType
+    public interface IConditionType
     {
     }
 }
