@@ -57,6 +57,11 @@
     <Compile Include="Types\Pieces\Piece.cs" />
     <Compile Include="Types\Pieces\PieceDef.cs" />
     <Compile Include="Types\Rules\Board2DRules.cs" />
+    <Compile Include="Types\Rules\Capture.cs" />
+    <Compile Include="Types\Rules\Condition.cs" />
+    <Compile Include="Types\Rules\ConditionType.cs" />
+    <Compile Include="Types\Rules\Leaper.cs" />
+    <Compile Include="Types\Rules\Movement.cs" />
     <Compile Include="Types\Rules\RulesPackageBase.cs" />
     <Compile Include="Types\Boards\Square2D.cs" />
     <Compile Include="Types\Pieces\Location.cs" />
