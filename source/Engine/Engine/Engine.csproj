@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IChessObject.cs" />
+    <Compile Include="Interfaces\IConditionType.cs" />
     <Compile Include="Interfaces\IConfigurablePiece.cs" />
     <Compile Include="Interfaces\IPiece.cs" />
     <Compile Include="Interfaces\IRulesPackage.cs" />
@@ -59,7 +60,10 @@
     <Compile Include="Types\Rules\Board2DRules.cs" />
     <Compile Include="Types\Rules\Capture.cs" />
     <Compile Include="Types\Rules\Condition.cs" />
-    <Compile Include="Types\Rules\ConditionType.cs" />
+    <Compile Include="Types\Rules\Conditions\Blocked.cs" />
+    <Compile Include="Types\Rules\Conditions\Checked.cs" />
+    <Compile Include="Types\Rules\Conditions\Moved.cs" />
+    <Compile Include="Types\Rules\Conditions\MyColor.cs" />
     <Compile Include="Types\Rules\Leaper.cs" />
     <Compile Include="Types\Rules\Movement.cs" />
     <Compile Include="Types\Rules\RulesPackageBase.cs" />

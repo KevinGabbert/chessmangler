@@ -22,8 +22,8 @@ namespace Engine.Types.Rules
             }
         }
 
-        private ConditionType _type;
-        public ConditionType Type
+        private IConditionType _type;
+        public IConditionType Type
         {
             get
             {
