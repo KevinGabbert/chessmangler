@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Xml;
@@ -150,7 +149,7 @@ namespace Engine.Types
         }
 
         //Expose our inner board logic so the UI can use it.
-        public IEnumerable SquareLogic(BoardDef boardDef)
+        public IEnumerable<Square2D> SquareLogic(BoardDef boardDef)
         {
             for (Int16 currentRow = 0; currentRow < boardDef.Rows; currentRow++)
             {
@@ -176,6 +175,5 @@ namespace Engine.Types
         }
 
         #endregion
-
     }
 }

@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
-using System.Text;
 
-using Engine.Xml;
 using Engine.Types;
 
 namespace Engine.Config
@@ -17,7 +16,7 @@ namespace Engine.Config
 
         public static XmlNode GetConfigDefNode(XmlDocument configFile, string defNode)
         {
-            return Engine.Xml.Parser.GetDefNode(configFile, _chessConfig, defNode);
+            return Engine.Xml.XmlParser.GetDefNode(configFile, _chessConfig, defNode);
         }
         public static BoardDef GetBoardDef(XmlDocument configFile)
         {
@@ -48,6 +47,26 @@ namespace Engine.Config
 
             return gotBoardDef;
         }
+
+        //public static IEnumerable Attributes(XmlNode node)
+        //{
+        //    XmlAttributeCollection attributes = node.Attributes;
+        //    foreach (XmlAttribute currentAttribute in attributes)
+        //    {
+        //        string currentName = currentAttribute.Name;
+
+        //        if (currentName == "rows")
+        //        {
+        //            //gotBoardDef.Rows = Convert.ToInt16(currentAttribute.Value);
+        //        }
+
+        //        if (currentName == "columns")
+        //        {
+        //            // gotBoardDef.Columns = Convert.ToInt16(currentAttribute.Value);
+        //        }
+        //    }
+        //}
+
         public static List<PieceDef> GetPieces(XmlDocument startingPosition)
         {
             List<PieceDef> gotPieceDefs = null;
