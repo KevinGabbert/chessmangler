@@ -7,6 +7,16 @@ namespace Engine.Types
 {
     public class BoardDef
     {
+        public BoardDef()
+        {
+        }
+
+        public BoardDef(Int16 columns, Int16 rows)
+        {
+            this.Columns = columns;
+            this.Rows = rows;
+        }
+
         Int16 _rows;
         public Int16 Rows
         {
