@@ -8,6 +8,7 @@ using System;
 using Rules.Interfaces;
 using Engine.Interfaces;
 using Engine.Types;
+using Engine.Config;
 
 namespace WinUIParts
 {
@@ -154,7 +155,7 @@ namespace WinUIParts
 
         public Int16 GetSquareSize(XmlDocument configFile)
         {
-            XmlNode defNode = this.GetDefNode(configFile, "UIDef");
+            XmlNode defNode = ConfigParser.GetConfigDefNode(configFile, "UIDef");
 
             Int16 gotSquareSize = -1;
 
@@ -179,57 +180,6 @@ namespace WinUIParts
             }
 
             return gotSquareSize;
-        }
-        //public BoardDef GetBoardDef(XmlDocument configFile)
-        //{
-        //    BoardDef gotBoardDef = null;
-
-        //    XmlNode boardDefNode = this.GetDefNode(configFile, "BoardDef");
-
-        //    if (boardDefNode != null)
-        //    {
-        //        gotBoardDef = new BoardDef();
-
-        //        XmlAttributeCollection attributes = boardDefNode.Attributes;
-        //        foreach (XmlAttribute currentAttribute in attributes)
-        //        {
-        //            string currentName = currentAttribute.Name;
-
-        //            if (currentName == "rows")
-        //            {
-        //                gotBoardDef.Rows = Convert.ToInt16(currentAttribute.Value);
-        //            }
-
-        //            if (currentName == "columns")
-        //            {
-        //                gotBoardDef.Columns = Convert.ToInt16(currentAttribute.Value);
-        //            }
-        //        }
-        //    }
-
-        //    return gotBoardDef;
-        //}
-
-        //refactor
-        public XmlNode GetDefNode(XmlDocument configFile, string defNode)
-        {
-            XmlNode gotDefNode = null;
-
-            foreach (XmlNode xmlNode in configFile)
-            {
-                if (xmlNode.Name == "ChessConfig")
-                {
-                    foreach (XmlNode childNode in xmlNode)
-                    {
-                        if (childNode.Name == defNode)
-                        {
-                            gotDefNode = childNode;
-                        }
-                    }
-                }
-            }
-
-            return gotDefNode;
         }
 
         #endregion

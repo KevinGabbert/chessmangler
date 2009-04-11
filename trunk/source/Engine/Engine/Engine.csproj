@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\ConfigParser.cs" />
     <Compile Include="Interfaces\IChessObject.cs" />
     <Compile Include="Interfaces\IConditionType.cs" />
     <Compile Include="Interfaces\IConfigurablePiece.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Types\Rules\RulesPackageBase.cs" />
     <Compile Include="Types\Boards\Square2D.cs" />
     <Compile Include="Types\Pieces\Location.cs" />
+    <Compile Include="Xml\Parser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
