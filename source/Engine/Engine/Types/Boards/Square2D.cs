@@ -55,20 +55,20 @@ namespace Engine.Types
             }
         }
 
-        protected bool _disabled = false;
+        //Not implemented for Square in 1.0
         public bool Disabled
         {
             get
             {
-                return _disabled;
+                throw new NotImplementedException();
             }
             set
             {
-                _disabled = value;
+                throw new NotImplementedException();
             }
         }
 
-        //There are plans to implement this later
+        //Not implemented for Square in 1.0
         public Image Image
         {
             get
@@ -115,7 +115,7 @@ namespace Engine.Types
             }
         }
 
-        public static void SetColor(Square2D squareToColor, int column, int row)
+        public static void SetCheckerboardStyle(Square2D squareToColor, int column, int row)
         {
             if (((squareToColor.Number) % 2) == 0)
             {
