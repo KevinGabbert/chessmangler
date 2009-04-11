@@ -9,7 +9,7 @@ namespace Engine.Xml
     /// This is a class intended for generic XML parsing functions used by this library.
     /// Functions intended to be exposed to other libraries are in Engine.Config.Parser
     /// </summary>
-    internal static class Parser
+    internal static class XmlParser
     {
         public static XmlNode GetDefNode(XmlDocument configFile, string rootNode, string defNode)
         {
