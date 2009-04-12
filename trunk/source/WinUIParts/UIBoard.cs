@@ -147,7 +147,7 @@ namespace WinUIParts
 
             if (currentSquare.CurrentPiece != null)
             {
-                newUISquare.Piece = currentSquare.CurrentPiece; //Ah, the power of interfaces..
+                newUISquare.CurrentPiece = currentSquare.CurrentPiece; //Ah, the power of interfaces..
             }
         }
 

@@ -91,32 +91,19 @@ namespace WinUIParts
 
         #endregion
 
-        protected IChessObject _piece;
-        public IChessObject Piece
-        {
-            get
-            {
-                return _piece;
-            }
-            set
-            {
-                _piece = value;
-                this.Image = value.Image;
-            }
-        }
-
+        protected IPiece _currentPiece;
         public IPiece CurrentPiece
         {
             get
             {
-                throw new NotImplementedException();
+                return _currentPiece;
             }
             set
             {
-                throw new NotImplementedException();
+                _currentPiece = value;
+                this.Image = value.Image;
             }
         }
-
 
         #region IChessObject Members
 

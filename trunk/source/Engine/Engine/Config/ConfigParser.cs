@@ -4,6 +4,8 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Xml;
 
+using System.Drawing;
+
 using Engine.Types;
 
 namespace Engine.Config
@@ -48,27 +50,6 @@ namespace Engine.Config
 
             return gotBoardDef;
         }
-        
-        //This slightly simplifies attribute collection.
-        public static IEnumerable<string> GetConfigDefNodeAttributes(XmlNode node, List<string> desiredAttributes)
-        {
-            if (node != null)
-            {
-                XmlAttributeCollection attributes = node.Attributes;
-                foreach (XmlAttribute currentAttribute in attributes)
-                {
-                    string currentName = currentAttribute.Name;
-
-                    foreach (string item in desiredAttributes)
-                    {
-                        if (currentName == item)
-                        {
-                             yield return currentAttribute.Value;
-                        }
-                    }
-                }
-            }
-        }
 
         public static List<PieceDef> GetPieces(XmlDocument startingPosition)
         {
@@ -104,6 +85,16 @@ namespace Engine.Config
                             if (currentName == "ImageName")
                             {
                                 newPiece.ImageName = currentAttribute.Value;
+                            }
+
+                            if (currentName == "Player")
+                            {
+                                newPiece.Player = Convert.ToInt16(currentAttribute.Value);
+                            }
+
+                            if (currentName == "Color")
+                            {
+                                newPiece.Color = Color.FromName(currentAttribute.Value);
                             }
                         }
                         gotPieceDefs.Add(newPiece);

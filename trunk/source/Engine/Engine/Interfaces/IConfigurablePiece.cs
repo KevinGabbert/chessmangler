@@ -24,18 +24,11 @@ namespace Rules.Interfaces
             set;
         }
 
-        //Who is going to used these packages? the engine??
-
-        BoardAttackPackage Attacking
-        {
-            get;
-            set;
-        }
-        BoardMovementPackage Moves
-        {
-            get;
-            set;
-        }
+        //int Player
+        //{
+        //    get;
+        //    set;
+        //}
 
         void CheckMy_MovementRule();
         void Move(Int64 from, Int64 to);

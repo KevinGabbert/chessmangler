@@ -66,7 +66,7 @@ namespace TestHarness.Engine
                 }
                 else
                 {
-                    Assert.AreEqual(Color.Black, currentSquare.Color);
+                    Assert.AreEqual(Color.Gray, currentSquare.Color);
                 }
             }
         }

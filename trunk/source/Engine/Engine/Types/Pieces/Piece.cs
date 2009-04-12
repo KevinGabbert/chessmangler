@@ -19,27 +19,42 @@ namespace Engine.Types
             //Look up attributes in passed config file and assign (such as image, and movement rules, etc..)
         }
 
+        protected PieceDef _pieceDef = new PieceDef();
+        public PieceDef Definition
+        {
+            get
+            {
+                return _pieceDef;
+            }
+            set
+            {
+                _pieceDef = value;
+            }
+        }
+
+        protected int _row;
         public int Row
         {
             get
             {
-                throw new NotImplementedException();
+                return _row;
             }
             set
             {
-                throw new NotImplementedException();
+                _row = value;
             }
         }
 
+        protected int _column;
         public int Column
         {
             get
             {
-                throw new NotImplementedException();
+                return _column;
             }
             set
             {
-                throw new NotImplementedException();
+                _column = value;
             }
         }
 
@@ -53,6 +68,19 @@ namespace Engine.Types
             set
             {
                 this._name = value;
+            }
+        }
+
+        protected int _player;
+        public int Player
+        {
+            get
+            {
+                return this.Definition.Player;
+            }
+            set
+            {
+                this.Definition.Player = value;
             }
         }
 
@@ -72,11 +100,11 @@ namespace Engine.Types
         {
             get
             {
-                throw new NotImplementedException();
+                return this.Definition.Color;
             }
             set
             {
-                throw new NotImplementedException();
+                this.Definition.Color = value;
             }
         }
 
