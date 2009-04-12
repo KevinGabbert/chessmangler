@@ -17,17 +17,25 @@ namespace TestHarness.Engine
         [SetUp]
         public void SetUp()
         {
-          //using a temporary path
-
             XmlDocument loader = new XmlDocument();
 
-            using (StreamReader __fileToLoad = new StreamReader(System.Environment.CurrentDirectory + "\\Board2D.config"))
+            string sourceDir = Directory.GetParent(Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString()).ToString();
+            string uiDirectory = sourceDir + "\\UI";
+            string imagesDirectory = uiDirectory + "\\images";
+            string configFile = sourceDir + "\\UI\\Board2D.config";
+            
+            //before we start, lets verify everything..
+            Assert.IsTrue(File.Exists(configFile), "can't find config file! TestHarness looked here: " + configFile);
+            Assert.IsTrue(Directory.Exists(uiDirectory), "can't find UI Directory! TestHarness looked here: " + configFile);
+            Assert.IsTrue(Directory.Exists(imagesDirectory), "can't find Images Directory! TestHarness looked here: " + uiDirectory + "\\images");
+
+            using (StreamReader __fileToLoad = new StreamReader(configFile))
             {
                 loader.Load(__fileToLoad);
                 __fileToLoad.Close();
             }
 
-            _testBoard = new Board2D(loader, System.Environment.CurrentDirectory);
+            _testBoard = new Board2D(loader, uiDirectory);
             Assert.IsFalse(_testBoard.IsNew);
         }
 
