@@ -123,7 +123,7 @@ namespace Engine.Types
             }
             else
             {
-                squareToColor.Color = Color.Black;
+                squareToColor.Color = Color.Gray;
             }
         }
     }

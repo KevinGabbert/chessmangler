@@ -81,11 +81,19 @@ namespace Engine.Types
 
             foreach (PieceDef piece in piecesToSet)
             {
-                Square2D squareForPiece = this.GetByName(piece.StartingLocation);
-                squareForPiece.CurrentPiece = new Piece(piece.Name);
+                switch (piece.Name)
+                {
+                    case "All":
+                        break;
 
-                //this needs to be set up in Piece..
-                squareForPiece.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + piece.ImageName);
+                    default:
+                        Square2D squareForPiece = this.GetByName(piece.StartingLocation);
+                        squareForPiece.CurrentPiece = new Piece(piece.Name);
+
+                        //this needs to be set up in Piece..
+                        squareForPiece.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + piece.ImageName);
+                        break;
+                }
             }
         }
 

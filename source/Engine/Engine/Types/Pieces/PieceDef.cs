@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using System.Drawing;
+
 namespace Engine.Types
 {
     public class PieceDef
@@ -42,6 +44,32 @@ namespace Engine.Types
             set
             {
                 _imageName = value;
+            }
+        }
+
+        protected int _player;
+        public int Player
+        {
+            get
+            {
+                return _player;
+            }
+            set
+            {
+                this._player = value;
+            }
+        }
+
+        protected Color _color;
+        public Color Color
+        {
+            get
+            {
+                return _color;
+            }
+            set
+            {
+                this._color = value;
             }
         }
     }
