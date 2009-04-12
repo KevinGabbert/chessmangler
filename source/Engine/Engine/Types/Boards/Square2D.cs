@@ -117,13 +117,15 @@ namespace Engine.Types
 
         public static void SetCheckerboardStyle(Square2D squareToColor, int column, int row)
         {
-            if (((squareToColor.Number) % 2) == 0)
-            {
-                squareToColor.Color = Color.White;
-            }
-            else
-            {
-                squareToColor.Color = Color.Gray;
+            
+                    if (((column + row) % 2) == 0)
+                    {
+                        squareToColor.Color = Color.White;
+                    }
+                    else
+                    {
+                        squareToColor.Color = Color.Gray;
+                   
             }
         }
     }

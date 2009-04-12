@@ -144,11 +144,11 @@ namespace Engine.Types
         {
             Square2D newSquare = new Square2D();
             newSquare.Number = (boardDef.Columns * row) + col;
-            newSquare.Name = (char)(97 + col) + (row + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
+            newSquare.Name = (char)(97 + col) + (8 - row).ToString(); //lowercase is PGN format... i.e. a6, not A6
 
             //TODO: IF the config file TELLS us to do this, then...
-            Square2D.SetCheckerboardStyle(newSquare, boardDef.Columns, boardDef.Rows);
-            
+            Square2D.SetCheckerboardStyle(newSquare, col, row);
+
             this.Squares.Add(newSquare);
             newlyAddedSquare = newSquare;
 
