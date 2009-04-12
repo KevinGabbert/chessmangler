@@ -30,16 +30,21 @@ namespace SKChess
 
             string configPath = System.Environment.CurrentDirectory + "\\Board2D.config"; //have it copy local
 
+            string sourceDir = Directory.GetParent(Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString()).ToString();
+            string uiDirectory = sourceDir + "\\UI";
+            string imagesDirectory = uiDirectory + "\\images";
+            string configFile = sourceDir + "\\UI\\Board2D.config";
+
             bool exists = false;
 
-            exists = File.Exists(configPath);
+            exists = File.Exists(configFile);
 
             if (exists)
             {
-                testSetup = Config.LoadXML(configPath);
+                testSetup = Config.LoadXML(configFile);
 
                 UIBoard newBoard = new UIBoard();
-                newBoard.CreateBoard(this, testSetup, System.Environment.CurrentDirectory); //get these from XML file 
+                newBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file 
  
                 //Steve, see those screwed up cell colors?? that's you..
             }

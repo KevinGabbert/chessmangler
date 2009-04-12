@@ -57,10 +57,10 @@ namespace Engine.Types
 
         #endregion
 
-        public Board2D(XmlDocument configFile, string directory)
+        public Board2D(XmlDocument configFile, string UIDirectory)
         {
             this.CreateBoard(configFile);
-            this.SetPieces(configFile, directory);
+            this.SetPieces(configFile, UIDirectory);
         }
 
         protected void CreateBoard(XmlDocument configFile)
