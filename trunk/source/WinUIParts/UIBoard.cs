@@ -118,6 +118,8 @@ namespace WinUIParts
 
                 #endregion
 
+                newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.Name);
+
                 UIBoard.TranslateEngineStuffToUI(currentSquare, newUISquare);
 
                 formForBoard.Controls.Add(newUISquare); //Place our newly built square on the grid
