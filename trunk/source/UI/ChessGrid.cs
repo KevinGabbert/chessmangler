@@ -52,6 +52,19 @@ namespace SKChess
                 //Whine pitifully..
                 MessageBox.Show("Default Board Setup file not found");
             }
+
+            this.AddHandlers();
+            
+        }
+
+        public void AddHandlers()
+        {
+            foreach(UISquare square in this.Controls)
+            {
+                square.MouseDown += CellMouseDown;
+                square.MouseMove += CellMouseMove;
+                square.MouseUp += CellMouseUp;
+            }
         }
 
         private MouseEventArgs _dragStart;
