@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-
+using System.Drawing;
 using System.IO;
 using System.Xml;
 
@@ -51,6 +51,61 @@ namespace SKChess
             {
                 //Whine pitifully..
                 MessageBox.Show("Default Board Setup file not found");
+            }
+        }
+
+        private MouseEventArgs _dragStart;
+        private MouseEventArgs _dragEnd;
+
+        private bool _mouseDown = true;
+        private bool _isDragging = false;
+
+        private void CellMouseDown(object sender, MouseEventArgs e)
+        {
+            _mouseDown = true;
+            _dragStart = e;
+        }
+
+        private void CellMouseMove(object sender, MouseEventArgs e)
+        {
+            _isDragging = _mouseDown;
+
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                //UI Class will do this;
+                //    delete picture in old place
+                //    picture needs to be animated and attached to the cursor.  (is this a windows function?)
+            }
+        }
+
+        private void CellMouseUp(object sender, MouseEventArgs e)
+        {
+            _dragEnd = e;
+            _isDragging = false;
+
+            //get start & end locations
+            //ChessSquare startSquare = (ChessSquare)dataGridView1[_dragStart.ColumnIndex, _dragStart.RowIndex];
+            //ChessSquare endSquare = (ChessSquare)dataGridView1[_dragEnd.ColumnIndex, _dragEnd.RowIndex];
+
+            //run rules
+
+            bool weCanMove = false; //= UIEngine.IsThisMoveOkay(startSquare, endSquare);
+
+            if (weCanMove)
+            {
+                //update the engine..
+                //   -set new location in chesspiece.location prop.
+
+                //grab picture to drop
+                //System.Drawing.Bitmap _pictureToTransfer = (Bitmap)dataGridView1[_dragStart.ColumnIndex, _dragStart.RowIndex].Value;
+
+                //UI Class will do this;
+                //    set the picture in its new place
+            }
+            else
+            {
+                //UI Class will do this;
+                //    set the picture back in its old place
             }
         }
     }
