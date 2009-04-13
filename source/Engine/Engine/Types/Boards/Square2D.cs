@@ -120,11 +120,11 @@ namespace Engine.Types
             
                     if (((column + row) % 2) == 0)
                     {
-                        squareToColor.Color = Color.White;
+                        squareToColor.Color = Color.Gray;
                     }
                     else
                     {
-                        squareToColor.Color = Color.Gray;
+                        squareToColor.Color = Color.White;
                    
             }
         }
