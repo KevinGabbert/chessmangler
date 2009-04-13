@@ -118,7 +118,7 @@ namespace WinUIParts
 
                 #endregion
 
-                newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.Name);
+                newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.Name + "C" + currentSquare.Column + "R" + currentSquare.Row);
 
                 UIBoard.TranslateEngineStuffToUI(currentSquare, newUISquare);
 
