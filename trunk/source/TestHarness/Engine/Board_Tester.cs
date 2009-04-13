@@ -68,7 +68,7 @@ namespace TestHarness.Engine
         {
             foreach (Square2D currentSquare in _testBoard.Squares)
             {
-                if (((currentSquare.Number) % 2) == 0)
+                if (((currentSquare.Row + currentSquare.Column) % 2) == 0)
                 {
                     Assert.AreEqual(Color.White, currentSquare.Color);
                 }
