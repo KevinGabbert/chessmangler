@@ -70,11 +70,11 @@ namespace TestHarness.Engine
             {
                 if (((currentSquare.Row + currentSquare.Column) % 2) == 0)
                 {
-                    Assert.AreEqual(Color.White, currentSquare.Color);
+                    Assert.AreEqual(Color.Gray, currentSquare.Color);
                 }
                 else
                 {
-                    Assert.AreEqual(Color.Gray, currentSquare.Color);
+                    Assert.AreEqual(Color.White, currentSquare.Color);
                 }
             }
         }
@@ -85,24 +85,24 @@ namespace TestHarness.Engine
             foreach (Square2D currentSquare in _testBoard.SquareLogic(new BoardDef(8,8)))
             {
                Assert.IsFalse(_testBoard.IsNew); 
-               Assert.AreEqual(_testBoard.GetByLocation(0, 0).Name, currentSquare.Name);
+               Assert.AreEqual(_testBoard.GetByLocation(7, 0).Name, currentSquare.Name);
                break;
             }
         }
 
-        [Test(Description = "So what is this for??")]
-        public void VerifySquareNumbers()
-        {
+        //[Test(Description = "So what is this for??")]
+        //public void VerifySquareNumbers()
+        //{
             //verify that x square has the intended number
-            Assert.AreEqual(27, _testBoard.Squares[27].Number);
-        }
+        //    Assert.AreEqual(27, _testBoard.Squares[27].Number);
+        //}
 
         [Test(Description = "Verify Square Names ")]
         public void VerifySquareNames()
         {
             //ok.. lets pick a couple and make sure they match up..
-            Assert.AreEqual("b1", _testBoard.Squares[1].Name);
-            Assert.AreEqual("h8", _testBoard.Squares[63].Name);
+            Assert.AreEqual("b8", _testBoard.Squares[1].Name);
+            Assert.AreEqual("h1", _testBoard.Squares[63].Name);
         }
 
         [Test(Description = "")]
