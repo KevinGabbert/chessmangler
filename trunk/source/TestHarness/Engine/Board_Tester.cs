@@ -90,13 +90,6 @@ namespace TestHarness.Engine
             }
         }
 
-        //[Test(Description = "So what is this for??")]
-        //public void VerifySquareNumbers()
-        //{
-            //verify that x square has the intended number
-        //    Assert.AreEqual(27, _testBoard.Squares[27].Number);
-        //}
-
         [Test(Description = "Verify Square Names ")]
         public void VerifySquareNames()
         {
