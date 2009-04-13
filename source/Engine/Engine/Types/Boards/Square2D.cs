@@ -17,8 +17,8 @@ namespace Engine.Types
         Color _color;
         int _number;
         string _name;
-
         int[] _position = new int[2] { 0, 0 };
+
         public int Row
         {
             get
