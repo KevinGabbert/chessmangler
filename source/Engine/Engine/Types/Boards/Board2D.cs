@@ -72,7 +72,7 @@ namespace Engine.Types
             foreach (Square2D currentSquare in this.SquareLogic(boardDef))
             {
                 //this empty foreach executes SquareLogic. We may need to put something here later..
-            } 
+            }
         }
 
         private void SetPieces(XmlDocument configFile, string directory)
@@ -87,19 +87,11 @@ namespace Engine.Types
                         break;
 
                     default:
-                        try
-                        {
-                            Square2D squareForPiece = this.GetByName(piece.StartingLocation);
-                            squareForPiece.CurrentPiece = new Piece(piece.Name);
+                        Square2D squareForPiece = this.GetByName(piece.StartingLocation);
+                        squareForPiece.CurrentPiece = new Piece(piece.Name);
 
-                            //this needs to be set up in Piece..
-                            squareForPiece.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + piece.ImageName);
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
-
+                        //this needs to be set up in Piece..
+                        squareForPiece.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + piece.ImageName);
                         break;
                 }
             }
@@ -152,11 +144,11 @@ namespace Engine.Types
         {
             Square2D newSquare = new Square2D();
             newSquare.Number = (boardDef.Columns * row) + col;
-            newSquare.Name = (char)(97 + col) + (row).ToString(); //lowercase is PGN format... i.e. a6, not A6
+            newSquare.Name = (char)(97 + col) + (row + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
 
             //TODO: IF the config file TELLS us to do this, then...
-            Square2D.SetCheckerboardStyle(newSquare, boardDef.Columns, boardDef.Rows);
-            
+            Square2D.SetCheckerboardStyle(newSquare, col, row);
+
             this.Squares.Add(newSquare);
             newlyAddedSquare = newSquare;
 
@@ -167,7 +159,7 @@ namespace Engine.Types
         //Expose our inner board logic so the UI can use it.
         public IEnumerable<Square2D> SquareLogic(BoardDef boardDef)
         {
-            for (Int16 currentRow = boardDef.Rows; currentRow - 1 > -1; currentRow--)
+            for (Int16 currentRow = 0; currentRow < boardDef.Rows; currentRow++)
             {
                 Int16 refRow = (Int16)(boardDef.Rows - (currentRow + 1));
 
