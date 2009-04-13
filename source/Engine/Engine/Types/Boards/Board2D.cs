@@ -159,7 +159,7 @@ namespace Engine.Types
         //Expose our inner board logic so the UI can use it.
         public IEnumerable<Square2D> SquareLogic(BoardDef boardDef)
         {
-            for (Int16 currentRow = 0; currentRow < boardDef.Rows; currentRow++)
+            for (Int16 currentRow = boardDef.Rows; currentRow < 0; currentRow--)
             {
                 for (Int16 currentColumn = 0; currentColumn < boardDef.Columns; currentColumn++)
                 {
