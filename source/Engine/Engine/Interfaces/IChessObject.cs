@@ -26,11 +26,6 @@ namespace Engine.Interfaces
             get;
             set;
         }
-        int Number
-        {
-            get;
-            set;
-        }
         bool Disabled
         {
             get;

@@ -145,18 +145,6 @@ namespace WinUIParts
             }
         }
 
-        int IChessObject.Number
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         Color IChessObject.Color
         {
             get
