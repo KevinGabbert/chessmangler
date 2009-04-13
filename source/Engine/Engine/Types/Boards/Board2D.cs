@@ -169,20 +169,22 @@ namespace Engine.Types
         {
             for (Int16 currentRow = boardDef.Rows; currentRow - 1 > -1; currentRow--)
             {
+                Int16 refRow = (Int16)(boardDef.Rows - (currentRow + 1));
+
                 for (Int16 currentColumn = 0; currentColumn < boardDef.Columns; currentColumn++)
                 {
                     //This IF may be temporary, as I'm evaluating whether this is a good idea..
                     if (this.IsNew)
                     {
                         Square2D newSquare;
-                        this.AddNewSquare(boardDef, currentColumn, currentRow, out newSquare);
+                        this.AddNewSquare(boardDef, currentColumn, refRow, out newSquare);
 
                         yield return newSquare; //Hand out this new square to those who want it..
                     }
                     else
                     {
                         //This would normally be called by the UI via a for loop.
-                        yield return this.GetByLocation(currentRow, currentColumn);
+                        yield return this.GetByLocation(refRow, currentColumn);
                     }
                 }
             }
