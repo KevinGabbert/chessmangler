@@ -6,7 +6,6 @@ using System.Xml;
 
 using WinUIParts;
 
-
 namespace SKChess
 {
     /// <summary>

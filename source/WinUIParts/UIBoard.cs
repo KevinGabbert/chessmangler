@@ -19,6 +19,19 @@ namespace WinUIParts
     {
         #region Properties
 
+        bool _debugMode = true;
+        public bool DebugMode
+        {
+            get
+            {
+                return _debugMode;
+            }
+            set
+            {
+                _debugMode = value;
+            }
+        }
+
         int _rows;
         public int Rows
         {
@@ -118,7 +131,10 @@ namespace WinUIParts
 
                 #endregion
 
-                newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.Name + "C" + currentSquare.Column + "R" + currentSquare.Row);
+                if (this.DebugMode)
+                {
+                    newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.Name + ".col" + currentSquare.Column + ".row" + currentSquare.Row, "Arial", 10);
+                }
 
                 UIBoard.TranslateEngineStuffToUI(currentSquare, newUISquare);
 

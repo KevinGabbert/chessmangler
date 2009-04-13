@@ -206,7 +206,7 @@ namespace WinUIParts
         }
 
         //This will probably need to be refactored to a generic UI library
-        public static Bitmap CreateBitmapImage(string sImageText)
+        public static Bitmap CreateBitmapImage(string sImageText, string fontName, int fontSize)
         {
             Bitmap objBmpImage = new Bitmap(1, 1);
 
@@ -214,7 +214,7 @@ namespace WinUIParts
             int intHeight = 0;
 
             // Create the Font object for the image text drawing.
-            Font objFont = new Font("Arial", 20, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            Font objFont = new Font(fontName, fontSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
 
             // Create a graphics object to measure the text's width and height.
             Graphics objGraphics = Graphics.FromImage(objBmpImage);
