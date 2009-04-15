@@ -109,7 +109,6 @@ namespace Engine.Types
         }
         public Square2D GetByLocation(int row, int column)
         {
-            //look up the square by its name.  ex. name:  "A2"
             this._findRow = row;
             this._findCol = column;
             Square2D foundSquare = this.Squares.Find(foundByLocation);

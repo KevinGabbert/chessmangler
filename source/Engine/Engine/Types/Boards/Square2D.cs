@@ -54,16 +54,16 @@ namespace Engine.Types
             }
         }
 
-        //Not implemented for Square in 1.0
+        protected bool _disabled;
         public bool Disabled
         {
             get
             {
-                throw new NotImplementedException();
+                return _disabled;
             }
             set
             {
-                throw new NotImplementedException();
+                _disabled = value;
             }
         }
 
@@ -106,15 +106,13 @@ namespace Engine.Types
 
         public static void SetCheckerboardStyle(Square2D squareToColor, int column, int row)
         {
-            
-                    if (((column + row) % 2) == 0)
-                    {
-                        squareToColor.Color = Color.Gray;
-                    }
-                    else
-                    {
-                        squareToColor.Color = Color.White;
-                   
+            if (((column + row) % 2) == 0)
+            {
+                squareToColor.Color = Color.Gray; //This will be set in config
+            }
+            else
+            {
+                squareToColor.Color = Color.White; //This will be set in config
             }
         }
     }

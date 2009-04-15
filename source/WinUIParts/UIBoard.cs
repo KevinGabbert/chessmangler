@@ -121,24 +121,22 @@ namespace WinUIParts
             //Hmmmmm.. the alternative is to do a for..i.. using BoardDef and GetByLocation, but SquareLogic already does this!, also, this allows for less complication in the UI..
             foreach (Square2D currentSquare in this.EngineBoard.SquareLogic(boardDef))
             {
-                #region Temporary UI Code
-                ////**** This is disposable test code, as the pieces will be set in Engine.Board (XmlDocument) *****
-                //UIPiece newUIPiece = new UIPiece("Rook");
-                //newUIPiece.Image = new Bitmap(Environment.CurrentDirectory + "\\images\\wr.gif");
-
                 UISquare newUISquare = new UISquare(new Point(squareR, squareC), squareSize);
-                //**** This is disposable test code, as the Squares will be set in Engine.Board (XmlDocument) *****
-
-                #endregion
 
                 if (this.DebugMode)
                 {
                     newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.Name + ".col" + currentSquare.Column + ".row" + currentSquare.Row, "Arial", 10);
                 }
 
+                //xfer variables over
+                newUISquare.X = squareR;
+                newUISquare.Y = squareC;
+                newUISquare.SquareSize = squareSize;
+
                 UIBoard.TranslateEngineStuffToUI(currentSquare, newUISquare);
 
                 formForBoard.Controls.Add(newUISquare); //Place our newly built square on the grid
+
 
                 //**** This is disposable test code, as the UI SquarePositions will be set in Engine.Board (XmlDocument) *****
 
@@ -162,10 +160,37 @@ namespace WinUIParts
         {
             //This is the only code that will remain in this loop when we are done.
             newUISquare.Color = currentSquare.Color;
+            newUISquare.Row = currentSquare.Row;
+            newUISquare.Column = currentSquare.Column;
+            newUISquare.Disabled = currentSquare.Disabled;
 
             if (currentSquare.CurrentPiece != null)
             {
                 newUISquare.CurrentPiece = currentSquare.CurrentPiece; //Ah, the power of interfaces..
+            }
+        }
+
+        protected int _findX;
+        protected int _findY;
+
+        public UISquare GetByXY(int x, int y)
+        {
+            this._findX = x;
+            this._findY = y;
+            UISquare foundSquare = this.Squares.Find(foundByXY);
+
+            return foundSquare;
+        }
+
+        protected bool foundByXY(UISquare find)
+        {
+            if ((find.X == this._findX) & (find.Y == this._findY))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
