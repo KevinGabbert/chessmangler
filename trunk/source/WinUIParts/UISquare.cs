@@ -33,37 +33,68 @@ namespace WinUIParts
         #region Properties
         #region ISquare Members
 
+        protected short _squareSize;
+        public short SquareSize
+        {
+            get
+            {
+                return _squareSize;
+            }
+            set
+            {
+                _squareSize = value;
+            }
+        }
+
+        protected int _x;
+        public int X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+
+        protected int _y;
+        public int Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+
+        protected int _row;
         public int Row
         {
             get
             {
-                throw new NotImplementedException();
+                return _row;
             }
             set
             {
-                throw new NotImplementedException();
+                _row = value;
             }
         }
+
+        protected int _column;
         public int Column
         {
             get
             {
-                throw new NotImplementedException();
+                return _column;
             }
             set
             {
-                throw new NotImplementedException();
-            }
-        }
-        public int Number
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                _column = value;
             }
         }
 
@@ -79,15 +110,16 @@ namespace WinUIParts
             }
         }
 
+        protected bool _disabled;
         public bool Disabled
         {
             get
             {
-                throw new NotImplementedException();
+                return _disabled;
             }
             set
             {
-                throw new NotImplementedException();
+                _disabled = value;
             }
         }
 
@@ -219,7 +251,7 @@ namespace WinUIParts
             // Create a graphics object to measure the text's width and height.
             Graphics objGraphics = Graphics.FromImage(objBmpImage);
 
-            // This is where the bitmap size is determined.
+            //This is where the bitmap size is determined.
             intWidth = (int)objGraphics.MeasureString(sImageText, objFont).Width;
             intHeight = (int)objGraphics.MeasureString(sImageText, objFont).Height;
 

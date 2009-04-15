@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 using System.Xml;
+using System.Collections.Generic;
+using Engine.Interfaces;
 
 using WinUIParts;
 
@@ -13,6 +15,19 @@ namespace SKChess
     /// </summary>
     public partial class ChessGrid : Form
     {
+        UIBoard _uiBoard = new UIBoard();
+        public UIBoard UIBoard
+        {
+            get
+            {
+                return _uiBoard;
+            }
+            set
+            {
+                _uiBoard = value;
+            }
+        }
+
         public ChessGrid()
         {
             InitializeComponent();
@@ -42,10 +57,8 @@ namespace SKChess
             {
                 testSetup = Config.LoadXML(configFile);
 
-                UIBoard newBoard = new UIBoard();
-                newBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file 
- 
-                //Steve, see those screwed up cell colors?? that's you..
+                this.UIBoard = new UIBoard();
+                this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file 
             }
             else
             {
@@ -67,8 +80,13 @@ namespace SKChess
             }
         }
 
+        //used for animation
         private MouseEventArgs _dragStart;
         private MouseEventArgs _dragEnd;
+
+        //used for rule evaluation
+        private ISquare _dragStartSquare;
+        private ISquare _dragEndSquare;
 
         private bool _mouseDown = true;
         private bool _isDragging = false;
@@ -77,8 +95,8 @@ namespace SKChess
         {
             _mouseDown = true;
             _dragStart = e;
+            _dragStartSquare = (ISquare)sender;
         }
-
         private void CellMouseMove(object sender, MouseEventArgs e)
         {
             _isDragging = _mouseDown;
@@ -90,19 +108,14 @@ namespace SKChess
                 //    picture needs to be animated and attached to the cursor.  (is this a windows function?)
             }
         }
-
         private void CellMouseUp(object sender, MouseEventArgs e)
         {
             _dragEnd = e;
             _isDragging = false;
-
-            //get start & end locations
-            //ChessSquare startSquare = (ChessSquare)dataGridView1[_dragStart.ColumnIndex, _dragStart.RowIndex];
-            //ChessSquare endSquare = (ChessSquare)dataGridView1[_dragEnd.ColumnIndex, _dragEnd.RowIndex];
+            _dragEndSquare = (ISquare)sender;
 
             //run rules
-
-            bool weCanMove = false; //= UIEngine.IsThisMoveOkay(startSquare, endSquare);
+            bool weCanMove = UIEngine.IsThisMoveOkay(_dragStartSquare, _dragEndSquare);
 
             if (weCanMove)
             {
