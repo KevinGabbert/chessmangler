@@ -163,6 +163,7 @@ namespace WinUIParts
             newUISquare.Row = currentSquare.Row;
             newUISquare.Column = currentSquare.Column;
             newUISquare.Disabled = currentSquare.Disabled;
+            //newUISquare.Image = currentSquare.Image;
 
             if (currentSquare.CurrentPiece != null)
             {
