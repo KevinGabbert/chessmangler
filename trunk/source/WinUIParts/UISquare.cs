@@ -23,6 +23,7 @@ namespace WinUIParts
         protected UISquare()
         {
 
+
         }
 
         public UISquare(Point formlocation, int size)
@@ -125,6 +126,15 @@ namespace WinUIParts
 
         #endregion
 
+
+        //Microsoft.. WHY do I have to override a virtual method on this???
+        public override bool AllowDrop 
+        { 
+            get; 
+            set; 
+        }
+
+
         protected IPiece _currentPiece;
         public IPiece CurrentPiece
         {
@@ -201,15 +211,16 @@ namespace WinUIParts
             }
         }
 
+        protected Image _image;
         Image IChessObject.Image
         {
             get
             {
-                throw new NotImplementedException();
+                return _image;
             }
             set
             {
-                throw new NotImplementedException();
+                _image = value;
             }
         }
 
