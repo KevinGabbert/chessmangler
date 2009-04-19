@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-using Engine.Interfaces;
+using ChessMangler.Engine.Interfaces;
 
-namespace Engine.Types
+namespace ChessMangler.Engine.Types
 {
     public class Square2D: ISquare
     {

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-using Rules.Types;
-using Engine.Types;
-using Engine.Interfaces;
+using ChessMangler.Rules.Types;
+using ChessMangler.Engine.Types;
+using ChessMangler.Engine.Interfaces;
 
-namespace Rules.Interfaces
+namespace ChessMangler.Rules.Interfaces
 {
     public interface IConfigurablePiece: IChessObject
     {

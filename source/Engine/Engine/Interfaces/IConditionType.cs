@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Engine.Interfaces
+namespace ChessMangler.Engine.Interfaces
 {
     public interface IConditionType
     {

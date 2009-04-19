@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-using Engine.Types;
+using ChessMangler.Engine.Types;
 
-namespace Engine.Interfaces
+namespace ChessMangler.Engine.Interfaces
 {
     public interface ISquare : IChessObject
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Engine.Types.Rules
+namespace ChessMangler.Engine.Types.Rules
 {
     public class Movement
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Engine.Interfaces;
+using ChessMangler.Engine.Interfaces;
 
-namespace Engine.Types.Rules
+namespace ChessMangler.Engine.Types.Rules
 {
     public class Condition
     {

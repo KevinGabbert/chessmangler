@@ -4,7 +4,7 @@ using System.Text;
 
 using System.Drawing;
 
-namespace Engine.Interfaces
+namespace ChessMangler.Engine.Interfaces
 {
     /// <summary>
     /// Attributes common to all Pieces and Squares

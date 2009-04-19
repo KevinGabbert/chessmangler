@@ -5,10 +5,10 @@ using System.Text;
 
 using System.Drawing;
 
-using Engine.Types.Rules;
-using Engine.Interfaces;
+using ChessMangler.Engine.Types.Rules;
+using ChessMangler.Engine.Interfaces;
 
-namespace Engine.Types
+namespace ChessMangler.Engine.Types
 {
     public class Piece: IPiece
     {

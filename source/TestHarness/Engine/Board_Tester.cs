@@ -1,13 +1,13 @@
 ﻿using System.Drawing;
 using NUnit.Framework;
-using Engine.Types;
+using ChessMangler.Engine.Types;
 
 using System.Collections.Generic;
 
 using System.IO;
 using System.Xml;
 
-namespace TestHarness.Engine
+namespace ChessMangler.TestHarness.Engine
 {
     [TestFixture]
     public class Board_Tester

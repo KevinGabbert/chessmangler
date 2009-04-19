@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}</ProjectGuid>
+    <ProjectGuid>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WinUIParts</RootNamespace>
-    <AssemblyName>WinUIParts</AssemblyName>
+    <RootNamespace>ChessMangler.ENgine</RootNamespace>
+    <AssemblyName>ChessMangler.Engine</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -36,7 +36,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -44,19 +43,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config.cs" />
+    <Compile Include="Config\ConfigParser.cs" />
+    <Compile Include="Interfaces\IChessObject.cs" />
+    <Compile Include="Interfaces\IConditionType.cs" />
+    <Compile Include="Interfaces\IConfigurablePiece.cs" />
+    <Compile Include="Interfaces\IPiece.cs" />
+    <Compile Include="Interfaces\IRulesPackage.cs" />
+    <Compile Include="Interfaces\ISquare.cs" />
+    <Compile Include="Types\Pieces\AttackPackage.cs" />
+    <Compile Include="Types\Boards\Board2D.cs" />
+    <Compile Include="Notes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIBoard.cs" />
-    <Compile Include="UIEngine.cs" />
-    <Compile Include="UISquare.cs">
-      <SubType>Component</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Engine\Engine\Engine.csproj">
-      <Project>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</Project>
-      <Name>Engine</Name>
-    </ProjectReference>
+    <Compile Include="Types\Boards\BoardDef.cs" />
+    <Compile Include="Types\Pieces\MovementPackage.cs" />
+    <Compile Include="Types\Pieces\Piece.cs" />
+    <Compile Include="Types\Pieces\PieceDef.cs" />
+    <Compile Include="Types\Rules\Board2DRules.cs" />
+    <Compile Include="Types\Rules\Capture.cs" />
+    <Compile Include="Types\Rules\Condition.cs" />
+    <Compile Include="Types\Rules\Conditions\Blocked.cs" />
+    <Compile Include="Types\Rules\Conditions\Checked.cs" />
+    <Compile Include="Types\Rules\Conditions\Moved.cs" />
+    <Compile Include="Types\Rules\Conditions\MyColor.cs" />
+    <Compile Include="Types\Rules\Leaper.cs" />
+    <Compile Include="Types\Rules\Movement.cs" />
+    <Compile Include="Types\Rules\RulesPackageBase.cs" />
+    <Compile Include="Types\Boards\Square2D.cs" />
+    <Compile Include="Types\Pieces\Location.cs" />
+    <Compile Include="Xml\Parser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

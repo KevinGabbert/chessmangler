@@ -8,10 +8,10 @@ using System.Drawing.Text;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-using Engine.Interfaces;
-using Rules.Interfaces;
+using ChessMangler.Engine.Interfaces;
+using ChessMangler.Rules.Interfaces;
 
-namespace WinUIParts
+namespace ChessMangler.WinUIParts
 {
     /// <summary>
     /// This object simply does what is needed 

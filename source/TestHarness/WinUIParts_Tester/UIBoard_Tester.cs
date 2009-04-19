@@ -5,9 +5,10 @@ using System.Xml;
 
 using System.Windows.Forms;
 using NUnit.Framework;
-using WinUIParts;
 
-namespace TestHarness.WinUIParts_Tester
+using ChessMangler.WinUIParts;
+
+namespace ChessMangler.TestHarness.WinUIParts_Tester
 {
     [TestFixture]
     public class UIBoard_Tester

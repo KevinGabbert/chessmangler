@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace Engine.Xml
+namespace ChessMangler.Engine.Xml
 {
     /// <summary>
     /// This is a class intended for generic XML parsing functions used by this library.

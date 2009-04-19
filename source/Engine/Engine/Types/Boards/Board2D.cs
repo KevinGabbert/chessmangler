@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Xml;
 
-using Engine.Config;
+using ChessMangler.Engine.Config;
 
-namespace Engine.Types
+namespace ChessMangler.Engine.Types
 {
     public class Board2D
     {

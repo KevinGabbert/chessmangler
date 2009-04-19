@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Rules.Types
+namespace ChessMangler.Rules.Types
 {
     //this concept may be deprecated by the "Movement" class
     public class BoardMovementPackage : RulesPackageBase

@@ -4,11 +4,12 @@ using System.Drawing;
 using System.IO;
 using System.Xml;
 using System.Collections.Generic;
-using Engine.Interfaces;
+using ChessMangler.Engine.Interfaces;
 
-using WinUIParts;
+using ChessMangler.Engine.Config;
+using ChessMangler.WinUIParts;
 
-namespace SKChess
+namespace ChessMangler.WinUIParts
 {
     /// <summary>
     /// This form only captures events from the form & scripts WinUIParts.  Nothing else.
