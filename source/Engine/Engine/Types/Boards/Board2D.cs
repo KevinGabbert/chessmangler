@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Xml;
 
 using ChessMangler.Engine.Config;
+using ChessMangler.Engine.Interfaces;
 
 namespace ChessMangler.Engine.Types
 {
@@ -95,6 +96,16 @@ namespace ChessMangler.Engine.Types
                         break;
                 }
             }
+        }
+
+        public static bool IsThisMoveOkay(ISquare startSquare, ISquare endSquare)
+        {
+            //no rules defined?? Then ALL moves are legal!
+
+            return true;
+
+
+            //Talk to the engine.. see what it has to say.  This function might not even
         }
 
         #region Squares

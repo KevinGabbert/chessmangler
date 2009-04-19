@@ -136,6 +136,7 @@ namespace ChessMangler.WinUIParts
                 UIBoard.TranslateEngineStuffToUI(currentSquare, newUISquare);
 
                 formForBoard.Controls.Add(newUISquare); //Place our newly built square on the grid
+                this.Squares.Add(newUISquare);
 
 
                 //**** This is disposable test code, as the UI SquarePositions will be set in Engine.Board (XmlDocument) *****
@@ -171,6 +172,13 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        public void ClearSquare(UISquare squareToClear)
+        {
+            //This UISquare is actually a ref to square on a form.. but doesn't *have* to be..
+            UISquare formSquare = this.GetByXY(squareToClear.X, squareToClear.Y);
+            squareToClear.Image = null;
+        }
+
         protected int _findX;
         protected int _findY;
 
@@ -182,7 +190,6 @@ namespace ChessMangler.WinUIParts
 
             return foundSquare;
         }
-
         protected bool foundByXY(UISquare find)
         {
             if ((find.X == this._findX) & (find.Y == this._findY))

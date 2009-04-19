@@ -29,6 +29,7 @@ namespace ChessMangler.WinUIParts
         public UISquare(Point formlocation, int size)
         {
             this.MakeSquare(formlocation, size);
+            this.AllowDrop = true;
         }
 
         #region Properties
@@ -132,6 +133,12 @@ namespace ChessMangler.WinUIParts
         { 
             get; 
             set; 
+        }
+
+        protected override void OnGiveFeedback(GiveFeedbackEventArgs gfbEvent)
+        {
+            // Allow us to use our own cursors when dragging
+            gfbEvent.UseDefaultCursors = false; //This could theoretically be in a config file somewhere.
         }
 
 
