@@ -19,7 +19,7 @@ namespace ChessMangler.WinUIParts
     {
         #region Properties
 
-        bool _debugMode = true;
+        bool _debugMode = false;
         public bool DebugMode
         {
             get
