@@ -8,6 +8,7 @@ using ChessMangler.Engine.Interfaces;
 
 using ChessMangler.Engine.Config;
 using ChessMangler.WinUIParts;
+using ChessMangler.Engine.Types;
 
 namespace ChessMangler.WinUIParts
 {
@@ -76,22 +77,15 @@ namespace ChessMangler.WinUIParts
             {
                 square.MouseDown += this.CellMouseDown;
                 square.MouseMove += this.CellMouseMove;
-                square.MouseUp += this.CellMouseUp;
 
                 square.DragEnter += this.CellDragEnter;
                 square.DragDrop += this.CellDragDrop;
-
-                square.AllowDrop = true;
             }
         }
 
-        //used for animation
-        private MouseEventArgs _dragStart;
-        private MouseEventArgs _dragEnd;
-
         //used for rule evaluation
-        private ISquare _dragStartSquare;
-        private ISquare _dragEndSquare;
+        private UISquare _dragStartSquare;
+        private UISquare _dragEndSquare;
 
         private bool _mouseDown = true;
         private bool _isDragging = false;
@@ -99,13 +93,15 @@ namespace ChessMangler.WinUIParts
         private void CellMouseDown(object sender, MouseEventArgs e)
         {
             _mouseDown = true;
-            _dragStart = e;
-            _dragStartSquare = (ISquare)sender;
+            _dragStartSquare = (UISquare)sender;
 
             //do we want it as currentPiece.Image?
-            if (_dragStartSquare.CurrentPiece.Image != null)
+            if (_dragStartSquare.CurrentPiece != null)
             {
-                this.DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
+                if (_dragStartSquare.CurrentPiece.Image != null)
+                {
+                    this.DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
+                }
             }
         }
         private void CellMouseMove(object sender, MouseEventArgs e)
@@ -124,64 +120,44 @@ namespace ChessMangler.WinUIParts
                 //    picture needs to be animated and attached to the cursor.  (is this a windows function?)
             //}
         }
-        private void CellMouseUp(object sender, MouseEventArgs e)
-        {
-            _dragEnd = e;
-            _isDragging = false;
-            _dragEndSquare = (ISquare)sender;
-
-            //run rules
-            bool weCanMove = UIEngine.IsThisMoveOkay(_dragStartSquare, _dragEndSquare);
-
-            if (weCanMove)
-            {
-                //update the engine..
-                //   -set new location in chesspiece.location prop.
-
-                //grab picture to drop
-                //System.Drawing.Bitmap _pictureToTransfer = (Bitmap)dataGridView1[_dragStart.ColumnIndex, _dragStart.RowIndex].Value;
-
-                //UI Class will do this;
-                //    set the picture in its new place
-            }
-            else
-            {
-                //UI Class will do this;
-                //    set the picture back in its old place
-            }
-        }
         private void CellDragEnter(object sender, DragEventArgs e)
         {
+            // Start the dragging proces
+            //DragDropEffects effect = DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
+
             //As we are interested in Image data only we will check this as follows
             if (e.Data.GetDataPresent(typeof(Bitmap)))
             {
                 e.Effect = DragDropEffects.Copy;
+
+                // Change the cursor to a hand
+                this.Cursor = Cursors.Hand;
             }
             else
             {
                 e.Effect = DragDropEffects.None;
             }
 
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
         }
-
         private void CellDragDrop(object sender, DragEventArgs e)
         {
-            //target control will accept data here 
-            ISquare destination = (ISquare)sender;
-            destination.CurrentPiece.Image = _dragStartSquare.CurrentPiece.Image; //(Bitmap)e.Data.GetData(typeof(Bitmap));
+            _isDragging = false;
+            _dragEndSquare = (UISquare)sender;
 
-            //try
-            //{
-            //    destination.CurrentPiece.Image = Image.FromFile(e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
-            //}
-            //catch (Exception ex)
-            //{ }
+            bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, _dragEndSquare);
 
+            if (weCanMove)
+            {
+                //Set the new piece
+                ((ISquare)sender).CurrentPiece = _dragStartSquare.CurrentPiece;
 
+                //Clear the old..
+                this.UIBoard.ClearSquare(_dragStartSquare);
+            }
+            else
+            {
+                //Flash the piece you are holding or something like that to show that you can't do that.
+            }
         }
     }
 }
