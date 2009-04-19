@@ -46,7 +46,6 @@
     <Compile Include="Config\ConfigParser.cs" />
     <Compile Include="Interfaces\IChessObject.cs" />
     <Compile Include="Interfaces\IConditionType.cs" />
-    <Compile Include="Interfaces\IConfigurablePiece.cs" />
     <Compile Include="Interfaces\IPiece.cs" />
     <Compile Include="Interfaces\IRulesPackage.cs" />
     <Compile Include="Interfaces\ISquare.cs" />
