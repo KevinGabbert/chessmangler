@@ -6,17 +6,42 @@ using System.Xml;
 using System.Collections.Generic;
 using ChessMangler.Engine.Interfaces;
 
+using System.Runtime.InteropServices;
+
 using ChessMangler.Engine.Config;
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 
+
+
 namespace ChessMangler.WinUIParts
 {
+    public struct IconInfo
+    {
+        public bool fIcon;
+        public int xHotspot;
+        public int yHotspot;
+        public IntPtr hbmMask;
+        public IntPtr hbmColor;
+    }
+
     /// <summary>
     /// This form only captures events from the form & scripts WinUIParts.  Nothing else.
     /// </summary>
     public partial class ChessGrid : Form
     {
+        #region WinAPI Calls
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo pIconInfo);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr CreateIconIndirect(ref IconInfo icon);
+
+        #endregion
+        #region Properties
+
         UIBoard _uiBoard = new UIBoard();
         public UIBoard UIBoard
         {
@@ -29,6 +54,8 @@ namespace ChessMangler.WinUIParts
                 _uiBoard = value;
             }
         }
+
+        #endregion
 
         public ChessGrid()
         {
@@ -86,58 +113,53 @@ namespace ChessMangler.WinUIParts
         //used for rule evaluation
         private UISquare _dragStartSquare;
         private UISquare _dragEndSquare;
+        private static IPiece _currentlyDraggingPiece;
 
         private bool _mouseDown = true;
         private bool _isDragging = false;
+
+        public static Cursor CreateCursor(Bitmap bmp, int xHotSpot, int yHotSpot)
+        {
+            IntPtr ptr = bmp.GetHicon();
+            IconInfo tmp = new IconInfo();
+            GetIconInfo(ptr, ref tmp);
+            tmp.xHotspot = xHotSpot;
+            tmp.yHotspot = yHotSpot;
+            tmp.fIcon = false;
+            ptr = CreateIconIndirect(ref tmp);
+            return new Cursor(ptr);
+        }
 
         private void CellMouseDown(object sender, MouseEventArgs e)
         {
             _mouseDown = true;
             _dragStartSquare = (UISquare)sender;
 
-            //do we want it as currentPiece.Image?
-            if (_dragStartSquare.CurrentPiece != null)
-            {
-                if (_dragStartSquare.CurrentPiece.Image != null)
-                {
-                    this.DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
-                }
-            }
+            ChessGrid.ShowPieceCursor((UISquare)sender);
+            this.UIBoard.ClearSquare(_dragStartSquare);
         }
         private void CellMouseMove(object sender, MouseEventArgs e)
         {
             _isDragging = _mouseDown;
-            ISquare senderSquare = (ISquare)sender;
+            UISquare senderSquare = (UISquare)sender;
 
-            //if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
-            //{
-                //UI Class will do this;
-                //    delete picture in old place
-                    //if (senderSquare.CurrentPiece != null)
-                    //{
-                    //    senderSquare.CurrentPiece.Image = null;
-                    //}
-                //    picture needs to be animated and attached to the cursor.  (is this a windows function?)
-            //}
+            if ((e.Button & MouseButtons.Left) == (MouseButtons.XButton1 | MouseButtons.Left))
+            {
+                ChessGrid.ShowPieceCursor(senderSquare);
+            }
         }
+
         private void CellDragEnter(object sender, DragEventArgs e)
         {
-            // Start the dragging proces
-            //DragDropEffects effect = DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
-
-            //As we are interested in Image data only we will check this as follows
             if (e.Data.GetDataPresent(typeof(Bitmap)))
             {
-                e.Effect = DragDropEffects.Copy;
-
-                // Change the cursor to a hand
-                this.Cursor = Cursors.Hand;
+                _dragEndSquare = (UISquare)sender;
+                ChessGrid.ShowPieceCursor((UISquare)sender);
             }
             else
             {
                 e.Effect = DragDropEffects.None;
             }
-
         }
         private void CellDragDrop(object sender, DragEventArgs e)
         {
@@ -149,7 +171,12 @@ namespace ChessMangler.WinUIParts
             if (weCanMove)
             {
                 //Set the new piece
-                ((ISquare)sender).CurrentPiece = _dragStartSquare.CurrentPiece;
+                ((ISquare)sender).CurrentPiece = _currentlyDraggingPiece;
+
+                this.DoDragDrop(_currentlyDraggingPiece.Image, DragDropEffects.Copy);
+
+                //((UISquare)sender).Refresh();
+
 
                 //Clear the old..
                 this.UIBoard.ClearSquare(_dragStartSquare);
@@ -157,6 +184,21 @@ namespace ChessMangler.WinUIParts
             else
             {
                 //Flash the piece you are holding or something like that to show that you can't do that.
+            }
+        }
+
+        private static void ShowPieceCursor(UISquare senderSquare)
+        {
+            if (senderSquare.CurrentPiece != null)
+            {
+                if (senderSquare.CurrentPiece.Image != null)
+                {
+                    _currentlyDraggingPiece = senderSquare.CurrentPiece;
+                    Bitmap bitmap = new Bitmap(_currentlyDraggingPiece.Image, senderSquare.Size);
+                    senderSquare.Cursor = CreateCursor(bitmap, 35, 35);
+
+                    bitmap.Dispose();
+                }
             }
         }
     }
