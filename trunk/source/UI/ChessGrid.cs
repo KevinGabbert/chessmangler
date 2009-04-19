@@ -140,6 +140,10 @@ namespace ChessMangler.WinUIParts
             _currentlyDraggingPiece = _dragStartSquare.CurrentPiece;
             _squareCurrentlyOver = (UISquare)sender;
 
+
+            //If you use this, then comment out MouseMove, and MouseUp
+            //this.DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
+
             ChessGrid.ShowPieceCursor((UISquare)sender);
 
             //this.UIBoard.ClearSquare(_dragStartSquare);
