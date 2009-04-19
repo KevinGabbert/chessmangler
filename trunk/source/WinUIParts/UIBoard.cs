@@ -179,6 +179,13 @@ namespace ChessMangler.WinUIParts
             squareToClear.Image = null;
         }
 
+        public void SetImage(UISquare squareToSet, IPiece piece)
+        {
+            //This UISquare is actually a ref to square on a form.. but doesn't *have* to be..
+            UISquare formSquare = this.GetByXY(squareToSet.X, squareToSet.Y);
+            squareToSet.CurrentPiece = piece;
+        }
+
         protected int _findX;
         protected int _findY;
 
@@ -187,12 +194,26 @@ namespace ChessMangler.WinUIParts
             this._findX = x;
             this._findY = y;
             UISquare foundSquare = this.Squares.Find(foundByXY);
-
+            
             return foundSquare;
         }
         protected bool foundByXY(UISquare find)
         {
-            if ((find.X == this._findX) & (find.Y == this._findY))
+            //Under Construction
+            //This function finishes when it finds its first TRUE
+
+            //if the pointer is *inside* a Square, then return that square.
+
+            int XMult = (72 * (find.X + 1));
+            int YMult = (72 * (find.Y + 1));
+
+            bool inRow = (find.X <= this._findX - XMult) & (find.X + XMult <= this._findX);
+
+            bool grZeroY = ((this._findY - YMult) >= 0);
+            bool inCol = (find.Y <= this._findY - YMult) & (grZeroY) &(find.Y + YMult <= this._findY);
+
+
+            if (inRow & inCol)
             {
                 return true;
             }

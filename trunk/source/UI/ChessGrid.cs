@@ -39,6 +39,9 @@ namespace ChessMangler.WinUIParts
         [DllImport("user32.dll")]
         public static extern IntPtr CreateIconIndirect(ref IconInfo icon);
 
+        [DllImport("user32.dll")]
+        static extern bool GetCursorPos(ref Point lpPoint);
+
         #endregion
         #region Properties
 
@@ -104,9 +107,11 @@ namespace ChessMangler.WinUIParts
             {
                 square.MouseDown += this.CellMouseDown;
                 square.MouseMove += this.CellMouseMove;
+                square.MouseUp += this.CellMouseUp;
 
-                square.DragEnter += this.CellDragEnter;
-                square.DragDrop += this.CellDragDrop;
+                //square.DragEnter += this.CellDragEnter;
+                //square.DragDrop += this.CellDragDrop;
+                
             }
         }
 
@@ -114,9 +119,7 @@ namespace ChessMangler.WinUIParts
         private UISquare _dragStartSquare;
         private UISquare _dragEndSquare;
         private static IPiece _currentlyDraggingPiece;
-
-        private bool _mouseDown = true;
-        private bool _isDragging = false;
+        private UISquare _squareCurrentlyOver;
 
         public static Cursor CreateCursor(Bitmap bmp, int xHotSpot, int yHotSpot)
         {
@@ -132,60 +135,133 @@ namespace ChessMangler.WinUIParts
 
         private void CellMouseDown(object sender, MouseEventArgs e)
         {
-            _mouseDown = true;
             _dragStartSquare = (UISquare)sender;
 
+            _currentlyDraggingPiece = _dragStartSquare.CurrentPiece;
+            _squareCurrentlyOver = (UISquare)sender;
+
             ChessGrid.ShowPieceCursor((UISquare)sender);
-            this.UIBoard.ClearSquare(_dragStartSquare);
+
+            //this.UIBoard.ClearSquare(_dragStartSquare);
         }
         private void CellMouseMove(object sender, MouseEventArgs e)
         {
-            _isDragging = _mouseDown;
-            UISquare senderSquare = (UISquare)sender;
 
-            if ((e.Button & MouseButtons.Left) == (MouseButtons.XButton1 | MouseButtons.Left))
-            {
-                ChessGrid.ShowPieceCursor(senderSquare);
-            }
+
+            Point defPnt = new Point();
+            GetCursorPos(ref defPnt);
+            _mouseX = defPnt.X - this.Location.X; //L-R 
+            _mouseY = defPnt.Y - this.Location.Y; //U-D 
+
+
+            ////so we have to do this manually.
+            //_squareCurrentlyOver = UIBoard.GetByXY(_mouseX, _mouseY);
+            //_squareCurrentlyOver.Visible = false;
+
+            Console.WriteLine(_mouseX.ToString() + "." + _mouseY.ToString());
+
+            //if (e.Button == (MouseButtons.Left | MouseButtons.XButton1))
+            //{
+            //    _squareCurrentlyOver.Visible = false;
+            //}
+        }
+        private void CellMouseUp(object sender, MouseEventArgs e)
+        {  
+            
+            //yeah, this is crap.  Sender is the start square???
+            //_dragEndSquare = (UISquare)sender;
+
+
+            
+            //_squareCurrentlyOver = UIBoard.GetByXY(_mouseX, _mouseY);
+
+           // _squareCurrentlyOver.Visible = false;
+
+            //this.Cursor = new Cursor(Cursor.Current.Handle);
+            //Cursor.Position = new Point(Cursor.Position.X - 50, Cursor.Position.Y - 50);
+
+            //_squareCurrentlyOver = UIBoard.GetByXY(this.Cursor.
+
+            //Set the new piece
+            _squareCurrentlyOver.CurrentPiece = _dragStartSquare.CurrentPiece; //_currentlyDraggingPiece;
+            //_squareCurrentlyDraggingOver.Visible = false;
+
+            //Clear the old..
+            //this.UIBoard.ClearSquare(_dragStartSquare);
+
+            //Set the cursor back to normal on the start square
+            _dragStartSquare.Cursor = Cursors.Arrow;
         }
 
-        private void CellDragEnter(object sender, DragEventArgs e)
+        int _mouseX;
+        int _mouseY;
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(Bitmap)))
-            {
-                _dragEndSquare = (UISquare)sender;
-                ChessGrid.ShowPieceCursor((UISquare)sender);
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
+            Point defPnt = new Point();
+
+            // Call the function and pass the Point, defPnt
+
+            GetCursorPos(ref defPnt);
+
+            // Now after calling the function, defPnt contains the coordinates which we can read
+
+            _mouseX = defPnt.X;
+            _mouseY = defPnt.Y;
         }
-        private void CellDragDrop(object sender, DragEventArgs e)
+
+
+        private void MoveCursor()
         {
-            _isDragging = false;
-            _dragEndSquare = (UISquare)sender;
+            // Set the Current cursor, move the cursor's Position,
+            // and set its clipping rectangle to the form. 
 
-            bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, _dragEndSquare);
-
-            if (weCanMove)
-            {
-                //Set the new piece
-                ((ISquare)sender).CurrentPiece = _currentlyDraggingPiece;
-
-                this.DoDragDrop(_currentlyDraggingPiece.Image, DragDropEffects.Copy);
-
-                //((UISquare)sender).Refresh();
-
-
-                //Clear the old..
-                this.UIBoard.ClearSquare(_dragStartSquare);
-            }
-            else
-            {
-                //Flash the piece you are holding or something like that to show that you can't do that.
-            }
+            this.Cursor = new Cursor(Cursor.Current.Handle);
+            Cursor.Position = new Point(Cursor.Position.X - 50, Cursor.Position.Y - 50);
+            Cursor.Clip = new Rectangle(this.Location, this.Size);
         }
+
+
+
+        //private void CellDragEnter(object sender, DragEventArgs e)
+        //{
+        //    //if (e.Data.GetDataPresent(typeof(Bitmap)))
+        //    //{
+        //       // _squareCurrentlyDraggingOver = (UISquare)sender;
+        //       // _dragEndSquare = (UISquare)sender;
+
+        //        //ChessGrid.ShowPieceCursor((UISquare)sender);
+        //    //}
+        //    //else
+        //    //{
+        //        //e.Effect = DragDropEffects.None;
+        //    //}
+        //}
+        //private void CellDragDrop(object sender, DragEventArgs e)
+        //{
+        //    _dragEndSquare = (UISquare)sender;
+
+        //    bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, _dragEndSquare);
+
+        //    if (weCanMove)
+        //    {
+        //        //Set the new piece
+        //        ((ISquare)sender).CurrentPiece = _dragStartSquare.CurrentPiece; //_currentlyDraggingPiece;
+
+                
+
+        //        //
+
+
+        //        //Clear the old..
+        //        //this.UIBoard.ClearSquare(_dragStartSquare);
+
+                
+        //    }
+        //    else
+        //    {
+        //        //Flash the piece you are holding or something like that to show that you can't do that.
+        //    }
+        //}
 
         private static void ShowPieceCursor(UISquare senderSquare)
         {
@@ -201,5 +277,7 @@ namespace ChessMangler.WinUIParts
                 }
             }
         }
+
+
     }
 }
