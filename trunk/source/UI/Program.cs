@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Windows.Forms;
 
-namespace SKChess
+namespace ChessMangler.WinUIParts
 {
     static class Program
     {

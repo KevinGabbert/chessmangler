@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Engine.Types;
-using Rules.Interfaces;
+using ChessMangler.Engine.Types;
+using ChessMangler.Rules.Interfaces;
 
-namespace Rules.Types
+namespace ChessMangler.Rules.Types
 {
     /// <summary>
     /// 

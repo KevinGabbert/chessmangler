@@ -5,12 +5,12 @@ using System.Xml;
 
 using System;
 
-using Rules.Interfaces;
-using Engine.Interfaces;
-using Engine.Types;
-using Engine.Config;
+using ChessMangler.Rules.Interfaces;
+using ChessMangler.Engine.Interfaces;
+using ChessMangler.Engine.Types;
+using ChessMangler.Engine.Config;
 
-namespace WinUIParts
+namespace ChessMangler.WinUIParts
 {
     /// <summary>
     /// This board does not enforce rules, it simply draws the board and moves pieces where it is told to..

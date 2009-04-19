@@ -4,7 +4,7 @@ using System.Text;
 
 using System.Drawing;
 
-namespace Engine.Types
+namespace ChessMangler.Engine.Types
 {
     public class PieceDef
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-using Engine.Interfaces;
+using ChessMangler.Engine.Interfaces;
 
-namespace WinUIParts
+namespace ChessMangler.WinUIParts
 {
     public class UIEngine
     {

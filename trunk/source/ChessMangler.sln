@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C# Express 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKWinUI", "UI\SKWinUI.csproj", "{9502F330-C0FB-4AF4-A89B-A19338CBD585}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.WinUI", "UI\ChessMangler.WinUI.csproj", "{9502F330-C0FB-4AF4-A89B-A19338CBD585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "TestHarness\TestHarness.csproj", "{D3665118-B129-446A-A20E-353130EECE00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.TestHarness", "TestHarness\ChessMangler.TestHarness.csproj", "{D3665118-B129-446A-A20E-353130EECE00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine\Engine.csproj", "{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.Engine", "Engine\Engine\ChessMangler.Engine.csproj", "{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIParts", "WinUIParts\WinUIParts.csproj", "{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.WinUIParts", "WinUIParts\ChessMangler.WinUIParts.csproj", "{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

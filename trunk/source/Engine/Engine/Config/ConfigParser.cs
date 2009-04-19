@@ -6,9 +6,9 @@ using System.Xml;
 
 using System.Drawing;
 
-using Engine.Types;
+using ChessMangler.Engine.Types;
 
-namespace Engine.Config
+namespace ChessMangler.Engine.Config
 {
     /// <summary>
     /// This is the class intended for use in parsing all chess config files.
