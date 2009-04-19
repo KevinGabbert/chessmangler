@@ -64,7 +64,6 @@
     <Compile Include="Types\Rules\Conditions\Checked.cs" />
     <Compile Include="Types\Rules\Conditions\Moved.cs" />
     <Compile Include="Types\Rules\Conditions\MyColor.cs" />
-    <Compile Include="Types\Rules\Leaper.cs" />
     <Compile Include="Types\Rules\Movement.cs" />
     <Compile Include="Types\Rules\RulesPackageBase.cs" />
     <Compile Include="Types\Boards\Square2D.cs" />
