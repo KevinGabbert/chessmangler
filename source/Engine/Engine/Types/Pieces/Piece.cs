@@ -84,18 +84,6 @@ namespace Engine.Types
             }
         }
 
-        public int Number
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public Color Color
         {
             get
