@@ -64,9 +64,6 @@
     <Compile Include="ChessGrid.Designer.cs">
       <DependentUpon>ChessGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ChessGrid.resx">
