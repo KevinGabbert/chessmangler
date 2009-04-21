@@ -61,9 +61,6 @@ namespace ChessMangler.WinUIParts
         #endregion
 
         private UISquare _dragStartSquare;
-        private UISquare _dragEndSquare;
-        private static IPiece _currentlyDraggingPiece;
-        private UISquare _squareCurrentlyOver;
 
         public ChessGrid()
         {
@@ -111,54 +108,33 @@ namespace ChessMangler.WinUIParts
             foreach(UISquare square in this.Controls)
             {
                 square.MouseDown += this.CellMouseDown;
-                square.MouseMove += this.CellMouseMove;
-
                 square.DragEnter += this.CellDragEnter;
-                square.DragDrop += this.CellDragDrop;
             }
         }
+
+        #region Cell Event Handlers
 
         private void CellMouseDown(object sender, MouseEventArgs e)
         {
             _dragStartSquare = (UISquare)sender;
-
-            _currentlyDraggingPiece = _dragStartSquare.CurrentPiece;
-            _squareCurrentlyOver = (UISquare)sender;
-
-            _dragStartSquare.GiveFeedback += this.CellGiveFeedback;
+            _dragStartSquare.MouseMove += this.CellMouseMove;
 
             ChessGrid.ShowPieceCursor((UISquare)sender);
-
             this.UIBoard.ClearSquare(_dragStartSquare);
         }
         private void CellMouseMove(object sender, MouseEventArgs e)
         {
+            _dragStartSquare.MouseMove -= this.CellMouseMove;
+
             if (e.Button != (MouseButtons.Left | MouseButtons.XButton1))
                 return;
 
             _dragStartSquare.DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
         }
 
-        private void CellGiveFeedback(object sender, GiveFeedbackEventArgs e)
-        {
-            e.UseDefaultCursors = e.Effect != DragDropEffects.Copy;
-            ChessGrid.ShowPieceCursor((UISquare)sender);
-        }
-
         private void CellDragEnter(object sender, DragEventArgs e)
         {
-            //if (e.Data.GetDataPresent(typeof(Bitmap)))
-            //{
-            //    _squareCurrentlyOver = (UISquare)sender;
-            //    _dragEndSquare = (UISquare)sender;
-
-            //    ChessGrid.ShowPieceCursor((UISquare)sender);
-            //    e.Effect = DragDropEffects.Copy;
-            //}
-            //else
-            //{
-            //    e.Effect = DragDropEffects.None;
-            //}
+            ((UISquare)sender).DragDrop += this.CellDragDrop;
 
             if (!e.Data.GetDataPresent(typeof(Bitmap)))
             {
@@ -170,23 +146,26 @@ namespace ChessMangler.WinUIParts
         }
         private void CellDragDrop(object sender, DragEventArgs e)
         {
-            _dragEndSquare = (UISquare)sender;
+            UISquare dragEndSquare = (UISquare)sender;
 
-            bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, _dragEndSquare);
+            bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
 
             if (weCanMove)
             {
                 //Set the new piece
                 ((ISquare)sender).CurrentPiece = _dragStartSquare.CurrentPiece; //_currentlyDraggingPiece;
-
-                //Clear the old..
-                //this.UIBoard.ClearSquare(_dragStartSquare);
             }
             else
             {
                 //Flash the piece you are holding or something like that to show that you can't do that.
             }
+
+            dragEndSquare.DragDrop -= this.CellDragDrop;
         }
+
+        #endregion
+
+        #region Cursor Code
 
         public static Cursor CreateCursor(Bitmap bmp, int xHotSpot, int yHotSpot)
         {
@@ -205,12 +184,13 @@ namespace ChessMangler.WinUIParts
             {
                 if (senderSquare.CurrentPiece.Image != null)
                 {
-                    _currentlyDraggingPiece = senderSquare.CurrentPiece;
-                    Bitmap bitmap = new Bitmap(_currentlyDraggingPiece.Image, senderSquare.Size);
+                    Bitmap bitmap = new Bitmap(senderSquare.CurrentPiece.Image, senderSquare.Size);
                     Cursor.Current = CreateCursor(bitmap, 35, 35);
                     bitmap.Dispose();
                 }
             }
         }
+
+        #endregion
     }
 }
