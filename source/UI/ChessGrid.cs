@@ -3,46 +3,21 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 using System.Xml;
+
 using System.Collections.Generic;
 using ChessMangler.Engine.Interfaces;
-
-using System.Runtime.InteropServices;
-
 using ChessMangler.Engine.Config;
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 
-
-
 namespace ChessMangler.WinUIParts
 {
-    public struct IconInfo
-    {
-        public bool fIcon;
-        public int xHotspot;
-        public int yHotspot;
-        public IntPtr hbmMask;
-        public IntPtr hbmColor;
-    }
-
     /// <summary>
     /// This form only captures events from the form & scripts WinUIParts.  Nothing else.
     /// </summary>
     public partial class ChessGrid : Form
     {
-        #region WinAPI Calls
 
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo pIconInfo);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr CreateIconIndirect(ref IconInfo icon);
-
-        [DllImport("user32.dll")]
-        static extern bool GetCursorPos(ref Point lpPoint);
-
-        #endregion
         #region Properties
 
         UIBoard _uiBoard = new UIBoard();
@@ -100,10 +75,14 @@ namespace ChessMangler.WinUIParts
                 MessageBox.Show("Default Board Setup file not found");
             }
 
-            this.AddHandlers();   
+            this.Add_Required_Square_Handlers();   
         }
 
-        public void AddHandlers()
+        /// <summary>
+        /// All Squares must have at least these events
+        /// (The others can be attached on the fly)
+        /// </summary>
+        public void Add_Required_Square_Handlers()
         {
             foreach(UISquare square in this.Controls)
             {
@@ -117,9 +96,16 @@ namespace ChessMangler.WinUIParts
         private void CellMouseDown(object sender, MouseEventArgs e)
         {
             _dragStartSquare = (UISquare)sender;
+
+            //No need to do anything if the user didn't click on a piece!
+            if (_dragStartSquare.CurrentPiece == null)
+            {
+                return;
+            }
+
             _dragStartSquare.MouseMove += this.CellMouseMove;
 
-            ChessGrid.ShowPieceCursor((UISquare)sender);
+            ChessPieceCursor.ShowPieceCursor((UISquare)sender);
             this.UIBoard.ClearSquare(_dragStartSquare);
         }
         private void CellMouseMove(object sender, MouseEventArgs e)
@@ -161,34 +147,6 @@ namespace ChessMangler.WinUIParts
             }
 
             dragEndSquare.DragDrop -= this.CellDragDrop;
-        }
-
-        #endregion
-
-        #region Cursor Code
-
-        public static Cursor CreateCursor(Bitmap bmp, int xHotSpot, int yHotSpot)
-        {
-            IntPtr ptr = bmp.GetHicon();
-            IconInfo tmp = new IconInfo();
-            GetIconInfo(ptr, ref tmp);
-            tmp.xHotspot = xHotSpot;
-            tmp.yHotspot = yHotSpot;
-            tmp.fIcon = false;
-            ptr = CreateIconIndirect(ref tmp);
-            return new Cursor(ptr);
-        }
-        private static void ShowPieceCursor(UISquare senderSquare)
-        {
-            if (senderSquare.CurrentPiece != null)
-            {
-                if (senderSquare.CurrentPiece.Image != null)
-                {
-                    Bitmap bitmap = new Bitmap(senderSquare.CurrentPiece.Image, senderSquare.Size);
-                    Cursor.Current = CreateCursor(bitmap, 35, 35);
-                    bitmap.Dispose();
-                }
-            }
         }
 
         #endregion
