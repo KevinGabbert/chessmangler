@@ -56,6 +56,20 @@ namespace ChessMangler.Engine.Types
             }
         }
 
+        //This may not be the final resting place for this property, but it will be necessary.
+        bool _rulesEnabled = true;
+        public bool RulesEnabled
+        {
+            get
+            {
+                return _rulesEnabled;
+            }
+            set
+            {
+                _rulesEnabled = value;
+            }
+        }
+
         #endregion
 
         public Board2D(XmlDocument configFile, string UIDirectory)
