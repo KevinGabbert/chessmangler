@@ -99,11 +99,35 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
+        int _findRow;
+        int _findCol;
+        public UISquare GetByLocation(int row, int column)
+        {
+            this._findRow = row;
+            this._findCol = column;
+            UISquare foundSquare = this.Squares.Find(foundByLocation);
+
+            return foundSquare;
+        }
+
+        protected bool foundByLocation(UISquare find)
+        {
+            if ((find.Row == this._findRow) & (find.Column == this._findCol))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void CreateBoard(Form formForBoard, XmlDocument configFile, string directory)
         {
             this.EngineBoard = new Board2D(configFile, directory);
             Int16 squareSize = this.GetSquareSize(configFile); //TODO: if squaresize is -1 then throw custom exception
 
+            //TODO:  keep these "adjustment numbers" somewhere
             formForBoard.Width = (squareSize * this.EngineBoard.Definition.Columns) + 12;
             formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + 30;
 
