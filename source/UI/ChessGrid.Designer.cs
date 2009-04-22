@@ -39,6 +39,7 @@
             this.Name = "ChessGrid";
             this.Text = "ChessGrid";
             this.Load += new System.EventHandler(this.ChessGrid_Load);
+            this.Resize += new System.EventHandler(this.ChessGrid_Resize);
             this.ResumeLayout(false);
 
         }

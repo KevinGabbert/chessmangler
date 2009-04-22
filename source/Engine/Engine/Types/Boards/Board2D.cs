@@ -116,6 +116,7 @@ namespace ChessMangler.Engine.Types
         {
             //no rules defined?? Then ALL moves are legal!
 
+
             return true;
 
 
@@ -188,7 +189,6 @@ namespace ChessMangler.Engine.Types
 
                 for (Int16 currentColumn = 0; currentColumn < boardDef.Columns; currentColumn++)
                 {
-                    //This IF may be temporary, as I'm evaluating whether this is a good idea..
                     if (this.IsNew)
                     {
                         Square2D newSquare;

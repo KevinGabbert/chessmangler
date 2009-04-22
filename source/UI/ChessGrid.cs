@@ -37,9 +37,15 @@ namespace ChessMangler.WinUIParts
 
         private UISquare _dragStartSquare;
 
+        string _sourceDir;
+        string _configFile;
+
         public ChessGrid()
         {
             InitializeComponent();
+
+            _sourceDir = _sourceDir = Directory.GetParent(Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString()).ToString();
+            _configFile = _sourceDir + "\\UI\\Board2D.config";
         }
 
         private void ChessGrid_Load(object sender, EventArgs e)
@@ -53,18 +59,17 @@ namespace ChessMangler.WinUIParts
 
             string configPath = System.Environment.CurrentDirectory + "\\Board2D.config"; //have it copy local
 
-            string sourceDir = Directory.GetParent(Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString()).ToString();
-            string uiDirectory = sourceDir + "\\UI";
+            
+            string uiDirectory = _sourceDir + "\\UI";
             string imagesDirectory = uiDirectory + "\\images";
-            string configFile = sourceDir + "\\UI\\Board2D.config";
 
             bool exists = false;
 
-            exists = File.Exists(configFile);
+            exists = File.Exists(_configFile);
 
             if (exists)
             {
-                testSetup = Config.LoadXML(configFile);
+                testSetup = Config.LoadXML(_configFile);
 
                 this.UIBoard = new UIBoard();
                 this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file 
@@ -150,5 +155,65 @@ namespace ChessMangler.WinUIParts
         }
 
         #endregion
+
+        private void ChessGrid_Resize(object sender, EventArgs e)
+        {
+            ChessGrid thisForm = (ChessGrid)sender;
+
+            //for the moment, we will pull this from config.  (we'll use a pre-loaded prop later)
+            Int16 defaultSquareSize  = this.UIBoard.GetSquareSize(Config.LoadXML(_configFile));
+
+            //Ensure that the client area is always square
+            //int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
+            //ClientSize = new Size(iSize, iSize);
+
+            int i = 0;
+            //Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
+
+            BoardDef board = new BoardDef(8, 8);
+            foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
+            {
+                UISquare currentUISquare = this.UIBoard.GetByLocation(currentSquare.Row, currentSquare.Column);
+
+                if (currentUISquare != null)
+                {
+                    //Square Location
+                    //Reverses board, but its a start
+                    currentUISquare.Location = new Point(currentSquare.Column * ClientSize.Width / 8, currentSquare.Row * ClientSize.Height / 8);
+
+                    //Square Size
+                    currentUISquare.Height = ClientSize.Height / 8;
+                    currentUISquare.Width = ClientSize.Width / 8;
+                }
+
+                i++;
+            }
+        }
+
+        public void TurnBoard()
+        {
+            int i = 0;
+            //cycle through all the squares on the board..
+            BoardDef board = new BoardDef(8, 8);
+            foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
+            {
+                UISquare currentUISquare = this.UIBoard.GetByLocation(currentSquare.Row, currentSquare.Column);
+
+                if (currentUISquare != null)
+                {
+                    //turns
+                    currentUISquare.Location = new Point(currentSquare.Row * 72, currentSquare.Column * 72);
+
+                    //reverses
+                    //currentUISquare.Location = new Point(currentSquare.Column * 72, currentSquare.Row * 72);
+                }
+
+                i++;
+            }
+        }
     }
 }
+
+
+
+
