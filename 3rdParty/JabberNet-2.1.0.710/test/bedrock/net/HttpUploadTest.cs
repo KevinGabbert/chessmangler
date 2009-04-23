@@ -39,6 +39,7 @@ namespace test.bedrock.net
             }
         }
 
+        [Ignore("Test commented out")]
         [Test]
         public void UploadFile()
         {

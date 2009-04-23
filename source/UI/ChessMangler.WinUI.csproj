@@ -46,6 +46,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="netlib.Dns, Version=1.1.3399.12391, Culture=neutral, PublicKeyToken=924c5b18328d6f09, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\3rdParty\JabberNet-2.1.0.710\netlib.Dns\bin\Debug\netlib.Dns.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -54,8 +58,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="zlib.net, Version=1.0.3.0, Culture=neutral, PublicKeyToken=924c5b18328d6f09, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\3rdParty\JabberNet-2.1.0.710\lib20\zlib.net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChessGrid.cs">
@@ -93,6 +102,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\3rdParty\JabberNet-2.1.0.710\2005-jabber-net.csproj">
+      <Project>{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}</Project>
+      <Name>2005-jabber-net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Engine\Engine\ChessMangler.Engine.csproj">
       <Project>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</Project>
       <Name>ChessMangler.Engine</Name>
