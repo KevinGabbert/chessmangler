@@ -89,10 +89,13 @@ namespace ChessMangler.WinUIParts
         /// </summary>
         public void Add_Required_Square_Handlers()
         {
-            foreach(UISquare square in this.Controls)
+            foreach(object control in this.Controls)
             {
-                square.MouseDown += this.CellMouseDown;
-                square.DragEnter += this.CellDragEnter;
+                if(typeof(Control).ToString() == "UISquare")
+                {
+                    ((UISquare)control).MouseDown += this.CellMouseDown;
+                    ((UISquare)control).DragEnter += this.CellDragEnter;
+                }
             }
         }
 
@@ -210,6 +213,11 @@ namespace ChessMangler.WinUIParts
 
                 i++;
             }
+        }
+
+        private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
