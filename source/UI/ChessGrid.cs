@@ -89,9 +89,11 @@ namespace ChessMangler.WinUIParts
         /// </summary>
         public void Add_Required_Square_Handlers()
         {
-            foreach(object control in this.Controls)
+            foreach(Control control in this.Controls)
             {
-                if(typeof(Control).ToString() == "UISquare")
+                string controlType = control.GetType().ToString();
+                
+                if (controlType == "ChessMangler.WinUIParts.UISquare")
                 {
                     ((UISquare)control).MouseDown += this.CellMouseDown;
                     ((UISquare)control).DragEnter += this.CellDragEnter;
