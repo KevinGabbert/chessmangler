@@ -152,7 +152,15 @@ namespace ChessMangler.WinUIParts
             set
             {
                 _currentPiece = value;
-                this.Image = value.Image;
+
+                if (value != null)
+                {
+                    this.Image = value.Image;
+                }
+                else
+                {
+                    this.Image = null;
+                }
             }
         }
 

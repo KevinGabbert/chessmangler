@@ -4,6 +4,147 @@
         <name>muzzle</name>
     </assembly>
     <members>
+        <member name="T:muzzle.InputBox">
+            <summary>
+            A generic input getter dialog.
+            </summary>
+        </member>
+        <member name="F:muzzle.InputBox.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:muzzle.InputBox.#ctor">
+            <summary>
+            Create
+            </summary>
+        </member>
+        <member name="M:muzzle.InputBox.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:muzzle.InputBox.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:muzzle.InputBox.ShowDialog(System.String,System.String,System.String)">
+            <summary>
+            Pop up the input box with the given parameters
+            </summary>
+            <param name="title">The text of the window title</param>
+            <param name="prompt">Prompt value.  Include colon if desired.</param>
+            <param name="defaultValue">Initial value of the input box</param>
+            <returns></returns>
+        </member>
+        <member name="P:muzzle.InputBox.Value">
+            <summary>
+            The value entered by the user
+            </summary>
+        </member>
+        <member name="T:muzzle.ChatHistory">
+            <summary>
+            Keep track of the history of a conversation or room.
+            </summary>
+        </member>
+        <member name="T:muzzle.BottomScrollRichText">
+            <summary>
+            Summary description for BottomScrollRichText.
+            </summary>
+        </member>
+        <member name="F:muzzle.BottomScrollRichText.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.#ctor">
+            <summary>
+            Create a RichText that can scroll to the bottom easily.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.WndProc(System.Windows.Forms.Message@)">
+            <summary>
+            The message pump.  Overriden to catch the WM_VSCROLL events.
+            </summary>
+            <param name="m"></param>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.ClearAndScroll">
+            <summary>
+            Clear the text, and scroll back to the top.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.ScrollToBottom">
+            <summary>
+            Scroll to the bottom of the current text.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.AppendMaybeScroll(System.String)">
+            <summary>
+            Append text.  If we were at the bottom, scroll to the bottom.  Otherwise leave the scroll position
+            where it is.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.AppendMaybeScroll(System.Drawing.Color,System.String,System.String)">
+             <summary>
+             Add a line that has a colored tag string, followed by a space, followed by
+             a chunk of text in the default color, followed by a newline.
+            
+             Note: Although this seems kind of random, it's needed in several places.
+             </summary>
+             <param name="tagColor">The color to use for the tag</param>
+             <param name="tag">The tag string</param>
+             <param name="text">The main text</param>
+        </member>
+        <member name="P:muzzle.BottomScrollRichText.IsAtBottom">
+            <summary>
+            Is the text currently scrolled to the bottom?
+            </summary>
+        </member>
+        <member name="M:muzzle.ChatHistory.#ctor">
+            <summary>
+            Create.  Make sure to set Client and From, at least.
+            </summary>
+        </member>
+        <member name="M:muzzle.ChatHistory.InsertMessage(jabber.protocol.client.Message)">
+            <summary>
+            Insert the given message into the history.  The timestamp on the message will be used, if
+            included, otherwise the current time will be used.
+            Messages without bodies will be ignored.
+            </summary>
+            <param name="msg"></param>
+        </member>
+        <member name="M:muzzle.ChatHistory.InsertSend(System.String)">
+            <summary>
+            We sent some text; insert it.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:muzzle.ChatHistory.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:muzzle.ChatHistory.Nickname">
+            <summary>
+            Nickname for the associated user.  If null, the resource will be used (e.g. MUC).
+            </summary>
+        </member>
         <member name="T:muzzle.RosterTree">
             <summary>
             A TreeView optimized for showing Jabber roster items.  Make sure that the
@@ -144,162 +285,6 @@
             The roster item.  Please make a clone before using it.
             </summary>
         </member>
-        <member name="T:muzzle.XmppDebugger">
-            <summary>
-            Debug stream for XMPP, so I don't have write it every time.
-            </summary>
-        </member>
-        <member name="T:muzzle.StreamControl">
-            <summary>
-            A UserControl that references an XmppStream.
-            </summary>
-        </member>
-        <member name="F:muzzle.StreamControl.m_stream">
-            <summary>
-            The XmppStream for this control.  Set at design time when a subclass control is dragged onto a form.
-            </summary>
-        </member>
-        <member name="E:muzzle.StreamControl.OnStreamChanged">
-            <summary>
-            The XmppStream was changed.  Often at design time.  The object will be this StreamControl.
-            </summary>
-        </member>
-        <member name="P:muzzle.StreamControl.Stream">
-            <summary>
-            The JabberClient or JabberService to hook up to.
-            </summary>
-        </member>
-        <member name="F:muzzle.XmppDebugger.components">
-            <summary>
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:muzzle.XmppDebugger.#ctor">
-            <summary>
-            Create
-            </summary>
-        </member>
-        <member name="M:muzzle.XmppDebugger.WriteError(System.String)">
-            <summary>
-            Write an error to the log.
-            </summary>
-            <param name="error"></param>
-        </member>
-        <member name="M:muzzle.XmppDebugger.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:muzzle.XmppDebugger.Clear">
-            <summary>
-            Clear both text boxes
-            </summary>
-        </member>
-        <member name="M:muzzle.XmppDebugger.Write(System.String,System.String)">
-            <summary>
-            Write other text to the debug log
-            </summary>
-            <param name="tag">The tag to prefix with</param>
-            <param name="text">The text after the tag</param>
-        </member>
-        <member name="M:muzzle.XmppDebugger.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="P:muzzle.XmppDebugger.SendColor">
-            <summary>
-            What color to use for the "SEND:" string.
-            </summary>
-        </member>
-        <member name="P:muzzle.XmppDebugger.ReceiveColor">
-            <summary>
-            What color to use for the "RECV:" string.
-            </summary>
-        </member>
-        <member name="P:muzzle.XmppDebugger.ErrorColor">
-            <summary>
-            What color to use for the "ERROR:" string.
-            </summary>
-        </member>
-        <member name="P:muzzle.XmppDebugger.TextColor">
-            <summary>
-            What color to use for the sent and received text.
-            </summary>
-        </member>
-        <member name="P:muzzle.XmppDebugger.OtherColor">
-            <summary>
-            What color to use for other text inserted
-            </summary>
-        </member>
-        <member name="P:muzzle.XmppDebugger.SendPrefix">
-            <summary>
-            The string to prefix on sent bytes.
-            </summary>
-        </member>
-        <member name="P:muzzle.XmppDebugger.ReceivePrefix">
-            <summary>
-            The string to prefix on sent bytes.
-            </summary>
-        </member>
-        <member name="P:muzzle.XmppDebugger.ErrorPrefix">
-            <summary>
-            The string to prefix on errors.
-            </summary>
-        </member>
-        <member name="T:muzzle.XDataForm">
-            <summary>
-            Summary description for XData.
-            </summary>
-        </member>
-        <member name="M:muzzle.XDataForm.#ctor">
-            <summary>
-            Create an x:data form with no contents.
-            </summary>
-        </member>
-        <member name="M:muzzle.XDataForm.#ctor(jabber.protocol.client.Message)">
-            <summary>
-            Create an x:data form from the given message stanza.
-            </summary>
-            <param name="parent">Original stanza</param>
-        </member>
-        <member name="M:muzzle.XDataForm.#ctor(jabber.protocol.client.IQ)">
-            <summary>
-            Create an x:data form from the given iq stanza.
-            </summary>
-            <param name="parent">Original stanza</param>
-        </member>
-        <member name="M:muzzle.XDataForm.#ctor(jabber.protocol.x.Data)">
-            <summary>
-            Create an x:data form from the given XML form description
-            </summary>
-            <param name="x">x:data form to render</param>
-        </member>
-        <member name="M:muzzle.XDataForm.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-        </member>
-        <member name="M:muzzle.XDataForm.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="M:muzzle.XDataForm.GetResponse">
-            <summary>
-            Get a response to the original stanza that caused this form to be popped up.
-            </summary>
-            <returns>A stanza ready to be sent back to the originator.</returns>
-        </member>
-        <member name="M:muzzle.XDataForm.FillInResponse(jabber.protocol.x.Data)">
-            <summary>
-            Modify the given x:data element to contain the response data.
-            </summary>
-            <param name="x"></param>
-        </member>
         <member name="T:muzzle.OptionForm">
             <summary>
             Base class for forms that configure XmppStream subclasses.
@@ -404,39 +389,34 @@
             <param name="option"></param>
             <returns></returns>
         </member>
-        <member name="T:muzzle.ComponentLogin">
-             <summary>
-             A login form for client connections.
-             </summary>
-             <example>
-             ComponentLogin l = new ComponentLogin(jc);
-            
-             if (l.ShowDialog(this) == DialogResult.OK)
-             {
-                 jc.Connect();
-             }
-             </example>
-        </member>
-        <member name="M:muzzle.ComponentLogin.#ctor">
+        <member name="T:muzzle.JidMulti">
             <summary>
-            Create a Client Login dialog box
+            Summary description for JidMulti.
             </summary>
         </member>
-        <member name="M:muzzle.ComponentLogin.Login(jabber.server.JabberService,System.String)">
+        <member name="M:muzzle.JidMulti.#ctor">
             <summary>
-            Log in to the server
+            Create a JidMulti control
             </summary>
-            <param name="service">The JabberClient instance to connect</param>
-            <param name="propertyFile">The name of an XML file to store properties in.</param>
-            <returns>True if the user clicked OK, false on cancel</returns>
         </member>
-        <member name="M:muzzle.ComponentLogin.#ctor(jabber.server.JabberService)">
+        <member name="M:muzzle.JidMulti.Dispose(System.Boolean)">
             <summary>
-            Create a Client Login dialog box that manages a component
+            Clean up any resources being used.
             </summary>
-            <param name="service">The component to manage</param>
         </member>
-        <member name="M:muzzle.ComponentLogin.InitializeComponent">
+        <member name="M:muzzle.JidMulti.AddRange(System.Object[])">
+            <summary>
+            Add a range of JIDs or strings to the list.
+            </summary>
+            <param name="range"></param>
+        </member>
+        <member name="M:muzzle.JidMulti.GetValues">
+            <summary>
+            Get the list of JIDs in the control currently.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:muzzle.JidMulti.InitializeComponent">
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
@@ -523,189 +503,109 @@
             Don't update the display for now.  Useful for bulk loads.
             </summary>
         </member>
-        <member name="T:muzzle.InputBox">
+        <member name="T:muzzle.XmppDebugger">
             <summary>
-            A generic input getter dialog.
+            Debug stream for XMPP, so I don't have write it every time.
             </summary>
         </member>
-        <member name="F:muzzle.InputBox.components">
+        <member name="T:muzzle.StreamControl">
+            <summary>
+            A UserControl that references an XmppStream.
+            </summary>
+        </member>
+        <member name="F:muzzle.StreamControl.m_stream">
+            <summary>
+            The XmppStream for this control.  Set at design time when a subclass control is dragged onto a form.
+            </summary>
+        </member>
+        <member name="E:muzzle.StreamControl.OnStreamChanged">
+            <summary>
+            The XmppStream was changed.  Often at design time.  The object will be this StreamControl.
+            </summary>
+        </member>
+        <member name="P:muzzle.StreamControl.Stream">
+            <summary>
+            The JabberClient or JabberService to hook up to.
+            </summary>
+        </member>
+        <member name="F:muzzle.XmppDebugger.components">
             <summary>
             Required designer variable.
             </summary>
         </member>
-        <member name="M:muzzle.InputBox.#ctor">
+        <member name="M:muzzle.XmppDebugger.#ctor">
             <summary>
             Create
             </summary>
         </member>
-        <member name="M:muzzle.InputBox.Dispose(System.Boolean)">
+        <member name="M:muzzle.XmppDebugger.WriteError(System.String)">
+            <summary>
+            Write an error to the log.
+            </summary>
+            <param name="error"></param>
+        </member>
+        <member name="M:muzzle.XmppDebugger.Dispose(System.Boolean)">
             <summary>
             Clean up any resources being used.
             </summary>
             <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         </member>
-        <member name="M:muzzle.InputBox.InitializeComponent">
+        <member name="M:muzzle.XmppDebugger.Clear">
+            <summary>
+            Clear both text boxes
+            </summary>
+        </member>
+        <member name="M:muzzle.XmppDebugger.Write(System.String,System.String)">
+            <summary>
+            Write other text to the debug log
+            </summary>
+            <param name="tag">The tag to prefix with</param>
+            <param name="text">The text after the tag</param>
+        </member>
+        <member name="M:muzzle.XmppDebugger.InitializeComponent">
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
             </summary>
         </member>
-        <member name="M:muzzle.InputBox.ShowDialog(System.String,System.String,System.String)">
+        <member name="P:muzzle.XmppDebugger.SendColor">
             <summary>
-            Pop up the input box with the given parameters
-            </summary>
-            <param name="title">The text of the window title</param>
-            <param name="prompt">Prompt value.  Include colon if desired.</param>
-            <param name="defaultValue">Initial value of the input box</param>
-            <returns></returns>
-        </member>
-        <member name="P:muzzle.InputBox.Value">
-            <summary>
-            The value entered by the user
+            What color to use for the "SEND:" string.
             </summary>
         </member>
-        <member name="T:muzzle.ClientLogin">
-             <summary>
-             A login form for client connections.
-             </summary>
-             <example>
-             ClientLogin l = new ClientLogin(jc);
-            
-             if (l.ShowDialog(this) == DialogResult.OK)
-             {
-                 jc.Connect();
-             }
-             </example>
-        </member>
-        <member name="F:muzzle.ClientLogin.tpBasic">
+        <member name="P:muzzle.XmppDebugger.ReceiveColor">
             <summary>
-            The basic configuration tab.
+            What color to use for the "RECV:" string.
             </summary>
         </member>
-        <member name="M:muzzle.ClientLogin.#ctor">
+        <member name="P:muzzle.XmppDebugger.ErrorColor">
             <summary>
-            Create a Client Login dialog box
+            What color to use for the "ERROR:" string.
             </summary>
         </member>
-        <member name="M:muzzle.ClientLogin.Login(jabber.client.JabberClient,System.String)">
+        <member name="P:muzzle.XmppDebugger.TextColor">
             <summary>
-            Log in to the server
-            </summary>
-            <param name="cli">The JabberClient instance to connect</param>
-            <param name="propertyFile">The name of an XML file to store properties in.</param>
-            <returns>True if the user clicked OK, false on cancel</returns>
-        </member>
-        <member name="M:muzzle.ClientLogin.#ctor(jabber.client.JabberClient)">
-            <summary>
-            Create a Client Login dialog box than manages the connection properties of a particular client
-            connection.
-            </summary>
-            <param name="cli">The client connection to modify</param>
-        </member>
-        <member name="M:muzzle.ClientLogin.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
+            What color to use for the sent and received text.
             </summary>
         </member>
-        <member name="T:muzzle.ChatHistory">
+        <member name="P:muzzle.XmppDebugger.OtherColor">
             <summary>
-            Keep track of the history of a conversation or room.
+            What color to use for other text inserted
             </summary>
         </member>
-        <member name="T:muzzle.BottomScrollRichText">
+        <member name="P:muzzle.XmppDebugger.SendPrefix">
             <summary>
-            Summary description for BottomScrollRichText.
+            The string to prefix on sent bytes.
             </summary>
         </member>
-        <member name="F:muzzle.BottomScrollRichText.components">
+        <member name="P:muzzle.XmppDebugger.ReceivePrefix">
             <summary>
-            Required designer variable.
+            The string to prefix on sent bytes.
             </summary>
         </member>
-        <member name="M:muzzle.BottomScrollRichText.#ctor">
+        <member name="P:muzzle.XmppDebugger.ErrorPrefix">
             <summary>
-            Create a RichText that can scroll to the bottom easily.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.WndProc(System.Windows.Forms.Message@)">
-            <summary>
-            The message pump.  Overriden to catch the WM_VSCROLL events.
-            </summary>
-            <param name="m"></param>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.ClearAndScroll">
-            <summary>
-            Clear the text, and scroll back to the top.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.ScrollToBottom">
-            <summary>
-            Scroll to the bottom of the current text.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.AppendMaybeScroll(System.String)">
-            <summary>
-            Append text.  If we were at the bottom, scroll to the bottom.  Otherwise leave the scroll position
-            where it is.
-            </summary>
-            <param name="text"></param>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.AppendMaybeScroll(System.Drawing.Color,System.String,System.String)">
-             <summary>
-             Add a line that has a colored tag string, followed by a space, followed by
-             a chunk of text in the default color, followed by a newline.
-            
-             Note: Although this seems kind of random, it's needed in several places.
-             </summary>
-             <param name="tagColor">The color to use for the tag</param>
-             <param name="tag">The tag string</param>
-             <param name="text">The main text</param>
-        </member>
-        <member name="P:muzzle.BottomScrollRichText.IsAtBottom">
-            <summary>
-            Is the text currently scrolled to the bottom?
-            </summary>
-        </member>
-        <member name="M:muzzle.ChatHistory.#ctor">
-            <summary>
-            Create.  Make sure to set Client and From, at least.
-            </summary>
-        </member>
-        <member name="M:muzzle.ChatHistory.InsertMessage(jabber.protocol.client.Message)">
-            <summary>
-            Insert the given message into the history.  The timestamp on the message will be used, if
-            included, otherwise the current time will be used.
-            Messages without bodies will be ignored.
-            </summary>
-            <param name="msg"></param>
-        </member>
-        <member name="M:muzzle.ChatHistory.InsertSend(System.String)">
-            <summary>
-            We sent some text; insert it.
-            </summary>
-            <param name="text"></param>
-        </member>
-        <member name="M:muzzle.ChatHistory.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="P:muzzle.ChatHistory.Nickname">
-            <summary>
-            Nickname for the associated user.  If null, the resource will be used (e.g. MUC).
+            The string to prefix on errors.
             </summary>
         </member>
         <member name="T:muzzle.ChartStyle">
@@ -871,34 +771,134 @@
             The last value inserted into the chart.
             </summary>
         </member>
-        <member name="T:muzzle.JidMulti">
+        <member name="T:muzzle.XDataForm">
             <summary>
-            Summary description for JidMulti.
+            Summary description for XData.
             </summary>
         </member>
-        <member name="M:muzzle.JidMulti.#ctor">
+        <member name="M:muzzle.XDataForm.#ctor">
             <summary>
-            Create a JidMulti control
+            Create an x:data form with no contents.
             </summary>
         </member>
-        <member name="M:muzzle.JidMulti.Dispose(System.Boolean)">
+        <member name="M:muzzle.XDataForm.#ctor(jabber.protocol.client.Message)">
+            <summary>
+            Create an x:data form from the given message stanza.
+            </summary>
+            <param name="parent">Original stanza</param>
+        </member>
+        <member name="M:muzzle.XDataForm.#ctor(jabber.protocol.client.IQ)">
+            <summary>
+            Create an x:data form from the given iq stanza.
+            </summary>
+            <param name="parent">Original stanza</param>
+        </member>
+        <member name="M:muzzle.XDataForm.#ctor(jabber.protocol.x.Data)">
+            <summary>
+            Create an x:data form from the given XML form description
+            </summary>
+            <param name="x">x:data form to render</param>
+        </member>
+        <member name="M:muzzle.XDataForm.Dispose(System.Boolean)">
             <summary>
             Clean up any resources being used.
             </summary>
         </member>
-        <member name="M:muzzle.JidMulti.AddRange(System.Object[])">
+        <member name="M:muzzle.XDataForm.InitializeComponent">
             <summary>
-            Add a range of JIDs or strings to the list.
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
             </summary>
-            <param name="range"></param>
         </member>
-        <member name="M:muzzle.JidMulti.GetValues">
+        <member name="M:muzzle.XDataForm.GetResponse">
             <summary>
-            Get the list of JIDs in the control currently.
+            Get a response to the original stanza that caused this form to be popped up.
             </summary>
-            <returns></returns>
+            <returns>A stanza ready to be sent back to the originator.</returns>
         </member>
-        <member name="M:muzzle.JidMulti.InitializeComponent">
+        <member name="M:muzzle.XDataForm.FillInResponse(jabber.protocol.x.Data)">
+            <summary>
+            Modify the given x:data element to contain the response data.
+            </summary>
+            <param name="x"></param>
+        </member>
+        <member name="T:muzzle.ComponentLogin">
+             <summary>
+             A login form for client connections.
+             </summary>
+             <example>
+             ComponentLogin l = new ComponentLogin(jc);
+            
+             if (l.ShowDialog(this) == DialogResult.OK)
+             {
+                 jc.Connect();
+             }
+             </example>
+        </member>
+        <member name="M:muzzle.ComponentLogin.#ctor">
+            <summary>
+            Create a Client Login dialog box
+            </summary>
+        </member>
+        <member name="M:muzzle.ComponentLogin.Login(jabber.server.JabberService,System.String)">
+            <summary>
+            Log in to the server
+            </summary>
+            <param name="service">The JabberClient instance to connect</param>
+            <param name="propertyFile">The name of an XML file to store properties in.</param>
+            <returns>True if the user clicked OK, false on cancel</returns>
+        </member>
+        <member name="M:muzzle.ComponentLogin.#ctor(jabber.server.JabberService)">
+            <summary>
+            Create a Client Login dialog box that manages a component
+            </summary>
+            <param name="service">The component to manage</param>
+        </member>
+        <member name="M:muzzle.ComponentLogin.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:muzzle.ClientLogin">
+             <summary>
+             A login form for client connections.
+             </summary>
+             <example>
+             ClientLogin l = new ClientLogin(jc);
+            
+             if (l.ShowDialog(this) == DialogResult.OK)
+             {
+                 jc.Connect();
+             }
+             </example>
+        </member>
+        <member name="F:muzzle.ClientLogin.tpBasic">
+            <summary>
+            The basic configuration tab.
+            </summary>
+        </member>
+        <member name="M:muzzle.ClientLogin.#ctor">
+            <summary>
+            Create a Client Login dialog box
+            </summary>
+        </member>
+        <member name="M:muzzle.ClientLogin.Login(jabber.client.JabberClient,System.String)">
+            <summary>
+            Log in to the server
+            </summary>
+            <param name="cli">The JabberClient instance to connect</param>
+            <param name="propertyFile">The name of an XML file to store properties in.</param>
+            <returns>True if the user clicked OK, false on cancel</returns>
+        </member>
+        <member name="M:muzzle.ClientLogin.#ctor(jabber.client.JabberClient)">
+            <summary>
+            Create a Client Login dialog box than manages the connection properties of a particular client
+            connection.
+            </summary>
+            <param name="cli">The client connection to modify</param>
+        </member>
+        <member name="M:muzzle.ClientLogin.InitializeComponent">
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.

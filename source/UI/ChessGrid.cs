@@ -116,7 +116,7 @@ namespace ChessMangler.WinUIParts
             _dragStartSquare.MouseMove += this.CellMouseMove;
 
             ChessPieceCursor.ShowPieceCursor((UISquare)sender);
-            this.UIBoard.ClearSquare(_dragStartSquare);
+            _dragStartSquare.Image = null; //Make the piece vanish right away. CurrentPiece needs to stay until the end of the DragDrop operation
         }
         private void CellMouseMove(object sender, MouseEventArgs e)
         {
@@ -157,6 +157,7 @@ namespace ChessMangler.WinUIParts
             }
 
             dragEndSquare.DragDrop -= this.CellDragDrop;
+            this.UIBoard.ClearSquare(_dragStartSquare);     
         }
 
         #endregion
@@ -166,32 +167,29 @@ namespace ChessMangler.WinUIParts
             ChessGrid thisForm = (ChessGrid)sender;
 
             //for the moment, we will pull this from config.  (we'll use a pre-loaded prop later)
-            Int16 defaultSquareSize  = this.UIBoard.GetSquareSize(Config.LoadXML(_configFile));
+            //Int16 defaultSquareSize  = this.UIBoard.get(Config.LoadXML(_configFile));
 
             //Ensure that the client area is always square
             //int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
             //ClientSize = new Size(iSize, iSize);
 
-            int i = 0;
             //Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
 
             BoardDef board = new BoardDef(8, 8);
             foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
             {
-                UISquare currentUISquare = this.UIBoard.GetByLocation(currentSquare.Row, currentSquare.Column);
+                UISquare currentUISquare = this.UIBoard.GetByLocation(currentSquare.Column, currentSquare.Row);
 
                 if (currentUISquare != null)
                 {
                     //Square Location
-                    //Reverses board, but its a start
-                    currentUISquare.Location = new Point(currentSquare.Column * ClientSize.Width / 8, currentSquare.Row * ClientSize.Height / 8);
+                    currentUISquare.Location = new Point(currentSquare.Row * ClientSize.Width / 8, currentSquare.Column * ClientSize.Height / 8);
+                    currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
 
                     //Square Size
                     currentUISquare.Height = ClientSize.Height / 8;
                     currentUISquare.Width = ClientSize.Width / 8;
                 }
-
-                i++;
             }
         }
 
@@ -215,11 +213,6 @@ namespace ChessMangler.WinUIParts
 
                 i++;
             }
-        }
-
-        private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
