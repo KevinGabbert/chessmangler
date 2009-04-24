@@ -200,6 +200,7 @@ namespace ChessMangler.WinUIParts
         {
             //This UISquare is actually a ref to square on a form.. but doesn't *have* to be..
             UISquare formSquare = this.GetByXY(squareToClear.X, squareToClear.Y);
+            squareToClear.CurrentPiece = null;
             squareToClear.Image = null;
         }
 
