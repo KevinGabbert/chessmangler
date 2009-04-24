@@ -58,7 +58,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin5\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <BaseIntermediateOutputPath>obj5\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>obj5\Debug\</IntermediateOutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
