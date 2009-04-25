@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.WinUIParts", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netlib.Dns", "..\3rdParty\JabberNet-2.1.0.710\netlib.Dns\netlib.Dns.csproj", "{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communications", "Communications\Communications.csproj", "{6348BF5C-3245-406C-B823-4291C154FEB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessManger.Communications", "Communications\ChessManger.Communications.csproj", "{6348BF5C-3245-406C-B823-4291C154FEB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
