@@ -8,8 +8,8 @@
     <ProjectGuid>{6348BF5C-3245-406C-B823-4291C154FEB1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Communications</RootNamespace>
-    <AssemblyName>Communications</AssemblyName>
+    <RootNamespace>ChessManger.Communications</RootNamespace>
+    <AssemblyName>ChessManger.Communications</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
