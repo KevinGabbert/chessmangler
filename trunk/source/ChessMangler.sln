@@ -9,13 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.Engine", "Engi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.WinUIParts", "WinUIParts\ChessMangler.WinUIParts.csproj", "{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2005-jabber-net", "..\3rdParty\JabberNet-2.1.0.710\2005-jabber-net.csproj", "{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netlib.Dns", "..\3rdParty\JabberNet-2.1.0.710\netlib.Dns\netlib.Dns.csproj", "{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2005-test", "..\3rdParty\JabberNet-2.1.0.710\test\2005-test.csproj", "{76F923A3-5D99-45B9-9327-FBE56648A39F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2005-muzzle", "..\3rdParty\JabberNet-2.1.0.710\muzzle\2005-muzzle.csproj", "{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communications", "Communications\Communications.csproj", "{6348BF5C-3245-406C-B823-4291C154FEB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,22 +35,14 @@ Global
 		{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76F923A3-5D99-45B9-9327-FBE56648A39F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76F923A3-5D99-45B9-9327-FBE56648A39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76F923A3-5D99-45B9-9327-FBE56648A39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76F923A3-5D99-45B9-9327-FBE56648A39F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6348BF5C-3245-406C-B823-4291C154FEB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6348BF5C-3245-406C-B823-4291C154FEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6348BF5C-3245-406C-B823-4291C154FEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6348BF5C-3245-406C-B823-4291C154FEB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
