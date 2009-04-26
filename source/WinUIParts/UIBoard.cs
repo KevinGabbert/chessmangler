@@ -19,7 +19,7 @@ namespace ChessMangler.WinUIParts
     {
         #region Properties
 
-        bool _debugMode = false;
+        bool _debugMode = true;
         public bool DebugMode
         {
             get
@@ -101,7 +101,7 @@ namespace ChessMangler.WinUIParts
 
         int _findRow;
         int _findCol;
-        public UISquare GetByLocation(int row, int column)
+        public UISquare GetByBoardLocation(int row, int column)
         {
             this._findRow = row;
             this._findCol = column;
@@ -149,7 +149,8 @@ namespace ChessMangler.WinUIParts
 
                 if (this.DebugMode)
                 {
-                    newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.Name + ".col" + currentSquare.Column + ".row" + currentSquare.Row, "Arial", 10);
+                    //newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation + ".col" + currentSquare.Column + ".row" + currentSquare.Row, "Arial", 10);
+                    newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation, "Arial", 10);
                 }
 
                 //xfer variables over
@@ -188,6 +189,7 @@ namespace ChessMangler.WinUIParts
             newUISquare.Row = currentSquare.Row;
             newUISquare.Column = currentSquare.Column;
             newUISquare.Disabled = currentSquare.Disabled;
+            newUISquare.BoardLocation = currentSquare.BoardLocation;
             //newUISquare.Image = currentSquare.Image;
 
             if (currentSquare.CurrentPiece != null)
@@ -196,12 +198,16 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        public void ClearSquare(UISquare squareToClear)
+        public void ClearSquare(UISquare squareToClear, bool clearImage)
         {
             //This UISquare is actually a ref to square on a form.. but doesn't *have* to be..
             UISquare formSquare = this.GetByXY(squareToClear.X, squareToClear.Y);
             squareToClear.CurrentPiece = null;
-            squareToClear.Image = null;
+
+            if (clearImage)
+            {
+                squareToClear.Image = null;
+            }
         }
 
         public void SetImage(UISquare squareToSet, IPiece piece)

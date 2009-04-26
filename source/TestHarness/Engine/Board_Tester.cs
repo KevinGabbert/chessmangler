@@ -85,7 +85,7 @@ namespace ChessMangler.TestHarness.Engine
             foreach (Square2D currentSquare in _testBoard.SquareLogic(new BoardDef(8,8)))
             {
                Assert.IsFalse(_testBoard.IsNew); 
-               Assert.AreEqual(_testBoard.GetByLocation(7, 0).Name, currentSquare.Name);
+               Assert.AreEqual(_testBoard.GetByLocation(7, 0).BoardLocation, currentSquare.BoardLocation);
                break;
             }
         }
@@ -94,15 +94,15 @@ namespace ChessMangler.TestHarness.Engine
         public void VerifySquareNames()
         {
             //ok.. lets pick a couple and make sure they match up..
-            Assert.AreEqual("b8", _testBoard.Squares[1].Name);
-            Assert.AreEqual("h1", _testBoard.Squares[63].Name);
+            Assert.AreEqual("b8", _testBoard.Squares[1].BoardLocation);
+            Assert.AreEqual("h1", _testBoard.Squares[63].BoardLocation);
         }
 
         [Test(Description = "")]
         public void VerifyGetByName()
         {
             //verify that x square has the intended Name
-            Assert.AreEqual("e5", _testBoard.GetByName("E5").Name);
+            Assert.AreEqual("e5", _testBoard.GetByName("E5").BoardLocation);
 
             //and yes.. we can do it so we look up by number.. you want that?
         }
@@ -110,8 +110,8 @@ namespace ChessMangler.TestHarness.Engine
         [Test()]
         public void VerifyGetByLocation()
         {
-            Assert.AreEqual("a1", _testBoard.GetByLocation(0, 0).Name);
-            Assert.AreEqual("b2", _testBoard.GetByLocation(1, 1).Name);
+            Assert.AreEqual("a1", _testBoard.GetByLocation(0, 0).BoardLocation);
+            Assert.AreEqual("b2", _testBoard.GetByLocation(1, 1).BoardLocation);
         }
     }
 }
