@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace ChessMangler.TestHarness.Data
 {
+    [SetUpFixture]
     public static class SetUp
     {
         public const string _testDir = @"..\..\..\TestHarness\Sandbox";
@@ -13,6 +14,7 @@ namespace ChessMangler.TestHarness.Data
 
         public static SQLiteConnection _testConnection;
 
+        [SetUp]
         public static void StartUp()
         {
             SetUp.DeleteFiles();
