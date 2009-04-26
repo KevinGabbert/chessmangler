@@ -127,21 +127,6 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
-
-        //Microsoft.. WHY do I have to override a virtual method on this???
-        public override bool AllowDrop 
-        { 
-            get; 
-            set; 
-        }
-
-        protected override void OnGiveFeedback(GiveFeedbackEventArgs gfbEvent)
-        {
-            // Allow us to use our own cursors when dragging
-            gfbEvent.UseDefaultCursors = false; //This could theoretically be in a config file somewhere.
-        }
-
-
         protected IPiece _currentPiece;
         public IPiece CurrentPiece
         {
@@ -164,82 +149,21 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        #region IChessObject Members
-
-        int IChessObject.Row
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        int IChessObject.Column
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        string IChessObject.Name
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        Color IChessObject.Color
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        bool IChessObject.Disabled
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        protected Image _image;
-        Image IChessObject.Image
-        {
-            get
-            {
-                return _image;
-            }
-            set
-            {
-                _image = value;
-            }
-        }
-
         #endregion
+
+        #region Drag & Drop
+        //Microsoft.. WHY do I have to override a virtual method on this???
+        public override bool AllowDrop 
+        { 
+            get; 
+            set; 
+        }
+
+        protected override void OnGiveFeedback(GiveFeedbackEventArgs gfbEvent)
+        {
+            // Allow us to use our own cursors when dragging
+            gfbEvent.UseDefaultCursors = false; //This could theoretically be in a config file somewhere.
+        }
 
         #endregion
 
