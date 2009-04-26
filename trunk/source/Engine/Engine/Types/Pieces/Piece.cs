@@ -14,7 +14,7 @@ namespace ChessMangler.Engine.Types
     {
         public Piece(string name)
         {
-            this.Name = name;
+            this.BoardLocation = name;
 
             //Look up attributes in passed config file and assign (such as image, and movement rules, etc..)
         }
@@ -59,7 +59,7 @@ namespace ChessMangler.Engine.Types
         }
 
         protected string _name;
-        public string Name
+        public string BoardLocation
         {
             get
             {

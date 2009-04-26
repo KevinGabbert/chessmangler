@@ -195,7 +195,7 @@ namespace ChessMangler.WinUIParts
 
             if ((dragEndSquare != _dragStartSquare) & (dragEndSquare.CurrentPiece != null) & (dragEndSquare.Image != null))
             {
-                this.UIBoard.ClearSquare(_dragStartSquare);
+                this.UIBoard.ClearSquare(_dragStartSquare, true);
             }
             else
             {
@@ -219,7 +219,7 @@ namespace ChessMangler.WinUIParts
             BoardDef board = new BoardDef(8, 8);
             foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
             {
-                UISquare currentUISquare = this.UIBoard.GetByLocation(currentSquare.Column, currentSquare.Row);
+                UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
 
                 if (currentUISquare != null)
                 {
@@ -259,7 +259,7 @@ namespace ChessMangler.WinUIParts
             BoardDef board = new BoardDef(8, 8);
             foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
             {
-                UISquare currentUISquare = this.UIBoard.GetByLocation(currentSquare.Column, currentSquare.Row);
+                UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
 
                 //restore any lost images
                 if ((currentUISquare.CurrentPiece != null) & (currentUISquare.Image == null))
@@ -291,7 +291,7 @@ namespace ChessMangler.WinUIParts
             BoardDef board = new BoardDef(8, 8);
             foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
             {
-                UISquare currentUISquare = this.UIBoard.GetByLocation(currentSquare.Row, currentSquare.Column);
+                UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Row, currentSquare.Column);
 
                 if (currentUISquare != null)
                 {

@@ -21,7 +21,7 @@ namespace ChessMangler.Engine.Interfaces
             get;
             set;
         }
-        string Name
+        string BoardLocation
         {
             get;
             set;

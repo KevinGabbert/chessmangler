@@ -15,7 +15,7 @@ namespace ChessMangler.Engine.Types
         }
 
         Color _color;
-        string _name;
+        string _boardLocation;
         int[] _position = new int[2] { 0, 0 };
 
         public int Row
@@ -80,15 +80,15 @@ namespace ChessMangler.Engine.Types
             }
         }
 
-        public string Name
+        public string BoardLocation
         {
             get
             {
-                return _name;
+                return _boardLocation;
             }
             set
             {
-                _name = value;
+                _boardLocation = value;
             }
         }
         

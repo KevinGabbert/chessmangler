@@ -144,7 +144,7 @@ namespace ChessMangler.Engine.Types
 
         protected bool foundByName(Square2D find)
         {
-            if (find.Name == this._findSquareName)
+            if (find.BoardLocation == this._findSquareName)
             {
                 return true;
             }
@@ -168,7 +168,7 @@ namespace ChessMangler.Engine.Types
         public void AddNewSquare(BoardDef boardDef, Int16 col, Int16 row, out Square2D newlyAddedSquare)
         {
             Square2D newSquare = new Square2D();
-            newSquare.Name = (char)(97 + col) + (row + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
+            newSquare.BoardLocation = (char)(97 + col) + (row + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
 
             //TODO: IF the config file TELLS us to do this, then...
             Square2D.SetCheckerboardStyle(newSquare, col, row);

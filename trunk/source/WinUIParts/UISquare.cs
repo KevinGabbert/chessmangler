@@ -111,6 +111,19 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        protected string _boardLocation;
+        public string BoardLocation
+        {
+            get
+            {
+                return _boardLocation;
+            }
+            set
+            {
+                _boardLocation = value;
+            }
+        }
+
         protected bool _disabled;
         public bool Disabled
         {
