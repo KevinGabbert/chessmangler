@@ -22,8 +22,7 @@ namespace ChessMangler.WinUIParts
         
         protected UISquare()
         {
-
-
+            //this.BorderStyle = BorderStyle.None;
         }
 
         public UISquare(Point formlocation, int size)

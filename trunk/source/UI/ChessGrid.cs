@@ -17,7 +17,6 @@ namespace ChessMangler.WinUIParts
     /// </summary>
     public partial class ChessGrid : Form
     {
-
         #region Properties
 
         UIBoard _uiBoard = new UIBoard();
@@ -39,6 +38,9 @@ namespace ChessMangler.WinUIParts
 
         string _sourceDir;
         string _configFile;
+
+        Image _imageBeingDragged; //what a drag..
+        bool _isDragging;
 
         public ChessGrid()
         {
@@ -89,6 +91,8 @@ namespace ChessMangler.WinUIParts
         /// </summary>
         public void Add_Required_Square_Handlers()
         {
+            this.chessMenu.MouseMove += this.chessMenu_MouseMove;
+
             foreach(Control control in this.Controls)
             {
                 string controlType = control.GetType().ToString();
@@ -96,12 +100,18 @@ namespace ChessMangler.WinUIParts
                 if (controlType == "ChessMangler.WinUIParts.UISquare")
                 {
                     ((UISquare)control).MouseDown += this.CellMouseDown;
+                    ((UISquare)control).MouseMove += this.CellMouseMove;
                     ((UISquare)control).DragEnter += this.CellDragEnter;
                 }
             }
         }
 
         #region Cell Event Handlers
+
+        private void chessMenu_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (this.PieceIsLost(e)) { return; }
+        }
 
         private void CellMouseDown(object sender, MouseEventArgs e)
         {
@@ -113,19 +123,39 @@ namespace ChessMangler.WinUIParts
                 return;
             }
 
-            _dragStartSquare.MouseMove += this.CellMouseMove;
-
             ChessPieceCursor.ShowPieceCursor((UISquare)sender);
+
+            _imageBeingDragged = _dragStartSquare.Image;
             _dragStartSquare.Image = null; //Make the piece vanish right away. CurrentPiece needs to stay until the end of the DragDrop operation
+
+            _isDragging = true;
         }
         private void CellMouseMove(object sender, MouseEventArgs e)
         {
-            _dragStartSquare.MouseMove -= this.CellMouseMove;
+            if (this.PieceIsLost(e)) { return; }
 
             if (e.Button != (MouseButtons.Left | MouseButtons.XButton1))
-                return;
+            {
+                UISquare senderSquare = (UISquare)sender;
 
-            _dragStartSquare.DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
+                //restore any lost images
+                if ((senderSquare.CurrentPiece != null) & (senderSquare.Image == null))
+                {
+                    senderSquare.Image = senderSquare.CurrentPiece.Image;
+                }
+
+                return;
+            }
+
+            if (_dragStartSquare.CurrentPiece != null)
+            {
+                _dragStartSquare.DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
+            }
+            else
+            {
+                //What? How do you lose a piece during MouseDown??
+                this.SyncBoard();
+            }
         }
 
         private void CellDragEnter(object sender, DragEventArgs e)
@@ -142,6 +172,9 @@ namespace ChessMangler.WinUIParts
         }
         private void CellDragDrop(object sender, DragEventArgs e)
         {
+            _isDragging = false;
+            _imageBeingDragged = null;
+
             UISquare dragEndSquare = (UISquare)sender;
 
             bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
@@ -149,7 +182,7 @@ namespace ChessMangler.WinUIParts
             if (weCanMove)
             {
                 //Set the new piece
-                ((ISquare)sender).CurrentPiece = _dragStartSquare.CurrentPiece; //_currentlyDraggingPiece;
+                ((UISquare)sender).CurrentPiece = _dragStartSquare.CurrentPiece; //_currentlyDraggingPiece;
             }
             else
             {
@@ -157,10 +190,18 @@ namespace ChessMangler.WinUIParts
             }
 
             dragEndSquare.DragDrop -= this.CellDragDrop;
-            this.UIBoard.ClearSquare(_dragStartSquare);     
-        }
 
-        #endregion
+            this.CheckForLostPieces();
+
+            if ((dragEndSquare != _dragStartSquare) & (dragEndSquare.CurrentPiece != null) & (dragEndSquare.Image != null))
+            {
+                this.UIBoard.ClearSquare(_dragStartSquare);
+            }
+            else
+            {
+                _dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
+            }
+        }
 
         private void ChessGrid_Resize(object sender, EventArgs e)
         {
@@ -191,6 +232,56 @@ namespace ChessMangler.WinUIParts
                     currentUISquare.Width = ClientSize.Width / 8;
                 }
             }
+
+            this.SyncBoard();
+        }
+
+        #endregion
+
+        public bool PieceIsLost(MouseEventArgs e)
+        {
+            if ((e.Button != (MouseButtons.Left | MouseButtons.XButton1)) & _isDragging)
+            {
+                //uhhh... How did you do that? Did you drop the piece off the form? (or between the squares?)
+                _dragStartSquare.Image = _imageBeingDragged;
+                _isDragging = false;
+                _imageBeingDragged = null;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void CheckForLostPieces()
+        {
+            BoardDef board = new BoardDef(8, 8);
+            foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
+            {
+                UISquare currentUISquare = this.UIBoard.GetByLocation(currentSquare.Column, currentSquare.Row);
+
+                //restore any lost images
+                if ((currentUISquare.CurrentPiece != null) & (currentUISquare.Image == null))
+                {
+                    currentUISquare.Image = currentUISquare.CurrentPiece.Image;
+                }
+            }
+        }
+
+        public void SyncBoard()
+        {
+            //BoardDef board = new BoardDef(8, 8);
+            //foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
+            //{
+            //    UISquare currentUISquare = this.UIBoard.GetByLocation(currentSquare.Column, currentSquare.Row);
+
+            //    if (currentUISquare != null)
+            //    {
+            //        currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
+            //        currentUISquare.Image = currentSquare.CurrentPiece.Image;
+            //    }
+            //}
         }
 
         public void TurnBoard()
@@ -214,6 +305,8 @@ namespace ChessMangler.WinUIParts
                 i++;
             }
         }
+
+
     }
 }
 
