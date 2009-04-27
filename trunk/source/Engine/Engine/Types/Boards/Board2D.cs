@@ -114,11 +114,23 @@ namespace ChessMangler.Engine.Types
 
         public static bool IsThisMoveOkay(ISquare startSquare, ISquare endSquare)
         {
-            //no rules defined?? Then ALL moves are legal!
+            //Temporary hardcoded rule.. (this will be in XML)
 
-
-            return true;
-
+            if (endSquare.CurrentPiece != null)
+            {
+                if (startSquare.CurrentPiece.Color == endSquare.CurrentPiece.Color)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
 
             //Talk to the engine.. see what it has to say.  This function might not even
         }
