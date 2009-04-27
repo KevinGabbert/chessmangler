@@ -35,6 +35,7 @@ namespace ChessMangler.WinUIParts
         #endregion
 
         private UISquare _dragStartSquare;
+        private UISquare _dragEndSquare; 
 
         string _sourceDir;
         string _configFile;
@@ -175,31 +176,52 @@ namespace ChessMangler.WinUIParts
             _isDragging = false;
             _imageBeingDragged = null;
 
-            UISquare dragEndSquare = (UISquare)sender;
+            _dragEndSquare = (UISquare)sender;
 
-            bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
+            bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, _dragEndSquare);
 
             if (weCanMove)
             {
                 //Set the new piece
-                ((UISquare)sender).CurrentPiece = _dragStartSquare.CurrentPiece; //_currentlyDraggingPiece;
+                ((UISquare)sender).CurrentPiece = _dragStartSquare.CurrentPiece;
+
+                ((UISquare)sender).BackColor = Color.Green;
             }
             else
             {
                 //Flash the piece you are holding or something like that to show that you can't do that.
             }
 
-            dragEndSquare.DragDrop -= this.CellDragDrop;
+            _dragEndSquare.DragDrop -= this.CellDragDrop;
 
-            this.CheckForLostPieces();
+            //this.CheckForLostPieces();
 
-            if ((dragEndSquare != _dragStartSquare) & (dragEndSquare.CurrentPiece != null) & (dragEndSquare.Image != null))
+            if ((_dragEndSquare != _dragStartSquare) & (_dragEndSquare.CurrentPiece != null) & (_dragEndSquare.Image != null))
             {
                 this.UIBoard.ClearSquare(_dragStartSquare, true);
+                _dragStartSquare.BackColor = Color.Pink;
             }
             else
             {
-                _dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
+                if (_dragStartSquare.CurrentPiece == null)
+                {
+                    //_dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
+                    _dragStartSquare.BackColor = Color.Red;
+                }
+                else
+                {
+                    
+                }
+
+                if (_dragEndSquare.CurrentPiece == null)
+                {
+                    //_dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
+                    _dragEndSquare.BackColor = Color.Red;
+                }
+                else
+                {
+
+                }
             }
         }
 
@@ -253,7 +275,6 @@ namespace ChessMangler.WinUIParts
                 return false;
             }
         }
-
         public void CheckForLostPieces()
         {
             BoardDef board = new BoardDef(8, 8);
@@ -268,7 +289,6 @@ namespace ChessMangler.WinUIParts
                 }
             }
         }
-
         public void SyncBoard()
         {
             //BoardDef board = new BoardDef(8, 8);
@@ -283,7 +303,6 @@ namespace ChessMangler.WinUIParts
             //    }
             //}
         }
-
         public void TurnBoard()
         {
             int i = 0;
@@ -305,8 +324,6 @@ namespace ChessMangler.WinUIParts
                 i++;
             }
         }
-
-
     }
 }
 
