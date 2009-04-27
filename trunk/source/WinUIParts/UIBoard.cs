@@ -129,7 +129,7 @@ namespace ChessMangler.WinUIParts
 
             //TODO:  keep these "adjustment numbers" somewhere
             formForBoard.Width = (squareSize * this.EngineBoard.Definition.Columns) + 12;
-            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + 30;
+            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + 30 + 25;
 
             this.BuildUISquares(formForBoard, this.EngineBoard.Definition, squareSize);
         }
@@ -137,7 +137,7 @@ namespace ChessMangler.WinUIParts
         protected void BuildUISquares(Form formForBoard, BoardDef boardDef, Int16 squareSize)
         {
             int squareR = 0;
-            int squareC = 0;
+            int squareC = 25;
 
             //Use board logic to iterate through the board.
             //Translates Engine stuff to UI Stuff
