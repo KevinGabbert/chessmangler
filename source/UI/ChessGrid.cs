@@ -35,13 +35,11 @@ namespace ChessMangler.WinUIParts
         #endregion
 
         private UISquare _dragStartSquare;
-        private UISquare _dragEndSquare; 
 
         string _sourceDir;
         string _configFile;
 
-        Image _imageBeingDragged; //what a drag..
-        bool _isDragging;
+        Image _recoveredImage; //for when people decide to drop a piece off the side of the board;
 
         public ChessGrid()
         {
@@ -100,9 +98,11 @@ namespace ChessMangler.WinUIParts
                 
                 if (controlType == "ChessMangler.WinUIParts.UISquare")
                 {
-                    ((UISquare)control).MouseDown += this.CellMouseDown;
-                    ((UISquare)control).MouseMove += this.CellMouseMove;
-                    ((UISquare)control).DragEnter += this.CellDragEnter;
+                    UISquare currentSquare = ((UISquare)control);
+                    currentSquare.MouseDown += this.CellMouseDown;
+                    currentSquare.MouseMove += this.CellMouseMove;
+                    currentSquare.DragEnter += this.CellDragEnter;
+                    currentSquare.DragDrop += this.CellDragDrop;
                 }
             }
         }
@@ -126,10 +126,8 @@ namespace ChessMangler.WinUIParts
 
             ChessPieceCursor.ShowPieceCursor((UISquare)sender);
 
-            _imageBeingDragged = _dragStartSquare.Image;
+            _recoveredImage = _dragStartSquare.Image;
             _dragStartSquare.Image = null; //Make the piece vanish right away. CurrentPiece needs to stay until the end of the DragDrop operation
-
-            _isDragging = true;
         }
         private void CellMouseMove(object sender, MouseEventArgs e)
         {
@@ -152,17 +150,10 @@ namespace ChessMangler.WinUIParts
             {
                 _dragStartSquare.DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
             }
-            else
-            {
-                //What? How do you lose a piece during MouseDown??
-                this.SyncBoard();
-            }
         }
 
         private void CellDragEnter(object sender, DragEventArgs e)
         {
-            ((UISquare)sender).DragDrop += this.CellDragDrop;
-
             if (!e.Data.GetDataPresent(typeof(Bitmap)))
             {
                 e.Effect = DragDropEffects.None;
@@ -173,55 +164,27 @@ namespace ChessMangler.WinUIParts
         }
         private void CellDragDrop(object sender, DragEventArgs e)
         {
-            _isDragging = false;
-            _imageBeingDragged = null;
+            _recoveredImage = null;
 
-            _dragEndSquare = (UISquare)sender;
+            UISquare dragEndSquare; 
 
-            bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, _dragEndSquare);
+            dragEndSquare = (UISquare)sender;
+
+            bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
 
             if (weCanMove)
             {
                 //Set the new piece
-                ((UISquare)sender).CurrentPiece = _dragStartSquare.CurrentPiece;
-
-                ((UISquare)sender).BackColor = Color.Green;
+                dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
             }
             else
             {
                 //Flash the piece you are holding or something like that to show that you can't do that.
             }
 
-            _dragEndSquare.DragDrop -= this.CellDragDrop;
-
-            //this.CheckForLostPieces();
-
-            if ((_dragEndSquare != _dragStartSquare) & (_dragEndSquare.CurrentPiece != null) & (_dragEndSquare.Image != null))
+            if ((dragEndSquare != _dragStartSquare) & (dragEndSquare.CurrentPiece != null) & (dragEndSquare.Image != null))
             {
                 this.UIBoard.ClearSquare(_dragStartSquare, true);
-                _dragStartSquare.BackColor = Color.Pink;
-            }
-            else
-            {
-                if (_dragStartSquare.CurrentPiece == null)
-                {
-                    //_dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
-                    _dragStartSquare.BackColor = Color.Red;
-                }
-                else
-                {
-                    
-                }
-
-                if (_dragEndSquare.CurrentPiece == null)
-                {
-                    //_dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
-                    _dragEndSquare.BackColor = Color.Red;
-                }
-                else
-                {
-
-                }
             }
         }
 
@@ -262,12 +225,11 @@ namespace ChessMangler.WinUIParts
 
         public bool PieceIsLost(MouseEventArgs e)
         {
-            if ((e.Button != (MouseButtons.Left | MouseButtons.XButton1)) & _isDragging)
+            if ((e.Button != (MouseButtons.Left | MouseButtons.XButton1)) & _recoveredImage!= null)
             {
                 //uhhh... How did you do that? Did you drop the piece off the form? (or between the squares?)
-                _dragStartSquare.Image = _imageBeingDragged;
-                _isDragging = false;
-                _imageBeingDragged = null;
+                _dragStartSquare.Image = _recoveredImage;
+                _recoveredImage = null;
                 return true;
             }
             else
@@ -275,7 +237,7 @@ namespace ChessMangler.WinUIParts
                 return false;
             }
         }
-        public void CheckForLostPieces()
+        public void CheckForMissingPieces()
         {
             BoardDef board = new BoardDef(8, 8);
             foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
