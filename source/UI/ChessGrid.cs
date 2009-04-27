@@ -35,6 +35,7 @@ namespace ChessMangler.WinUIParts
         #endregion
 
         private UISquare _dragStartSquare;
+        bool _done = true;
 
         string _sourceDir;
         string _configFile;
@@ -116,6 +117,7 @@ namespace ChessMangler.WinUIParts
 
         private void CellMouseDown(object sender, MouseEventArgs e)
         {
+            _done = false;
             _dragStartSquare = (UISquare)sender;
 
             //No need to do anything if the user didn't click on a piece!
@@ -164,8 +166,6 @@ namespace ChessMangler.WinUIParts
         }
         private void CellDragDrop(object sender, DragEventArgs e)
         {
-            _recoveredImage = null;
-
             UISquare dragEndSquare; 
 
             dragEndSquare = (UISquare)sender;
@@ -176,16 +176,20 @@ namespace ChessMangler.WinUIParts
             {
                 //Set the new piece
                 dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
+
+                //if ((dragEndSquare != _dragStartSquare) & (dragEndSquare.CurrentPiece != null) & (dragEndSquare.Image != null))
+                //{
+                    this.UIBoard.ClearSquare(_dragStartSquare, true);
+                //}
             }
             else
             {
                 //Flash the piece you are holding or something like that to show that you can't do that.
+                //_dragStartSquare.CurrentPiece.Image = _recoveredImage;
             }
 
-            if ((dragEndSquare != _dragStartSquare) & (dragEndSquare.CurrentPiece != null) & (dragEndSquare.Image != null))
-            {
-                this.UIBoard.ClearSquare(_dragStartSquare, true);
-            }
+            _recoveredImage = null;
+            _done = true;
         }
 
         private void ChessGrid_Resize(object sender, EventArgs e)
@@ -225,7 +229,7 @@ namespace ChessMangler.WinUIParts
 
         public bool PieceIsLost(MouseEventArgs e)
         {
-            if ((e.Button != (MouseButtons.Left | MouseButtons.XButton1)) & _recoveredImage!= null)
+            if ((e.Button != (MouseButtons.Left | MouseButtons.XButton1)) & (_recoveredImage!= null) & (_done == false))
             {
                 //uhhh... How did you do that? Did you drop the piece off the form? (or between the squares?)
                 _dragStartSquare.Image = _recoveredImage;
