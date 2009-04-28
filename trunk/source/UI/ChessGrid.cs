@@ -78,6 +78,8 @@ namespace ChessMangler.WinUIParts
 
                 this.UIBoard = new UIBoard(0, 25); //This needs to come from the config file
                 this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file 
+
+                this.FormBorderStyle = FormBorderStyle.FixedSingle;
             }
             else
             {
@@ -198,35 +200,35 @@ namespace ChessMangler.WinUIParts
 
         private void ChessGrid_Resize(object sender, EventArgs e)
         {
-            ChessGrid thisForm = (ChessGrid)sender;
+            //ChessGrid thisForm = (ChessGrid)sender;
 
-            //for the moment, we will pull this from config.  (we'll use a pre-loaded prop later)
-            //Int16 defaultSquareSize  = this.UIBoard.get(Config.LoadXML(_configFile));
+            ////for the moment, we will pull this from config.  (we'll use a pre-loaded prop later)
+            ////Int16 defaultSquareSize  = this.UIBoard.get(Config.LoadXML(_configFile));
 
-            //Ensure that the client area is always square
-            //int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
-            //ClientSize = new Size(iSize, iSize);
+            ////Ensure that the client area is always square
+            ////int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
+            ////ClientSize = new Size(iSize, iSize);
 
-            //Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
+            ////Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
 
-            BoardDef board = new BoardDef(8, 8);
-            foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
-            {
-                UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
+            //BoardDef board = new BoardDef(8, 8);
+            //foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
+            //{
+            //    UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
 
-                if (currentUISquare != null)
-                {
-                    //Square Location
-                    currentUISquare.Location = new Point(currentSquare.Row * ClientSize.Width / 8, currentSquare.Column * ClientSize.Height / 8);
-                    currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
+            //    if (currentUISquare != null)
+            //    {
+            //        //Square Location
+            //        currentUISquare.Location = new Point(currentSquare.Row * ClientSize.Width / 8, currentSquare.Column * ClientSize.Height / 8);
+            //        currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
 
-                    //Square Size
-                    currentUISquare.Height = ClientSize.Height / 8;
-                    currentUISquare.Width = ClientSize.Width / 8;
-                }
-            }
+            //        //Square Size
+            //        currentUISquare.Height = ClientSize.Height / 8;
+            //        currentUISquare.Width = ClientSize.Width / 8;
+            //    }
+            //}
 
-            this.SyncBoard();
+            //this.SyncBoard();
         }
 
         #endregion
