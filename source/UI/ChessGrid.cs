@@ -19,7 +19,7 @@ namespace ChessMangler.WinUIParts
     {
         #region Properties
 
-        UIBoard _uiBoard = new UIBoard();
+        UIBoard _uiBoard;
         public UIBoard UIBoard
         {
             get
@@ -73,7 +73,10 @@ namespace ChessMangler.WinUIParts
             {
                 testSetup = Config.LoadXML(_configFile);
 
-                this.UIBoard = new UIBoard();
+                //TODO: get default size from 
+
+
+                this.UIBoard = new UIBoard(0, 25); //This needs to come from the config file
                 this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file 
             }
             else
@@ -176,21 +179,22 @@ namespace ChessMangler.WinUIParts
             {
                 //Set the new piece
                 dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
-
-                //if ((dragEndSquare != _dragStartSquare) & (dragEndSquare.CurrentPiece != null) & (dragEndSquare.Image != null))
-                //{
-                    this.UIBoard.ClearSquare(_dragStartSquare, true);
-                //}
+                this.UIBoard.ClearSquare(_dragStartSquare, true);
             }
             else
             {
-                //Flash the piece you are holding or something like that to show that you can't do that.
-                //_dragStartSquare.CurrentPiece.Image = _recoveredImage;
+                //put it back
+                _dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
             }
 
             _recoveredImage = null;
             _done = true;
         }
+
+        #endregion
+
+        #region Form Event Handlers
+
 
         private void ChessGrid_Resize(object sender, EventArgs e)
         {

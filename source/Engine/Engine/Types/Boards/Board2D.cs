@@ -75,7 +75,7 @@ namespace ChessMangler.Engine.Types
         public Board2D(XmlDocument configFile, string UIDirectory)
         {
             this.CreateBoard(configFile);
-            this.SetPieces(configFile, UIDirectory);
+            this.MapPieces(configFile, UIDirectory);
         }
 
         protected void CreateBoard(XmlDocument configFile)
@@ -90,7 +90,7 @@ namespace ChessMangler.Engine.Types
             }
         }
 
-        private void SetPieces(XmlDocument configFile, string directory)
+        private void MapPieces(XmlDocument configFile, string directory)
         {
             List<PieceDef> piecesToSet = ConfigParser.GetPieces(configFile);
 
@@ -107,6 +107,8 @@ namespace ChessMangler.Engine.Types
 
                         //this needs to be set up in Piece..
                         squareForPiece.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + piece.ImageName);
+                        squareForPiece.CurrentPiece.Color = piece.Color;
+
                         break;
                 }
             }
