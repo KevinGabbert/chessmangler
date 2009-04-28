@@ -17,6 +17,12 @@ namespace ChessMangler.WinUIParts
     /// </summary>
     public class UIBoard
     {
+        public UIBoard(int columnStart, int rowStart)
+        {
+            _currentColumn = columnStart;
+            _currentRow = rowStart;
+        }
+
         #region Properties
 
         bool _debugMode = true;
@@ -29,32 +35,6 @@ namespace ChessMangler.WinUIParts
             set
             {
                 _debugMode = value;
-            }
-        }
-
-        int _rows;
-        public int Rows
-        {
-            get
-            {
-                return _rows;
-            }
-            set
-            {
-                _rows = value;
-            }
-        }
-
-        int _columns;
-        public int Columns
-        {
-            get
-            {
-                return _columns;
-            }
-            set
-            {
-                _columns = value;
             }
         }
 
@@ -101,6 +81,10 @@ namespace ChessMangler.WinUIParts
 
         int _findRow;
         int _findCol;
+
+        int _currentColumn = 0;
+        int _currentRow = 25;
+
         public UISquare GetByBoardLocation(int row, int column)
         {
             this._findRow = row;
@@ -136,16 +120,13 @@ namespace ChessMangler.WinUIParts
 
         protected void BuildUISquares(Form formForBoard, BoardDef boardDef, Int16 squareSize)
         {
-            int squareR = 0;
-            int squareC = 25;
-
             //Use board logic to iterate through the board.
             //Translates Engine stuff to UI Stuff
 
             //Hmmmmm.. the alternative is to do a for..i.. using BoardDef and GetByLocation, but SquareLogic already does this!, also, this allows for less complication in the UI..
             foreach (Square2D currentSquare in this.EngineBoard.SquareLogic(boardDef))
             {
-                UISquare newUISquare = new UISquare(new Point(squareR, squareC), squareSize);
+                UISquare newUISquare = new UISquare(new Point(_currentColumn, _currentRow), squareSize);
 
                 if (this.DebugMode)
                 {
@@ -154,8 +135,8 @@ namespace ChessMangler.WinUIParts
                 }
 
                 //xfer variables over
-                newUISquare.X = squareR;
-                newUISquare.Y = squareC;
+                newUISquare.X = _currentColumn;
+                newUISquare.Y = _currentRow;
                 newUISquare.SquareSize = squareSize;
 
                 UIBoard.TranslateEngineStuffToUI(currentSquare, newUISquare);
@@ -172,11 +153,11 @@ namespace ChessMangler.WinUIParts
                 //Set the position of our new square to be drawn
                 if (currentSquare.Column == boardDef.Columns - 1)
                 {
-                    squareC = squareC + squareSize;
-                    squareR = 0 - squareSize;
+                    _currentRow = _currentRow + squareSize;
+                    _currentColumn = 0 - squareSize;
                 }
 
-                squareR = squareR + squareSize;
+                _currentColumn = _currentColumn + squareSize;
                 //**** This is disposable test code, as the UI SquarePositions will be set in Engine.Board (XmlDocument) *****
             }
         }

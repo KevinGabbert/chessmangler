@@ -1,6 +1,6 @@
 ﻿namespace ChessMangler.WinUIParts
 {
-    partial class ChessGrid
+    public partial class ChessGrid
     {
         /// <summary>
         /// Required designer variable.
@@ -318,7 +318,6 @@
         #endregion
 
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.MenuStrip chessMenu;
         private System.Windows.Forms.ToolStripMenuItem connectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
@@ -349,6 +348,7 @@
         private System.Windows.Forms.ToolStripMenuItem messageWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem showLogToolStripMenuItem;
+        public System.Windows.Forms.MenuStrip chessMenu;
 
 
 
