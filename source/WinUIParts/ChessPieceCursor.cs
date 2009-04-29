@@ -63,7 +63,6 @@ namespace ChessMangler.WinUIParts
                 }
             }
         }
-
         public static void ShowPieceCursor(Image cursorImage, Size size)
         {
             Bitmap bitmap = new Bitmap(cursorImage, size);
