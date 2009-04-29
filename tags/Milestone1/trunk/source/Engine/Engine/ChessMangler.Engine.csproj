@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ChessMangler.ENgine</RootNamespace>
+    <AssemblyName>ChessMangler.Engine</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\ConfigParser.cs" />
+    <Compile Include="Interfaces\IChessObject.cs" />
+    <Compile Include="Interfaces\IConditionType.cs" />
+    <Compile Include="Interfaces\IPiece.cs" />
+    <Compile Include="Interfaces\IRulesPackage.cs" />
+    <Compile Include="Interfaces\ISquare.cs" />
+    <Compile Include="Types\Pieces\AttackPackage.cs" />
+    <Compile Include="Types\Boards\Board2D.cs" />
+    <Compile Include="Notes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\Boards\BoardDef.cs" />
+    <Compile Include="Types\Pieces\MovementPackage.cs" />
+    <Compile Include="Types\Pieces\Piece.cs" />
+    <Compile Include="Types\Pieces\PieceDef.cs" />
+    <Compile Include="Types\Rules\Board2DRules.cs" />
+    <Compile Include="Types\Rules\Capture.cs" />
+    <Compile Include="Types\Rules\Condition.cs" />
+    <Compile Include="Types\Rules\Conditions\Blocked.cs" />
+    <Compile Include="Types\Rules\Conditions\Checked.cs" />
+    <Compile Include="Types\Rules\Conditions\Moved.cs" />
+    <Compile Include="Types\Rules\Conditions\MyColor.cs" />
+    <Compile Include="Types\Rules\Movement.cs" />
+    <Compile Include="Types\Rules\RulesPackageBase.cs" />
+    <Compile Include="Types\Boards\Square2D.cs" />
+    <Compile Include="Types\Pieces\Location.cs" />
+    <Compile Include="Xml\Parser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
