@@ -10,6 +10,8 @@ using ChessMangler.Engine.Config;
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 
+using ChessMangler.WinUI;
+
 namespace ChessMangler.WinUIParts
 {
     /// <summary>
@@ -42,6 +44,8 @@ namespace ChessMangler.WinUIParts
 
         Image _recoveredImage; //for when people decide to drop a piece off the side of the board;
 
+        DebugForm debugForm = new DebugForm();
+
         public ChessGrid()
         {
             InitializeComponent();
@@ -61,15 +65,15 @@ namespace ChessMangler.WinUIParts
 
             string configPath = System.Environment.CurrentDirectory + "\\Board2D.config"; //have it copy local
 
-            
             string uiDirectory = _sourceDir + "\\UI";
             string imagesDirectory = uiDirectory + "\\images";
 
-            bool exists = false;
+            bool uiDirectoryExists = Directory.Exists(uiDirectory);
+            bool imagesDirectoryExists = Directory.Exists(imagesDirectory);
 
-            exists = File.Exists(_configFile);
+            bool configFileExists = File.Exists(_configFile);
 
-            if (exists)
+            if (configFileExists)
             {
                 testSetup = Config.LoadXML(_configFile);
 
@@ -84,7 +88,7 @@ namespace ChessMangler.WinUIParts
             else
             {
                 //Whine pitifully..
-                MessageBox.Show("Default Board Setup file not found");
+                MessageBox.Show("Default Board Setup file not found. expected to find: " + _configFile);
             }
 
             this.Add_Required_Square_Handlers();   
@@ -125,6 +129,12 @@ namespace ChessMangler.WinUIParts
             _done = false;
             _dragStartSquare = (UISquare)sender;
 
+            //Make the piece vanish right away. CurrentPiece needs to stay until the end of the DragDrop operation
+            UISquare blank = new UISquare(_dragStartSquare.Location, _dragStartSquare.SquareSize);
+            blank.BackColor = _dragStartSquare.BackColor;
+            this.Controls.Add(blank);
+            blank.BringToFront();
+
             //No need to do anything if the user didn't click on a piece!
             if (_dragStartSquare.CurrentPiece == null)
             {
@@ -134,7 +144,15 @@ namespace ChessMangler.WinUIParts
             ChessPieceCursor.ShowPieceCursor((UISquare)sender);
 
             _recoveredImage = _dragStartSquare.Image;
-            _dragStartSquare.Image = null; //Make the piece vanish right away. CurrentPiece needs to stay until the end of the DragDrop operation
+
+            if (_dragStartSquare.CurrentPiece != null)
+            {
+                _dragStartSquare.DoDragDrop(_recoveredImage, DragDropEffects.Copy); //_dragStartSquare.CurrentPiece.Image
+            }
+
+
+
+            this.Controls.Remove(blank);
         }
         private void CellMouseMove(object sender, MouseEventArgs e)
         {
@@ -145,7 +163,7 @@ namespace ChessMangler.WinUIParts
                 UISquare senderSquare = (UISquare)sender;
 
                 //restore any lost images
-                if ((senderSquare.CurrentPiece != null) & (senderSquare.Image == null))
+                if ((_recoveredImage != null) & (senderSquare.CurrentPiece != null) & (senderSquare.Image == null))
                 {
                     senderSquare.Image = senderSquare.CurrentPiece.Image;
                 }
@@ -153,10 +171,10 @@ namespace ChessMangler.WinUIParts
                 return;
             }
 
-            if (_dragStartSquare.CurrentPiece != null)
-            {
-                _dragStartSquare.DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
-            }
+            //if (_dragStartSquare.CurrentPiece != null)
+            //{
+            //    _dragStartSquare.DoDragDrop(_dragStartSquare.CurrentPiece.Image, DragDropEffects.Copy);
+            //}
         }
 
         private void CellDragEnter(object sender, DragEventArgs e)
@@ -171,26 +189,42 @@ namespace ChessMangler.WinUIParts
         }
         private void CellDragDrop(object sender, DragEventArgs e)
         {
-            UISquare dragEndSquare; 
+            debugForm.textBox1.Text += "\r\n ++ Drop Start";
 
-            dragEndSquare = (UISquare)sender;
-
-            bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
-
-            if (weCanMove)
+            try
             {
-                //Set the new piece
-                dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
-                this.UIBoard.ClearSquare(_dragStartSquare, true);
-            }
-            else
-            {
-                //put it back
-                _dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
-            }
+                UISquare dragEndSquare;
 
-            _recoveredImage = null;
-            _done = true;
+                dragEndSquare = (UISquare)sender;
+
+                bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
+
+                if (weCanMove)
+                {
+                    //Set the new piece
+                    dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
+                    debugForm.textBox1.Text += "\r\n Set Piece";
+
+                    this.UIBoard.ClearSquare(_dragStartSquare, true);
+                    debugForm.textBox1.Text += "\r\n Clear Square";
+                }
+                else
+                {
+                    //put it back
+                    _dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
+
+                    debugForm.textBox1.Text += "\r\n Putting back piece";
+                }
+
+                _recoveredImage = null;
+                _done = true;
+
+                debugForm.textBox1.Text += "\r\n -- Drop End";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         #endregion
@@ -295,6 +329,14 @@ namespace ChessMangler.WinUIParts
 
                 i++;
             }
+        }
+
+        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            debugForm = new DebugForm();
+            debugForm.Show();
+
+            debugForm.textBox1.Text += "New Debug Form";
         }
     }
 }

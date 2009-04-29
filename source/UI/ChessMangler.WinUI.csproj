@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChessMangler.WinUI</RootNamespace>
     <AssemblyName>ChessMangler.WinUI</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -27,6 +27,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,15 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="netlib.Dns, Version=1.1.3399.12391, Culture=neutral, PublicKeyToken=924c5b18328d6f09, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\3rdParty\JabberNet-2.1.0.710\netlib.Dns\bin\Debug\netlib.Dns.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -67,16 +63,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutChessMangler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutChessMangler.Designer.cs">
+      <DependentUpon>AboutChessMangler.cs</DependentUpon>
+    </Compile>
     <Compile Include="ChessGrid.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ChessGrid.Designer.cs">
       <DependentUpon>ChessGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="DebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DebugForm.Designer.cs">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutChessMangler.resx">
+      <DependentUpon>AboutChessMangler.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ChessGrid.resx">
       <DependentUpon>ChessGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DebugForm.resx">
+      <DependentUpon>DebugForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -88,6 +102,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="Board2D.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
