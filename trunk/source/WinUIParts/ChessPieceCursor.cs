@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 
 using System.Runtime.InteropServices;
@@ -62,6 +62,13 @@ namespace ChessMangler.WinUIParts
                     bitmap.Dispose();
                 }
             }
+        }
+
+        public static void ShowPieceCursor(Image cursorImage, Size size)
+        {
+            Bitmap bitmap = new Bitmap(cursorImage, size);
+            Cursor.Current = CreateCursor(bitmap, 35, 35); //TODO: get rid of this hardcoding
+            bitmap.Dispose();
         }
     }
 }
