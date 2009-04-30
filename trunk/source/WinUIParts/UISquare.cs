@@ -162,7 +162,6 @@ namespace ChessMangler.WinUIParts
         }
 
         #endregion
-
         #region Drag & Drop
         //Microsoft.. WHY do I have to override a virtual method on this???
         public override bool AllowDrop 

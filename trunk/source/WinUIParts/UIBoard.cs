@@ -25,7 +25,7 @@ namespace ChessMangler.WinUIParts
 
         #region Properties
 
-        bool _debugMode = false;
+        bool _debugMode = true;
         public bool DebugMode
         {
             get

@@ -37,7 +37,6 @@ namespace ChessMangler.WinUIParts
         #endregion
 
         private UISquare _dragStartSquare;
-        bool _done = true;
 
         string _sourceDir;
         string _configFile;
@@ -80,7 +79,7 @@ namespace ChessMangler.WinUIParts
                 this.UIBoard = new UIBoard(0, 25); //This needs to come from the config file
                 this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file 
 
-                this.FormBorderStyle = FormBorderStyle.FixedSingle;
+                //this.FormBorderStyle = FormBorderStyle.FixedSingle;
             }
             else
             {
@@ -116,7 +115,6 @@ namespace ChessMangler.WinUIParts
 
         private void CellMouseDown(object sender, MouseEventArgs e)
         {
-            _done = false;
             _dragStartSquare = (UISquare)sender;
 
             //Make the piece vanish right away. CurrentPiece needs to stay until the end of the DragDrop operation
@@ -190,8 +188,6 @@ namespace ChessMangler.WinUIParts
                     debugForm.debugTextBox.Text += "\r\n Putting back piece";
                 }
 
-                _done = true;
-
                 debugForm.debugTextBox.Text += "\r\n -- Drop End";
             }
             catch (Exception ex)
@@ -201,41 +197,55 @@ namespace ChessMangler.WinUIParts
         }
 
         #endregion
-
         #region Form Event Handlers
-
 
         private void ChessGrid_Resize(object sender, EventArgs e)
         {
-            //ChessGrid thisForm = (ChessGrid)sender;
+            ChessGrid thisForm = (ChessGrid)sender;
+            //this.FormBorderStyle
+            //for the moment, we will pull this from config.  (we'll use a pre-loaded prop later)
+            //Int16 defaultSquareSize  = this.UIBoard.get(Config.LoadXML(_configFile));
 
-            ////for the moment, we will pull this from config.  (we'll use a pre-loaded prop later)
-            ////Int16 defaultSquareSize  = this.UIBoard.get(Config.LoadXML(_configFile));
+            //Ensure that the client area is always square
+            //int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
+            //ClientSize = new Size(iSize, iSize);
 
-            ////Ensure that the client area is always square
-            ////int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
-            ////ClientSize = new Size(iSize, iSize);
+            //Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
 
-            ////Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
+            int newRow = 0;
+            int columnCount = 0;
 
-            //BoardDef board = new BoardDef(8, 8);
-            //foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
-            //{
-            //    UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
+            BoardDef board = new BoardDef(8, 8);
+            foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
+            {
+                UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
 
-            //    if (currentUISquare != null)
-            //    {
-            //        //Square Location
-            //        currentUISquare.Location = new Point(currentSquare.Row * ClientSize.Width / 8, currentSquare.Column * ClientSize.Height / 8);
-            //        currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
+                if (currentUISquare != null)
+                {
+                    int x = currentSquare.Column * ClientSize.Width / 8;
+                    int y = (newRow * ClientSize.Height / 8) + this.chessMenu.Height;
 
-            //        //Square Size
-            //        currentUISquare.Height = ClientSize.Height / 8;
-            //        currentUISquare.Width = ClientSize.Width / 8;
-            //    }
-            //}
+                    currentUISquare.Location = new Point(x, y);
+                    currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
 
-            //this.SyncBoard();
+                    currentUISquare.Height = (ClientSize.Height / 8); //+ this.chessMenu.Height;
+                    currentUISquare.Width = (ClientSize.Width) / 8;
+
+                    if (this.UIBoard.DebugMode)
+                    {
+                        if (currentUISquare.CurrentPiece == null)
+                        {
+                            currentUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation, "Arial", 25);
+                        }
+                    }
+                }
+
+                if (++columnCount > 7)
+                {
+                    columnCount = 0;
+                    newRow++;
+                }
+            }
         }
 
         #endregion
@@ -254,20 +264,20 @@ namespace ChessMangler.WinUIParts
                 }
             }
         }
-        public void SyncBoard()
-        {
-            //BoardDef board = new BoardDef(8, 8);
-            //foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
-            //{
-            //    UISquare currentUISquare = this.UIBoard.GetByLocation(currentSquare.Column, currentSquare.Row);
+        //public void SyncBoard()
+        //{
+        //    BoardDef board = new BoardDef(8, 8);
+        //    foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
+        //    {
+        //        UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
 
-            //    if (currentUISquare != null)
-            //    {
-            //        currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
-            //        currentUISquare.Image = currentSquare.CurrentPiece.Image;
-            //    }
-            //}
-        }
+        //        if (currentUISquare != null)
+        //        {
+        //            currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
+        //            currentUISquare.Image = currentSquare.CurrentPiece.Image;
+        //        }
+        //    }
+        //}
         public void TurnBoard()
         {
             int i = 0;
@@ -298,7 +308,4 @@ namespace ChessMangler.WinUIParts
         }
     }
 }
-
-
-
 
