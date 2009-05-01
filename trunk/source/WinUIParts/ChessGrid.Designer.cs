@@ -1,4 +1,4 @@
-﻿namespace ChessMangler.WinUI
+﻿namespace ChessMangler.WinUIParts
 {
     public partial class ChessGrid
     {

@@ -10,9 +10,7 @@ using ChessMangler.Engine.Config;
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 
-using ChessMangler.WinUI;
-
-namespace ChessMangler.WinUI
+namespace ChessMangler.WinUIParts
 {
     /// <summary>
     /// This form only captures events from the form & scripts WinUIParts.  Nothing else.

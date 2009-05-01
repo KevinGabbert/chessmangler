@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using System.Windows.Forms;
+using ChessMangler.WinUIParts;
 
 namespace ChessMangler.WinUI
 {

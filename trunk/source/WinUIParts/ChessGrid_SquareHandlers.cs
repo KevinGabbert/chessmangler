@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 
-namespace ChessMangler.WinUI
+namespace ChessMangler.WinUIParts
 {
     public class ChessGrid_SquareHandlers
     {
