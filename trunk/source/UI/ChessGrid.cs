@@ -12,7 +12,7 @@ using ChessMangler.Engine.Types;
 
 using ChessMangler.WinUI;
 
-namespace ChessMangler.WinUIParts
+namespace ChessMangler.WinUI
 {
     /// <summary>
     /// This form only captures events from the form & scripts WinUIParts.  Nothing else.
@@ -36,12 +36,12 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
-        private UISquare _dragStartSquare;
-
         string _sourceDir;
         string _configFile;
 
-        DebugForm debugForm = new DebugForm();
+        DebugForm _debugForm = new DebugForm();
+
+        ChessGrid_SquareHandlers _squareHandlers = new ChessGrid_SquareHandlers();
 
         public ChessGrid()
         {
@@ -87,149 +87,48 @@ namespace ChessMangler.WinUIParts
                 MessageBox.Show("Default Board Setup file not found. expected to find: " + _configFile);
             }
 
-            this.Add_Required_Square_Handlers();   
+            _squareHandlers.DebugForm = _debugForm;
+            _squareHandlers.Add_Required_Square_Handlers(this);
+
+            ClientSize = new Size(ClientSize.Width, ClientSize.Height + this.chessMenu.Height);
         }
 
-        /// <summary>
-        /// All Squares must have at least these events
-        /// (The others can be attached on the fly)
-        /// </summary>
-        public void Add_Required_Square_Handlers()
-        {
-            foreach(Control control in this.Controls)
-            {
-                string controlType = control.GetType().ToString();
-                
-                if (controlType == "ChessMangler.WinUIParts.UISquare")
-                {
-                    UISquare currentSquare = ((UISquare)control);
-                    currentSquare.MouseDown += this.CellMouseDown;
-                    currentSquare.MouseMove += this.CellMouseMove;
-                    currentSquare.DragEnter += this.CellDragEnter;
-                    currentSquare.DragDrop += this.CellDragDrop;
-                }
-            }
-        }
-
-        #region Cell Event Handlers
-
-        private void CellMouseDown(object sender, MouseEventArgs e)
-        {
-            _dragStartSquare = (UISquare)sender;
-
-            //Make the piece vanish right away. CurrentPiece needs to stay until the end of the DragDrop operation
-            UISquare blank = new UISquare(_dragStartSquare.Location, _dragStartSquare.SquareSize);
-
-            //No need to do anything if the user didn't click on a piece!
-            if (_dragStartSquare.CurrentPiece == null)
-            {
-                return;
-            }
-            else
-            {
-                //Hide what we are doing from the user (clone wont work!)
-                blank.BackColor = _dragStartSquare.BackColor;
-                this.Controls.Add(blank);
-                blank.BringToFront();
-            }
-
-            ChessPieceCursor.ShowPieceCursor((UISquare)sender);
-
-            if (_dragStartSquare.CurrentPiece != null)
-            {
-                _dragStartSquare.DoDragDrop(_dragStartSquare.Image, DragDropEffects.Copy); 
-            }
-
-            this.Controls.Remove(blank);
-
-            blank = null;
-        }
-        private void CellMouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button != (MouseButtons.Left | MouseButtons.XButton1))
-            {
-                return;
-            }
-        }
-        private void CellDragEnter(object sender, DragEventArgs e)
-        {
-            if (!e.Data.GetDataPresent(typeof(Bitmap)))
-            {
-                e.Effect = DragDropEffects.None;
-                return;
-            }
-
-            e.Effect = DragDropEffects.Copy;
-        }
-        private void CellDragDrop(object sender, DragEventArgs e)
-        {
-            debugForm.debugTextBox.Text += "\r\n ++ Drop Start";
-
-            try
-            {
-                UISquare dragEndSquare;
-                dragEndSquare = (UISquare)sender;
-
-                bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
-
-                if (weCanMove)
-                {
-                    //Set the new piece
-                    dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
-                    debugForm.debugTextBox.Text += "\r\n Set Piece";
-
-                    this.UIBoard.ClearSquare(_dragStartSquare, true);
-                    debugForm.debugTextBox.Text += "\r\n Clear Square";
-                }
-                else
-                {
-                    //put it back
-                    _dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
-                    debugForm.debugTextBox.Text += "\r\n Putting back piece";
-                }
-
-                debugForm.debugTextBox.Text += "\r\n -- Drop End";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        #endregion
         #region Form Event Handlers
 
         private void ChessGrid_Resize(object sender, EventArgs e)
         {
             ChessGrid thisForm = (ChessGrid)sender;
-            //this.FormBorderStyle
+
             //for the moment, we will pull this from config.  (we'll use a pre-loaded prop later)
             //Int16 defaultSquareSize  = this.UIBoard.get(Config.LoadXML(_configFile));
 
             //Ensure that the client area is always square
-            //int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
-            //ClientSize = new Size(iSize, iSize);
+            //TODO: this needs to account for fullscreen
+            int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
+            ClientSize = new Size(iSize, iSize);
 
             //Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
 
             int newRow = 0;
             int columnCount = 0;
 
-            BoardDef board = new BoardDef(8, 8);
+            BoardDef board = this.UIBoard.EngineBoard.Definition;
             foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
             {
                 UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
 
                 if (currentUISquare != null)
                 {
-                    int x = currentSquare.Column * ClientSize.Width / 8;
-                    int y = (newRow * ClientSize.Height / 8) + this.chessMenu.Height;
+                    int x = currentSquare.Column * ClientSize.Width / board.Columns;
+                    int y = (newRow * (ClientSize.Height - (this.chessMenu.Height - 2)) / board.Rows);
+
+                    y = y + this.chessMenu.Height;
 
                     currentUISquare.Location = new Point(x, y);
                     currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
 
-                    currentUISquare.Height = (ClientSize.Height / 8); //+ this.chessMenu.Height;
-                    currentUISquare.Width = (ClientSize.Width) / 8;
+                    currentUISquare.Height = (ClientSize.Height / board.Columns);
+                    currentUISquare.Width = (ClientSize.Width) / board.Rows;
 
                     if (this.UIBoard.DebugMode)
                     {
@@ -240,6 +139,7 @@ namespace ChessMangler.WinUIParts
                     }
                 }
 
+                //This is what we use to impose a new order (different than the Square2D list)
                 if (++columnCount > 7)
                 {
                     columnCount = 0;
@@ -250,61 +150,11 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
-        public void CheckForMissingPieces()
-        {
-            BoardDef board = new BoardDef(8, 8);
-            foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
-            {
-                UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
-
-                //restore any lost images
-                if ((currentUISquare.CurrentPiece != null) & (currentUISquare.Image == null))
-                {
-                    currentUISquare.Image = currentUISquare.CurrentPiece.Image;
-                }
-            }
-        }
-        //public void SyncBoard()
-        //{
-        //    BoardDef board = new BoardDef(8, 8);
-        //    foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
-        //    {
-        //        UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
-
-        //        if (currentUISquare != null)
-        //        {
-        //            currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
-        //            currentUISquare.Image = currentSquare.CurrentPiece.Image;
-        //        }
-        //    }
-        //}
-        public void TurnBoard()
-        {
-            int i = 0;
-            //cycle through all the squares on the board..
-            BoardDef board = new BoardDef(8, 8);
-            foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
-            {
-                UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Row, currentSquare.Column);
-
-                if (currentUISquare != null)
-                {
-                    //turns
-                    currentUISquare.Location = new Point(currentSquare.Row * 72, currentSquare.Column * 72);
-
-                    //reverses
-                    //currentUISquare.Location = new Point(currentSquare.Column * 72, currentSquare.Row * 72);
-                }
-
-                i++;
-            }
-        }
-
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            debugForm = new DebugForm();
-            debugForm.Show();
-            debugForm.debugTextBox.Text += "New Debug Form";
+            _debugForm = new DebugForm();
+            _debugForm.Show();
+            _debugForm.debugTextBox.Text += "New Debug Form";
         }
     }
 }

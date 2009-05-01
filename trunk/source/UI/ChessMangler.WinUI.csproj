@@ -75,6 +75,7 @@
     <Compile Include="ChessGrid.Designer.cs">
       <DependentUpon>ChessGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChessGrid_SquareHandlers.cs" />
     <Compile Include="DebugForm.cs">
       <SubType>Form</SubType>
     </Compile>
