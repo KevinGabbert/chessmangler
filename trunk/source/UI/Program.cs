@@ -32,7 +32,14 @@ namespace ChessMangler
             //---------  This pulls from ProgramSettings DB
 
 
-            Application.Run(new ChessMangler.WinUIParts.ChessGrid());
+            //Open up a *Game List* form
+
+
+
+
+
+
+            Application.Run(new ChessMangler.WinUIParts.GameList());
         }
     }
 }
