@@ -5,10 +5,12 @@ using System.IO;
 using System.Xml;
 
 using System.Collections.Generic;
+
 using ChessMangler.Engine.Interfaces;
 using ChessMangler.Engine.Config;
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
+using ChessMangler.Settings.Types.WinUI;
 
 namespace ChessMangler.WinUIParts
 {
@@ -40,13 +42,22 @@ namespace ChessMangler.WinUIParts
         DebugForm _debugForm = new DebugForm();
 
         ChessGrid_SquareHandlers _squareHandlers = new ChessGrid_SquareHandlers();
+        ChessGrid_Settings _gridOptions = new ChessGrid_Settings();
 
         public ChessGrid()
         {
             InitializeComponent();
 
-            _sourceDir = _sourceDir = Directory.GetParent(Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString()).ToString();
-            _configFile = _sourceDir + "\\UI\\Board2D.config";
+            //---------  This pulls from ProgramSettings DB
+
+            _sourceDir = _sourceDir = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString();
+            _configFile =  _sourceDir + "\\Config\\Board2D.config"; //This needs to come from ProgramSettings
+            //_sourceDir = _gridOptions.Get("_configFile");
+
+            //---------  This pulls from ProgramSettings DB
+
+
+            //string x = _gridOptions.Get("x");
         }
 
         private void ChessGrid_Load(object sender, EventArgs e)
@@ -54,13 +65,11 @@ namespace ChessMangler.WinUIParts
             //A test file so we can have something to develop with..
             XmlDocument testSetup = new XmlDocument();
 
-            //The App should start up with a blank form and a combobox showing what boards are available to load up.
+            //TODO: The App should start up with a blank form and a combobox showing what boards are available to load up.
             //If there are none, then the combobox should not be there.  Instead there will be a "Browse" button so
            //the user can point to a directory with config files.
 
-            string configPath = System.Environment.CurrentDirectory + "\\Board2D.config"; //have it copy local
-
-            string uiDirectory = _sourceDir + "\\UI";
+            string uiDirectory = _sourceDir;
             string imagesDirectory = uiDirectory + "\\images";
 
             bool uiDirectoryExists = Directory.Exists(uiDirectory);

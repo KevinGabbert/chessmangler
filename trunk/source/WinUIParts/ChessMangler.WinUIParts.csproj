@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\UI\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -71,6 +71,10 @@
     <ProjectReference Include="..\Engine\Engine\ChessMangler.Engine.csproj">
       <Project>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</Project>
       <Name>ChessMangler.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Settings\ChessMangler.Settings.csproj">
+      <Project>{985BBB78-43C5-49BF-A6D4-C7F602C4ACB5}</Project>
+      <Name>ChessMangler.Settings</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

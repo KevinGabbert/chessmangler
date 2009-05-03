@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Text;
 
-namespace Data
+namespace ChessMangler.Settings.Types.WinUI
 {
-    public class Class1
+    public class WinUIBase: UIBase
     {
     }
 }
