@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 
 using System.Windows.Forms;
-using ChessMangler.WinUIParts;
 
-namespace ChessMangler.WinUI
+namespace ChessMangler
 {
     static class Program
     {
@@ -16,7 +15,7 @@ namespace ChessMangler.WinUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ChessGrid());
+            Application.Run(new ChessMangler.WinUIParts.ChessGrid());
         }
     }
 }

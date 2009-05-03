@@ -33,10 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="jabber-net, Version=2.1.0.702, Culture=neutral, PublicKeyToken=924c5b18328d6f09, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\3rdParty\JabberNet-2.1.0.710\bin\Debug\jabber-net.dll</HintPath>
-    </Reference>
     <Reference Include="muzzle, Version=2.1.0.702, Culture=neutral, PublicKeyToken=924c5b18328d6f09, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\3rdParty\JabberNet-2.1.0.710\muzzle\bin\Debug\muzzle.dll</HintPath>
@@ -46,14 +42,21 @@
       <HintPath>..\..\3rdParty\JabberNet-2.1.0.710\netlib.Dns\bin\Debug\netlib.Dns.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\MoveBase.cs" />
+    <Compile Include="Types\MovePacket.cs" />
+    <Compile Include="Types\MoveResponsePacket.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
