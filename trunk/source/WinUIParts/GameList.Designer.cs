@@ -138,7 +138,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(132, 33);
+            this.label5.Location = new System.Drawing.Point(200, 36);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(64, 13);
             this.label5.TabIndex = 10;
@@ -146,14 +146,16 @@
             // 
             // udSquareSize
             // 
-            this.udSquareSize.Location = new System.Drawing.Point(135, 49);
+            this.udSquareSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.udSquareSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.udSquareSize.Location = new System.Drawing.Point(203, 52);
             this.udSquareSize.Name = "udSquareSize";
-            this.udSquareSize.Size = new System.Drawing.Size(61, 20);
+            this.udSquareSize.Size = new System.Drawing.Size(61, 29);
             this.udSquareSize.TabIndex = 4;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(251, 106);
+            this.button1.Location = new System.Drawing.Point(251, 117);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(24, 20);
             this.button1.TabIndex = 9;
@@ -163,7 +165,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 90);
+            this.label4.Location = new System.Drawing.Point(3, 101);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(261, 13);
             this.label4.TabIndex = 8;
@@ -171,7 +173,8 @@
             // 
             // txtImages
             // 
-            this.txtImages.Location = new System.Drawing.Point(3, 106);
+            this.txtImages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtImages.Location = new System.Drawing.Point(3, 117);
             this.txtImages.Name = "txtImages";
             this.txtImages.Size = new System.Drawing.Size(239, 20);
             this.txtImages.TabIndex = 7;
@@ -192,22 +195,29 @@
             this.groupBox1.Controls.Add(this.udGridY);
             this.groupBox1.Location = new System.Drawing.Point(3, 33);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(104, 46);
+            this.groupBox1.Size = new System.Drawing.Size(163, 54);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Create Grid";
             // 
             // udGridX
             // 
-            this.udGridX.Location = new System.Drawing.Point(6, 19);
+            this.udGridX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.udGridX.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.udGridX.Location = new System.Drawing.Point(21, 19);
+            this.udGridX.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             this.udGridX.Name = "udGridX";
-            this.udGridX.Size = new System.Drawing.Size(33, 20);
+            this.udGridX.Size = new System.Drawing.Size(43, 29);
             this.udGridX.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(44, 26);
+            this.label2.Location = new System.Drawing.Point(69, 26);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(14, 13);
             this.label2.TabIndex = 3;
@@ -215,9 +225,16 @@
             // 
             // udGridY
             // 
-            this.udGridY.Location = new System.Drawing.Point(64, 19);
+            this.udGridY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.udGridY.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.udGridY.Location = new System.Drawing.Point(89, 19);
+            this.udGridY.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             this.udGridY.Name = "udGridY";
-            this.udGridY.Size = new System.Drawing.Size(33, 20);
+            this.udGridY.Size = new System.Drawing.Size(45, 29);
             this.udGridY.TabIndex = 2;
             // 
             // tabPage3
