@@ -52,6 +52,8 @@
     <Compile Include="ChessGrid.Designer.cs">
       <DependentUpon>ChessGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChessGrid_HandlerBase.cs" />
+    <Compile Include="ChessGrid_MenuBarHandlers.cs" />
     <Compile Include="ChessGrid_SquareHandlers.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DebugForm.cs">
@@ -108,6 +110,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ChessGrid\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

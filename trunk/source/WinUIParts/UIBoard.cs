@@ -25,7 +25,7 @@ namespace ChessMangler.WinUIParts
 
         #region Properties
 
-        bool _debugMode = true;
+        bool _debugMode = false;
         public bool DebugMode
         {
             get
@@ -117,7 +117,6 @@ namespace ChessMangler.WinUIParts
 
             this.BuildUISquares(formForBoard, this.EngineBoard.Definition, squareSize);
         }
-
         public void CreateBoard(Form formForBoard, BoardDef boardDef, short squareSize)
         {
             this.EngineBoard = new Board2D(boardDef);
@@ -175,7 +174,7 @@ namespace ChessMangler.WinUIParts
         }
 
         //These should all map 1 to 1..
-        protected static void TranslateEngineStuffToUI(ISquare currentSquare, UISquare newUISquare)
+        public static void TranslateEngineStuffToUI(ISquare currentSquare, UISquare newUISquare)
         {
             //This is the only code that will remain in this loop when we are done.
             newUISquare.Color = currentSquare.Color;

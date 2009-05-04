@@ -46,6 +46,8 @@
             this.udGridX = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.udGridY = new System.Windows.Forms.NumericUpDown();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lstFreeFormPresets = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -54,6 +56,7 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udGridX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udGridY)).BeginInit();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -96,6 +99,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(1, 92);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -216,11 +220,29 @@
             this.udGridY.Size = new System.Drawing.Size(33, 20);
             this.udGridY.TabIndex = 2;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.lstFreeFormPresets);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(282, 165);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Free Form Presets";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // lstFreeFormPresets
+            // 
+            this.lstFreeFormPresets.FormattingEnabled = true;
+            this.lstFreeFormPresets.Location = new System.Drawing.Point(3, 15);
+            this.lstFreeFormPresets.Name = "lstFreeFormPresets";
+            this.lstFreeFormPresets.Size = new System.Drawing.Size(276, 147);
+            this.lstFreeFormPresets.TabIndex = 2;
+            // 
             // GameList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 318);
+            this.ClientSize = new System.Drawing.Size(292, 317);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.openGrid);
             this.Controls.Add(this.pictureBox1);
@@ -237,6 +259,7 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udGridX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udGridY)).EndInit();
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -260,5 +283,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown udSquareSize;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.ListBox lstFreeFormPresets;
     }
 }

@@ -10,35 +10,9 @@ using ChessMangler.Engine.Types;
 
 namespace ChessMangler.WinUIParts
 {
-    public class ChessGrid_SquareHandlers
+    public class ChessGrid_SquareHandlers: ChessGrid_HandlerBase
     {
         #region Properties
-
-        ChessGrid _chessGrid;
-        public ChessGrid ChessGrid_Form
-        {
-            get
-            {
-                return _chessGrid;
-            }
-            set
-            {
-                _chessGrid = value;
-            }
-        }
-
-        DebugForm _debugForm;
-        public DebugForm DebugForm
-        {
-            get
-            {
-                return _debugForm;
-            }
-            set
-            {
-                _debugForm = value;
-            }
-        }
 
         UISquare _dragStartSquare;
         public UISquare DragStart_Square

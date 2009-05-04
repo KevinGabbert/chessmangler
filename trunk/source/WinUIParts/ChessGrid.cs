@@ -34,6 +34,19 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        bool _constrainProportions;
+        public bool ConstrainProportions
+        {
+            get
+            {
+                return _constrainProportions;
+            }
+            set
+            {
+                _constrainProportions = value;
+            }
+        }
+
         #endregion
 
         string _sourceDir;
@@ -43,6 +56,7 @@ namespace ChessMangler.WinUIParts
 
         DebugForm _debugForm = new DebugForm();
 
+        ChessGrid_MenuBarHandlers _menuBarHandlers = new ChessGrid_MenuBarHandlers();
         ChessGrid_SquareHandlers _squareHandlers = new ChessGrid_SquareHandlers();
         ChessGrid_Settings _gridOptions = new ChessGrid_Settings();
 
@@ -61,7 +75,6 @@ namespace ChessMangler.WinUIParts
 
             //string x = _gridOptions.Get("x");
         }
-
         public ChessGrid(BoardDef board, string imagesDirectory, short squareSize)
         {
             InitializeComponent();
@@ -126,15 +139,20 @@ namespace ChessMangler.WinUIParts
 
         private void ChessGrid_Resize(object sender, EventArgs e)
         {
-            ChessGrid thisForm = (ChessGrid)sender;
+            //ChessGrid thisForm = (ChessGrid)sender;
 
             //for the moment, we will pull this from config.  (we'll use a pre-loaded prop later)
             //Int16 defaultSquareSize  = this.UIBoard.get(Config.LoadXML(_configFile));
 
-            //Ensure that the client area is always square
-            //TODO: this needs to account for fullscreen
-            int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
-            ClientSize = new Size(iSize, iSize);
+            this.Redraw_UIBoard();
+        }
+
+        public void Redraw_UIBoard()
+        {
+            if (this.ConstrainProportions)
+            {
+                this.KeepSquare();
+            }
 
             //Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
 
@@ -155,7 +173,6 @@ namespace ChessMangler.WinUIParts
 
                     currentUISquare.Location = new Point(x, y);
                     currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
-
                     currentUISquare.Height = (ClientSize.Height / board.Columns);
                     currentUISquare.Width = (ClientSize.Width) / board.Rows;
 
@@ -177,14 +194,15 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        #endregion
-
-        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
+        private void KeepSquare()
         {
-            _debugForm = new DebugForm();
-            _debugForm.Show();
-            _debugForm.debugTextBox.Text += "New Debug Form";
+            //Ensure that the client area is always square
+            //TODO: this needs to account for fullscreen
+            int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
+            ClientSize = new Size(iSize, iSize);
         }
+
+        #endregion
     }
 }
 

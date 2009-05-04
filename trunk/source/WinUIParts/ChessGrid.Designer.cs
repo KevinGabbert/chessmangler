@@ -67,6 +67,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.onlineHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toggleDebugModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.chessMenu.SuspendLayout();
             this.SuspendLayout();
@@ -192,7 +193,7 @@
             this.aIMFredFarkelToolStripMenuItem,
             this.googleJoeblowToolStripMenuItem});
             this.accountsToolStripMenuItem1.Name = "accountsToolStripMenuItem1";
-            this.accountsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
+            this.accountsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.accountsToolStripMenuItem1.Text = "Accounts";
             // 
             // jabberToolStripMenuItem1
@@ -222,7 +223,7 @@
             // optionsToolStripMenuItem1
             // 
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
+            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem1.Text = "Options";
             // 
             // movesToolStripMenuItem
@@ -240,40 +241,41 @@
             // movesToolStripMenuItem1
             // 
             this.movesToolStripMenuItem1.Name = "movesToolStripMenuItem1";
-            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(130, 22);
+            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.movesToolStripMenuItem1.Text = "Moves";
             // 
             // annotateToolStripMenuItem
             // 
             this.annotateToolStripMenuItem.Name = "annotateToolStripMenuItem";
-            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.annotateToolStripMenuItem.Text = "Annotate";
             // 
             // capturedToolStripMenuItem
             // 
             this.capturedToolStripMenuItem.Name = "capturedToolStripMenuItem";
-            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.capturedToolStripMenuItem.Text = "Captured";
             // 
             // uIConfigToolStripMenuItem
             // 
             this.uIConfigToolStripMenuItem.Name = "uIConfigToolStripMenuItem";
-            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.uIConfigToolStripMenuItem.Text = "UI Config";
             // 
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.debugToolStripMenuItem.Text = "Debug";
-            this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
+            this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
             // 
             // actionsToolStripMenuItem
             // 
             this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.flipBoardToolStripMenuItem,
             this.rotateBoardToolStripMenuItem,
-            this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem});
+            this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem,
+            this.toggleDebugModeToolStripMenuItem});
             this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
             this.actionsToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.actionsToolStripMenuItem.Text = "Actions";
@@ -281,19 +283,19 @@
             // flipBoardToolStripMenuItem
             // 
             this.flipBoardToolStripMenuItem.Name = "flipBoardToolStripMenuItem";
-            this.flipBoardToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.flipBoardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.flipBoardToolStripMenuItem.Text = "Flip Board";
             // 
             // rotateBoardToolStripMenuItem
             // 
             this.rotateBoardToolStripMenuItem.Name = "rotateBoardToolStripMenuItem";
-            this.rotateBoardToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.rotateBoardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rotateBoardToolStripMenuItem.Text = "Rotate Board";
             // 
             // undoshouldThisBeSetInTheRulesFileToolStripMenuItem
             // 
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Name = "undoshouldThisBeSetInTheRulesFileToolStripMenuItem";
-            this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Text = "Undo";
             // 
             // chatToolStripMenuItem
@@ -344,6 +346,13 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.aboutToolStripMenuItem.Text = "About";
+            // 
+            // toggleDebugModeToolStripMenuItem
+            // 
+            this.toggleDebugModeToolStripMenuItem.Name = "toggleDebugModeToolStripMenuItem";
+            this.toggleDebugModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.toggleDebugModeToolStripMenuItem.Text = "Toggle Debug Mode";
+            this.toggleDebugModeToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
             // 
             // ChessGrid
             // 
@@ -405,6 +414,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aIMFredFarkelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem googleJoeblowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toggleDebugModeToolStripMenuItem;
 
 
 
