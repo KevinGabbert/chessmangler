@@ -78,9 +78,23 @@ namespace ChessMangler.Engine.Types
             this.MapPieces(configFile, UIDirectory);
         }
 
+        public Board2D(BoardDef boardDef)
+        {
+            this.CreateBoard(boardDef);
+        }
+
+
         protected void CreateBoard(XmlDocument configFile)
         {
             BoardDef boardDef = ConfigParser.GetBoardDef(configFile); // TODO: if BoardDef is null then throw custom exception
+            this.BuildSquares(boardDef);
+        }
+        protected void CreateBoard(BoardDef boardDef)
+        {
+            this.BuildSquares(boardDef);
+        }
+        private void BuildSquares(BoardDef boardDef)
+        {
             this.Definition = boardDef;
 
             //This foreach construct may be temporary, as I'm evaluating whether this is a good idea..
@@ -89,7 +103,6 @@ namespace ChessMangler.Engine.Types
                 //this empty foreach executes SquareLogic. We may need to put something here later..
             }
         }
-
         private void MapPieces(XmlDocument configFile, string directory)
         {
             List<PieceDef> piecesToSet = ConfigParser.GetPieces(configFile);
@@ -113,7 +126,6 @@ namespace ChessMangler.Engine.Types
                 }
             }
         }
-
         public static bool IsThisMoveOkay(ISquare startSquare, ISquare endSquare)
         {
             //Temporary hardcoded rule.. (this will be in XML)

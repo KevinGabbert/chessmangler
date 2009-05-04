@@ -39,6 +39,8 @@ namespace ChessMangler.WinUIParts
         string _sourceDir;
         string _configFile;
 
+        UIBoard _freeFormBoard = null;
+
         DebugForm _debugForm = new DebugForm();
 
         ChessGrid_SquareHandlers _squareHandlers = new ChessGrid_SquareHandlers();
@@ -58,6 +60,18 @@ namespace ChessMangler.WinUIParts
 
 
             //string x = _gridOptions.Get("x");
+        }
+
+        public ChessGrid(BoardDef board, string imagesDirectory, short squareSize)
+        {
+            InitializeComponent();
+
+            this.UIBoard = new UIBoard(0, 25); //adjust for Menu Bar
+            this.UIBoard.CreateBoard(this, board, squareSize);
+
+            this.UIBoard.EngineBoard.RulesEnabled = false;
+
+            //imagesDirectory is for a "tools window (like photoshop) that has chess piece images mapped as buttons
         }
 
         private void ChessGrid_Load(object sender, EventArgs e)
@@ -81,17 +95,25 @@ namespace ChessMangler.WinUIParts
             {
                 testSetup = Config.LoadXML(_configFile);
 
-                //TODO: get default size from 
-
-                this.UIBoard = new UIBoard(0, 25); //This needs to come from the config file
-                this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file 
+                if (_freeFormBoard == null)
+                {
+                    this.UIBoard = new UIBoard(0, 25); //adjust for Menu Bar //This needs to come from the config file
+                    this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file
+                }
+                else
+                {
+                    this.UIBoard = _freeFormBoard;
+                }
 
                 //this.FormBorderStyle = FormBorderStyle.FixedSingle;
             }
             else
             {
-                //Whine pitifully..
-                MessageBox.Show("Default Board Setup file not found. expected to find: " + _configFile);
+                if (_freeFormBoard != null)
+                {
+                    //Whine pitifully..
+                    MessageBox.Show("Default Board Setup file not found. expected to find: " + _configFile);
+                }
             }
 
             _squareHandlers.DebugForm = _debugForm;
@@ -147,7 +169,7 @@ namespace ChessMangler.WinUIParts
                 }
 
                 //This is what we use to impose a new order (different than the Square2D list)
-                if (++columnCount > 7)
+                if (++columnCount > board.Columns - 1)
                 {
                     columnCount = 0;
                     newRow++;

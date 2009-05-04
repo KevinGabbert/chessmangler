@@ -36,21 +36,24 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.udSquareSize = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtImages = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.udGridX = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.udGridY = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udSquareSize)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udGridX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udGridY)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -70,7 +73,6 @@
             this.configList.Name = "configList";
             this.configList.Size = new System.Drawing.Size(276, 134);
             this.configList.TabIndex = 1;
-            this.configList.SelectedIndexChanged += new System.EventHandler(this.configList_SelectedIndexChanged);
             // 
             // openGrid
             // 
@@ -114,9 +116,11 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.udSquareSize);
             this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.textBox1);
+            this.tabPage2.Controls.Add(this.txtImages);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -126,6 +130,22 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Free Form Game";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(132, 33);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(64, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Square Size";
+            // 
+            // udSquareSize
+            // 
+            this.udSquareSize.Location = new System.Drawing.Point(135, 49);
+            this.udSquareSize.Name = "udSquareSize";
+            this.udSquareSize.Size = new System.Drawing.Size(61, 20);
+            this.udSquareSize.TabIndex = 4;
             // 
             // button1
             // 
@@ -145,12 +165,12 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Folder with \"Chess Piece\" images to use in your game";
             // 
-            // textBox1
+            // txtImages
             // 
-            this.textBox1.Location = new System.Drawing.Point(3, 106);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(239, 20);
-            this.textBox1.TabIndex = 7;
+            this.txtImages.Location = new System.Drawing.Point(3, 106);
+            this.txtImages.Name = "txtImages";
+            this.txtImages.Size = new System.Drawing.Size(239, 20);
+            this.txtImages.TabIndex = 7;
             // 
             // label3
             // 
@@ -163,9 +183,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.udGridX);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.numericUpDown2);
+            this.groupBox1.Controls.Add(this.udGridY);
             this.groupBox1.Location = new System.Drawing.Point(3, 33);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(104, 46);
@@ -173,12 +193,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Create Grid";
             // 
-            // numericUpDown1
+            // udGridX
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(6, 19);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(33, 20);
-            this.numericUpDown1.TabIndex = 1;
+            this.udGridX.Location = new System.Drawing.Point(6, 19);
+            this.udGridX.Name = "udGridX";
+            this.udGridX.Size = new System.Drawing.Size(33, 20);
+            this.udGridX.TabIndex = 1;
             // 
             // label2
             // 
@@ -189,12 +209,12 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "X";
             // 
-            // numericUpDown2
+            // udGridY
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(64, 19);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(33, 20);
-            this.numericUpDown2.TabIndex = 2;
+            this.udGridY.Location = new System.Drawing.Point(64, 19);
+            this.udGridY.Name = "udGridY";
+            this.udGridY.Size = new System.Drawing.Size(33, 20);
+            this.udGridY.TabIndex = 2;
             // 
             // GameList
             // 
@@ -212,10 +232,11 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udSquareSize)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udGridX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udGridY)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -230,12 +251,14 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown udGridX;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown udGridY;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtImages;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown udSquareSize;
     }
 }

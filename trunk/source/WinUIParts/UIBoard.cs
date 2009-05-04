@@ -118,6 +118,18 @@ namespace ChessMangler.WinUIParts
             this.BuildUISquares(formForBoard, this.EngineBoard.Definition, squareSize);
         }
 
+        public void CreateBoard(Form formForBoard, BoardDef boardDef, short squareSize)
+        {
+            this.EngineBoard = new Board2D(boardDef);
+            //TODO: if squaresize is -1 then throw custom exception
+
+            //TODO:  keep these "adjustment numbers" somewhere
+            formForBoard.Width = (squareSize * this.EngineBoard.Definition.Columns) + 12;
+            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + 30 + 25;
+
+            this.BuildUISquares(formForBoard, boardDef, squareSize);
+        }
+
         protected void BuildUISquares(Form formForBoard, BoardDef boardDef, Int16 squareSize)
         {
             //Use board logic to iterate through the board.
