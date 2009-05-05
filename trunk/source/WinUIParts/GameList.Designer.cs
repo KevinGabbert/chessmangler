@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameList));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.configList = new System.Windows.Forms.ListBox();
-            this.openGrid = new System.Windows.Forms.Button();
+            this.btnOpenGrid = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabControlGames = new System.Windows.Forms.TabControl();
+            this.tabRulesGame = new System.Windows.Forms.TabPage();
+            this.tabFreeForm = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
             this.udSquareSize = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
@@ -46,17 +46,18 @@
             this.udGridX = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.udGridY = new System.Windows.Forms.NumericUpDown();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabFreeFormPresets = new System.Windows.Forms.TabPage();
             this.lstFreeFormPresets = new System.Windows.Forms.ListBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabControlGames.SuspendLayout();
+            this.tabRulesGame.SuspendLayout();
+            this.tabFreeForm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udSquareSize)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udGridX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udGridY)).BeginInit();
-            this.tabPage3.SuspendLayout();
+            this.tabFreeFormPresets.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -76,16 +77,17 @@
             this.configList.Name = "configList";
             this.configList.Size = new System.Drawing.Size(276, 134);
             this.configList.TabIndex = 1;
+            this.configList.SelectedIndexChanged += new System.EventHandler(this.configList_SelectedIndexChanged);
             // 
-            // openGrid
+            // btnOpenGrid
             // 
-            this.openGrid.Location = new System.Drawing.Point(87, 289);
-            this.openGrid.Name = "openGrid";
-            this.openGrid.Size = new System.Drawing.Size(114, 23);
-            this.openGrid.TabIndex = 2;
-            this.openGrid.Text = "Start Game";
-            this.openGrid.UseVisualStyleBackColor = true;
-            this.openGrid.Click += new System.EventHandler(this.openGrid_Click);
+            this.btnOpenGrid.Location = new System.Drawing.Point(87, 289);
+            this.btnOpenGrid.Name = "btnOpenGrid";
+            this.btnOpenGrid.Size = new System.Drawing.Size(114, 23);
+            this.btnOpenGrid.TabIndex = 2;
+            this.btnOpenGrid.Text = "Start Game";
+            this.btnOpenGrid.UseVisualStyleBackColor = true;
+            this.btnOpenGrid.Click += new System.EventHandler(this.btnOpenGrid_Click);
             // 
             // label1
             // 
@@ -95,45 +97,47 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Games to play";
             // 
-            // tabControl1
+            // tabControlGames
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(1, 92);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(290, 191);
-            this.tabControl1.TabIndex = 4;
+            this.tabControlGames.Controls.Add(this.tabRulesGame);
+            this.tabControlGames.Controls.Add(this.tabFreeForm);
+            this.tabControlGames.Controls.Add(this.tabFreeFormPresets);
+            this.tabControlGames.Location = new System.Drawing.Point(1, 92);
+            this.tabControlGames.Name = "tabControlGames";
+            this.tabControlGames.SelectedIndex = 0;
+            this.tabControlGames.Size = new System.Drawing.Size(290, 191);
+            this.tabControlGames.TabIndex = 4;
+            this.tabControlGames.SelectedIndexChanged += new System.EventHandler(this.tabControlGames_SelectedIndexChanged);
             // 
-            // tabPage1
+            // tabRulesGame
             // 
-            this.tabPage1.Controls.Add(this.configList);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(282, 165);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Rules Game";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabRulesGame.Controls.Add(this.configList);
+            this.tabRulesGame.Controls.Add(this.label1);
+            this.tabRulesGame.Location = new System.Drawing.Point(4, 22);
+            this.tabRulesGame.Name = "tabRulesGame";
+            this.tabRulesGame.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRulesGame.Size = new System.Drawing.Size(282, 165);
+            this.tabRulesGame.TabIndex = 0;
+            this.tabRulesGame.Text = "Rules Game";
+            this.tabRulesGame.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tabFreeForm
             // 
-            this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Controls.Add(this.udSquareSize);
-            this.tabPage2.Controls.Add(this.button1);
-            this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.txtImages);
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.groupBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(282, 165);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Free Form Game";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabFreeForm.Controls.Add(this.label6);
+            this.tabFreeForm.Controls.Add(this.label5);
+            this.tabFreeForm.Controls.Add(this.udSquareSize);
+            this.tabFreeForm.Controls.Add(this.button1);
+            this.tabFreeForm.Controls.Add(this.label4);
+            this.tabFreeForm.Controls.Add(this.txtImages);
+            this.tabFreeForm.Controls.Add(this.label3);
+            this.tabFreeForm.Controls.Add(this.groupBox1);
+            this.tabFreeForm.Location = new System.Drawing.Point(4, 22);
+            this.tabFreeForm.Name = "tabFreeForm";
+            this.tabFreeForm.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFreeForm.Size = new System.Drawing.Size(282, 165);
+            this.tabFreeForm.TabIndex = 1;
+            this.tabFreeForm.Text = "Free Form Game";
+            this.tabFreeForm.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -152,10 +156,11 @@
             this.udSquareSize.Name = "udSquareSize";
             this.udSquareSize.Size = new System.Drawing.Size(61, 29);
             this.udSquareSize.TabIndex = 4;
+            this.udSquareSize.ValueChanged += new System.EventHandler(this.udSquareSize_ValueChanged);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(251, 117);
+            this.button1.Location = new System.Drawing.Point(251, 130);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(24, 20);
             this.button1.TabIndex = 9;
@@ -174,9 +179,9 @@
             // txtImages
             // 
             this.txtImages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtImages.Location = new System.Drawing.Point(3, 117);
+            this.txtImages.Location = new System.Drawing.Point(3, 130);
             this.txtImages.Name = "txtImages";
-            this.txtImages.Size = new System.Drawing.Size(239, 20);
+            this.txtImages.Size = new System.Drawing.Size(240, 20);
             this.txtImages.TabIndex = 7;
             // 
             // label3
@@ -213,6 +218,7 @@
             this.udGridX.Name = "udGridX";
             this.udGridX.Size = new System.Drawing.Size(43, 29);
             this.udGridX.TabIndex = 1;
+            this.udGridX.ValueChanged += new System.EventHandler(this.udGridX_ValueChanged);
             // 
             // label2
             // 
@@ -236,16 +242,17 @@
             this.udGridY.Name = "udGridY";
             this.udGridY.Size = new System.Drawing.Size(45, 29);
             this.udGridY.TabIndex = 2;
+            this.udGridY.ValueChanged += new System.EventHandler(this.udGridY_ValueChanged);
             // 
-            // tabPage3
+            // tabFreeFormPresets
             // 
-            this.tabPage3.Controls.Add(this.lstFreeFormPresets);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(282, 165);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Free Form Presets";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabFreeFormPresets.Controls.Add(this.lstFreeFormPresets);
+            this.tabFreeFormPresets.Location = new System.Drawing.Point(4, 22);
+            this.tabFreeFormPresets.Name = "tabFreeFormPresets";
+            this.tabFreeFormPresets.Size = new System.Drawing.Size(282, 165);
+            this.tabFreeFormPresets.TabIndex = 2;
+            this.tabFreeFormPresets.Text = "Free Form Presets";
+            this.tabFreeFormPresets.UseVisualStyleBackColor = true;
             // 
             // lstFreeFormPresets
             // 
@@ -255,28 +262,38 @@
             this.lstFreeFormPresets.Size = new System.Drawing.Size(276, 147);
             this.lstFreeFormPresets.TabIndex = 2;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(34, 114);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(196, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "(if left blank, default images will be used)";
+            // 
             // GameList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(292, 317);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.openGrid);
+            this.Controls.Add(this.tabControlGames);
+            this.Controls.Add(this.btnOpenGrid);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "GameList";
             this.Text = "GameList";
+            this.Load += new System.EventHandler(this.GameList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tabControlGames.ResumeLayout(false);
+            this.tabRulesGame.ResumeLayout(false);
+            this.tabFreeForm.ResumeLayout(false);
+            this.tabFreeForm.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udSquareSize)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udGridX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udGridY)).EndInit();
-            this.tabPage3.ResumeLayout(false);
+            this.tabFreeFormPresets.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -285,11 +302,11 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ListBox configList;
-        private System.Windows.Forms.Button openGrid;
+        private System.Windows.Forms.Button btnOpenGrid;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabControl tabControlGames;
+        private System.Windows.Forms.TabPage tabRulesGame;
+        private System.Windows.Forms.TabPage tabFreeForm;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NumericUpDown udGridX;
         private System.Windows.Forms.Label label2;
@@ -300,7 +317,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown udSquareSize;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabFreeFormPresets;
         private System.Windows.Forms.ListBox lstFreeFormPresets;
+        private System.Windows.Forms.Label label6;
     }
 }

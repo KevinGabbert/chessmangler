@@ -47,6 +47,19 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        string _rulesFilePath;
+        public string RulesFilePath
+        {
+            get
+            {
+                return _rulesFilePath;
+            }
+            set
+            {
+                _rulesFilePath = value;
+            }
+        }
+
         #endregion
 
         string _sourceDir;
@@ -66,7 +79,7 @@ namespace ChessMangler.WinUIParts
 
             //---------  This pulls from ProgramSettings DB
 
-            _sourceDir = _sourceDir = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString();
+            _sourceDir = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString();
             _configFile =  _sourceDir + "\\Config\\Board2D.config"; //This needs to come from ProgramSettings
             //_sourceDir = _gridOptions.Get("_configFile");
 
