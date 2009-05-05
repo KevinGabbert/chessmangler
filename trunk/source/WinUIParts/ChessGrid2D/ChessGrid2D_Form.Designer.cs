@@ -28,8 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChessGrid2D_Form));
             this.chessMenu = new System.Windows.Forms.MenuStrip();
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,6 +59,7 @@
             this.flipBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotateBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toggleDebugModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.messageWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,14 +67,12 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.onlineHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toggleDebugModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.statusBar = new System.Windows.Forms.StatusStrip();
+            this.connectionLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.chessMenu.SuspendLayout();
+            this.statusBar.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // errorProvider1
-            // 
-            this.errorProvider1.ContainerControl = this;
             // 
             // chessMenu
             // 
@@ -193,7 +191,7 @@
             this.aIMFredFarkelToolStripMenuItem,
             this.googleJoeblowToolStripMenuItem});
             this.accountsToolStripMenuItem1.Name = "accountsToolStripMenuItem1";
-            this.accountsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.accountsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.accountsToolStripMenuItem1.Text = "Accounts";
             // 
             // jabberToolStripMenuItem1
@@ -223,7 +221,7 @@
             // optionsToolStripMenuItem1
             // 
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.optionsToolStripMenuItem1.Text = "Options";
             // 
             // movesToolStripMenuItem
@@ -241,33 +239,32 @@
             // movesToolStripMenuItem1
             // 
             this.movesToolStripMenuItem1.Name = "movesToolStripMenuItem1";
-            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(130, 22);
             this.movesToolStripMenuItem1.Text = "Moves";
             // 
             // annotateToolStripMenuItem
             // 
             this.annotateToolStripMenuItem.Name = "annotateToolStripMenuItem";
-            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.annotateToolStripMenuItem.Text = "Annotate";
             // 
             // capturedToolStripMenuItem
             // 
             this.capturedToolStripMenuItem.Name = "capturedToolStripMenuItem";
-            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.capturedToolStripMenuItem.Text = "Captured";
             // 
             // uIConfigToolStripMenuItem
             // 
             this.uIConfigToolStripMenuItem.Name = "uIConfigToolStripMenuItem";
-            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.uIConfigToolStripMenuItem.Text = "UI Config";
             // 
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.debugToolStripMenuItem.Text = "Debug";
-            this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
             // 
             // actionsToolStripMenuItem
             // 
@@ -297,6 +294,12 @@
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Name = "undoshouldThisBeSetInTheRulesFileToolStripMenuItem";
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Text = "Undo";
+            // 
+            // toggleDebugModeToolStripMenuItem
+            // 
+            this.toggleDebugModeToolStripMenuItem.Name = "toggleDebugModeToolStripMenuItem";
+            this.toggleDebugModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.toggleDebugModeToolStripMenuItem.Text = "Toggle Debug Mode";
             // 
             // chatToolStripMenuItem
             // 
@@ -347,28 +350,50 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
-            // toggleDebugModeToolStripMenuItem
+            // statusBar
             // 
-            this.toggleDebugModeToolStripMenuItem.Name = "toggleDebugModeToolStripMenuItem";
-            this.toggleDebugModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.toggleDebugModeToolStripMenuItem.Text = "Toggle Debug Mode";
-            this.toggleDebugModeToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
+            this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectionLabel,
+            this.toolStripSplitButton1});
+            this.statusBar.Location = new System.Drawing.Point(0, 557);
+            this.statusBar.Name = "statusBar";
+            this.statusBar.Size = new System.Drawing.Size(669, 22);
+            this.statusBar.TabIndex = 1;
+            this.statusBar.Text = "statusStrip1";
             // 
-            // ChessGrid2D
+            // connectionLabel
+            // 
+            this.connectionLabel.Name = "connectionLabel";
+            this.connectionLabel.Size = new System.Drawing.Size(135, 17);
+            this.connectionLabel.Text = "Connected (Joe FakeUser)";
+            // 
+            // toolStripSplitButton1
+            // 
+            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 20);
+            this.toolStripSplitButton1.Text = "toolStripSplitButton1";
+            // 
+            // ChessGrid2D_Form
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(669, 579);
+            this.Controls.Add(this.statusBar);
             this.Controls.Add(this.chessMenu);
             this.MainMenuStrip = this.chessMenu;
-            this.Name = "ChessGrid2D";
+            this.Name = "ChessGrid2D_Form";
             this.Text = "ChessGrid2D";
             this.Load += new System.EventHandler(this.ChessGrid2D_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ChessGrid2D_Form_FormClosed);
             this.Resize += new System.EventHandler(this.ChessGrid2D_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.chessMenu.ResumeLayout(false);
             this.chessMenu.PerformLayout();
+            this.statusBar.ResumeLayout(false);
+            this.statusBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -376,7 +401,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ToolStripMenuItem connectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
@@ -415,6 +439,9 @@
         private System.Windows.Forms.ToolStripMenuItem aIMFredFarkelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem googleJoeblowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toggleDebugModeToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusBar;
+        private System.Windows.Forms.ToolStripStatusLabel connectionLabel;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
 
 
 

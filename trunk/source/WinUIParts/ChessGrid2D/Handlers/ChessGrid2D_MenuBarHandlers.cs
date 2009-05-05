@@ -25,6 +25,5 @@ namespace ChessMangler.WinUIParts
             ChessGrid2D_Form.UIBoard.DebugMode = this._userSetDebugMode;
             ChessGrid2D_Form.Redraw_UIBoard();
         }
-
     }
 }

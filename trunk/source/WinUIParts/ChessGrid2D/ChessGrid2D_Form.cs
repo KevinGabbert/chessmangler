@@ -62,9 +62,6 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
-        string _sourceDir;
-        string _configFile;
-
         UIBoard _freeFormBoard = null;
 
         DebugForm _debugForm = new DebugForm();
@@ -76,23 +73,13 @@ namespace ChessMangler.WinUIParts
         public ChessGrid2D_Form()
         {
             InitializeComponent();
-
-            //---------  This pulls from ProgramSettings DB
-
-            _sourceDir = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString();
-            _configFile =  _sourceDir + "\\Config\\Board2D.config"; //This needs to come from ProgramSettings
-            //_sourceDir = _gridOptions.Get("_configFile");
-
-            //---------  This pulls from ProgramSettings DB
-
-
-            //string x = _gridOptions.Get("x");
         }
+
         public ChessGrid2D_Form(BoardDef board, string imagesDirectory, short squareSize)
         {
             InitializeComponent();
 
-            this.UIBoard = new UIBoard(0, 25); //adjust for Menu Bar
+            this.UIBoard = new UIBoard(0, this.chessMenu.Height + this.statusBar.Height); //adjust for Menu Bar
             this.UIBoard.CreateBoard(this, board, squareSize);
 
             this.UIBoard.EngineBoard.RulesEnabled = false;
@@ -105,48 +92,41 @@ namespace ChessMangler.WinUIParts
             //A test file so we can have something to develop with..
             XmlDocument testSetup = new XmlDocument();
 
-            //TODO: The App should start up with a blank form and a combobox showing what boards are available to load up.
-            //If there are none, then the combobox should not be there.  Instead there will be a "Browse" button so
-           //the user can point to a directory with config files.
-
-            string uiDirectory = _sourceDir;
+            string uiDirectory = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString();
             string imagesDirectory = uiDirectory + "\\images";
 
             bool uiDirectoryExists = Directory.Exists(uiDirectory);
             bool imagesDirectoryExists = Directory.Exists(imagesDirectory);
 
-            bool configFileExists = File.Exists(_configFile);
+            bool configFileExists = File.Exists(this.RulesFilePath);
 
             if (configFileExists)
             {
-                testSetup = Config.LoadXML(_configFile);
+                testSetup = Config.LoadXML(this.RulesFilePath);
 
                 if (_freeFormBoard == null)
                 {
-                    this.UIBoard = new UIBoard(0, 25); //adjust for Menu Bar //This needs to come from the config file
+                    this.UIBoard = new UIBoard(0, this.chessMenu.Height + this.statusBar.Height); //adjust for Menu Bar
                     this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file
                 }
                 else
                 {
                     this.UIBoard = _freeFormBoard;
                 }
-
-                //this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            }
-            else
-            {
-                if (_freeFormBoard != null)
-                {
-                    //Whine pitifully..
-                    MessageBox.Show("Default Board Setup file not found. expected to find: " + _configFile);
-                }
             }
 
             _squareHandlers.DebugForm = _debugForm;
             _squareHandlers.Add_Required_Square_Handlers(this);
 
-            ClientSize = new Size(ClientSize.Width, ClientSize.Height + this.chessMenu.Height);
+            //Menu Handlers
+            this.toggleDebugModeToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
+            this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
+
+            //Adjust Form size to account for menu bar
+            ClientSize = new Size(ClientSize.Width, ClientSize.Height + this.chessMenu.Height); //+ this.StatusBar.Height
         }
+
+
 
         #region Form Event Handlers
 
@@ -169,40 +149,44 @@ namespace ChessMangler.WinUIParts
 
             //Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
 
-            int newRow = 0;
-            int columnCount = 0;
-
-            BoardDef board = this.UIBoard.EngineBoard.Definition;
-            foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
+            if (this.UIBoard != null)
             {
-                UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
+                int newRow = 0;
+                int columnCount = 0;
 
-                if (currentUISquare != null)
+                BoardDef board = this.UIBoard.EngineBoard.Definition;
+                foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
                 {
-                    int x = currentSquare.Column * ClientSize.Width / board.Columns;
-                    int y = (newRow * (ClientSize.Height - (this.chessMenu.Height - 2)) / board.Rows);
+                    UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
 
-                    y = y + this.chessMenu.Height;
-
-                    currentUISquare.Location = new Point(x, y);
-                    currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
-                    currentUISquare.Height = (ClientSize.Height / board.Columns);
-                    currentUISquare.Width = (ClientSize.Width) / board.Rows;
-
-                    if (this.UIBoard.DebugMode)
+                    if (currentUISquare != null)
                     {
-                        if (currentUISquare.CurrentPiece == null)
+                        int heightAdjustment = 6;
+                        int x = currentSquare.Column * ClientSize.Width / board.Columns;
+                        int y = (newRow * (ClientSize.Height - this.chessMenu.Height - this.statusBar.Height - heightAdjustment) / board.Rows);
+
+                        y = y + this.chessMenu.Height;
+
+                        currentUISquare.Location = new Point(x, y);
+                        currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
+                        currentUISquare.Height = (ClientSize.Height / board.Columns);
+                        currentUISquare.Width = (ClientSize.Width) / board.Rows;
+
+                        if (this.UIBoard.DebugMode)
                         {
-                            currentUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation, "Arial", 25);
+                            if (currentUISquare.CurrentPiece == null)
+                            {
+                                currentUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation, "Arial", 25);
+                            }
                         }
                     }
-                }
 
-                //This is what we use to impose a new order (different than the Square2D list)
-                if (++columnCount > board.Columns - 1)
-                {
-                    columnCount = 0;
-                    newRow++;
+                    //This is what we use to impose a new order (different than the Square2D list)
+                    if (++columnCount > board.Columns - 1)
+                    {
+                        columnCount = 0;
+                        newRow++;
+                    }
                 }
             }
         }
@@ -216,6 +200,13 @@ namespace ChessMangler.WinUIParts
         }
 
         #endregion
+
+        private void ChessGrid2D_Form_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Dispose();
+
+            Application.Exit();
+        }
     }
 }
 

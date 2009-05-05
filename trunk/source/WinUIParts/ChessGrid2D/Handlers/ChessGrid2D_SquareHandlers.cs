@@ -48,6 +48,7 @@ namespace ChessMangler.WinUIParts
                     currentSquare.MouseMove += this.CellMouseMove;
                     currentSquare.DragEnter += this.CellDragEnter;
                     currentSquare.DragDrop += this.CellDragDrop;
+                    currentSquare.MouseClick += this.CellMouseClick;
                 }
             }
         }
@@ -56,6 +57,11 @@ namespace ChessMangler.WinUIParts
 
         private void CellMouseDown(object sender, MouseEventArgs e)
         {
+            if (e.Button == (MouseButtons.Right))
+            {
+                return;
+            }
+
             _dragStartSquare = (UISquare)sender;
 
             //Make the piece vanish right away. CurrentPiece needs to stay until the end of the DragDrop operation
@@ -135,6 +141,13 @@ namespace ChessMangler.WinUIParts
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void CellMouseClick(object sender, MouseEventArgs e)
+        {
+            //if this is a right click, then pull up right-click menu
+
+            MessageBox.Show("if piece clicked, Menu to delete piece.  if square clicked menu to add piece");
         }
 
         #endregion
