@@ -11,13 +11,14 @@ using ChessMangler.Engine.Config;
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 using ChessMangler.Settings.Types.WinUI;
+using ChessMangler.Engine.Enums;
 
 namespace ChessMangler.WinUIParts
 {
     /// <summary>
     /// This form only captures events from the form & scripts WinUIParts.  Nothing else.
     /// </summary>
-    public partial class ChessGrid2D_Form : Form
+    public partial class ChessGrid2D_Form : Form, IBoardMode
     {
         #region Properties
 
@@ -60,6 +61,19 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        BoardMode _boardMode = new BoardMode();
+        public BoardMode BoardMode
+        {
+            get
+            {
+                return this.UIBoard.EngineBoard.BoardMode;
+            }
+            set
+            {
+                this.UIBoard.EngineBoard.BoardMode = value;
+            }
+        }
+
         #endregion
 
         UIBoard _freeFormBoard = null;
@@ -82,7 +96,7 @@ namespace ChessMangler.WinUIParts
             this.UIBoard = new UIBoard(0, this.chessMenu.Height + this.statusBar.Height); //adjust for Menu Bar
             this.UIBoard.CreateBoard(this, board, squareSize);
 
-            this.UIBoard.EngineBoard.RulesEnabled = false;
+            this.UIBoard.EngineBoard.BoardMode = BoardMode.FreeForm;
 
             //imagesDirectory is for a "tools window (like photoshop) that has chess piece images mapped as buttons
         }
@@ -126,8 +140,6 @@ namespace ChessMangler.WinUIParts
             ClientSize = new Size(ClientSize.Width, ClientSize.Height + this.chessMenu.Height); //+ this.StatusBar.Height
         }
 
-
-
         #region Form Event Handlers
 
         private void ChessGrid2D_Resize(object sender, EventArgs e)
@@ -169,8 +181,10 @@ namespace ChessMangler.WinUIParts
 
                         currentUISquare.Location = new Point(x, y);
                         currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
+
                         currentUISquare.Height = (ClientSize.Height / board.Columns);
                         currentUISquare.Width = (ClientSize.Width) / board.Rows;
+
 
                         if (this.UIBoard.DebugMode)
                         {
@@ -204,7 +218,6 @@ namespace ChessMangler.WinUIParts
         private void ChessGrid2D_Form_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Dispose();
-
             Application.Exit();
         }
     }

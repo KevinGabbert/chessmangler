@@ -98,6 +98,11 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        private void configList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.OpenChosenConfigFile();
+        }
+
         #region FreeForm Game Tab events
         private void udGridX_ValueChanged(object sender, EventArgs e)
         {
@@ -129,7 +134,6 @@ namespace ChessMangler.WinUIParts
         }
 
         #endregion
-
         #region Functions
 
         private void OpenChosenConfigFile()

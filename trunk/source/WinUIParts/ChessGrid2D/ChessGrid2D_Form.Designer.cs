@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChessGrid2D_Form));
             this.chessMenu = new System.Windows.Forms.MenuStrip();
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,7 +68,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.connectionLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.formModeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.chessMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.SuspendLayout();
@@ -354,12 +353,11 @@
             // 
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectionLabel,
-            this.toolStripSplitButton1});
+            this.formModeLabel});
             this.statusBar.Location = new System.Drawing.Point(0, 557);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(669, 22);
             this.statusBar.TabIndex = 1;
-            this.statusBar.Text = "statusStrip1";
             // 
             // connectionLabel
             // 
@@ -367,14 +365,11 @@
             this.connectionLabel.Size = new System.Drawing.Size(135, 17);
             this.connectionLabel.Text = "Connected (Joe FakeUser)";
             // 
-            // toolStripSplitButton1
+            // formModeLabel
             // 
-            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
-            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 20);
-            this.toolStripSplitButton1.Text = "toolStripSplitButton1";
+            this.formModeLabel.Name = "formModeLabel";
+            this.formModeLabel.Size = new System.Drawing.Size(64, 17);
+            this.formModeLabel.Text = "Form Mode:";
             // 
             // ChessGrid2D_Form
             // 
@@ -441,7 +436,7 @@
         private System.Windows.Forms.ToolStripMenuItem toggleDebugModeToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.ToolStripStatusLabel connectionLabel;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripStatusLabel formModeLabel;
 
 
 

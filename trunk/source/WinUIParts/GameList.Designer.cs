@@ -36,6 +36,7 @@
             this.tabControlGames = new System.Windows.Forms.TabControl();
             this.tabRulesGame = new System.Windows.Forms.TabPage();
             this.tabFreeForm = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.udSquareSize = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
@@ -48,7 +49,6 @@
             this.udGridY = new System.Windows.Forms.NumericUpDown();
             this.tabFreeFormPresets = new System.Windows.Forms.TabPage();
             this.lstFreeFormPresets = new System.Windows.Forms.ListBox();
-            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControlGames.SuspendLayout();
             this.tabRulesGame.SuspendLayout();
@@ -77,6 +77,7 @@
             this.configList.Name = "configList";
             this.configList.Size = new System.Drawing.Size(276, 134);
             this.configList.TabIndex = 1;
+            this.configList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.configList_MouseDoubleClick);
             this.configList.SelectedIndexChanged += new System.EventHandler(this.configList_SelectedIndexChanged);
             // 
             // btnOpenGrid
@@ -138,6 +139,15 @@
             this.tabFreeForm.TabIndex = 1;
             this.tabFreeForm.Text = "Free Form Game";
             this.tabFreeForm.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(34, 114);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(196, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "(if left blank, default images will be used)";
             // 
             // label5
             // 
@@ -261,15 +271,6 @@
             this.lstFreeFormPresets.Name = "lstFreeFormPresets";
             this.lstFreeFormPresets.Size = new System.Drawing.Size(276, 147);
             this.lstFreeFormPresets.TabIndex = 2;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(34, 114);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(196, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "(if left blank, default images will be used)";
             // 
             // GameList
             // 

@@ -8,7 +8,7 @@
     <ProjectGuid>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChessMangler.ENgine</RootNamespace>
+    <RootNamespace>ChessMangler.Engine</RootNamespace>
     <AssemblyName>ChessMangler.Engine</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigParser.cs" />
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Interfaces\IBoardMode.cs" />
     <Compile Include="Interfaces\IChessObject.cs" />
     <Compile Include="Interfaces\IConditionType.cs" />
     <Compile Include="Interfaces\IPiece.cs" />

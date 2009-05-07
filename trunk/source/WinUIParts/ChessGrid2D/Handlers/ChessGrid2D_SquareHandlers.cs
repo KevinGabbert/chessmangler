@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
+using ChessMangler.Engine.Enums;
 
 namespace ChessMangler.WinUIParts
 {
@@ -75,7 +76,10 @@ namespace ChessMangler.WinUIParts
             else
             {
                 //Hide what we are doing from the user (clone wont work!)
+                blank.Height = _dragStartSquare.Height - 5;  //why do we have to make this adjustment?
+                blank.Width = _dragStartSquare.Width;
                 blank.BackColor = _dragStartSquare.BackColor;
+
                 ChessGrid2D_Form.Controls.Add(blank);
                 blank.BringToFront();
             }
@@ -89,7 +93,7 @@ namespace ChessMangler.WinUIParts
 
             ChessGrid2D_Form.Controls.Remove(blank);
 
-            blank = null;
+            blank.Dispose();
         }
         private void CellMouseMove(object sender, MouseEventArgs e)
         {
@@ -142,13 +146,46 @@ namespace ChessMangler.WinUIParts
                 MessageBox.Show(ex.Message);
             }
         }
-
         private void CellMouseClick(object sender, MouseEventArgs e)
         {
-            //if this is a right click, then pull up right-click menu
+            if (this.ChessGrid2D_Form.BoardMode == BoardMode.FreeForm)
+            {
+                UISquare clickedSquare = (UISquare)sender;
 
-            MessageBox.Show("if piece clicked, Menu to delete piece.  if square clicked menu to add piece");
+                if (e.Button == MouseButtons.Right)
+                {
+                    clickedSquare.ContextMenu = new ContextMenu();
+
+                    if (clickedSquare.CurrentPiece != null)
+                    {
+                        //Show Piece context menu
+                        clickedSquare.ContextMenu.MenuItems.Add("Transform Piece");
+                        clickedSquare.ContextMenu.MenuItems.Add("Delete");
+                        clickedSquare.ContextMenu.MenuItems.Add("Open Piece 'Tool Window'");
+
+                        //clickedSquare.ContextMenu.MenuItems.Add("Rules for this piece"); // > .5 feature
+                        //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Add Rule for this piece"); // > 1.0 feature
+                        //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Delete Rule for this piece"); // > 1.0 feature
+                        //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Change Rule for this piece"); // > 1.0 feature
+                        //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("View Piece Rules"); // > 1.0 feature
+
+                        clickedSquare.ContextMenu.Show(clickedSquare, new Point(clickedSquare.Height / 2, clickedSquare.Width / 2)); //Cursor.Current.HotSpot 
+                    }
+                    else
+                    {
+                        clickedSquare.ContextMenu.MenuItems.Add("Add New Piece");
+                        clickedSquare.ContextMenu.MenuItems.Add("Open Square 'Tool Window'");
+                        //clickedSquare.ContextMenu.MenuItems.Add("Resize Square"); //> 1.0 feature
+                        clickedSquare.ContextMenu.Show(clickedSquare, new Point(clickedSquare.Height / 2, clickedSquare.Width / 2)); //This needs to come from config db
+                    }
+                }
+
+            }
         }
+
+        #endregion
+
+        #region Cell Context Menus
 
         #endregion
     }

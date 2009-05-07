@@ -5,10 +5,11 @@ using System.Xml;
 
 using ChessMangler.Engine.Config;
 using ChessMangler.Engine.Interfaces;
+using ChessMangler.Engine.Enums;
 
 namespace ChessMangler.Engine.Types
 {
-    public class Board2D
+    public class Board2D: IBoardMode
     {
         #region Properties
 
@@ -43,6 +44,19 @@ namespace ChessMangler.Engine.Types
             }
         }
 
+        BoardMode _boardMode = new BoardMode();
+        public BoardMode BoardMode
+        {
+            get
+            {
+                return _boardMode;
+            }
+            set
+            {
+                _boardMode = value;
+            }
+        }
+
         bool _isNew = true;
         public bool IsNew
         {
@@ -53,20 +67,6 @@ namespace ChessMangler.Engine.Types
             set
             {
                 _isNew = value;
-            }
-        }
-
-        //This may not be the final resting place for this property, but it will be necessary.
-        bool _rulesEnabled = true;
-        public bool RulesEnabled
-        {
-            get
-            {
-                return _rulesEnabled;
-            }
-            set
-            {
-                _rulesEnabled = value;
             }
         }
 

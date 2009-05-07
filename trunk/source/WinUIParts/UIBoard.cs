@@ -9,13 +9,14 @@ using ChessMangler.Rules.Interfaces;
 using ChessMangler.Engine.Interfaces;
 using ChessMangler.Engine.Types;
 using ChessMangler.Engine.Config;
+using ChessMangler.Engine.Enums;
 
 namespace ChessMangler.WinUIParts
 {
     /// <summary>
     /// This board does not enforce rules, it simply draws the board and moves pieces where it is told to..
     /// </summary>
-    public class UIBoard
+    public class UIBoard: IBoardMode
     {
         public UIBoard(int columnStart, int rowStart)
         {
@@ -74,6 +75,19 @@ namespace ChessMangler.WinUIParts
             set
             {
                 _engineBoard = value;
+            }
+        }
+
+        BoardMode _boardMode = new BoardMode();
+        public BoardMode BoardMode
+        {
+            get
+            {
+                return this.EngineBoard.BoardMode;
+            }
+            set
+            {
+                this.EngineBoard.BoardMode = value;
             }
         }
 
