@@ -140,6 +140,10 @@ namespace ChessMangler.WinUIParts
                 }
 
                 this.DebugForm.debugTextBox.Text += "\r\n -- Drop End";
+
+                //Data_Layer.Record_Move_In_DB
+                //Communications_Layer.Send_Move_To_opponent
+
             }
             catch (Exception ex)
             {

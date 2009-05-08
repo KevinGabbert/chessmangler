@@ -83,6 +83,8 @@ namespace ChessMangler.WinUIParts
         ChessGrid2D_SquareHandlers _squareHandlers = new ChessGrid2D_SquareHandlers();
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
+        //Subscribe to the Comm Recieve Event
+
         public ChessGrid2D_Form()
         {
             InitializeComponent();
