@@ -92,7 +92,7 @@ namespace ChessMangler.WinUIParts
         {
             InitializeComponent();
 
-            this.UIBoard = new UIBoard(0, this.chessMenu.Height + this.statusBar.Height); //adjust for Menu Bar
+            this.UIBoard = new UIBoard(0, this.chessMenu.Height, this.statusBar.Height); //adjust for Menu Bar
             this.UIBoard.CreateBoard(this, board, squareSize);
 
             this.SetMode(BoardMode.FreeForm);
@@ -119,7 +119,7 @@ namespace ChessMangler.WinUIParts
 
                 if (_freeFormBoard == null)
                 {
-                    this.UIBoard = new UIBoard(0, this.chessMenu.Height + this.statusBar.Height); //adjust for Menu Bar
+                    this.UIBoard = new UIBoard(0, this.chessMenu.Height, this.statusBar.Height); //adjust for Menu Bar
                     this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file
                     this.SetMode(BoardMode.Standard);
                 }

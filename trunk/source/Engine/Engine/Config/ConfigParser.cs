@@ -50,6 +50,35 @@ namespace ChessMangler.Engine.Config
 
             return gotBoardDef;
         }
+        public static Int16 GetSquareSize(XmlDocument configFile)
+        {
+            //TODO: if squaresize is -1 then throw custom exception
+            XmlNode defNode = ConfigParser.GetConfigDefNode(configFile, "UIDef");
+
+            Int16 gotSquareSize = -1;
+
+            if (defNode != null)
+            {
+                foreach (XmlNode squareLayoutNode in defNode)
+                {
+                    if (squareLayoutNode.Name == "UISquareLayout")
+                    {
+                        XmlAttributeCollection attributes = squareLayoutNode.Attributes;
+                        foreach (XmlAttribute currentAttribute in attributes)
+                        {
+                            string currentName = currentAttribute.Name;
+
+                            if (currentName == "SquareSize")
+                            {
+                                gotSquareSize = Convert.ToInt16(currentAttribute.Value);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return gotSquareSize;
+        }
 
         public static List<PieceDef> GetPieces(XmlDocument startingPosition)
         {

@@ -18,10 +18,11 @@ namespace ChessMangler.WinUIParts
     /// </summary>
     public class UIBoard: IBoardMode
     {
-        public UIBoard(int columnStart, int rowStart)
+        public UIBoard(int columnStart, int rowStart, int topMenuOffset)
         {
             _currentColumn = columnStart;
             _currentRow = rowStart;
+            _topMenuOffset = topMenuOffset;
         }
 
         #region Properties
@@ -93,52 +94,30 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
-        int _findRow;
-        int _findCol;
+        #region Form Stuff
 
+        int _topMenuOffset = 0;
         int _currentColumn = 0;
-        int _currentRow = 25;
-
-        public UISquare GetByBoardLocation(int row, int column)
-        {
-            this._findRow = row;
-            this._findCol = column;
-            UISquare foundSquare = this.Squares.Find(foundByLocation);
-
-            return foundSquare;
-        }
-
-        protected bool foundByLocation(UISquare find)
-        {
-            if ((find.Row == this._findRow) & (find.Column == this._findCol))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        int _currentRow = 0;
 
         public void CreateBoard(Form formForBoard, XmlDocument configFile, string directory)
         {
             this.EngineBoard = new Board2D(configFile, directory);
-            Int16 squareSize = this.GetSquareSize(configFile); //TODO: if squaresize is -1 then throw custom exception
+            Int16 squareSize = ConfigParser.GetSquareSize(configFile);
 
             //TODO:  keep these "adjustment numbers" somewhere
-            formForBoard.Width = (squareSize * this.EngineBoard.Definition.Columns) + 12;
-            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + 30 + 25;
+            formForBoard.Width = (squareSize * this.EngineBoard.Definition.Columns);
+            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + _topMenuOffset + 50;
 
             this.BuildUISquares(formForBoard, this.EngineBoard.Definition, squareSize);
         }
         public void CreateBoard(Form formForBoard, BoardDef boardDef, short squareSize)
         {
             this.EngineBoard = new Board2D(boardDef);
-            //TODO: if squaresize is -1 then throw custom exception
 
             //TODO:  keep these "adjustment numbers" somewhere
-            formForBoard.Width = (squareSize * this.EngineBoard.Definition.Columns) + 12;
-            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + 30 + 25;
+            formForBoard.Width = (squareSize * this.EngineBoard.Definition.Columns);
+            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + _topMenuOffset + 50;
 
             this.BuildUISquares(formForBoard, boardDef, squareSize);
         }
@@ -187,6 +166,9 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        #endregion
+        #region Square Stuff
+
         //These should all map 1 to 1..
         public static void TranslateEngineStuffToUI(ISquare currentSquare, UISquare newUISquare)
         {
@@ -215,7 +197,6 @@ namespace ChessMangler.WinUIParts
                 squareToClear.Image = null;
             }
         }
-
         public void SetImage(UISquare squareToSet, IPiece piece)
         {
             //This UISquare is actually a ref to square on a form.. but doesn't *have* to be..
@@ -223,6 +204,32 @@ namespace ChessMangler.WinUIParts
             squareToSet.CurrentPiece = piece;
         }
 
+        #region GetByBoardLocation
+
+        int _findRow;
+        int _findCol;
+        public UISquare GetByBoardLocation(int row, int column)
+        {
+            this._findRow = row;
+            this._findCol = column;
+            UISquare foundSquare = this.Squares.Find(foundByLocation);
+
+            return foundSquare;
+        }
+        protected bool foundByLocation(UISquare find)
+        {
+            if ((find.Row == this._findRow) & (find.Column == this._findCol))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+        #region GetByXY
         protected int _findX;
         protected int _findY;
 
@@ -231,7 +238,7 @@ namespace ChessMangler.WinUIParts
             this._findX = x;
             this._findY = y;
             UISquare foundSquare = this.Squares.Find(foundByXY);
-            
+
             return foundSquare;
         }
         protected bool foundByXY(UISquare find)
@@ -241,13 +248,13 @@ namespace ChessMangler.WinUIParts
 
             //if the pointer is *inside* a Square, then return that square.
 
-            int XMult = (72 * (find.X + 1));
-            int YMult = (72 * (find.Y + 1));
+            int XMult = (find.X * (find.X + 1));
+            int YMult = (find.Y * (find.Y + 1));
 
             bool inRow = (find.X <= this._findX - XMult) & (find.X + XMult <= this._findX);
 
             bool grZeroY = ((this._findY - YMult) >= 0);
-            bool inCol = (find.Y <= this._findY - YMult) & (grZeroY) &(find.Y + YMult <= this._findY);
+            bool inCol = (find.Y <= this._findY - YMult) & (grZeroY) & (find.Y + YMult <= this._findY);
 
 
             if (inRow & inCol)
@@ -260,36 +267,7 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        #region Xml
-
-        public Int16 GetSquareSize(XmlDocument configFile)
-        {
-            XmlNode defNode = ConfigParser.GetConfigDefNode(configFile, "UIDef");
-
-            Int16 gotSquareSize = -1;
-
-            if (defNode != null)
-            {
-                foreach (XmlNode squareLayoutNode in defNode)
-                {
-                    if (squareLayoutNode.Name == "UISquareLayout")
-                    {
-                        XmlAttributeCollection attributes = squareLayoutNode.Attributes;
-                        foreach (XmlAttribute currentAttribute in attributes)
-                        {
-                            string currentName = currentAttribute.Name;
-
-                            if (currentName == "SquareSize")
-                            {
-                                gotSquareSize = Convert.ToInt16(currentAttribute.Value);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return gotSquareSize;
-        }
+        #endregion
 
         #endregion
     }

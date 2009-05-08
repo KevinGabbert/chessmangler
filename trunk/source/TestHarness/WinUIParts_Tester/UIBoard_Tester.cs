@@ -38,7 +38,7 @@ namespace ChessMangler.TestHarness.WinUIParts_Tester
         [Test]
         public void test()
         {
-            UIBoard newBoard = new UIBoard(0, 25);
+            UIBoard newBoard = new UIBoard(0, 0, 25);
             newBoard.CreateBoard(new Form(), _testSetup, _uiDirectory); //get these from XML file 
         }
     }
