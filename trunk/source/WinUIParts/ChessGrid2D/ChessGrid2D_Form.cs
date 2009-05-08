@@ -61,7 +61,6 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        BoardMode _boardMode = new BoardMode();
         public BoardMode BoardMode
         {
             get
@@ -96,7 +95,7 @@ namespace ChessMangler.WinUIParts
             this.UIBoard = new UIBoard(0, this.chessMenu.Height + this.statusBar.Height); //adjust for Menu Bar
             this.UIBoard.CreateBoard(this, board, squareSize);
 
-            this.UIBoard.EngineBoard.BoardMode = BoardMode.FreeForm;
+            this.SetMode(BoardMode.FreeForm);
 
             //imagesDirectory is for a "tools window (like photoshop) that has chess piece images mapped as buttons
         }
@@ -122,10 +121,12 @@ namespace ChessMangler.WinUIParts
                 {
                     this.UIBoard = new UIBoard(0, this.chessMenu.Height + this.statusBar.Height); //adjust for Menu Bar
                     this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file
+                    this.SetMode(BoardMode.Standard);
                 }
                 else
                 {
                     this.UIBoard = _freeFormBoard;
+                    this.SetMode(BoardMode.FreeForm);
                 }
             }
 
@@ -220,6 +221,31 @@ namespace ChessMangler.WinUIParts
             this.Dispose();
             Application.Exit();
         }
+
+        #region Mode Button
+
+        private void ToggleBoardMode()
+        {
+            if (this.BoardMode == BoardMode.Standard)
+            {
+                this.SetMode(BoardMode.FreeForm);
+            }
+            else
+            {
+                this.SetMode(BoardMode.Standard);
+            }
+        }
+        private void SetMode(BoardMode boardMode)
+        {
+            this.BoardMode = boardMode;
+            this.modeButton.Text = boardMode.ToString();
+        }
+        private void modeButton_Click(object sender, EventArgs e)
+        {
+            this.ToggleBoardMode();
+        }
+
+        #endregion
     }
 }
 

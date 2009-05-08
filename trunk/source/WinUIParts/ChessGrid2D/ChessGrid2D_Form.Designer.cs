@@ -68,7 +68,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.connectionLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.formModeLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.modeButton = new System.Windows.Forms.ToolStripStatusLabel();
             this.chessMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.SuspendLayout();
@@ -353,7 +353,7 @@
             // 
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectionLabel,
-            this.formModeLabel});
+            this.modeButton});
             this.statusBar.Location = new System.Drawing.Point(0, 557);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(669, 22);
@@ -365,11 +365,19 @@
             this.connectionLabel.Size = new System.Drawing.Size(135, 17);
             this.connectionLabel.Text = "Connected (Joe FakeUser)";
             // 
-            // formModeLabel
+            // modeButton
             // 
-            this.formModeLabel.Name = "formModeLabel";
-            this.formModeLabel.Size = new System.Drawing.Size(64, 17);
-            this.formModeLabel.Text = "Form Mode:";
+            this.modeButton.BackColor = System.Drawing.SystemColors.Control;
+            this.modeButton.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
+                        | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
+                        | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.modeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.modeButton.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.modeButton.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this.modeButton.Name = "modeButton";
+            this.modeButton.Size = new System.Drawing.Size(80, 19);
+            this.modeButton.Text = "ModeButton";
+            this.modeButton.Click += new System.EventHandler(this.modeButton_Click);
             // 
             // ChessGrid2D_Form
             // 
@@ -436,7 +444,7 @@
         private System.Windows.Forms.ToolStripMenuItem toggleDebugModeToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.ToolStripStatusLabel connectionLabel;
-        private System.Windows.Forms.ToolStripStatusLabel formModeLabel;
+        private System.Windows.Forms.ToolStripStatusLabel modeButton;
 
 
 

@@ -148,44 +148,55 @@ namespace ChessMangler.WinUIParts
         }
         private void CellMouseClick(object sender, MouseEventArgs e)
         {
+            UISquare clickedSquare = (UISquare)sender;
+
             if (this.ChessGrid2D_Form.BoardMode == BoardMode.FreeForm)
             {
-                UISquare clickedSquare = (UISquare)sender;
-
                 if (e.Button == MouseButtons.Right)
                 {
                     clickedSquare.ContextMenu = new ContextMenu();
 
                     if (clickedSquare.CurrentPiece != null)
                     {
-                        //Show Piece context menu
-                        clickedSquare.ContextMenu.MenuItems.Add("Transform Piece");
-                        clickedSquare.ContextMenu.MenuItems.Add("Delete");
-                        clickedSquare.ContextMenu.MenuItems.Add("Open Piece 'Tool Window'");
-
-                        //clickedSquare.ContextMenu.MenuItems.Add("Rules for this piece"); // > .5 feature
-                        //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Add Rule for this piece"); // > 1.0 feature
-                        //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Delete Rule for this piece"); // > 1.0 feature
-                        //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Change Rule for this piece"); // > 1.0 feature
-                        //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("View Piece Rules"); // > 1.0 feature
-
-                        clickedSquare.ContextMenu.Show(clickedSquare, new Point(clickedSquare.Height / 2, clickedSquare.Width / 2)); //Cursor.Current.HotSpot 
+                        ChessGrid2D_SquareHandlers.ShowPieceMenu(clickedSquare);
                     }
                     else
                     {
-                        clickedSquare.ContextMenu.MenuItems.Add("Add New Piece");
-                        clickedSquare.ContextMenu.MenuItems.Add("Open Square 'Tool Window'");
-                        //clickedSquare.ContextMenu.MenuItems.Add("Resize Square"); //> 1.0 feature
-                        clickedSquare.ContextMenu.Show(clickedSquare, new Point(clickedSquare.Height / 2, clickedSquare.Width / 2)); //This needs to come from config db
+                        ChessGrid2D_SquareHandlers.ShowSquareMenu(clickedSquare);
                     }
-                }
 
+                    //Ditch the menu.  User might decide to set the board to "standard", and the menu shouldn't be there at that point..
+                    clickedSquare.ContextMenu = null;
+                }
             }
         }
 
         #endregion
 
         #region Cell Context Menus
+
+            private static void ShowSquareMenu(UISquare clickedSquare)
+            {
+                clickedSquare.ContextMenu.MenuItems.Add("Add New Piece");
+                clickedSquare.ContextMenu.MenuItems.Add("Open Square 'Tool Window'");
+                //clickedSquare.ContextMenu.MenuItems.Add("Resize Square"); //> 1.0 feature
+                clickedSquare.ContextMenu.Show(clickedSquare, new Point(clickedSquare.Height / 2, clickedSquare.Width / 2)); //This needs to come from config db
+            }
+            private static void ShowPieceMenu(UISquare clickedSquare)
+            {
+                //Show Piece context menu
+                clickedSquare.ContextMenu.MenuItems.Add("Transform Piece");
+                clickedSquare.ContextMenu.MenuItems.Add("Delete");
+                clickedSquare.ContextMenu.MenuItems.Add("Open Piece 'Tool Window'");
+
+                //clickedSquare.ContextMenu.MenuItems.Add("Rules for this piece"); // > .5 feature
+                //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Add Rule for this piece"); // > 1.0 feature
+                //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Delete Rule for this piece"); // > 1.0 feature
+                //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Change Rule for this piece"); // > 1.0 feature
+                //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("View Piece Rules"); // > 1.0 feature
+
+                clickedSquare.ContextMenu.Show(clickedSquare, new Point(clickedSquare.Height / 2, clickedSquare.Width / 2));
+            }
 
         #endregion
     }
