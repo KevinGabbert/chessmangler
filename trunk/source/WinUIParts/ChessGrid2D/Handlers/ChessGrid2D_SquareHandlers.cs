@@ -84,6 +84,7 @@ namespace ChessMangler.WinUIParts
                 blank.BringToFront();
             }
 
+            //TODO:  Fix the cursor size on this (
             ChessPieceCursor.ShowPieceCursor((UISquare)sender);
 
             if (_dragStartSquare.CurrentPiece != null)

@@ -44,25 +44,40 @@ namespace ChessMangler.WinUIParts
         {
             IntPtr ptr = bmp.GetHicon();
             IconInfo tmp = new IconInfo();
+
             GetIconInfo(ptr, ref tmp);
             tmp.xHotspot = xHotSpot;
             tmp.yHotspot = yHotSpot;
             tmp.fIcon = false;
+
             ptr = CreateIconIndirect(ref tmp);
+
             return new Cursor(ptr);
         }
-        public static void ShowPieceCursor(UISquare senderSquare)
+        public static void ShowPieceCursor(UISquare senderSquare, Size cursorSize)
         {
             if (senderSquare.CurrentPiece != null)
             {
                 if (senderSquare.CurrentPiece.Image != null)
                 {
-                    Bitmap bitmap = new Bitmap(senderSquare.CurrentPiece.Image, senderSquare.Size);
+                    Bitmap bitmap = new Bitmap(senderSquare.CurrentPiece.Image, cursorSize);
                     Cursor.Current = CreateCursor(bitmap, 35, 35);
                     bitmap.Dispose();
                 }
             }
         }
+
+        public static void ShowPieceCursor(UISquare senderSquare)
+        {
+            ChessPieceCursor.ShowPieceCursor(senderSquare, senderSquare.CurrentPiece.Image.Size);
+        }
+
+        //TODO: This "enlargeBy" feature will also become a config file option
+        //public static void ShowPieceCursor(UISquare senderSquare, Size enlargeBy)
+        //{
+        //    ChessPieceCursor.ShowPieceCursor(senderSquare, senderSquare.CurrentPiece.Image.Size);
+        //}
+
         public static void ShowPieceCursor(Image cursorImage, Size size)
         {
             Bitmap bitmap = new Bitmap(cursorImage, size);
