@@ -94,7 +94,7 @@ namespace ChessMangler.WinUIParts
         {
             InitializeComponent();
 
-            this.UIBoard = new UIBoard(0, this.chessMenu.Height, this.statusBar.Height); //adjust for Menu Bar
+            this.UIBoard = this.InitNewBoard();
             this.UIBoard.CreateBoard(this, board, squareSize);
 
             this.SetMode(BoardMode.FreeForm);
@@ -121,7 +121,7 @@ namespace ChessMangler.WinUIParts
 
                 if (_freeFormBoard == null)
                 {
-                    this.UIBoard = new UIBoard(0, this.chessMenu.Height, this.statusBar.Height); //adjust for Menu Bar
+                    this.UIBoard = this.InitNewBoard();
                     this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file
                     this.SetMode(BoardMode.Standard);
                 }
@@ -139,8 +139,15 @@ namespace ChessMangler.WinUIParts
             this.toggleDebugModeToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
             this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
 
-            //Adjust Form size to account for menu bar
-            ClientSize = new Size(ClientSize.Width, ClientSize.Height + this.chessMenu.Height); //+ this.StatusBar.Height
+            //Fire the resize event..
+            ClientSize = new Size(ClientSize.Width, ClientSize.Height + 1); 
+        }
+
+        public UIBoard InitNewBoard()
+        {
+            //tabControl1.Visible = false;
+            //statusBar.Visible = false;
+            return new UIBoard(0, this.chessMenu.Height, 0);//this.statusBar.Height + this.tabControl1.Height  //adjust for bottom controls
         }
 
         #region Form Event Handlers
@@ -155,6 +162,7 @@ namespace ChessMangler.WinUIParts
             this.Redraw_UIBoard();
         }
 
+        int adjust2 = 20;
         public void Redraw_UIBoard()
         {
             if (this.ConstrainProportions)
@@ -176,18 +184,16 @@ namespace ChessMangler.WinUIParts
 
                     if (currentUISquare != null)
                     {
-                        int heightAdjustment = 6;
+                        //Adjusts "Board Width" (Board being all the squares)
                         int x = currentSquare.Column * ClientSize.Width / board.Columns;
-                        int y = (newRow * (ClientSize.Height - this.chessMenu.Height - this.statusBar.Height - heightAdjustment) / board.Rows);
+                        int y = AdjustBoardHeight(newRow, board);
 
-                        y = y + this.chessMenu.Height;
 
                         currentUISquare.Location = new Point(x, y);
                         currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
 
-                        currentUISquare.Height = (ClientSize.Height / board.Columns);
+                        currentUISquare.Height = (ClientSize.Height / board.Columns) - adjust2;
                         currentUISquare.Width = (ClientSize.Width) / board.Rows;
-
 
                         if (this.UIBoard.DebugMode)
                         {
@@ -206,6 +212,22 @@ namespace ChessMangler.WinUIParts
                     }
                 }
             }
+        }
+
+        private int AdjustBoardHeight(int row, BoardDef board)
+        {
+            //(Board being all the squares)
+            int heightAdjustment = this.statusBar.Height - adjust2;//unknown why I need this.  is this a total of cumulative errors??
+            int controlsHeight = this.chessMenu.Height + heightAdjustment + this.tabControl1.Height + adjust2;
+            int chessBoardHeight = ClientSize.Height - controlsHeight - heightAdjustment -adjust2;
+
+            int y = 0;
+
+            y = (row * chessBoardHeight) / board.Rows;
+            y = y + (heightAdjustment * row);
+            y = y + this.chessMenu.Height; //adding in the chessMenu Height controls where the grid begi
+
+            return y;
         }
 
         private void KeepSquare()
