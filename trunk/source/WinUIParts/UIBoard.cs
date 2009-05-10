@@ -78,8 +78,6 @@ namespace ChessMangler.WinUIParts
                 _engineBoard = value;
             }
         }
-
-        BoardMode _boardMode = new BoardMode();
         public BoardMode BoardMode
         {
             get

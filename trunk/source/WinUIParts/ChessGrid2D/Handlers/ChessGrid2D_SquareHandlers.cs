@@ -76,7 +76,7 @@ namespace ChessMangler.WinUIParts
             else
             {
                 //Hide what we are doing from the user (clone wont work!)
-                blank.Height = _dragStartSquare.Height - 5;  //why do we have to make this adjustment?
+                blank.Height = _dragStartSquare.Height;
                 blank.Width = _dragStartSquare.Width;
                 blank.BackColor = _dragStartSquare.BackColor;
 

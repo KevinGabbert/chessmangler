@@ -23,9 +23,10 @@ namespace ChessMangler.TestHarness.WinUIParts_Tester
         [SetUp]
         public void SetUp()
         {
+            //TODO: sourceDir and the hardcoded bits need to come from ProgramSettings
             _uiDirectory = _sourceDir + "\\UI";
             _imagesDirectory = _uiDirectory + "\\images";
-            _configFile = _sourceDir + "\\Config\\Board2D.config"; //This needs to come from ProgramSettings
+            _configFile = _sourceDir + "\\Config\\Board2D.config"; 
 
             //before we start, lets verify everything..
             Assert.IsTrue(File.Exists(_configFile), "can't find config file! TestHarness looked here: " + _configFile);

@@ -71,8 +71,8 @@
             this.modeButton = new System.Windows.Forms.ToolStripStatusLabel();
             this.dgvMoves = new System.Windows.Forms.DataGridView();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.txtChat = new System.Windows.Forms.TextBox();
             this.btnChatSend = new System.Windows.Forms.Button();
+            this.txtChat = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -417,14 +417,6 @@
             this.splitContainer.SplitterDistance = 219;
             this.splitContainer.TabIndex = 3;
             // 
-            // txtChat
-            // 
-            this.txtChat.Location = new System.Drawing.Point(3, 4);
-            this.txtChat.Multiline = true;
-            this.txtChat.Name = "txtChat";
-            this.txtChat.Size = new System.Drawing.Size(368, 77);
-            this.txtChat.TabIndex = 0;
-            // 
             // btnChatSend
             // 
             this.btnChatSend.Location = new System.Drawing.Point(376, 6);
@@ -433,6 +425,14 @@
             this.btnChatSend.TabIndex = 1;
             this.btnChatSend.Text = "Send";
             this.btnChatSend.UseVisualStyleBackColor = true;
+            // 
+            // txtChat
+            // 
+            this.txtChat.Location = new System.Drawing.Point(3, 4);
+            this.txtChat.Multiline = true;
+            this.txtChat.Name = "txtChat";
+            this.txtChat.Size = new System.Drawing.Size(368, 77);
+            this.txtChat.TabIndex = 0;
             // 
             // tabControl1
             // 
@@ -476,6 +476,7 @@
             this.Controls.Add(this.chessMenu);
             this.MainMenuStrip = this.chessMenu;
             this.Name = "ChessGrid2D_Form";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ChessGrid2D";
             this.Load += new System.EventHandler(this.ChessGrid2D_Load);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ChessGrid2D_Form_FormClosed);

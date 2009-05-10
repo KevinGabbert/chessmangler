@@ -140,14 +140,12 @@ namespace ChessMangler.WinUIParts
             this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
 
             //Fire the resize event..
-            ClientSize = new Size(ClientSize.Width, ClientSize.Height + 1); 
+            ClientSize = new Size(ClientSize.Width, ClientSize.Height + 130);  //this value should come from 1. game config or if that is not there, then 2. Program Config
         }
 
         public UIBoard InitNewBoard()
         {
-            //tabControl1.Visible = false;
-            //statusBar.Visible = false;
-            return new UIBoard(0, this.chessMenu.Height, 0);//this.statusBar.Height + this.tabControl1.Height  //adjust for bottom controls
+            return new UIBoard(0, 0, 0);
         }
 
         #region Form Event Handlers
@@ -187,7 +185,6 @@ namespace ChessMangler.WinUIParts
                         //Adjusts "Board Width" (Board being all the squares)
                         int x = currentSquare.Column * ClientSize.Width / board.Columns;
                         int y = AdjustBoardHeight(newRow, board);
-
 
                         currentUISquare.Location = new Point(x, y);
                         currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
