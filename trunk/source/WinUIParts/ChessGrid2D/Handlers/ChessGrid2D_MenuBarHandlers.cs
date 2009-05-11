@@ -5,7 +5,7 @@ using System.Text;
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 
-namespace ChessMangler.WinUIParts
+namespace ChessMangler.WinUIParts.ChessGrid2D
 {
     public class ChessGrid2D_MenuBarHandlers : ChessGrid2D_HandlerBase
     {
@@ -23,7 +23,7 @@ namespace ChessMangler.WinUIParts
             _userSetDebugMode = !this._userSetDebugMode;
 
             ChessGrid2D_Form.UIBoard.DebugMode = this._userSetDebugMode;
-            ChessGrid2D_Form.Redraw_UIBoard();
+            ChessGrid2D_Form.Grid.Redraw();
         }
     }
 }

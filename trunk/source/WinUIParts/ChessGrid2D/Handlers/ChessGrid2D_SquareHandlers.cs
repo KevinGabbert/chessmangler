@@ -9,7 +9,7 @@ using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 using ChessMangler.Engine.Enums;
 
-namespace ChessMangler.WinUIParts
+namespace ChessMangler.WinUIParts.ChessGrid2D
 {
     public class ChessGrid2D_SquareHandlers: ChessGrid2D_HandlerBase
     {
@@ -52,6 +52,11 @@ namespace ChessMangler.WinUIParts
                     currentSquare.MouseClick += this.CellMouseClick;
                 }
             }
+        }
+        public void Add_Required_Square_Handlers(ChessGrid2D_Form chessForm, DebugForm debugForm)
+        {
+            this.DebugForm = debugForm;
+            this.Add_Required_Square_Handlers(chessForm);
         }
 
         #region Cell Event Handlers

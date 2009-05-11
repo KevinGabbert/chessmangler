@@ -13,7 +13,7 @@ using ChessMangler.Engine.Types;
 using ChessMangler.Settings.Types.WinUI;
 using ChessMangler.Engine.Enums;
 
-namespace ChessMangler.WinUIParts
+namespace ChessMangler.WinUIParts.ChessGrid2D
 {
     /// <summary>
     /// This form only captures events from the form & scripts WinUIParts.  Nothing else.
@@ -32,6 +32,19 @@ namespace ChessMangler.WinUIParts
             set
             {
                 _uiBoard = value;
+            }
+        }
+
+        GridUtility _grid;
+        public GridUtility Grid
+        {
+            get
+            {
+                return _grid;
+            }
+            set
+            {
+                _grid = value;
             }
         }
 
@@ -83,7 +96,8 @@ namespace ChessMangler.WinUIParts
         ChessGrid2D_SquareHandlers _squareHandlers = new ChessGrid2D_SquareHandlers();
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
-        //Subscribe to the Comm Recieve Event
+        //TODO: Subscribe to the Comm Recieve Event
+        //ChessGrid2D_CommHandlers _commHandlers = new ChessGrid2D_CommHandlers();
 
         public ChessGrid2D_Form()
         {
@@ -96,33 +110,47 @@ namespace ChessMangler.WinUIParts
 
             this.UIBoard = this.InitNewBoard();
             this.UIBoard.CreateBoard(this, board, squareSize);
-
             this.SetMode(BoardMode.FreeForm);
-
-            //imagesDirectory is for a "tools window (like photoshop) that has chess piece images mapped as buttons
         }
+
+        public UIBoard InitNewBoard()
+        {
+            this.Grid = new GridUtility(this);
+            return new UIBoard(0, 0, 0);
+        }
+
+        #region Form Event Handlers
 
         private void ChessGrid2D_Load(object sender, EventArgs e)
         {
-            //A test file so we can have something to develop with..
-            XmlDocument testSetup = new XmlDocument();
+            this.SetUp_DefaultBoard();
 
+            _squareHandlers.Add_Required_Square_Handlers(this, _debugForm);
+
+            //Menu Handlers
+            this.toggleDebugModeToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
+            this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
+
+            //Set initial size.  This also fires the resize event, which gives the form its final shape.
+            ClientSize = new Size(ClientSize.Width, ClientSize.Height + 130);  //this value should come from 1. game config or if that is not there, then 2. Program Config
+        }
+
+        private void SetUp_DefaultBoard()
+        {
+            //TODO: Get these 2 paths from program or game config file.
             string uiDirectory = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString();
             string imagesDirectory = uiDirectory + "\\images";
 
-            bool uiDirectoryExists = Directory.Exists(uiDirectory);
-            bool imagesDirectoryExists = Directory.Exists(imagesDirectory);
+            ChessGrid2D_Form.Check_Paths(uiDirectory, imagesDirectory);
 
-            bool configFileExists = File.Exists(this.RulesFilePath);
-
-            if (configFileExists)
+            if (File.Exists(this.RulesFilePath))
             {
-                testSetup = Config.LoadXML(this.RulesFilePath);
+                XmlDocument rulesDocument = Config.LoadXML(this.RulesFilePath);
 
                 if (_freeFormBoard == null)
                 {
                     this.UIBoard = this.InitNewBoard();
-                    this.UIBoard.CreateBoard(this, testSetup, uiDirectory); //get these from XML file
+                    this.UIBoard.CreateBoard(this, rulesDocument, uiDirectory);
                     this.SetMode(BoardMode.Standard);
                 }
                 else
@@ -131,24 +159,7 @@ namespace ChessMangler.WinUIParts
                     this.SetMode(BoardMode.FreeForm);
                 }
             }
-
-            _squareHandlers.DebugForm = _debugForm;
-            _squareHandlers.Add_Required_Square_Handlers(this);
-
-            //Menu Handlers
-            this.toggleDebugModeToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
-            this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
-
-            //Fire the resize event..
-            ClientSize = new Size(ClientSize.Width, ClientSize.Height + 130);  //this value should come from 1. game config or if that is not there, then 2. Program Config
         }
-
-        public UIBoard InitNewBoard()
-        {
-            return new UIBoard(0, 0, 0);
-        }
-
-        #region Form Event Handlers
 
         private void ChessGrid2D_Resize(object sender, EventArgs e)
         {
@@ -157,91 +168,15 @@ namespace ChessMangler.WinUIParts
             //for the moment, we will pull this from config.  (we'll use a pre-loaded prop later)
             //Int16 defaultSquareSize  = this.UIBoard.get(Config.LoadXML(_configFile));
 
-            this.Redraw_UIBoard();
+            this.Grid.Redraw();
         }
-
-        int adjust2 = 20;
-        public void Redraw_UIBoard()
-        {
-            if (this.ConstrainProportions)
-            {
-                this.KeepSquare();
-            }
-
-            //Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
-
-            if (this.UIBoard != null)
-            {
-                int newRow = 0;
-                int columnCount = 0;
-
-                BoardDef board = this.UIBoard.EngineBoard.Definition;
-                foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
-                {
-                    UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
-
-                    if (currentUISquare != null)
-                    {
-                        //Adjusts "Board Width" (Board being all the squares)
-                        int x = currentSquare.Column * ClientSize.Width / board.Columns;
-                        int y = AdjustBoardHeight(newRow, board);
-
-                        currentUISquare.Location = new Point(x, y);
-                        currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
-
-                        currentUISquare.Height = (ClientSize.Height / board.Columns) - adjust2;
-                        currentUISquare.Width = (ClientSize.Width) / board.Rows;
-
-                        if (this.UIBoard.DebugMode)
-                        {
-                            if (currentUISquare.CurrentPiece == null)
-                            {
-                                currentUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation, "Arial", 25);
-                            }
-                        }
-                    }
-
-                    //This is what we use to impose a new order (different than the Square2D list)
-                    if (++columnCount > board.Columns - 1)
-                    {
-                        columnCount = 0;
-                        newRow++;
-                    }
-                }
-            }
-        }
-
-        private int AdjustBoardHeight(int row, BoardDef board)
-        {
-            //(Board being all the squares)
-            int heightAdjustment = this.statusBar.Height - adjust2;//unknown why I need this.  is this a total of cumulative errors??
-            int controlsHeight = this.chessMenu.Height + heightAdjustment + this.tabControl1.Height + adjust2;
-            int chessBoardHeight = ClientSize.Height - controlsHeight - heightAdjustment -adjust2;
-
-            int y = 0;
-
-            y = (row * chessBoardHeight) / board.Rows;
-            y = y + (heightAdjustment * row);
-            y = y + this.chessMenu.Height; //adding in the chessMenu Height controls where the grid begi
-
-            return y;
-        }
-
-        private void KeepSquare()
-        {
-            //Ensure that the client area is always square
-            //TODO: this needs to account for fullscreen
-            int iSize = Math.Min(ClientSize.Height, ClientSize.Width);
-            ClientSize = new Size(iSize, iSize);
-        }
-
-        #endregion
-
         private void ChessGrid2D_Form_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Dispose();
             Application.Exit();
         }
+
+        #endregion
 
         #region Mode Button
 
@@ -264,6 +199,31 @@ namespace ChessMangler.WinUIParts
         private void modeButton_Click(object sender, EventArgs e)
         {
             this.ToggleBoardMode();
+        }
+
+        #endregion
+
+        #region Helper Functions
+
+        private static void Check_Paths(string uiDirectory, string imagesDirectory)
+        {
+            //Check essential files
+            bool uiDirectoryExists = Directory.Exists(uiDirectory);
+            if (!uiDirectoryExists)
+            {
+                MessageBox.Show("Unable to find UI files directory:  " + uiDirectory);
+
+            }
+
+
+            //imagesDirectory is for a "tools window (like photoshop) that has chess piece images mapped as buttons
+
+            bool imagesDirectoryExists = Directory.Exists(imagesDirectory);
+            if (!imagesDirectoryExists)
+            {
+                MessageBox.Show("Unable to find Images directory:  " + imagesDirectory);
+
+            }
         }
 
         #endregion

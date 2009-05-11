@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 
 using ChessMangler.Engine.Types;
+using ChessMangler.WinUIParts.ChessGrid2D;
 
 namespace ChessMangler.WinUIParts
 {

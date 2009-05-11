@@ -1,4 +1,4 @@
-﻿namespace ChessMangler.WinUIParts
+﻿namespace ChessMangler.WinUIParts.ChessGrid2D
 {
     public partial class ChessGrid2D_Form
     {
@@ -537,14 +537,14 @@
         private System.Windows.Forms.ToolStripMenuItem aIMFredFarkelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem googleJoeblowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toggleDebugModeToolStripMenuItem;
-        private System.Windows.Forms.StatusStrip statusBar;
+        public System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.ToolStripStatusLabel connectionLabel;
         private System.Windows.Forms.ToolStripStatusLabel modeButton;
         private System.Windows.Forms.DataGridView dgvMoves;
         private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.TextBox txtChat;
         private System.Windows.Forms.Button btnChatSend;
-        private System.Windows.Forms.TabControl tabControl1;
+        public System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
 

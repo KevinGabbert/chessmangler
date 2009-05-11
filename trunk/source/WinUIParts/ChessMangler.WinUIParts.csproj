@@ -52,6 +52,7 @@
     <Compile Include="ChessGrid2D\ChessGrid2D_Form.Designer.cs">
       <DependentUpon>ChessGrid2D_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChessGrid2D\GridUtility.cs" />
     <Compile Include="ChessGrid2D\Handlers\ChessGrid2D_HandlerBase.cs" />
     <Compile Include="ChessGrid2D\Handlers\ChessGrid2D_MenuBarHandlers.cs" />
     <Compile Include="ChessGrid2D\Handlers\ChessGrid2D_SquareHandlers.cs" />
