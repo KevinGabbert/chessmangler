@@ -107,6 +107,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (e.Button != (MouseButtons.Left | MouseButtons.XButton1))
             {
+                int square2DRow = this.UIBoard.EngineBoard.GetByLocation(((UISquare)sender).Row, ((UISquare)sender).Column).Row;
+                int square2DColumn = this.UIBoard.EngineBoard.GetByLocation(((UISquare)sender).Row, ((UISquare)sender).Column).Column;
+
+                this.DebugForm.debugTextBox.Text += ((UISquare)sender).Row + " " + ((UISquare)sender).Column + " ~E:" + square2DRow + " " + square2DColumn;
+
                 return;
             }
         }
@@ -135,6 +140,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 {
                     //Set the new piece
                     dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
+
+                    //On the engineboard too.
+                    this.UIBoard.EngineBoard.GetByLocation(dragEndSquare.Row, dragEndSquare.Column).CurrentPiece = dragEndSquare.CurrentPiece;
+                    this.UIBoard.EngineBoard.GetByLocation(_dragStartSquare.Row, _dragStartSquare.Column).CurrentPiece = null;
+
                     this.DebugForm.debugTextBox.Text += "\r\n Set Piece";
 
                     this.UIBoard.ClearSquare(_dragStartSquare, true);

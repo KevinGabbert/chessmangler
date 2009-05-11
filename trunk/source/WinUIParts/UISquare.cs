@@ -150,6 +150,8 @@ namespace ChessMangler.WinUIParts
             {
                 _currentPiece = value;
 
+                //TODO: Find Engine Square and place piece
+
                 if (value != null)
                 {
                     this.Image = value.Image;

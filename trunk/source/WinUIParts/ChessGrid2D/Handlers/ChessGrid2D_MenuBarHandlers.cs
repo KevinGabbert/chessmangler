@@ -9,11 +9,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 {
     public class ChessGrid2D_MenuBarHandlers : ChessGrid2D_Base
     {
+        public ChessGrid2D_MenuBarHandlers(DebugForm debugForm)
+        {
+            this.DebugForm = debugForm;
+        }
+
         bool _userSetDebugMode;
 
         public void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _debugForm = new DebugForm();
+            //_debugForm = new DebugForm();
             _debugForm.Show();
             _debugForm.debugTextBox.Text += "New Debug Form";
         }

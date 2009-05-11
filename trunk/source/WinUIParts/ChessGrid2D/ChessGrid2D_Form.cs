@@ -20,8 +20,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
     /// </summary>
     public partial class ChessGrid2D_Form : GridForm
     {
-        DebugForm _debugForm = new DebugForm();
-        ChessGrid2D_MenuBarHandlers _menuBarHandlers = new ChessGrid2D_MenuBarHandlers();
+        static DebugForm _debugForm = new DebugForm();
+        ChessGrid2D_MenuBarHandlers _menuBarHandlers = new ChessGrid2D_MenuBarHandlers(_debugForm);
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
         public ChessGrid2D_Form()
