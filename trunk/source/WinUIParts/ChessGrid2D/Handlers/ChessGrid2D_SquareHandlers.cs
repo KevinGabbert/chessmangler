@@ -11,7 +11,7 @@ using ChessMangler.Engine.Enums;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
-    public class ChessGrid2D_SquareHandlers: ChessGrid2D_HandlerBase
+    public class ChessGrid2D_SquareHandlers: ChessGrid2D_Base
     {
         #region Properties
 
@@ -34,11 +34,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         /// All Squares must have at least these events
         /// (The others can be attached on the fly)
         /// </summary>
-        public void Add_Required_Square_Handlers(ChessGrid2D_Form chessForm)
+        public void Add_Required_Square_Handlers(GridForm form)
         {
-            this.ChessGrid2D_Form = chessForm;
+            this.ChessGrid2D_Form = (ChessGrid2D_Form)form;
 
-            foreach (Control control in chessForm.Controls)
+            foreach (Control control in form.Controls)
             {
                 string controlType = control.GetType().ToString();
 
@@ -53,10 +53,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 }
             }
         }
-        public void Add_Required_Square_Handlers(ChessGrid2D_Form chessForm, DebugForm debugForm)
+        public void Add_Required_Square_Handlers(GridForm form, DebugForm debugForm)
         {
             this.DebugForm = debugForm;
-            this.Add_Required_Square_Handlers(chessForm);
+            this.Add_Required_Square_Handlers(form);
+            this.UIBoard = form.Grid.UIBoard;
         }
 
         #region Cell Event Handlers
@@ -65,6 +66,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (e.Button == (MouseButtons.Right))
             {
+                ChessGrid2D_SquareHandlers.DitchMenu(sender);
                 return;
             }
 
@@ -120,10 +122,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         }
         private void CellDragDrop(object sender, DragEventArgs e)
         {
-            this.DebugForm.debugTextBox.Text += "\r\n ++ Drop Start";
-
             try
             {
+                this.DebugForm.debugTextBox.Text += "\r\n ++ Drop Start";
+
                 UISquare dragEndSquare;
                 dragEndSquare = (UISquare)sender;
 
@@ -135,7 +137,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                     dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
                     this.DebugForm.debugTextBox.Text += "\r\n Set Piece";
 
-                    ChessGrid2D_Form.UIBoard.ClearSquare(_dragStartSquare, true);
+                    this.UIBoard.ClearSquare(_dragStartSquare, true);
                     this.DebugForm.debugTextBox.Text += "\r\n Clear Square";
                 }
                 else
@@ -160,7 +162,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             UISquare clickedSquare = (UISquare)sender;
 
-            if (this.ChessGrid2D_Form.BoardMode == BoardMode.FreeForm)
+            if (this.BoardMode == BoardMode.FreeForm)
             {
                 if (e.Button == MouseButtons.Right)
                 {
@@ -174,10 +176,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                     {
                         ChessGrid2D_SquareHandlers.ShowSquareMenu(clickedSquare);
                     }
-
-                    //Ditch the menu.  User might decide to set the board to "standard", and the menu shouldn't be there at that point..
-                    clickedSquare.ContextMenu = null;
                 }
+            }
+            else
+            {
+                ChessGrid2D_SquareHandlers.DitchMenu(sender);
             }
         }
 
@@ -206,6 +209,18 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("View Piece Rules"); // > 1.0 feature
 
                 clickedSquare.ContextMenu.Show(clickedSquare, new Point(clickedSquare.Height / 2, clickedSquare.Width / 2));
+            }
+            private static void DitchMenu(object sender)
+            {
+                //Ditch the menu.  User might decide to set the board to "standard", and the menu shouldn't be there at that point..
+                try
+                {
+                    UISquare clickedSquare = (UISquare)sender;
+                    clickedSquare.ContextMenu = null;
+                }
+                catch
+                {
+                }
             }
 
         #endregion

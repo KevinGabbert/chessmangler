@@ -539,7 +539,7 @@
         private System.Windows.Forms.ToolStripMenuItem toggleDebugModeToolStripMenuItem;
         public System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.ToolStripStatusLabel connectionLabel;
-        private System.Windows.Forms.ToolStripStatusLabel modeButton;
+        public System.Windows.Forms.ToolStripStatusLabel modeButton;
         private System.Windows.Forms.DataGridView dgvMoves;
         private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.TextBox txtChat;

@@ -143,7 +143,7 @@ namespace ChessMangler.WinUIParts
 
             if (this.configList.SelectedValue.ToString() != null)
             {
-                open.RulesFilePath = this.ConfigFilePath + "\\" + this.configList.SelectedValue.ToString() + ".config";
+                open.Grid.RulesFilePath = this.ConfigFilePath + "\\" + this.configList.SelectedValue.ToString() + ".config";
 
                 if (!File.Exists(this.ConfigFilePath))
                 {
@@ -152,7 +152,7 @@ namespace ChessMangler.WinUIParts
                 }
                 else
                 {
-                    MessageBox.Show("Config file not found: " + open.RulesFilePath);
+                    MessageBox.Show("Config file not found: " + open.Grid.RulesFilePath);
                 }
 
             }
