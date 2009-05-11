@@ -69,14 +69,12 @@ namespace ChessMangler.WinUIParts
 
         public static void ShowPieceCursor(UISquare senderSquare)
         {
-            ChessPieceCursor.ShowPieceCursor(senderSquare, senderSquare.CurrentPiece.Image.Size);
-        }
+            Size imageSize = senderSquare.CurrentPiece.Image.Size;
+            imageSize.Height = imageSize.Height + 8; //TODO: Configure this in program/game config
+            imageSize.Width = imageSize.Width + 8;  //TODO: Configure this in program/game config
 
-        //TODO: This "enlargeBy" feature will also become a config file option
-        //public static void ShowPieceCursor(UISquare senderSquare, Size enlargeBy)
-        //{
-        //    ChessPieceCursor.ShowPieceCursor(senderSquare, senderSquare.CurrentPiece.Image.Size);
-        //}
+            ChessPieceCursor.ShowPieceCursor(senderSquare, imageSize);
+        }
 
         public static void ShowPieceCursor(Image cursorImage, Size size)
         {
