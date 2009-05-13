@@ -4,10 +4,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 {
     public class GridForm : Form
     {
-        public ChessGrid2D_SquareHandlers _squareHandlers = new ChessGrid2D_SquareHandlers();
+        protected ChessGrid2D_SquareHandlers _squareHandlers;
 
         //TODO: Subscribe to the Comm Recieve Event
-        //ChessGrid2D_CommHandlers _commHandlers = new ChessGrid2D_CommHandlers();
+        //ChessGrid2D_CommHandlers _commHandlers;
 
         #region Properties
 

@@ -130,11 +130,7 @@ namespace ChessMangler.WinUIParts
             {
                 UISquare newUISquare = new UISquare(new Point(_currentColumn, _currentRow), squareSize);
 
-                if (this.DebugMode)
-                {
-                    //newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation + ".col" + currentSquare.Column + ".row" + currentSquare.Row, "Arial", 10);
-                    newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation, "Arial", 10);
-                }
+                Square_DebugStuff(currentSquare, newUISquare);
 
                 //xfer variables over
                 newUISquare.X = _currentColumn;
@@ -161,6 +157,15 @@ namespace ChessMangler.WinUIParts
 
                 _currentColumn = _currentColumn + squareSize;
                 //**** This is disposable test code, as the UI SquarePositions will be set in Engine.Board (XmlDocument) *****
+            }
+        }
+
+        private void Square_DebugStuff(Square2D currentSquare, UISquare newUISquare)
+        {
+            if (this.DebugMode)
+            {
+                //newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation + ".col" + currentSquare.Column + ".row" + currentSquare.Row, "Arial", 10);
+                newUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation, "Arial", 10);
             }
         }
 

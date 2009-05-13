@@ -13,6 +13,8 @@ namespace ChessMangler.WinUIParts
         public DebugForm()
         {
             InitializeComponent();
+
+
         }
     }
 }

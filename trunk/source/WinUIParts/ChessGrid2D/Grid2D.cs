@@ -46,7 +46,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 this.Form_KeepSquare();
             }
 
-            //Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
+            //Use our good friend BoardEnumerator to help us find all the squares on the board, and reset their locations
 
             if (this.UIBoard != null)
             {
@@ -83,11 +83,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             currentUISquare.Height = (this.ChessGrid2D_Form.ClientSize.Height / board.Columns) - _adjust2;
             currentUISquare.Width = (this.ChessGrid2D_Form.ClientSize.Width) / board.Rows;
         }
-        public void Square_SetLocation(int newRow, BoardDef board, Square2D currentSquare, UISquare currentUISquare)
+        public void Square_SetLocation(int newRow, BoardDef boardDef, Square2D currentSquare, UISquare currentUISquare)
         {
             //Adjusts "Board Width" (Board being all the squares)
-            int x = currentSquare.Column * this.ChessGrid2D_Form.ClientSize.Width / board.Columns;
-            int y = Grid_AdjustHeight(newRow, board);
+            int x = currentSquare.Column * this.ChessGrid2D_Form.ClientSize.Width / boardDef.Columns;
+            int y = Grid_AdjustHeight(newRow, boardDef);
 
             currentUISquare.Location = new Point(x, y);
         }
@@ -179,8 +179,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         }
         public static void SetUp_Common(GridForm formToPlaceBoard)
         {
-            formToPlaceBoard._squareHandlers.Add_Required_Square_Handlers(formToPlaceBoard, formToPlaceBoard.Grid.DebugForm);
-
             //Set initial size.  This also fires the resize event, which gives the form its final shape.
             formToPlaceBoard.ClientSize = new Size(formToPlaceBoard.ClientSize.Width, formToPlaceBoard.ClientSize.Height + 130);  //this value should come from 1. game config or if that is not there, then 2. Program Config
         }
@@ -193,7 +191,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             {
                 if (currentUISquare.CurrentPiece == null)
                 {
-                    currentUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation, "Arial", 25);
+                    currentUISquare.Image = UISquare.CreateBitmapImage("E:" + currentSquare.BoardLocation + "\\UI:" + currentUISquare.BoardLocation, "Arial", 10);
                 }
             }
         }
@@ -208,7 +206,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             if (!uiDirectoryExists)
             {
                 MessageBox.Show("Unable to find UI files directory:  " + uiDirectory);
-
             }
 
 

@@ -98,7 +98,7 @@ namespace ChessMangler.Engine.Types
             //This foreach construct may be temporary, as I'm evaluating whether this is a good idea..
             foreach (Square2D currentSquare in this.BoardEnumerator(boardDef))
             {
-                //this empty foreach executes SquareLogic. We may need to put something here later..
+                //this empty foreach executes BoardEnumerator. We may need to put something here later..
             }
         }
         private void MapPieces(XmlDocument configFile, string directory)
@@ -128,7 +128,7 @@ namespace ChessMangler.Engine.Types
         {
             //Temporary hardcoded rule.. (this will be in XML)
 
-            if (endSquare.CurrentPiece != null)
+            if ((endSquare.CurrentPiece != null) && (startSquare.CurrentPiece != null))
             {
                 if (startSquare.CurrentPiece.Color == endSquare.CurrentPiece.Color)
                 {
@@ -189,7 +189,7 @@ namespace ChessMangler.Engine.Types
             }
         }
 
-        public void AddNewSquare(BoardDef boardDef, Int16 col, Int16 row, out Square2D newlyAddedSquare)
+        public Square2D AddNewSquare(BoardDef boardDef, Int16 col, Int16 row)
         {
             Square2D newSquare = new Square2D();
             newSquare.BoardLocation = (char)(97 + col) + (row + 1).ToString(); //lowercase is PGN format... i.e. a6, not A6
@@ -198,10 +198,11 @@ namespace ChessMangler.Engine.Types
             Square2D.SetCheckerboardStyle(newSquare, col, row);
 
             this.Squares.Add(newSquare);
-            newlyAddedSquare = newSquare;
 
             newSquare.Column = col;
             newSquare.Row = row;
+
+            return newSquare;
         }
 
         /// <summary>
@@ -220,10 +221,8 @@ namespace ChessMangler.Engine.Types
                 {
                     if (this.IsNew)
                     {
-                        Square2D newSquare;
-                        this.AddNewSquare(boardDef, currentColumn, refRow, out newSquare);
-
-                        yield return newSquare; //Hand out this new square to those who want it..
+                        //Hand out this new square to those who want it..
+                        yield return this.AddNewSquare(boardDef, currentColumn, refRow);
                     }
                     else
                     {

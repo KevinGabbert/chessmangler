@@ -21,7 +21,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
     public partial class ChessGrid2D_Form : GridForm
     {
         static DebugForm _debugForm = new DebugForm();
-        ChessGrid2D_MenuBarHandlers _menuBarHandlers = new ChessGrid2D_MenuBarHandlers(_debugForm);
+
+        ChessGrid2D_MenuBarHandlers _menuBarHandlers;
+
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
         public ChessGrid2D_Form()
@@ -36,6 +38,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             this.InitGrid();
             this.Grid.SetUp_FreeFormBoard(this, board, squareSize);
+
+            this.InitHandlers();
         }
 
         #region Event Handlers
@@ -43,10 +47,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         private void ChessGrid2D_Load(object sender, EventArgs e)
         {
             this.Grid.SetUp_DefaultUIBoard(this);
-
-            //Menu Handlers
-            this.toggleDebugModeToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
-            this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
+            this.InitHandlers();
         }
         private void ChessGrid2D_Resize(object sender, EventArgs e)
         {
@@ -68,6 +69,30 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         public void InitGrid()
         {
             this.Grid = new Grid2D(this);
+        }
+        public void InitHandlers()
+        {
+            _menuBarHandlers = new ChessGrid2D_MenuBarHandlers(_debugForm, this);
+            _squareHandlers = new ChessGrid2D_SquareHandlers();
+
+            this._squareHandlers.Add_Required_Square_Handlers(this, this.Grid.DebugForm);
+
+            //Menu Handlers
+            this.toggleDebugModeToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
+            this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
+            this.resetPiecesToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
+            this.clearPiecesToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.clearPiecesToolStripMenuItem_Click);
+        }
+
+        //used in some cases to reset things.
+        public void DitchHandlers()
+        {
+            this._squareHandlers.Delete_Required_Square_Handlers(this);
+
+            //Menu Handlers
+            this.toggleDebugModeToolStripMenuItem.Click -= new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
+            this.debugToolStripMenuItem.Click -= new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
+            this.resetPiecesToolStripMenuItem.Click -= new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
         }
     }
 }

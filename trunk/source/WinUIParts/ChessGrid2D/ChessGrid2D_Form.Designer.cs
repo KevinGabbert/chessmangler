@@ -59,6 +59,7 @@
             this.rotateBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleDebugModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetPiecesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.messageWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +77,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.clearPiecesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chessMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMoves)).BeginInit();
@@ -309,9 +311,18 @@
             // 
             // toggleDebugModeToolStripMenuItem
             // 
+            this.toggleDebugModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.resetPiecesToolStripMenuItem,
+            this.clearPiecesToolStripMenuItem});
             this.toggleDebugModeToolStripMenuItem.Name = "toggleDebugModeToolStripMenuItem";
             this.toggleDebugModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.toggleDebugModeToolStripMenuItem.Text = "Toggle Debug Mode";
+            // 
+            // resetPiecesToolStripMenuItem
+            // 
+            this.resetPiecesToolStripMenuItem.Name = "resetPiecesToolStripMenuItem";
+            this.resetPiecesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetPiecesToolStripMenuItem.Text = "Reset Pieces";
             // 
             // chatToolStripMenuItem
             // 
@@ -465,6 +476,12 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // clearPiecesToolStripMenuItem
+            // 
+            this.clearPiecesToolStripMenuItem.Name = "clearPiecesToolStripMenuItem";
+            this.clearPiecesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearPiecesToolStripMenuItem.Text = "Clear Pieces";
+            // 
             // ChessGrid2D_Form
             // 
             this.AllowDrop = true;
@@ -547,6 +564,8 @@
         public System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ToolStripMenuItem resetPiecesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearPiecesToolStripMenuItem;
 
 
 

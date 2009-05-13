@@ -53,6 +53,25 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 }
             }
         }
+        public void Delete_Required_Square_Handlers(GridForm form)
+        {
+            this.ChessGrid2D_Form = (ChessGrid2D_Form)form;
+
+            foreach (Control control in form.Controls)
+            {
+                string controlType = control.GetType().ToString();
+
+                if (controlType == "ChessMangler.WinUIParts.UISquare")
+                {
+                    UISquare currentSquare = ((UISquare)control);
+                    currentSquare.MouseDown -= this.CellMouseDown;
+                    currentSquare.MouseMove -= this.CellMouseMove;
+                    currentSquare.DragEnter -= this.CellDragEnter;
+                    currentSquare.DragDrop -= this.CellDragDrop;
+                    currentSquare.MouseClick -= this.CellMouseClick;
+                }
+            }
+        }
         public void Add_Required_Square_Handlers(GridForm form, DebugForm debugForm)
         {
             this.DebugForm = debugForm;
@@ -70,7 +89,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 return;
             }
 
-            _dragStartSquare = (UISquare)sender;
+            this.DragStart_Square = (UISquare)sender;
 
             //Make the piece vanish right away. CurrentPiece needs to stay until the end of the DragDrop operation
             UISquare blank = new UISquare(_dragStartSquare.Location, _dragStartSquare.SquareSize);
@@ -134,34 +153,41 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 UISquare dragEndSquare;
                 dragEndSquare = (UISquare)sender;
 
-                bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
-
-                if (weCanMove)
+                if (this.DragStart_Square != null && dragEndSquare != null)
                 {
-                    //Set the new piece
-                    dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
+                    bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
 
-                    //On the engineboard too.
-                    this.UIBoard.EngineBoard.GetByLocation(dragEndSquare.Row, dragEndSquare.Column).CurrentPiece = dragEndSquare.CurrentPiece;
-                    this.UIBoard.EngineBoard.GetByLocation(_dragStartSquare.Row, _dragStartSquare.Column).CurrentPiece = null;
+                    if (weCanMove)
+                    {
+                        //Set the new piece
+                        dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
 
-                    this.DebugForm.debugTextBox.Text += "\r\n Set Piece";
+                        //On the engineboard too.
+                        this.UIBoard.EngineBoard.GetByLocation(dragEndSquare.Row, dragEndSquare.Column).CurrentPiece = dragEndSquare.CurrentPiece;
+                        this.UIBoard.EngineBoard.GetByLocation(_dragStartSquare.Row, _dragStartSquare.Column).CurrentPiece = null;
 
-                    this.UIBoard.ClearSquare(_dragStartSquare, true);
-                    this.DebugForm.debugTextBox.Text += "\r\n Clear Square";
+                        this.DebugForm.debugTextBox.Text += "\r\n Set Piece";
+
+                        this.UIBoard.ClearSquare(_dragStartSquare, true);
+                        this.DebugForm.debugTextBox.Text += "\r\n Clear Square";
+                    }
+                    else
+                    {
+                        //put it back
+                        _dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
+                        this.DebugForm.debugTextBox.Text += "\r\n Putting back piece";
+                    }
                 }
                 else
                 {
-                    //put it back
-                    _dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
-                    this.DebugForm.debugTextBox.Text += "\r\n Putting back piece";
+                    //uh oh.. this is a problem.  You shouldn't be here
+                    throw new System.Exception();
                 }
 
                 this.DebugForm.debugTextBox.Text += "\r\n -- Drop End";
 
                 //Data_Layer.Record_Move_In_DB
                 //Communications_Layer.Send_Move_To_opponent
-
             }
             catch (Exception ex)
             {

@@ -104,6 +104,8 @@ namespace ChessMangler.Engine.Types
             }
         }
 
+        //TODO: Hopefully this could eventually be set somehow by the config file.
+        //until then, this will be a feature that this program will support.
         public static void SetCheckerboardStyle(Square2D squareToColor, int column, int row)
         {
             if (((column + row) % 2) == 0)
