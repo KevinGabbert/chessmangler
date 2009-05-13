@@ -77,12 +77,10 @@ namespace ChessMangler.Engine.Types
             this.CreateBoard(configFile);
             this.MapPieces(configFile, UIDirectory);
         }
-
         public Board2D(BoardDef boardDef)
         {
             this.CreateBoard(boardDef);
         }
-
 
         protected void CreateBoard(XmlDocument configFile)
         {
@@ -98,7 +96,7 @@ namespace ChessMangler.Engine.Types
             this.Definition = boardDef;
 
             //This foreach construct may be temporary, as I'm evaluating whether this is a good idea..
-            foreach (Square2D currentSquare in this.SquareLogic(boardDef))
+            foreach (Square2D currentSquare in this.BoardEnumerator(boardDef))
             {
                 //this empty foreach executes SquareLogic. We may need to put something here later..
             }
@@ -206,8 +204,13 @@ namespace ChessMangler.Engine.Types
             newSquare.Row = row;
         }
 
-        //Expose our inner board logic so the UI can use it.
-        public IEnumerable<Square2D> SquareLogic(BoardDef boardDef)
+        /// <summary>
+        /// Expose our inner board logic so the UI can use it.
+        /// This function enumerates through our board for those functions that want to traverse all the squares
+        /// </summary>
+        /// <param name="boardDef"></param>
+        /// <returns></returns>
+        public IEnumerable<Square2D> BoardEnumerator(BoardDef boardDef)
         {
             for (Int16 currentRow = 0; currentRow < boardDef.Rows; currentRow++)
             {

@@ -126,7 +126,7 @@ namespace ChessMangler.WinUIParts
             //Translates Engine stuff to UI Stuff
 
             //Hmmmmm.. the alternative is to do a for..i.. using BoardDef and GetByLocation, but SquareLogic already does this!, also, this allows for less complication in the UI..
-            foreach (Square2D currentSquare in this.EngineBoard.SquareLogic(boardDef))
+            foreach (Square2D currentSquare in this.EngineBoard.BoardEnumerator(boardDef))
             {
                 UISquare newUISquare = new UISquare(new Point(_currentColumn, _currentRow), squareSize);
 

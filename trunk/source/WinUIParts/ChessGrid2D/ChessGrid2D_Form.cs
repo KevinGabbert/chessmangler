@@ -60,7 +60,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         private void modeButton_Click(object sender, EventArgs e)
         {
-            this.Grid.ToggleBoardMode();
+            this.Grid.Toggle_BoardMode();
         }
 
         #endregion

@@ -14,7 +14,7 @@ using ChessMangler.Rules.Interfaces;
 namespace ChessMangler.WinUIParts
 {
     /// <summary>
-    /// This object simply does what is needed 
+    /// This object simply does what is needed to create a square and stick in a piece image 
     /// </summary>
     public class UISquare : PictureBox, ISquare 
     {

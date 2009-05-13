@@ -38,12 +38,12 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.DebugForm = new DebugForm();
         }
 
-        int adjust2 = 20;
+        int _adjust2 = 20;
         public void Redraw()
         {
             if (this.ConstrainProportions)
             {
-                this.KeepSquare();
+                this.Form_KeepSquare();
             }
 
             //Use our good friend SquareLogic to help us find all the squares on the board, and reset their locations
@@ -54,29 +54,17 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 int columnCount = 0;
 
                 BoardDef board = this.UIBoard.EngineBoard.Definition;
-                foreach (Square2D currentSquare in this.UIBoard.EngineBoard.SquareLogic(board))
+                foreach (Square2D currentSquare in this.UIBoard.EngineBoard.BoardEnumerator(board))
                 {
                     UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
 
                     if (currentUISquare != null)
                     {
-                        //Adjusts "Board Width" (Board being all the squares)
-                        int x = currentSquare.Column * this.ChessGrid2D_Form.ClientSize.Width / board.Columns;
-                        int y = AdjustBoardHeight(newRow, board);
+                        this.Set_SquareLocation(newRow, board, currentSquare, currentUISquare);
+                        this.Set_SquareSize(board, currentUISquare);
+                        Grid2D.Set_SquarePiece(currentSquare, currentUISquare);
 
-                        currentUISquare.Location = new Point(x, y);
-                        currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
-
-                        currentUISquare.Height = (this.ChessGrid2D_Form.ClientSize.Height / board.Columns) - adjust2;
-                        currentUISquare.Width = (this.ChessGrid2D_Form.ClientSize.Width) / board.Rows;
-
-                        if (this.UIBoard.DebugMode)
-                        {
-                            if (currentUISquare.CurrentPiece == null)
-                            {
-                                currentUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation, "Arial", 25);
-                            }
-                        }
+                        this.Do_DebugStuff(currentSquare, currentUISquare);
                     }
 
                     //This is what we use to impose a new order (different than the Square2D list)
@@ -88,12 +76,31 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 }
             }
         }
-        private int AdjustBoardHeight(int row, BoardDef board)
+
+        private void Set_SquareSize(BoardDef board, UISquare currentUISquare)
         {
-            //(Board being all the squares)
-            int heightAdjustment = this.ChessGrid2D_Form.statusBar.Height - adjust2;//unknown why I need this.  is this a total of cumulative errors??
-            int controlsHeight = this.ChessGrid2D_Form.chessMenu.Height + heightAdjustment + this.ChessGrid2D_Form.tabControl1.Height + adjust2;
-            int chessBoardHeight = this.ChessGrid2D_Form.ClientSize.Height - controlsHeight - heightAdjustment - adjust2;
+            currentUISquare.Height = (this.ChessGrid2D_Form.ClientSize.Height / board.Columns) - _adjust2;
+            currentUISquare.Width = (this.ChessGrid2D_Form.ClientSize.Width) / board.Rows;
+        }
+        public void Set_SquareLocation(int newRow, BoardDef board, Square2D currentSquare, UISquare currentUISquare)
+        {
+            //Adjusts "Board Width" (Board being all the squares)
+            int x = currentSquare.Column * this.ChessGrid2D_Form.ClientSize.Width / board.Columns;
+            int y = Grid_AdjustHeight(newRow, board);
+
+            currentUISquare.Location = new Point(x, y);
+        }
+        private static void Set_SquarePiece(Square2D currentSquare, UISquare currentUISquare)
+        {
+            currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
+        }
+
+        private int Grid_AdjustHeight(int row, BoardDef board)
+        {
+            int heightAdjustment = this.ChessGrid2D_Form.statusBar.Height - _adjust2;//unknown why I need this.  is this a total of cumulative errors??
+            
+            int controlsHeight = this.ChessGrid2D_Form.chessMenu.Height + heightAdjustment + this.ChessGrid2D_Form.tabControl1.Height + _adjust2;
+            int chessBoardHeight = this.ChessGrid2D_Form.ClientSize.Height - controlsHeight - heightAdjustment - _adjust2;
 
             int y = 0;
 
@@ -103,7 +110,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             return y;
         }
-        public void KeepSquare()
+        public void Form_KeepSquare()
         {
             //Ensure that the client area is always square
             //TODO: this needs to account for fullscreen
@@ -111,18 +118,18 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.ChessGrid2D_Form.ClientSize = new Size(iSize, iSize);
         }
 
-        public void ToggleBoardMode()
+        public void Toggle_BoardMode()
         {
             if (this.BoardMode == BoardMode.Standard)
             {
-                this.SetMode(BoardMode.FreeForm);
+                this.Set_BoardMode(BoardMode.FreeForm);
             }
             else
             {
-                this.SetMode(BoardMode.Standard);
+                this.Set_BoardMode(BoardMode.Standard);
             }
         }
-        public void SetMode(BoardMode boardMode)
+        public void Set_BoardMode(BoardMode boardMode)
         {
             this.BoardMode = boardMode;
             this.ChessGrid2D_Form.modeButton.Text = boardMode.ToString();
@@ -150,12 +157,12 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 {
                     this.UIBoard = Grid2D.SetUp_NewUIBoard();
                     this.UIBoard.CreateBoard(this.ChessGrid2D_Form, rulesDocument, uiDirectory);
-                    this.SetMode(BoardMode.Standard);
+                    this.Set_BoardMode(BoardMode.Standard);
                 }
                 else
                 {
                     this.UIBoard = _freeFormBoard;
-                    this.SetMode(BoardMode.FreeForm);
+                    this.Set_BoardMode(BoardMode.FreeForm);
                 }
 
                 Grid2D.SetUp_Common(formToPlaceBoard);
@@ -165,11 +172,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             this.UIBoard = Grid2D.SetUp_NewUIBoard();
             this.UIBoard.CreateBoard(formToPlaceBoard, board, squareSize);
-            this.SetMode(BoardMode.FreeForm);
+            this.Set_BoardMode(BoardMode.FreeForm);
 
             Grid2D.SetUp_Common(formToPlaceBoard);
         }
-
         public static void SetUp_Common(GridForm formToPlaceBoard)
         {
             formToPlaceBoard._squareHandlers.Add_Required_Square_Handlers(formToPlaceBoard, formToPlaceBoard.Grid.DebugForm);
@@ -180,8 +186,20 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         #endregion
 
+        private void Do_DebugStuff(Square2D currentSquare, UISquare currentUISquare)
+        {
+            if (this.UIBoard.DebugMode)
+            {
+                if (currentUISquare.CurrentPiece == null)
+                {
+                    currentUISquare.Image = UISquare.CreateBitmapImage(currentSquare.BoardLocation, "Arial", 25);
+                }
+            }
+        }
+
         #region Move this elsewhere
 
+        //This needs to be refactored to another object
         private static void Check_Paths(string uiDirectory, string imagesDirectory)
         {
             //Check essential files
