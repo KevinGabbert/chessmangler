@@ -98,7 +98,7 @@ namespace ChessMangler.WinUIParts
         int _currentColumn = 0;
         int _currentRow = 0;
 
-        public void CreateBoard(Form formForBoard, XmlDocument configFile, string directory)
+        public void Create(Form formForBoard, XmlDocument configFile, string directory)
         {
             this.EngineBoard = new Board2D(configFile, directory);
             Int16 squareSize = ConfigParser.GetSquareSize(configFile);
@@ -109,7 +109,7 @@ namespace ChessMangler.WinUIParts
 
             this.BuildUISquares(formForBoard, this.EngineBoard.Definition, squareSize);
         }
-        public void CreateBoard(Form formForBoard, BoardDef boardDef, short squareSize)
+        public void Create(Form formForBoard, BoardDef boardDef, short squareSize)
         {
             this.EngineBoard = new Board2D(boardDef);
 
@@ -206,7 +206,7 @@ namespace ChessMangler.WinUIParts
 
         int _findRow;
         int _findCol;
-        public UISquare GetByBoardLocation(int row, int column)
+        public UISquare GetSquare_ByLocation(int row, int column)
         {
             this._findRow = row;
             this._findCol = column;

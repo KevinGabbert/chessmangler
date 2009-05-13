@@ -56,15 +56,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 BoardDef board = this.UIBoard.EngineBoard.Definition;
                 foreach (Square2D currentSquare in this.UIBoard.EngineBoard.BoardEnumerator(board))
                 {
-                    UISquare currentUISquare = this.UIBoard.GetByBoardLocation(currentSquare.Column, currentSquare.Row);
+                    UISquare currentUISquare = this.UIBoard.GetSquare_ByLocation(currentSquare.Column, currentSquare.Row);
 
                     if (currentUISquare != null)
                     {
-                        this.Set_SquareLocation(newRow, board, currentSquare, currentUISquare);
-                        this.Set_SquareSize(board, currentUISquare);
-                        Grid2D.Set_SquarePiece(currentSquare, currentUISquare);
+                        //Can these go into UISquare?
+                        this.Square_SetLocation(newRow, board, currentSquare, currentUISquare);
+                        this.Square_SetSize(board, currentUISquare);
+                        Grid2D.Square_SetPiece(currentSquare, currentUISquare);
 
-                        this.Do_DebugStuff(currentSquare, currentUISquare);
+                        this.Square_DoDebugStuff(currentSquare, currentUISquare);
                     }
 
                     //This is what we use to impose a new order (different than the Square2D list)
@@ -77,12 +78,12 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
         }
 
-        private void Set_SquareSize(BoardDef board, UISquare currentUISquare)
+        public void Square_SetSize(BoardDef board, UISquare currentUISquare)
         {
             currentUISquare.Height = (this.ChessGrid2D_Form.ClientSize.Height / board.Columns) - _adjust2;
             currentUISquare.Width = (this.ChessGrid2D_Form.ClientSize.Width) / board.Rows;
         }
-        public void Set_SquareLocation(int newRow, BoardDef board, Square2D currentSquare, UISquare currentUISquare)
+        public void Square_SetLocation(int newRow, BoardDef board, Square2D currentSquare, UISquare currentUISquare)
         {
             //Adjusts "Board Width" (Board being all the squares)
             int x = currentSquare.Column * this.ChessGrid2D_Form.ClientSize.Width / board.Columns;
@@ -90,7 +91,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             currentUISquare.Location = new Point(x, y);
         }
-        private static void Set_SquarePiece(Square2D currentSquare, UISquare currentUISquare)
+        private static void Square_SetPiece(Square2D currentSquare, UISquare currentUISquare)
         {
             currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
         }
@@ -156,7 +157,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 if (_freeFormBoard == null)
                 {
                     this.UIBoard = Grid2D.SetUp_NewUIBoard();
-                    this.UIBoard.CreateBoard(this.ChessGrid2D_Form, rulesDocument, uiDirectory);
+                    this.UIBoard.Create(this.ChessGrid2D_Form, rulesDocument, uiDirectory);
                     this.Set_BoardMode(BoardMode.Standard);
                 }
                 else
@@ -171,7 +172,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         public void SetUp_FreeFormBoard(GridForm formToPlaceBoard, BoardDef board, short squareSize)
         {
             this.UIBoard = Grid2D.SetUp_NewUIBoard();
-            this.UIBoard.CreateBoard(formToPlaceBoard, board, squareSize);
+            this.UIBoard.Create(formToPlaceBoard, board, squareSize);
             this.Set_BoardMode(BoardMode.FreeForm);
 
             Grid2D.SetUp_Common(formToPlaceBoard);
@@ -186,7 +187,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         #endregion
 
-        private void Do_DebugStuff(Square2D currentSquare, UISquare currentUISquare)
+        private void Square_DoDebugStuff(Square2D currentSquare, UISquare currentUISquare)
         {
             if (this.UIBoard.DebugMode)
             {
