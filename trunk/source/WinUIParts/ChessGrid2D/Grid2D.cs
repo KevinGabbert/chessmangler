@@ -90,11 +90,14 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             int y = Grid_AdjustHeight(newRow, boardDef);
 
             currentUISquare.Location = new Point(x, y);
-            currentUISquare.BoardLocation = currentSquare.BoardLocation;
+            currentUISquare.BoardLocation = currentSquare.BoardLocation; //sync up square name with engine square
         }
         private static void Square_SetPiece(Square2D currentSquare, UISquare currentUISquare)
         {
             currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
+
+            //pull a new piece image from a cached image
+            //currentUISquare.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + currentSquare.CurrentPiece.Name);
         }
 
         private int Grid_AdjustHeight(int row, BoardDef board)

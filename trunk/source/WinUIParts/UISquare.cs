@@ -22,7 +22,6 @@ namespace ChessMangler.WinUIParts
         
         protected UISquare()
         {
-            //this.BorderStyle = BorderStyle.None;
         }
 
         public UISquare(Point formlocation, int size)
@@ -196,8 +195,11 @@ namespace ChessMangler.WinUIParts
 
             //this.Piece = piece;
             //this.Image = this.Piece.Image;
-            this.SizeMode = PictureBoxSizeMode.CenterImage;
+            this.SizeMode = PictureBoxSizeMode.CenterImage;  //TODO: this needs to be pulled from config ( > v1.0)
+
+            //TODO:  This needs to be pulled from config
             this.BorderStyle = BorderStyle.FixedSingle;
+            //config will have a BorderStyle attribute for the form (and later perhaps for each square)
         }
 
         //This will probably need to be refactored to a generic UI library

@@ -60,6 +60,7 @@
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleDebugModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetPiecesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearPiecesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.messageWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,7 +78,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.clearPiecesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.chessMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMoves)).BeginInit();
@@ -205,7 +206,7 @@
             this.aIMFredFarkelToolStripMenuItem,
             this.googleJoeblowToolStripMenuItem});
             this.accountsToolStripMenuItem1.Name = "accountsToolStripMenuItem1";
-            this.accountsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
+            this.accountsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.accountsToolStripMenuItem1.Text = "Accounts";
             // 
             // jabberToolStripMenuItem1
@@ -235,7 +236,7 @@
             // optionsToolStripMenuItem1
             // 
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
+            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem1.Text = "Options";
             // 
             // movesToolStripMenuItem
@@ -253,31 +254,31 @@
             // movesToolStripMenuItem1
             // 
             this.movesToolStripMenuItem1.Name = "movesToolStripMenuItem1";
-            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(130, 22);
+            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.movesToolStripMenuItem1.Text = "Moves";
             // 
             // annotateToolStripMenuItem
             // 
             this.annotateToolStripMenuItem.Name = "annotateToolStripMenuItem";
-            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.annotateToolStripMenuItem.Text = "Annotate";
             // 
             // capturedToolStripMenuItem
             // 
             this.capturedToolStripMenuItem.Name = "capturedToolStripMenuItem";
-            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.capturedToolStripMenuItem.Text = "Captured";
             // 
             // uIConfigToolStripMenuItem
             // 
             this.uIConfigToolStripMenuItem.Name = "uIConfigToolStripMenuItem";
-            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.uIConfigToolStripMenuItem.Text = "UI Config";
             // 
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.debugToolStripMenuItem.Text = "Debug";
             // 
             // actionsToolStripMenuItem
@@ -286,6 +287,7 @@
             this.flipBoardToolStripMenuItem,
             this.rotateBoardToolStripMenuItem,
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem,
+            this.debugToolStripMenuItem1,
             this.toggleDebugModeToolStripMenuItem});
             this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
             this.actionsToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
@@ -323,6 +325,12 @@
             this.resetPiecesToolStripMenuItem.Name = "resetPiecesToolStripMenuItem";
             this.resetPiecesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.resetPiecesToolStripMenuItem.Text = "Reset Pieces";
+            // 
+            // clearPiecesToolStripMenuItem
+            // 
+            this.clearPiecesToolStripMenuItem.Name = "clearPiecesToolStripMenuItem";
+            this.clearPiecesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearPiecesToolStripMenuItem.Text = "Clear Pieces";
             // 
             // chatToolStripMenuItem
             // 
@@ -476,11 +484,11 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // clearPiecesToolStripMenuItem
+            // debugToolStripMenuItem1
             // 
-            this.clearPiecesToolStripMenuItem.Name = "clearPiecesToolStripMenuItem";
-            this.clearPiecesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.clearPiecesToolStripMenuItem.Text = "Clear Pieces";
+            this.debugToolStripMenuItem1.Name = "debugToolStripMenuItem1";
+            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.debugToolStripMenuItem1.Text = "Debug";
             // 
             // ChessGrid2D_Form
             // 
@@ -566,6 +574,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStripMenuItem resetPiecesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearPiecesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem1;
 
 
 

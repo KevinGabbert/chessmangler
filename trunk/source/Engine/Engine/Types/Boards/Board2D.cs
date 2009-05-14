@@ -114,7 +114,8 @@ namespace ChessMangler.Engine.Types
 
                     default:
                         Square2D squareForPiece = this.GetByName(piece.StartingLocation);
-                        squareForPiece.CurrentPiece = new Piece(piece.Name);
+                        squareForPiece.CurrentPiece = new Piece();
+                        squareForPiece.CurrentPiece.Name = piece.Name;
 
                         //this needs to be set up in Piece..
                         squareForPiece.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + piece.ImageName);

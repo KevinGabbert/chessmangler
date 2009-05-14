@@ -79,7 +79,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this._squareHandlers.Add_Required_Square_Handlers(this, this.Grid.DebugForm);
 
             //Menu Handlers
+            //To add a new entry, create one in the form UI, double-click, and then add a handler in _menuBarHandlers.
+
             this.toggleDebugModeToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
+            this.optionsToolStripMenuItem1.Click += new System.EventHandler(_menuBarHandlers.optionsToolStripMenuItem_Click);
             this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
             this.resetPiecesToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
             this.clearPiecesToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.clearPiecesToolStripMenuItem_Click);

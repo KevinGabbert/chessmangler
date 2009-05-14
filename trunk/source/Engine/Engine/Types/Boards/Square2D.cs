@@ -41,6 +41,19 @@ namespace ChessMangler.Engine.Types
             }
         }
 
+        protected string _name;
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                this._name = value;
+            }
+        }
+
         protected IPiece _currentPiece;
         public IPiece CurrentPiece
         {

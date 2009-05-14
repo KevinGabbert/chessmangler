@@ -20,6 +20,12 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         bool _userSetDebugMode;
 
+        public void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Open options form 
+            //Add "Constrain Proportions" option
+        }
+
         public void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _debugForm.Show();
@@ -33,7 +39,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.UIBoard.DebugMode = this._userSetDebugMode;
             this.ChessGrid2D_Form.Grid.Redraw();
         }
-
         public void resetPiecesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //experimental
@@ -53,7 +58,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             //this.ChessGrid2D_Form.Grid.Redraw();
         }
-
         public void clearPiecesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //experimental

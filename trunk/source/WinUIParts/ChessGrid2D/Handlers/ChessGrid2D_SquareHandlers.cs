@@ -173,8 +173,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                         this.UIBoard.EngineBoard.GetByName(dragEndSquare.BoardLocation).CurrentPiece = dragEndSquare.CurrentPiece;
                         this.UIBoard.EngineBoard.GetByName(_dragStartSquare.BoardLocation).CurrentPiece = null;
 
-                      
-
                         if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
                         {
                             this.DebugForm.debugTextBox.Text += "\r\n Set Piece";
@@ -186,6 +184,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                         {
                             this.DebugForm.debugTextBox.Text += "\r\n Clear Square";
                         }
+
                     }
                     else
                     {

@@ -12,9 +12,9 @@ namespace ChessMangler.Engine.Types
 {
     public class Piece: IPiece
     {
-        public Piece(string name)
+        public Piece()
         {
-            this.BoardLocation = name;
+            //this.BoardLocation = boardLocation;
 
             //Look up attributes in passed config file and assign (such as image, and movement rules, etc..)
         }
@@ -59,7 +59,7 @@ namespace ChessMangler.Engine.Types
         }
 
         protected string _name;
-        public string BoardLocation
+        public string Name
         {
             get
             {
@@ -68,6 +68,19 @@ namespace ChessMangler.Engine.Types
             set
             {
                 this._name = value;
+            }
+        }
+
+        protected string _boardLocation;
+        public string BoardLocation
+        {
+            get
+            {
+                return _boardLocation;
+            }
+            set
+            {
+                this._boardLocation = value;
             }
         }
 
