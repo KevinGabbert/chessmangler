@@ -90,6 +90,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             int y = Grid_AdjustHeight(newRow, boardDef);
 
             currentUISquare.Location = new Point(x, y);
+            currentUISquare.BoardLocation = currentSquare.BoardLocation;
         }
         private static void Square_SetPiece(Square2D currentSquare, UISquare currentUISquare)
         {

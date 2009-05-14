@@ -20,10 +20,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
     /// </summary>
     public partial class ChessGrid2D_Form : GridForm
     {
-        static DebugForm _debugForm = new DebugForm();
+        static DebugForm _debugForm;
 
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
-
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
         public ChessGrid2D_Form()
@@ -31,6 +30,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             InitializeComponent();
 
             this.InitGrid();
+            this.InitForms();
         }
         public ChessGrid2D_Form(BoardDef board, string imagesDirectory, short squareSize)
         {
@@ -40,6 +40,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.Grid.SetUp_FreeFormBoard(this, board, squareSize);
 
             this.InitHandlers();
+            this.InitForms();
         }
 
         #region Event Handlers
@@ -82,6 +83,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
             this.resetPiecesToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
             this.clearPiecesToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.clearPiecesToolStripMenuItem_Click);
+        }
+        public void InitForms()
+        {
+            ChessGrid2D_Form._debugForm = this.Grid.DebugForm;
         }
 
         //used in some cases to reset things.

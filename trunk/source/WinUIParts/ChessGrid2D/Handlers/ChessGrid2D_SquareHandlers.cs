@@ -53,6 +53,12 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 }
             }
         }
+        public void Add_Required_Square_Handlers(GridForm form, DebugForm debugForm)
+        {
+            this.DebugForm = debugForm;
+            this.Add_Required_Square_Handlers(form);
+            this.UIBoard = form.Grid.UIBoard;
+        }
         public void Delete_Required_Square_Handlers(GridForm form)
         {
             this.ChessGrid2D_Form = (ChessGrid2D_Form)form;
@@ -71,12 +77,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                     currentSquare.MouseClick -= this.CellMouseClick;
                 }
             }
-        }
-        public void Add_Required_Square_Handlers(GridForm form, DebugForm debugForm)
-        {
-            this.DebugForm = debugForm;
-            this.Add_Required_Square_Handlers(form);
-            this.UIBoard = form.Grid.UIBoard;
         }
 
         #region Cell Event Handlers
@@ -126,10 +126,14 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (e.Button != (MouseButtons.Left | MouseButtons.XButton1))
             {
-                int square2DRow = this.UIBoard.EngineBoard.GetByLocation(((UISquare)sender).Row, ((UISquare)sender).Column).Row;
-                int square2DColumn = this.UIBoard.EngineBoard.GetByLocation(((UISquare)sender).Row, ((UISquare)sender).Column).Column;
+                UISquare senderSquare = (UISquare)sender;
 
-                this.DebugForm.debugTextBox.Text += ((UISquare)sender).Row + " " + ((UISquare)sender).Column + " ~E:" + square2DRow + " " + square2DColumn;
+                string address = this.UIBoard.EngineBoard.GetByName(senderSquare.BoardLocation).BoardLocation;
+
+                if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
+                {
+                    //this.DebugForm.debugTextBox.Text += ((UISquare)sender).Row + " " + ((UISquare)sender).Column + " ~E:" + square2DRow + " " + square2DColumn;
+                }
 
                 return;
             }
@@ -148,7 +152,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             try
             {
-                this.DebugForm.debugTextBox.Text += "\r\n ++ Drop Start";
+                if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
+                {
+                    this.DebugForm.debugTextBox.Text += "\r\n ++ Drop Start";
+                }
 
                 UISquare dragEndSquare;
                 dragEndSquare = (UISquare)sender;
@@ -163,19 +170,32 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                         dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
 
                         //On the engineboard too.
-                        this.UIBoard.EngineBoard.GetByLocation(dragEndSquare.Row, dragEndSquare.Column).CurrentPiece = dragEndSquare.CurrentPiece;
-                        this.UIBoard.EngineBoard.GetByLocation(_dragStartSquare.Row, _dragStartSquare.Column).CurrentPiece = null;
+                        this.UIBoard.EngineBoard.GetByName(dragEndSquare.BoardLocation).CurrentPiece = dragEndSquare.CurrentPiece;
+                        this.UIBoard.EngineBoard.GetByName(_dragStartSquare.BoardLocation).CurrentPiece = null;
 
-                        this.DebugForm.debugTextBox.Text += "\r\n Set Piece";
+                      
+
+                        if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
+                        {
+                            this.DebugForm.debugTextBox.Text += "\r\n Set Piece";
+                        }
 
                         this.UIBoard.ClearSquare(_dragStartSquare, true);
-                        this.DebugForm.debugTextBox.Text += "\r\n Clear Square";
+
+                        if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
+                        {
+                            this.DebugForm.debugTextBox.Text += "\r\n Clear Square";
+                        }
                     }
                     else
                     {
                         //put it back
                         _dragStartSquare.Image = _dragStartSquare.CurrentPiece.Image;
-                        this.DebugForm.debugTextBox.Text += "\r\n Putting back piece";
+
+                        if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
+                        {
+                            this.DebugForm.debugTextBox.Text += "\r\n Putting back piece";
+                        }
                     }
                 }
                 else
@@ -184,7 +204,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                     throw new System.Exception();
                 }
 
-                this.DebugForm.debugTextBox.Text += "\r\n -- Drop End";
+                if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
+                {
+                    this.DebugForm.debugTextBox.Text += "\r\n -- Drop End";
+                }
 
                 //Data_Layer.Record_Move_In_DB
                 //Communications_Layer.Send_Move_To_opponent
@@ -221,7 +244,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         }
 
         #endregion
-
         #region Cell Context Menus
 
             private static void ShowSquareMenu(UISquare clickedSquare)
