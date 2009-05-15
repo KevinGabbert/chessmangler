@@ -49,6 +49,11 @@
             this.udGridY = new System.Windows.Forms.NumericUpDown();
             this.tabFreeFormPresets = new System.Windows.Forms.TabPage();
             this.lstFreeFormPresets = new System.Windows.Forms.ListBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cboOpponents = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControlGames.SuspendLayout();
             this.tabRulesGame.SuspendLayout();
@@ -58,13 +63,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.udGridX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udGridY)).BeginInit();
             this.tabFreeFormPresets.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Black;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(1, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(2, 27);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(290, 83);
             this.pictureBox1.TabIndex = 0;
@@ -75,14 +81,14 @@
             this.configList.FormattingEnabled = true;
             this.configList.Location = new System.Drawing.Point(3, 25);
             this.configList.Name = "configList";
-            this.configList.Size = new System.Drawing.Size(276, 134);
+            this.configList.Size = new System.Drawing.Size(276, 160);
             this.configList.TabIndex = 1;
             this.configList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.configList_MouseDoubleClick);
             this.configList.SelectedIndexChanged += new System.EventHandler(this.configList_SelectedIndexChanged);
             // 
             // btnOpenGrid
             // 
-            this.btnOpenGrid.Location = new System.Drawing.Point(87, 289);
+            this.btnOpenGrid.Location = new System.Drawing.Point(85, 374);
             this.btnOpenGrid.Name = "btnOpenGrid";
             this.btnOpenGrid.Size = new System.Drawing.Size(114, 23);
             this.btnOpenGrid.TabIndex = 2;
@@ -103,10 +109,10 @@
             this.tabControlGames.Controls.Add(this.tabRulesGame);
             this.tabControlGames.Controls.Add(this.tabFreeForm);
             this.tabControlGames.Controls.Add(this.tabFreeFormPresets);
-            this.tabControlGames.Location = new System.Drawing.Point(1, 92);
+            this.tabControlGames.Location = new System.Drawing.Point(2, 116);
             this.tabControlGames.Name = "tabControlGames";
             this.tabControlGames.SelectedIndex = 0;
-            this.tabControlGames.Size = new System.Drawing.Size(290, 191);
+            this.tabControlGames.Size = new System.Drawing.Size(290, 212);
             this.tabControlGames.TabIndex = 4;
             this.tabControlGames.SelectedIndexChanged += new System.EventHandler(this.tabControlGames_SelectedIndexChanged);
             // 
@@ -117,7 +123,7 @@
             this.tabRulesGame.Location = new System.Drawing.Point(4, 22);
             this.tabRulesGame.Name = "tabRulesGame";
             this.tabRulesGame.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRulesGame.Size = new System.Drawing.Size(282, 165);
+            this.tabRulesGame.Size = new System.Drawing.Size(282, 186);
             this.tabRulesGame.TabIndex = 0;
             this.tabRulesGame.Text = "Rules Game";
             this.tabRulesGame.UseVisualStyleBackColor = true;
@@ -135,7 +141,7 @@
             this.tabFreeForm.Location = new System.Drawing.Point(4, 22);
             this.tabFreeForm.Name = "tabFreeForm";
             this.tabFreeForm.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFreeForm.Size = new System.Drawing.Size(282, 165);
+            this.tabFreeForm.Size = new System.Drawing.Size(282, 156);
             this.tabFreeForm.TabIndex = 1;
             this.tabFreeForm.Text = "Free Form Game";
             this.tabFreeForm.UseVisualStyleBackColor = true;
@@ -259,7 +265,7 @@
             this.tabFreeFormPresets.Controls.Add(this.lstFreeFormPresets);
             this.tabFreeFormPresets.Location = new System.Drawing.Point(4, 22);
             this.tabFreeFormPresets.Name = "tabFreeFormPresets";
-            this.tabFreeFormPresets.Size = new System.Drawing.Size(282, 165);
+            this.tabFreeFormPresets.Size = new System.Drawing.Size(282, 175);
             this.tabFreeFormPresets.TabIndex = 2;
             this.tabFreeFormPresets.Text = "Free Form Presets";
             this.tabFreeFormPresets.UseVisualStyleBackColor = true;
@@ -269,14 +275,57 @@
             this.lstFreeFormPresets.FormattingEnabled = true;
             this.lstFreeFormPresets.Location = new System.Drawing.Point(3, 15);
             this.lstFreeFormPresets.Name = "lstFreeFormPresets";
-            this.lstFreeFormPresets.Size = new System.Drawing.Size(276, 147);
+            this.lstFreeFormPresets.Size = new System.Drawing.Size(276, 134);
             this.lstFreeFormPresets.TabIndex = 2;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectionToolStripMenuItem,
+            this.toolStripMenuItem1});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(292, 24);
+            this.menuStrip1.TabIndex = 5;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(56, 20);
+            this.toolStripMenuItem1.Text = "Options";
+            // 
+            // connectionToolStripMenuItem
+            // 
+            this.connectionToolStripMenuItem.Name = "connectionToolStripMenuItem";
+            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.connectionToolStripMenuItem.Text = "Connection";
+            // 
+            // cboOpponents
+            // 
+            this.cboOpponents.FormattingEnabled = true;
+            this.cboOpponents.Location = new System.Drawing.Point(6, 347);
+            this.cboOpponents.Name = "cboOpponents";
+            this.cboOpponents.Size = new System.Drawing.Size(282, 21);
+            this.cboOpponents.TabIndex = 5;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 331);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(87, 13);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "Select Opponent";
             // 
             // GameList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 317);
+            this.ClientSize = new System.Drawing.Size(292, 406);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.cboOpponents);
             this.Controls.Add(this.tabControlGames);
             this.Controls.Add(this.btnOpenGrid);
             this.Controls.Add(this.pictureBox1);
@@ -295,7 +344,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.udGridX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udGridY)).EndInit();
             this.tabFreeFormPresets.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -321,5 +373,10 @@
         private System.Windows.Forms.TabPage tabFreeFormPresets;
         private System.Windows.Forms.ListBox lstFreeFormPresets;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem connectionToolStripMenuItem;
+        private System.Windows.Forms.ComboBox cboOpponents;
+        private System.Windows.Forms.Label label7;
     }
 }

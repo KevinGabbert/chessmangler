@@ -133,5 +133,69 @@ namespace ChessMangler.Engine.Config
 
             return gotPieceDefs;
         }
+
+        public static List<PieceDef> GetUniquePieces(XmlDocument configDocument)
+        {
+
+            //TODO: Does this need to be cached somewhere??
+
+            List<PieceDef> gotPieceDefs = null;
+            List<string> pieceNames = new List<string>();
+
+            XmlNode pieceDefs = ConfigParser.GetConfigDefNode(configDocument, "PieceDef");
+
+            if (pieceDefs != null)
+            {
+                gotPieceDefs = new List<PieceDef>();
+
+                foreach (XmlNode currentPiece in pieceDefs)
+                {
+                    if (currentPiece.Attributes != null)
+                    {
+                        PieceDef newPiece = new PieceDef();
+
+                        XmlAttributeCollection attributes = currentPiece.Attributes;
+                        foreach (XmlAttribute currentAttribute in attributes)
+                        {
+                            string currentName = currentAttribute.Name;
+
+                            if (currentName == "name")
+                            {
+                                newPiece.Name = currentAttribute.Value;
+                            }
+
+                            if (!pieceNames.Contains(newPiece.Name))
+                            {
+                                pieceNames.Add(newPiece.Name);
+
+                                if (currentName == "StartingLocation")
+                                {
+                                    newPiece.StartingLocation = currentAttribute.Value;
+                                }
+
+                                if (currentName == "ImageName")
+                                {
+                                    newPiece.ImageName = currentAttribute.Value;
+                                }
+
+                                if (currentName == "Player")
+                                {
+                                    newPiece.Player = Convert.ToInt16(currentAttribute.Value);
+                                }
+
+                                if (currentName == "Color")
+                                {
+                                    newPiece.Color = Color.FromName(currentAttribute.Value);
+                                }
+
+                                gotPieceDefs.Add(newPiece);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return gotPieceDefs;
+        }
     }
 }
