@@ -58,6 +58,7 @@
             this.flipBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotateBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleDebugModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetPiecesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearPiecesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,7 +79,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.debugToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.chessMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMoves)).BeginInit();
@@ -206,7 +206,7 @@
             this.aIMFredFarkelToolStripMenuItem,
             this.googleJoeblowToolStripMenuItem});
             this.accountsToolStripMenuItem1.Name = "accountsToolStripMenuItem1";
-            this.accountsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.accountsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.accountsToolStripMenuItem1.Text = "Accounts";
             // 
             // jabberToolStripMenuItem1
@@ -236,7 +236,7 @@
             // optionsToolStripMenuItem1
             // 
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.optionsToolStripMenuItem1.Text = "Options";
             // 
             // movesToolStripMenuItem
@@ -254,31 +254,31 @@
             // movesToolStripMenuItem1
             // 
             this.movesToolStripMenuItem1.Name = "movesToolStripMenuItem1";
-            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(130, 22);
             this.movesToolStripMenuItem1.Text = "Moves";
             // 
             // annotateToolStripMenuItem
             // 
             this.annotateToolStripMenuItem.Name = "annotateToolStripMenuItem";
-            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.annotateToolStripMenuItem.Text = "Annotate";
             // 
             // capturedToolStripMenuItem
             // 
             this.capturedToolStripMenuItem.Name = "capturedToolStripMenuItem";
-            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.capturedToolStripMenuItem.Text = "Captured";
             // 
             // uIConfigToolStripMenuItem
             // 
             this.uIConfigToolStripMenuItem.Name = "uIConfigToolStripMenuItem";
-            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.uIConfigToolStripMenuItem.Text = "UI Config";
             // 
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.debugToolStripMenuItem.Text = "Debug";
             // 
             // actionsToolStripMenuItem
@@ -311,6 +311,12 @@
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Text = "Undo";
             // 
+            // debugToolStripMenuItem1
+            // 
+            this.debugToolStripMenuItem1.Name = "debugToolStripMenuItem1";
+            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.debugToolStripMenuItem1.Text = "Debug";
+            // 
             // toggleDebugModeToolStripMenuItem
             // 
             this.toggleDebugModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -323,13 +329,13 @@
             // resetPiecesToolStripMenuItem
             // 
             this.resetPiecesToolStripMenuItem.Name = "resetPiecesToolStripMenuItem";
-            this.resetPiecesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetPiecesToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.resetPiecesToolStripMenuItem.Text = "Reset Pieces";
             // 
             // clearPiecesToolStripMenuItem
             // 
             this.clearPiecesToolStripMenuItem.Name = "clearPiecesToolStripMenuItem";
-            this.clearPiecesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearPiecesToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.clearPiecesToolStripMenuItem.Text = "Clear Pieces";
             // 
             // chatToolStripMenuItem
@@ -444,6 +450,7 @@
             this.btnChatSend.TabIndex = 1;
             this.btnChatSend.Text = "Send";
             this.btnChatSend.UseVisualStyleBackColor = true;
+            this.btnChatSend.Click += new System.EventHandler(this.btnChatSend_Click);
             // 
             // txtChat
             // 
@@ -483,12 +490,6 @@
             this.tabPage2.Size = new System.Drawing.Size(661, 91);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // debugToolStripMenuItem1
-            // 
-            this.debugToolStripMenuItem1.Name = "debugToolStripMenuItem1";
-            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.debugToolStripMenuItem1.Text = "Debug";
             // 
             // ChessGrid2D_Form
             // 

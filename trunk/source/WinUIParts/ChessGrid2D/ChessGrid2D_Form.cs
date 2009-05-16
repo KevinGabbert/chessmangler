@@ -102,6 +102,17 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.debugToolStripMenuItem.Click -= new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
             this.resetPiecesToolStripMenuItem.Click -= new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
         }
+
+        private void btnChatSend_Click(object sender, EventArgs e)
+        {
+            //jabber.protocol.client.Message msg = new jabber.protocol.client.Message(m_jc.Document);
+            //msg.To = txtTo.Text;
+            //if (txtSubject.Text != "")
+            //    msg.Subject = txtSubject.Text;
+            //msg.Body = txtBody.Text;
+            //m_jc.Write(msg);
+            //this.Close();
+        }
     }
 }
 

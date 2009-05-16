@@ -136,7 +136,6 @@ namespace ChessMangler.Engine.Config
 
         public static List<PieceDef> GetUniquePieces(XmlDocument configDocument)
         {
-
             //TODO: Does this need to be cached somewhere??
 
             List<PieceDef> gotPieceDefs = null;
