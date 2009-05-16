@@ -67,6 +67,7 @@ namespace ChessMangler.WinUIParts.Xml
 
                             default:
                                 configFileMenu.MenuItems.Add(piece.Name);
+                                configFileMenu.Click += configFileMenu_Click;
                                 break;
                         }
                     }
@@ -78,7 +79,20 @@ namespace ChessMangler.WinUIParts.Xml
             {
 
             }
+        }
 
+        public static void configFileMenu_Click(object sender, EventArgs e)
+        {
+            int x;
+            //This is called for every clicked Piece..
+
+            //first of all, what Piece was clicked?  Because we can create a new instance of it if needed
+
+            //next.. either the image or the path is already loaded into the piece, so lets grab that pic, 
+            //turn it into a bitmap & set the cursor to become that image
+
+            //Done! Now when the cursor clicks on an unoccupied square, then that image will be transferred to that square,
+            //but that code is in that square!
         }
     }
 }

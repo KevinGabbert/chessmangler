@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChessGrid2D_Form));
             this.chessMenu = new System.Windows.Forms.MenuStrip();
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -254,31 +255,32 @@
             // movesToolStripMenuItem1
             // 
             this.movesToolStripMenuItem1.Name = "movesToolStripMenuItem1";
-            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(130, 22);
+            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.movesToolStripMenuItem1.Text = "Moves";
             // 
             // annotateToolStripMenuItem
             // 
             this.annotateToolStripMenuItem.Name = "annotateToolStripMenuItem";
-            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.annotateToolStripMenuItem.Text = "Annotate";
             // 
             // capturedToolStripMenuItem
             // 
             this.capturedToolStripMenuItem.Name = "capturedToolStripMenuItem";
-            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.capturedToolStripMenuItem.Text = "Captured";
             // 
             // uIConfigToolStripMenuItem
             // 
             this.uIConfigToolStripMenuItem.Name = "uIConfigToolStripMenuItem";
-            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.uIConfigToolStripMenuItem.Text = "UI Config";
             // 
             // debugToolStripMenuItem
             // 
+            this.debugToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("debugToolStripMenuItem.Image")));
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.debugToolStripMenuItem.Text = "Debug";
             // 
             // actionsToolStripMenuItem
