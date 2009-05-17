@@ -16,6 +16,8 @@ namespace ChessMangler.WinUIParts.Xml
     /// </summary>
     public class XmlConfigFileMenu
     {
+        UISquare _clickedSquare;
+
         //TODO: put this in a "Common Menu Tasks" object
         public static MenuItem NewMenuItem(string caption, string name)
         {
@@ -26,11 +28,13 @@ namespace ChessMangler.WinUIParts.Xml
             return addPieceMenu;
         }
 
-
         //Proof of concept
         //TODO: Refactor this
-        public static void Build_ConfigFile_PieceMenu(UISquare clickedSquare)
+        public void Build_ConfigFile_PieceMenu(UISquare clickedSquare)
         {
+            this._clickedSquare = clickedSquare;
+            MenuItem configFileMenu;
+
             MenuItem addPieceFromMenu = NewMenuItem("Add Piece from: ", "AddPieceFromMenu");
             clickedSquare.ContextMenu.MenuItems.Add(addPieceFromMenu);
 
@@ -53,7 +57,7 @@ namespace ChessMangler.WinUIParts.Xml
                 {
                     string name = Path.GetFileName(file).Replace(".config", "");
 
-                    MenuItem configFileMenu = NewMenuItem(name, name + "ConfigFile");
+                    configFileMenu = NewMenuItem(name, name + "ConfigFile");
 
                     XmlDocument rulesDocument = Config.LoadXML(file);
                     List<PieceDef> piecesToSet = ConfigParser.GetUniquePieces(rulesDocument);
@@ -66,8 +70,8 @@ namespace ChessMangler.WinUIParts.Xml
                                 break;
 
                             default:
-                                configFileMenu.MenuItems.Add(piece.Name);
-                                configFileMenu.Click += configFileMenu_Click;
+                                configFileMenu.MenuItems.Add(NewMenuItem(piece.Name, piece.Name + "Piece"));
+                                configFileMenu.MenuItems[piece.Name + "Piece"].Click += pieceMenuItem_Click;
                                 break;
                         }
                     }
@@ -81,18 +85,41 @@ namespace ChessMangler.WinUIParts.Xml
             }
         }
 
-        public static void configFileMenu_Click(object sender, EventArgs e)
+        public void pieceMenuItem_Click(object sender, EventArgs e)
         {
+            MenuItem currentMenuItem;
+
+            try
+            {
+                currentMenuItem = (MenuItem)sender;
+
+                //This is called for every clicked Piece..
+
+                //first of all, what Piece was clicked?  Because we can create a new instance of it if needed
+
+                Piece newPiece = new Piece();
+
+                newPiece.Row = this._clickedSquare.Row;
+                newPiece.Column = this._clickedSquare.Column;
+                //newPiece.Definition = ?;
+                //newPiece.Movement = ?;
+                //newPiece.Capture = ?;
+                //newPiece.
+
+                //newPiece.Image;
+                //newPiece.Color;
+                //newPiece.Name;
+                
+
+                this._clickedSquare.CurrentPiece = newPiece;
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+
             int x;
-            //This is called for every clicked Piece..
-
-            //first of all, what Piece was clicked?  Because we can create a new instance of it if needed
-
-            //next.. either the image or the path is already loaded into the piece, so lets grab that pic, 
-            //turn it into a bitmap & set the cursor to become that image
-
-            //Done! Now when the cursor clicks on an unoccupied square, then that image will be transferred to that square,
-            //but that code is in that square!
         }
     }
 }

@@ -252,7 +252,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
                 clickedSquare.ContextMenu.MenuItems.Add(addPiece);
 
-                XmlConfigFileMenu.Build_ConfigFile_PieceMenu(clickedSquare);
+                XmlConfigFileMenu thisSquareMenu = new XmlConfigFileMenu();
+                    
+                thisSquareMenu.Build_ConfigFile_PieceMenu(clickedSquare);
 
                 //clickedSquare.ContextMenu.MenuItems.Add("Open Square 'Tool Window'");
                 //clickedSquare.ContextMenu.MenuItems.Add("Resize Square"); //> 1.0 feature

@@ -100,7 +100,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ChessPieceCursor.cs" />
-    <Compile Include="Xml\XmlConfigFileMenu.cs" />
+    <Compile Include="Xml\XmlConfigFileMenu.cs">
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine\ChessMangler.Engine.csproj">
