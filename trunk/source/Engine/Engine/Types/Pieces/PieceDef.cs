@@ -47,6 +47,19 @@ namespace ChessMangler.Engine.Types
             }
         }
 
+        string _imageDirectory;
+        public string ImageDirectory
+        {
+            get
+            {
+                return _imageDirectory;
+            }
+            set
+            {
+                _imageDirectory = value;
+            }
+        }
+
         protected int _player;
         public int Player
         {

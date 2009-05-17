@@ -136,10 +136,10 @@ namespace ChessMangler.Engine.Config
 
         public static List<PieceDef> GetUniquePieces(XmlDocument configDocument)
         {
-            //TODO: Does this need to be cached somewhere??
-
+            //TODO: Does this need to be cached somewhere?
             List<PieceDef> gotPieceDefs = null;
             List<string> pieceNames = new List<string>();
+            bool unique = false;
 
             XmlNode pieceDefs = ConfigParser.GetConfigDefNode(configDocument, "PieceDef");
 
@@ -149,22 +149,27 @@ namespace ChessMangler.Engine.Config
 
                 foreach (XmlNode currentPiece in pieceDefs)
                 {
+                    PieceDef newPiece = new PieceDef();
+
                     if (currentPiece.Attributes != null)
                     {
-                        PieceDef newPiece = new PieceDef();
+                        string pieceName = ConfigParser.GetPieceName(currentPiece.Attributes);
+
+                        unique = (pieceName != "All") && (!pieceNames.Contains(pieceName));
 
                         XmlAttributeCollection attributes = currentPiece.Attributes;
                         foreach (XmlAttribute currentAttribute in attributes)
                         {
                             string currentName = currentAttribute.Name;
 
-                            if (currentName == "name")
+                            //TODO:  this below can now be refactored with GetPieces.
+                            if (unique && currentName != "All")
                             {
-                                newPiece.Name = currentAttribute.Value;
-                            }
+                                if (currentName == "name")
+                                {
+                                    newPiece.Name = currentAttribute.Value;
+                                }
 
-                            if (!pieceNames.Contains(newPiece.Name))
-                            {
                                 pieceNames.Add(newPiece.Name);
 
                                 if (currentName == "StartingLocation")
@@ -186,15 +191,33 @@ namespace ChessMangler.Engine.Config
                                 {
                                     newPiece.Color = Color.FromName(currentAttribute.Value);
                                 }
-
-                                gotPieceDefs.Add(newPiece);
                             }
                         }
                     }
+
+                    if (unique) { gotPieceDefs.Add(newPiece); }
                 }
             }
 
             return gotPieceDefs;
+        }
+
+        public static string GetPieceName(XmlAttributeCollection attributes)
+        {
+            string retVal = "Not Found";
+
+            foreach (XmlAttribute currentAttribute in attributes)
+            {
+                string currentName = currentAttribute.Name;
+
+                if (currentName == "name")
+                {
+                    retVal = currentAttribute.Value;
+                    break;
+                }
+            }
+
+            return retVal;
         }
     }
 }

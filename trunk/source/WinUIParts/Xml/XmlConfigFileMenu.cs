@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 using System.IO;
 using System.Xml;
@@ -75,6 +76,9 @@ namespace ChessMangler.WinUIParts.Xml
                                 configFileMenu.MenuItems.Add(NewMenuItem(pieceDef.Name, uniqueName));
                                 configFileMenu.MenuItems[uniqueName].Click += pieceMenuItem_Click;
 
+                                //TODO:  Temporary Code (as this will be eventually pulled from a config file)
+                                pieceDef.ImageDirectory = Directory.GetParent(Path.GetDirectoryName(file)).FullName + @"\images\";
+
                                 //Store what we've read in, cause we are going to look up what the user selected..
                                 this._tempCache.Add(uniqueName, pieceDef); 
                                 break;
@@ -86,7 +90,8 @@ namespace ChessMangler.WinUIParts.Xml
             }
             catch (Exception ex)
             {
-
+                //TODO: This should be reported on screen somewhere (like a red box or a message to show that the config
+                //file is corrupt or missing.
             }
         }
 
@@ -100,32 +105,24 @@ namespace ChessMangler.WinUIParts.Xml
 
                 //This is called for every clicked Piece..
 
-                //first of all, what Piece was clicked?  Because we can create a new instance of it if needed
-
-                Piece newPiece = new Piece();
-                newPiece.Definition = this.GetPieceDef(currentMenuItem.Name);
+                ////first of all, what Piece was clicked?  Because we can create a new instance of it if needed
+                Piece newPiece = new Piece(this.GetPieceDef(currentMenuItem.Name));
 
                 newPiece.Row = this._clickedSquare.Row;
                 newPiece.Column = this._clickedSquare.Column;
-                //newPiece.Definition = ?;
-                //newPiece.Movement = ?;
-                //newPiece.Capture = ?;
-                //newPiece.
 
-                //newPiece.Image;
-                //newPiece.Color;
-                //newPiece.Name;
-
+                ////newPiece.Movement = ?;
+                ////newPiece.Capture = ?;
 
                 this._clickedSquare.CurrentPiece = newPiece;
             }
             catch (Exception ex)
             {
+                //TODO: This should be reported on screen somewhere (like a red box or a message to show that the config
+                //file is corrupt or missing.
 
+                //Whatever the case.. at this point the action should be cancelled.
             }
-
-
-            int x;
         }
 
         private PieceDef GetPieceDef(string name)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Xml;
+using System.IO;
 
 using ChessMangler.Engine.Config;
 using ChessMangler.Engine.Interfaces;
@@ -105,22 +106,21 @@ namespace ChessMangler.Engine.Types
         {
             List<PieceDef> piecesToSet = ConfigParser.GetPieces(configFile);
 
-            foreach (PieceDef piece in piecesToSet)
+            foreach (PieceDef pieceDef in piecesToSet)
             {
-                switch (piece.Name)
+                switch (pieceDef.Name)
                 {
                     case "All":
                         break;
 
                     default:
-                        Square2D squareForPiece = this.GetByName(piece.StartingLocation);
-                        squareForPiece.CurrentPiece = new Piece();
-                        squareForPiece.CurrentPiece.Name = piece.Name;
+                        Square2D squareForPiece = this.GetByName(pieceDef.StartingLocation);
 
-                        //this needs to be set up in Piece..
-                        squareForPiece.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + piece.ImageName);
-                        squareForPiece.CurrentPiece.Color = piece.Color;
+                        //TODO:  Temporary Code (as this will be eventually pulled from a config file)
+                        pieceDef.ImageDirectory = directory + @"\images\";
 
+                        //TODO: >v1.0? this dir can be overridden by a config file setting
+                        squareForPiece.CurrentPiece = new Piece(pieceDef);
                         break;
                 }
             }

@@ -12,11 +12,35 @@ namespace ChessMangler.Engine.Types
 {
     public class Piece: IPiece
     {
-        public Piece()
-        {
-            //this.BoardLocation = boardLocation;
+        #region Properties
 
-            //Look up attributes in passed config file and assign (such as image, and movement rules, etc..)
+        string _imageDirectory;
+        public string ImageDirectory
+        {
+            get
+            {
+                return _imageDirectory;
+            }
+            set
+            {
+                _imageDirectory = value;
+            }
+        }
+
+        /// <summary>
+        /// Auto Map info when Def is assigned
+        /// </summary>
+        bool _autoMapOnDefSet;
+        public bool AutoMapOnDefSet
+        {
+            get
+            {
+                return _autoMapOnDefSet;
+            }
+            set
+            {
+                _autoMapOnDefSet = value;
+            }
         }
 
         protected PieceDef _pieceDef = new PieceDef();
@@ -29,6 +53,11 @@ namespace ChessMangler.Engine.Types
             set
             {
                 _pieceDef = value;
+
+                if (this.AutoMapOnDefSet)
+                {
+                    this.Map_Info(value);
+                }
             }
         }
 
@@ -158,6 +187,46 @@ namespace ChessMangler.Engine.Types
             {
                 _capture = value;
             }
+        }
+
+        #endregion
+
+        public Piece()
+        {
+        }
+
+        public Piece(bool autoMapOnDefSet, string ImageDirectory)
+        {
+            this.AutoMapOnDefSet = autoMapOnDefSet;
+        }
+        public Piece(PieceDef pieceDef)
+        {
+            this.AutoMapOnDefSet = true;
+
+            this.Map_Info(pieceDef);
+        }
+        public Piece(PieceDef pieceDef, bool autoMapOnDefSet, string ImageDirectory)
+        {
+            this.Map_Info(pieceDef);
+        }
+
+        public void Map_Info(PieceDef value)
+        {
+            //Look up attributes in passed config file and assign (such as image, and movement rules, etc..)
+
+            this.Name = value.Name;
+            this.Color = value.Color;
+            this.BoardLocation = value.StartingLocation;
+            this.Player = value.Player;
+            this.ImageDirectory = value.ImageDirectory;
+
+            //TODO: Validate Path
+            //TODO: Validate Image
+
+            //Bitmap will say "Parameter not valid" if any part of the file name is messed up..
+
+            this.Image = new Bitmap(this.ImageDirectory + value.ImageName);
+            //TODO: this.Disabled = value.Disabled
         }
     }
 }

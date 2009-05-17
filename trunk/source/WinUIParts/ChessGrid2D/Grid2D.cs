@@ -96,6 +96,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
 
+            //TODO: is this still necessary?
             //pull a new piece image from a cached image
             //currentUISquare.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + currentSquare.CurrentPiece.Name);
         }
