@@ -126,8 +126,9 @@ namespace ChessMangler.Engine.Config
                     if (currentPiece.Attributes != null)
                     {
                         string pieceName = ConfigParser.GetPieceName(currentPiece.Attributes);
+                        string pieceColor = ConfigParser.GetPieceColor(currentPiece.Attributes);
 
-                        unique = (pieceName != "All") && (!pieceNames.Contains(pieceName));
+                        unique = (pieceName != "All") && (!pieceNames.Contains(pieceColor + "." + pieceName));
 
                         XmlAttributeCollection attributes = currentPiece.Attributes;
                         foreach (XmlAttribute currentAttribute in attributes)
@@ -135,7 +136,7 @@ namespace ChessMangler.Engine.Config
                             string currentName = currentAttribute.Name;
                             if (unique && currentName != "All")
                             {
-                                pieceNames.Add(pieceName);
+                                pieceNames.Add(pieceColor + "." + pieceName);
                                 ConfigParser.XmlToPieceDef(newPiece, currentAttribute, currentName);
                             }
                         }
@@ -175,6 +176,8 @@ namespace ChessMangler.Engine.Config
                 newPiece.Color = Color.FromName(currentAttribute.Value);
             }
         }
+
+        //TODO: Refactor these "Get" functions
         public static string GetPieceName(XmlAttributeCollection attributes)
         {
             string retVal = "Not Found";
@@ -192,5 +195,31 @@ namespace ChessMangler.Engine.Config
 
             return retVal;
         }
+        public static string GetPieceColor(XmlAttributeCollection attributes)
+        {
+            string retVal = "Not Found";
+
+            foreach (XmlAttribute currentAttribute in attributes)
+            {
+                string currentName = currentAttribute.Name;
+
+                if (currentName == "Color")
+                {
+                    retVal = currentAttribute.Value;
+                    break;
+                }
+            }
+
+            return retVal;
+        }
+
+        //TODO:
+        //An alternate way to filter, if necessary: what we really need to to be able to search gotPieceDefs for a piece with specific 
+        //attributes..  
+        //These "Get" function might wind up being fine for now..
+        //now.. Filter: This likely means to make a "Contains" function for List<PieceDef>
+        //1. Create new class:  PieceDefs.
+        //2. Inherit from List<PieceDef>
+        //3. Overload Contains(). Make it so you can pass an attribute, like PieceDef.Color
     }
 }

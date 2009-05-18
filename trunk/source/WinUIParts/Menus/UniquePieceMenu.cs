@@ -31,11 +31,11 @@ namespace ChessMangler.WinUIParts.Menus
         }
 
         //TODO: Refactor this
-        public void Build_ConfigFile_PieceMenu(UISquare clickedSquare)
+        public void Build_ConfigFile_PieceMenu(UISquare clickedSquare, string menuItemName, string menuItemID)
         {
             try
             {
-                this.Add_Config_Menus(clickedSquare);
+                this.Add_Config_Menus(clickedSquare, menuItemName, menuItemID);
             }
             catch (Exception ex)
             {
@@ -44,12 +44,12 @@ namespace ChessMangler.WinUIParts.Menus
             }
         }
 
-        public void Add_Config_Menus(UISquare clickedSquare)
+        public void Add_Config_Menus(UISquare clickedSquare, string menuItemName, string menuItemID)
         {
             UniquePieceMenu._clickedSquare = clickedSquare;
             MenuItem configFileMenu;
 
-            MenuItem addPieceFromMenu = NewMenuItem("Add Piece from: ", "AddPieceFromMenu");
+            MenuItem addPieceFromMenu = NewMenuItem(menuItemName, menuItemID);
             clickedSquare.ContextMenu.MenuItems.Add(addPieceFromMenu);
 
             //Looks through config directory, and list what Config files are found

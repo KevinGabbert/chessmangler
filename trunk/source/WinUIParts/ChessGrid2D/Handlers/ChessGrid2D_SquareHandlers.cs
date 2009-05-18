@@ -248,7 +248,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             private static void ShowSquareMenu(UISquare clickedSquare)
             {
-                (new UniquePieceMenu()).Build_ConfigFile_PieceMenu(clickedSquare);
+                (new UniquePieceMenu()).Build_ConfigFile_PieceMenu(clickedSquare, "Add Piece from: ", "AddPieceFromMenu");
 
                 //clickedSquare.ContextMenu.MenuItems.Add("Open Square 'Tool Window'");
                 //TODO: clickedSquare.ContextMenu.MenuItems.Add("Resize Square"); //> 1.0 feature
@@ -258,7 +258,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             private static void ShowPieceMenu(UISquare clickedSquare)
             {
                 //Show Piece context menu
-                clickedSquare.ContextMenu.MenuItems.Add("Transform Piece");
+                //clickedSquare.ContextMenu.MenuItems.Add("Transform Piece");
+                (new UniquePieceMenu()).Build_ConfigFile_PieceMenu(clickedSquare, "Transform Piece", "TransFormPieceMenu");
 
                 (new UISquareDeleteMenu()).CreatePieceDeleteMenu(clickedSquare);
 
