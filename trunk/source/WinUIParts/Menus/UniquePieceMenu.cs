@@ -10,18 +10,18 @@ using System.Windows.Forms;
 using ChessMangler.Engine.Types;
 using ChessMangler.Engine.Config;
 
-namespace ChessMangler.WinUIParts.Xml
+namespace ChessMangler.WinUIParts.Menus
 {
     /// <summary>
     /// The purpose of this class is to build a Windows.Form.MenuItem tree containing piece names & images from each stored Config File
     /// </summary>
-    public static class UniquePieceMenu
+    public class UniquePieceMenu
     {
         static UISquare _clickedSquare;
         static Dictionary<string, PieceDef> _tempCache = new Dictionary<string, PieceDef>();
 
         //TODO: put this in a "Common Menu Tasks" object
-        public static MenuItem NewMenuItem(string caption, string name)
+        public MenuItem NewMenuItem(string caption, string name)
         {
             MenuItem addPieceMenu = new MenuItem();
             addPieceMenu.Name = name;
@@ -30,9 +30,8 @@ namespace ChessMangler.WinUIParts.Xml
             return addPieceMenu;
         }
 
-        //Proof of concept
         //TODO: Refactor this
-        public static void Build_ConfigFile_PieceMenu(UISquare clickedSquare)
+        public void Build_ConfigFile_PieceMenu(UISquare clickedSquare)
         {
             UniquePieceMenu._clickedSquare = clickedSquare;
             MenuItem configFileMenu;
@@ -94,7 +93,7 @@ namespace ChessMangler.WinUIParts.Xml
             }
         }
 
-        public static void pieceMenuItem_Click(object sender, EventArgs e)
+        public void pieceMenuItem_Click(object sender, EventArgs e)
         {
             MenuItem currentMenuItem;
 
@@ -105,7 +104,7 @@ namespace ChessMangler.WinUIParts.Xml
                 //This is called for every clicked Piece..
 
                 ////first of all, what Piece was clicked?  Because we can create a new instance of it if needed
-                Piece newPiece = new Piece(UniquePieceMenu.GetPieceDef(currentMenuItem.Name));
+                Piece newPiece = new Piece((new UniquePieceMenu()).GetPieceDef(currentMenuItem.Name));
 
                 newPiece.Row = UniquePieceMenu._clickedSquare.Row;
                 newPiece.Column = UniquePieceMenu._clickedSquare.Column;
@@ -124,7 +123,7 @@ namespace ChessMangler.WinUIParts.Xml
             }
         }
 
-        private static PieceDef GetPieceDef(string name)
+        private PieceDef GetPieceDef(string name)
         {
             PieceDef gotValue;
 

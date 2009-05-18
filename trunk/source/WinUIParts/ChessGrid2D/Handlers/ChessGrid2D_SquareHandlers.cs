@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 using ChessMangler.Engine.Enums;
-using ChessMangler.WinUIParts.Xml;
+using ChessMangler.WinUIParts.Menus;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
@@ -248,7 +248,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             private static void ShowSquareMenu(UISquare clickedSquare)
             {
-                UniquePieceMenu.Build_ConfigFile_PieceMenu(clickedSquare);
+                (new UniquePieceMenu()).Build_ConfigFile_PieceMenu(clickedSquare);
 
                 //clickedSquare.ContextMenu.MenuItems.Add("Open Square 'Tool Window'");
                 //TODO: clickedSquare.ContextMenu.MenuItems.Add("Resize Square"); //> 1.0 feature
@@ -259,7 +259,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             {
                 //Show Piece context menu
                 clickedSquare.ContextMenu.MenuItems.Add("Transform Piece");
-                clickedSquare.ContextMenu.MenuItems.Add("Delete");
+
+                (new UISquareDeleteMenu()).CreatePieceDeleteMenu(clickedSquare);
+
                 clickedSquare.ContextMenu.MenuItems.Add("Open Piece 'Tool Window'");
 
                 //clickedSquare.ContextMenu.MenuItems.Add("Rules for this piece"); // > .5 feature

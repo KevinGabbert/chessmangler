@@ -179,6 +179,12 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
+        public void Clear()
+        {
+            this.Image = null;
+            this.CurrentPiece = null;
+        }
+
         private void MakeSquare(Point formLocation, int size)
         {
             this.Location = formLocation;
