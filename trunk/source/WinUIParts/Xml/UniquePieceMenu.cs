@@ -15,10 +15,10 @@ namespace ChessMangler.WinUIParts.Xml
     /// <summary>
     /// The purpose of this class is to build a Windows.Form.MenuItem tree containing piece names & images from each stored Config File
     /// </summary>
-    public class XmlConfigFileMenu
+    public static class UniquePieceMenu
     {
-        UISquare _clickedSquare;
-        Dictionary<string, PieceDef> _tempCache = new Dictionary<string, PieceDef>();
+        static UISquare _clickedSquare;
+        static Dictionary<string, PieceDef> _tempCache = new Dictionary<string, PieceDef>();
 
         //TODO: put this in a "Common Menu Tasks" object
         public static MenuItem NewMenuItem(string caption, string name)
@@ -32,9 +32,9 @@ namespace ChessMangler.WinUIParts.Xml
 
         //Proof of concept
         //TODO: Refactor this
-        public void Build_ConfigFile_PieceMenu(UISquare clickedSquare)
+        public static void Build_ConfigFile_PieceMenu(UISquare clickedSquare)
         {
-            this._clickedSquare = clickedSquare;
+            UniquePieceMenu._clickedSquare = clickedSquare;
             MenuItem configFileMenu;
 
             MenuItem addPieceFromMenu = NewMenuItem("Add Piece from: ", "AddPieceFromMenu");
@@ -55,14 +55,13 @@ namespace ChessMangler.WinUIParts.Xml
                     }
                 }
 
-                foreach (string file in configFiles)
+                foreach (string filePath in configFiles)
                 {
-                    string name = Path.GetFileName(file).Replace(".config", "");
+                    string fileNameOnly = Path.GetFileName(filePath).Replace(".config", "");
 
-                    configFileMenu = NewMenuItem(name, name + "ConfigFile");
+                    configFileMenu = NewMenuItem(fileNameOnly, fileNameOnly + "ConfigFile");
 
-                    XmlDocument rulesDocument = Config.LoadXML(file);
-                    List<PieceDef> piecesToSet = ConfigParser.GetUniquePieces(rulesDocument);
+                    List<PieceDef> piecesToSet = ConfigParser.GetUniquePieces(Config.LoadXML(filePath));
 
                     foreach (PieceDef pieceDef in piecesToSet)
                     {
@@ -77,10 +76,10 @@ namespace ChessMangler.WinUIParts.Xml
                                 configFileMenu.MenuItems[uniqueName].Click += pieceMenuItem_Click;
 
                                 //TODO:  Temporary Code (as this will be eventually pulled from a config file)
-                                pieceDef.ImageDirectory = Directory.GetParent(Path.GetDirectoryName(file)).FullName + @"\images\";
+                                pieceDef.ImageDirectory = Directory.GetParent(Path.GetDirectoryName(filePath)).FullName + @"\images\";
 
                                 //Store what we've read in, cause we are going to look up what the user selected..
-                                this._tempCache.Add(uniqueName, pieceDef); 
+                                UniquePieceMenu._tempCache.Add(uniqueName, pieceDef); 
                                 break;
                         }
                     }
@@ -95,7 +94,7 @@ namespace ChessMangler.WinUIParts.Xml
             }
         }
 
-        public void pieceMenuItem_Click(object sender, EventArgs e)
+        public static void pieceMenuItem_Click(object sender, EventArgs e)
         {
             MenuItem currentMenuItem;
 
@@ -106,15 +105,15 @@ namespace ChessMangler.WinUIParts.Xml
                 //This is called for every clicked Piece..
 
                 ////first of all, what Piece was clicked?  Because we can create a new instance of it if needed
-                Piece newPiece = new Piece(this.GetPieceDef(currentMenuItem.Name));
+                Piece newPiece = new Piece(UniquePieceMenu.GetPieceDef(currentMenuItem.Name));
 
-                newPiece.Row = this._clickedSquare.Row;
-                newPiece.Column = this._clickedSquare.Column;
+                newPiece.Row = UniquePieceMenu._clickedSquare.Row;
+                newPiece.Column = UniquePieceMenu._clickedSquare.Column;
 
                 ////newPiece.Movement = ?;
                 ////newPiece.Capture = ?;
 
-                this._clickedSquare.CurrentPiece = newPiece;
+                UniquePieceMenu._clickedSquare.CurrentPiece = newPiece;
             }
             catch (Exception ex)
             {
@@ -125,7 +124,7 @@ namespace ChessMangler.WinUIParts.Xml
             }
         }
 
-        private PieceDef GetPieceDef(string name)
+        private static PieceDef GetPieceDef(string name)
         {
             PieceDef gotValue;
 

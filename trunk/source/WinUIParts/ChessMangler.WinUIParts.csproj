@@ -100,7 +100,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ChessPieceCursor.cs" />
-    <Compile Include="Xml\XmlConfigFileMenu.cs">
+    <Compile Include="Xml\UniquePieceMenu.cs">
     </Compile>
   </ItemGroup>
   <ItemGroup>

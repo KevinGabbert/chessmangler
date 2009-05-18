@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.Collections.Generic;
-using System.Xml;
-
 using System.Drawing;
-
+using System.Xml;
 using ChessMangler.Engine.Types;
 
 namespace ChessMangler.Engine.Config
@@ -101,30 +97,7 @@ namespace ChessMangler.Engine.Config
                         {
                             string currentName = currentAttribute.Name;
 
-                            if (currentName == "name")
-                            {
-                                newPiece.Name = currentAttribute.Value;
-                            }
-
-                            if (currentName == "StartingLocation")
-                            {
-                                newPiece.StartingLocation = currentAttribute.Value;
-                            }
-
-                            if (currentName == "ImageName")
-                            {
-                                newPiece.ImageName = currentAttribute.Value;
-                            }
-
-                            if (currentName == "Player")
-                            {
-                                newPiece.Player = Convert.ToInt16(currentAttribute.Value);
-                            }
-
-                            if (currentName == "Color")
-                            {
-                                newPiece.Color = Color.FromName(currentAttribute.Value);
-                            }
+                            ConfigParser.XmlToPieceDef(newPiece, currentAttribute, currentName);
                         }
                         gotPieceDefs.Add(newPiece);
                     }
@@ -133,7 +106,6 @@ namespace ChessMangler.Engine.Config
 
             return gotPieceDefs;
         }
-
         public static List<PieceDef> GetUniquePieces(XmlDocument configDocument)
         {
             //TODO: Does this need to be cached somewhere?
@@ -161,36 +133,10 @@ namespace ChessMangler.Engine.Config
                         foreach (XmlAttribute currentAttribute in attributes)
                         {
                             string currentName = currentAttribute.Name;
-
-                            //TODO:  this below can now be refactored with GetPieces.
                             if (unique && currentName != "All")
                             {
-                                if (currentName == "name")
-                                {
-                                    newPiece.Name = currentAttribute.Value;
-                                }
-
-                                pieceNames.Add(newPiece.Name);
-
-                                if (currentName == "StartingLocation")
-                                {
-                                    newPiece.StartingLocation = currentAttribute.Value;
-                                }
-
-                                if (currentName == "ImageName")
-                                {
-                                    newPiece.ImageName = currentAttribute.Value;
-                                }
-
-                                if (currentName == "Player")
-                                {
-                                    newPiece.Player = Convert.ToInt16(currentAttribute.Value);
-                                }
-
-                                if (currentName == "Color")
-                                {
-                                    newPiece.Color = Color.FromName(currentAttribute.Value);
-                                }
+                                pieceNames.Add(pieceName);
+                                ConfigParser.XmlToPieceDef(newPiece, currentAttribute, currentName);
                             }
                         }
                     }
@@ -202,6 +148,33 @@ namespace ChessMangler.Engine.Config
             return gotPieceDefs;
         }
 
+        public static void XmlToPieceDef(PieceDef newPiece, XmlAttribute currentAttribute, string currentName)
+        {
+            if (currentName == "name")
+            {
+                newPiece.Name = currentAttribute.Value;
+            }
+
+            if (currentName == "StartingLocation")
+            {
+                newPiece.StartingLocation = currentAttribute.Value;
+            }
+
+            if (currentName == "ImageName")
+            {
+                newPiece.ImageName = currentAttribute.Value;
+            }
+
+            if (currentName == "Player")
+            {
+                newPiece.Player = Convert.ToInt16(currentAttribute.Value);
+            }
+
+            if (currentName == "Color")
+            {
+                newPiece.Color = Color.FromName(currentAttribute.Value);
+            }
+        }
         public static string GetPieceName(XmlAttributeCollection attributes)
         {
             string retVal = "Not Found";

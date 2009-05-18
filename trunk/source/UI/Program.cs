@@ -20,8 +20,8 @@ namespace ChessMangler
 
             //---------  This pulls from ProgramSettings DB
 
-            string sourceDir = sourceDir = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString();          
-            string configFile =  sourceDir + "\\Config\\Board2D.config"; //This needs to come from ProgramSettings
+            string sourceDir = sourceDir = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString();
+            string configFile = sourceDir + "\\Config\\Standard Chess.config"; //This needs to come from ProgramSettings
             //_sourceDir = _gridOptions.Get("_configFile");
 
             if(!File.Exists(configFile))
