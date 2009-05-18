@@ -258,12 +258,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             private static void ShowPieceMenu(UISquare clickedSquare)
             {
                 //Show Piece context menu
-                //clickedSquare.ContextMenu.MenuItems.Add("Transform Piece");
                 (new UniquePieceMenu()).Build_ConfigFile_PieceMenu(clickedSquare, "Transform Piece", "TransFormPieceMenu");
-
                 (new UISquareDeleteMenu()).CreatePieceDeleteMenu(clickedSquare);
-
-                clickedSquare.ContextMenu.MenuItems.Add("Open Piece 'Tool Window'");
 
                 //clickedSquare.ContextMenu.MenuItems.Add("Rules for this piece"); // > .5 feature
                 //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Add Rule for this piece"); // > 1.0 feature
