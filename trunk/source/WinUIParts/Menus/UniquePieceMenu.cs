@@ -89,7 +89,7 @@ namespace ChessMangler.WinUIParts.Menus
         public void Add_Piece_MenuItem(MenuItem configFileMenu, string filePath, PieceDef pieceDef)
         {
             string uniqueName = pieceDef.Name + Guid.NewGuid();
-            configFileMenu.MenuItems.Add(NewMenuItem(pieceDef.Name, uniqueName));
+            configFileMenu.MenuItems.Add(NewMenuItem("(" + pieceDef.Color.Name + ") " + pieceDef.Name, uniqueName));
             configFileMenu.MenuItems[uniqueName].Click += pieceMenuItem_Click;
 
             //TODO:  Temporary Code (as this will be eventually pulled from a config file)
