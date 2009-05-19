@@ -25,7 +25,7 @@
     <WarningLevel>4</WarningLevel>
     <StartAction>Program</StartAction>
     <StartProgram>..\Tools\NUnit\NUnit-2.4.8-net-2.0\binx\nunit.exe</StartProgram>
-    <StartArguments>/run TestHarness.dll</StartArguments>
+    <StartArguments>/run ChessMangler.TestHarness.dll</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

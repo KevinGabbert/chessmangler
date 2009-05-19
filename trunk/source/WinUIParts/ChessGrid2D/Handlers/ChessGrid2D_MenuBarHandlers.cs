@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 
-using System.Windows.Forms;
-
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 

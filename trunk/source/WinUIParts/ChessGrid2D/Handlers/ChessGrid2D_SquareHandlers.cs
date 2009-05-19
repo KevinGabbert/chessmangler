@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-
 using System.Windows.Forms;
-using ChessMangler.WinUIParts;
-using ChessMangler.Engine.Types;
 using ChessMangler.Engine.Enums;
+using ChessMangler.Engine.Types;
 using ChessMangler.WinUIParts.Menus;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
