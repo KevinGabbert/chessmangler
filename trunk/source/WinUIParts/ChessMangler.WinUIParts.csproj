@@ -64,7 +64,6 @@
     </Compile>
     <Compile Include="ChessGrid2D\Handlers\ChessGrid2D_MenuBarHandlers.cs" />
     <Compile Include="ChessGrid2D\Handlers\ChessGrid2D_SquareHandlers.cs" />
-    <Compile Include="Config.cs" />
     <Compile Include="DebugForm.cs">
       <SubType>Form</SubType>
     </Compile>

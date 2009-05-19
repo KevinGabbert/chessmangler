@@ -6,7 +6,7 @@ using System.Xml;
 
 using ChessMangler.Engine.Enums;
 using ChessMangler.Engine.Types;
-
+using ChessMangler.Engine.Config;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {

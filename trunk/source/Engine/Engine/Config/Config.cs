@@ -4,7 +4,7 @@ using System.Xml;
 using System.IO;
 using System.Text;
 
-namespace ChessMangler.WinUIParts
+namespace ChessMangler.Engine.Config
 {
     //This class will probably be moved around later..
     public static class Config

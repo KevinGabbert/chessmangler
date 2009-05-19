@@ -5,6 +5,7 @@ using System.Xml;
 
 using System.Windows.Forms;
 using NUnit.Framework;
+using ChessMangler.Engine.Config;
 
 using ChessMangler.WinUIParts;
 

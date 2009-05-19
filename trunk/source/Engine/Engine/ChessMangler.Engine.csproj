@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\Config.cs" />
     <Compile Include="Config\ConfigParser.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Interfaces\IBoardMode.cs" />

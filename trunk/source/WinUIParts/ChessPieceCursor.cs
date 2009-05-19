@@ -54,6 +54,7 @@ namespace ChessMangler.WinUIParts
 
             return new Cursor(ptr);
         }
+
         public static void ShowPieceCursor(UISquare senderSquare, Size cursorSize)
         {
             if (senderSquare.CurrentPiece != null)
@@ -66,7 +67,6 @@ namespace ChessMangler.WinUIParts
                 }
             }
         }
-
         public static void ShowPieceCursor(UISquare senderSquare)
         {
             Size imageSize = senderSquare.CurrentPiece.Image.Size;
@@ -75,7 +75,6 @@ namespace ChessMangler.WinUIParts
 
             ChessPieceCursor.ShowPieceCursor(senderSquare, imageSize);
         }
-
         public static void ShowPieceCursor(Image cursorImage, Size size)
         {
             Bitmap bitmap = new Bitmap(cursorImage, size);
