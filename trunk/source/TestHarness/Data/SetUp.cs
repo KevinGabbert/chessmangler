@@ -4,48 +4,49 @@ using NUnit.Framework;
 
 namespace ChessMangler.TestHarness.Data
 {
-    [SetUpFixture]
-    public static class SetUp
-    {
-        public const string _testDir = @"..\..\..\TestHarness\Sandbox";
-        public const string _testDB = @"..\..\..\TestHarness\Test Files\ChessMangler.db";
+    //[SetUpFixture]
+    //public static class SetUp
+    //{
+    //    public const string _testDir = @"..\..\..\TestHarness\Sandbox";
+    //    public const string _testDB = @"..\..\..\TestHarness\Test Files\ChessMangler.db";
 
-        public static string _sandboxDB = _testDir + @"\ChessMangler.db";
+    //    public static string _sandboxDB = _testDir + @"\ChessMangler.db";
 
-        public static SQLiteConnection _testConnection;
+    //    public static SQLiteConnection _testConnection;
 
-        [SetUp]
-        public static void StartUp()
-        {
-            SetUp.DeleteFiles();
+    //    [Ignore]
+    //    [SetUp]
+    //    public static void StartUp()
+    //    {
+    //        SetUp.DeleteFiles();
 
-            //Pull down a fresh copy of our test database
-            SetUp.CopyDB();
+    //        //Pull down a fresh copy of our test database
+    //        SetUp.CopyDB();
 
-            //Connect to this fresh copy.
-            _testConnection = new SQLiteConnection();
-            _testConnection.ConnectionString = "Data Source=" + _sandboxDB + ";";
-            _testConnection.Open();
-        }
+    //        //Connect to this fresh copy.
+    //        _testConnection = new SQLiteConnection();
+    //        _testConnection.ConnectionString = "Data Source=" + _sandboxDB + ";";
+    //        _testConnection.Open();
+    //    }
 
-        public static void CopyDB()
-        {
-            //Copy Test File into sandbox directory
-            File.Copy(SetUp._testDB, SetUp._sandboxDB);
+    //    public static void CopyDB()
+    //    {
+    //        //Copy Test File into sandbox directory
+    //        File.Copy(SetUp._testDB, SetUp._sandboxDB);
 
-            bool bExists = File.Exists(SetUp._sandboxDB);
-            Assert.AreEqual(true, bExists, "unable to verify sandbox db file.  not at: " + SetUp._testDB);
-        }
+    //        bool bExists = File.Exists(SetUp._sandboxDB);
+    //        Assert.AreEqual(true, bExists, "unable to verify sandbox db file.  not at: " + SetUp._testDB);
+    //    }
 
-        public static void DeleteFiles()
-        {
-            //Delete Test DB File if its there when we start..
-            if (File.Exists(_sandboxDB))
-            {
-                File.Delete(_sandboxDB);
-            }
-        }
-    }
+    //    public static void DeleteFiles()
+    //    {
+    //        //Delete Test DB File if its there when we start..
+    //        if (File.Exists(_sandboxDB))
+    //        {
+    //            File.Delete(_sandboxDB);
+    //        }
+    //    }
+    //}
 }
 
 

@@ -27,7 +27,7 @@ namespace ChessMangler.TestHarness.WinUIParts_Tester
             //TODO: sourceDir and the hardcoded bits need to come from ProgramSettings
             _uiDirectory = _sourceDir + "\\UI";
             _imagesDirectory = _uiDirectory + "\\images";
-            _configFile = _sourceDir + "\\Config\\Standard Chess.config"; 
+            _configFile = _uiDirectory + "\\Config\\Standard Chess.config"; 
 
             //before we start, lets verify everything..
             Assert.IsTrue(File.Exists(_configFile), "can't find config file! TestHarness looked here: " + _configFile);

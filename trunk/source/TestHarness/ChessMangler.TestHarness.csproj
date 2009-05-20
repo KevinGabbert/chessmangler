@@ -60,6 +60,7 @@
     <Compile Include="JabberNet\JabberNet_Tester.cs" />
     <Compile Include="JabberNet\SendMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WinUIParts_Tester\Grid2D_Tester.cs" />
     <Compile Include="WinUIParts_Tester\UIBoard_Tester.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -31,9 +31,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         #endregion
 
-        public Grid2D(Form formWithGrid)
+        public Grid2D(ChessGrid2D_Form formWithGrid)
         {
-            this.ChessGrid2D_Form = (ChessGrid2D_Form)formWithGrid;
+            this.ChessGrid2D_Form = formWithGrid;
             this.DebugForm = new DebugForm();
         }
 

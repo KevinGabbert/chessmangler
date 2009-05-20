@@ -17,6 +17,7 @@ namespace ChessMangler.TestHarness.JabberNet
         //http://code.google.com/p/jabber-net/wiki/GettingStarted
         //http://code.google.com/p/jabber-net/w/list
 
+        [Ignore]
         [Test]
         public void TestJabber()
         {

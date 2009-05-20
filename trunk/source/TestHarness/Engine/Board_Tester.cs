@@ -10,7 +10,7 @@ using System.Xml;
 namespace ChessMangler.TestHarness.Engine
 {
     [TestFixture]
-    public class Board_Tester
+    public class Board2D_Tester
     {
         Board2D _testBoard;
 
@@ -22,7 +22,7 @@ namespace ChessMangler.TestHarness.Engine
             string sourceDir = Directory.GetParent(Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString()).ToString();
             string uiDirectory = sourceDir + "\\UI";
             string imagesDirectory = uiDirectory + "\\images";
-            string configFile = sourceDir + "\\Config\\Standard Chess.config"; //This needs to come from ProgramSettings
+            string configFile = uiDirectory + "\\Config\\Standard Chess.config"; //This needs to come from ProgramSettings
             
             //before we start, lets verify everything..
             Assert.IsTrue(File.Exists(configFile), "can't find config file! TestHarness looked here: " + configFile);
