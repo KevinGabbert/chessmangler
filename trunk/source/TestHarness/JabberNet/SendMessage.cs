@@ -17,7 +17,6 @@ namespace ChessMangler.TestHarness.JabberNet
         //http://code.google.com/p/jabber-net/wiki/GettingStarted
         //http://code.google.com/p/jabber-net/w/list
 
-        [Ignore]
         [Test]
         public void TestJabber()
         {
@@ -26,6 +25,8 @@ namespace ChessMangler.TestHarness.JabberNet
             j.User = "Test.Chess.Mangler";
             j.Server = "gmail.com";  // use gmail.com for GoogleTalk
             j.Password = "Ch3$$Mangl3r";
+
+            j.NetworkHost = "talk.l.google.com";  // Note: that's an "L", not a "1".
 
             // don't do extra stuff, please.
             j.AutoPresence = false;
@@ -48,8 +49,16 @@ namespace ChessMangler.TestHarness.JabberNet
             // Set everything in motion
             j.Connect();
 
-            // wait until sending a message is complete
+            //j.Write("This is a test");
+
+            j.Message(TARGET, "Test Message: " + DateTime.Now.ToString());
+
+
+            //wait until sending a message is complete
             done.WaitOne();
+
+
+            j.Message(TARGET, "Test Message: " + DateTime.Now.ToString());
 
             // logout cleanly
             j.Close();
@@ -58,18 +67,22 @@ namespace ChessMangler.TestHarness.JabberNet
         static void j_OnWriteText(object sender, string txt)
         {
             if (txt == " ") return;  // ignore keep-alive spaces
-            Console.WriteLine("SEND: " + txt);
+            //Console.WriteLine("SEND: " + txt);
+            System.Windows.Forms.MessageBox.Show(txt, "--- WRITE ---");
         }
         static void j_OnReadText(object sender, string txt)
         {
             if (txt == " ") return;  // ignore keep-alive spaces
-            Console.WriteLine("RECV: " + txt);
+            //Console.WriteLine("RECV: " + txt);
+            System.Windows.Forms.MessageBox.Show(txt, "*** READ ***");
         }
         static void j_OnAuthenticate(object sender)
         {
             // Sender is always the JabberClient.
             JabberClient j = (JabberClient)sender;
-            j.Message(TARGET, "test");
+            j.Message(TARGET, "Authenticate: " + DateTime.Now.ToString());
+
+            j.Message(TARGET, "Test Message: " + DateTime.Now.ToString());
 
             // Finished sending.  Shut down.
             done.Set();
@@ -77,7 +90,7 @@ namespace ChessMangler.TestHarness.JabberNet
         static void j_OnError(object sender, Exception ex)
         {
             // There was an error!
-            Console.WriteLine("Error: " + ex.ToString());
+            System.Windows.Forms.MessageBox.Show("Error: " + ex.ToString(), "Jabber-Net TestHarness");
 
             // Shut down.
             done.Set();

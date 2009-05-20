@@ -15,6 +15,8 @@ namespace ChessMangler.TestHarness.JabberNet
             jc.Server = "gmail.com";
             jc.Password = "Ch3$$Mangl3r";
 
+            jc.Connect();
+
         }
     }
 }
