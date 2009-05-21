@@ -3,6 +3,13 @@ using System.Threading;
 using NUnit.Framework;
 using jabber.client;
 
+using System.IO;
+
+using System.Xml;
+
+using jabber.protocol;
+using jabber.protocol.client;
+
 namespace ChessMangler.TestHarness.JabberNet
 {
     [TestFixture]
@@ -39,6 +46,8 @@ namespace ChessMangler.TestHarness.JabberNet
             // what to do when login completes
             j.OnAuthenticate += new bedrock.ObjectHandler(j_OnAuthenticate);
 
+            j.OnMessage += new MessageHandler(j_OnMessage);
+
             // listen for XMPP wire protocol
             if (VERBOSE)
             {
@@ -51,17 +60,40 @@ namespace ChessMangler.TestHarness.JabberNet
 
             //j.Write("This is a test");
 
-            j.Message(TARGET, "Test Message: " + DateTime.Now.ToString());
+            //j.Message(TARGET, "Test Message: " + DateTime.Now.ToString());
 
 
             //wait until sending a message is complete
             done.WaitOne();
 
 
-            j.Message(TARGET, "Test Message: " + DateTime.Now.ToString());
+
+            //*********  send message
+            //jabber.protocol.client.Message msg = new jabber.protocol.client.Message(m_jc.Document);
+            //msg.To = txtTo.Text;
+            //if (txtSubject.Text != "")
+            //    msg.Subject = txtSubject.Text;
+            //msg.Body = txtBody.Text;
+            //m_jc.Write(msg);
+            //this.Close();
+
+            //*********  send messa
 
             // logout cleanly
             j.Close();
+        }
+
+        private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
+        {
+            jabber.protocol.x.Data x = msg["x", URI.XDATA] as jabber.protocol.x.Data;
+            if (x != null)
+            {
+                //muzzle.XDataForm f = new muzzle.XDataForm(msg);
+                //f.ShowDialog(this);
+                //j.Write(f.GetResponse());
+            }
+            else
+                System.Windows.Forms.MessageBox.Show(msg.Body, msg.From);
         }
 
         static void j_OnWriteText(object sender, string txt)
@@ -75,6 +107,17 @@ namespace ChessMangler.TestHarness.JabberNet
             if (txt == " ") return;  // ignore keep-alive spaces
             //Console.WriteLine("RECV: " + txt);
             System.Windows.Forms.MessageBox.Show(txt, "*** READ ***");
+
+            //can we use jabber to parse an XML message?
+
+
+            XmlDocument xx = new XmlDocument();
+
+
+            //Message x = new Message(txt);
+
+            //System.Windows.Forms.MessageBox.Show(x.Body);
+
         }
         static void j_OnAuthenticate(object sender)
         {
