@@ -255,32 +255,32 @@
             // movesToolStripMenuItem1
             // 
             this.movesToolStripMenuItem1.Name = "movesToolStripMenuItem1";
-            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(130, 22);
             this.movesToolStripMenuItem1.Text = "Moves";
             // 
             // annotateToolStripMenuItem
             // 
             this.annotateToolStripMenuItem.Name = "annotateToolStripMenuItem";
-            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.annotateToolStripMenuItem.Text = "Annotate";
             // 
             // capturedToolStripMenuItem
             // 
             this.capturedToolStripMenuItem.Name = "capturedToolStripMenuItem";
-            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.capturedToolStripMenuItem.Text = "Captured";
             // 
             // uIConfigToolStripMenuItem
             // 
             this.uIConfigToolStripMenuItem.Name = "uIConfigToolStripMenuItem";
-            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.uIConfigToolStripMenuItem.Text = "UI Config";
             // 
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("debugToolStripMenuItem.Image")));
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.debugToolStripMenuItem.Text = "Debug";
             // 
             // actionsToolStripMenuItem
@@ -508,6 +508,7 @@
             this.Text = "ChessGrid2D";
             this.Load += new System.EventHandler(this.ChessGrid2D_Load);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ChessGrid2D_Form_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChessGrid2D_Form_FormClosing);
             this.Resize += new System.EventHandler(this.ChessGrid2D_Resize);
             this.chessMenu.ResumeLayout(false);
             this.chessMenu.PerformLayout();

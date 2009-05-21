@@ -27,36 +27,35 @@ namespace ChessMangler.TestHarness.JabberNet
         [Test]
         public void TestJabber()
         {
-            JabberClient j = new JabberClient();
+            JabberClient jabberClient = new JabberClient();
             // what user/pass to log in as
-            j.User = "Test.Chess.Mangler";
-            j.Server = "gmail.com";  // use gmail.com for GoogleTalk
-            j.Password = "Ch3$$Mangl3r";
+            jabberClient.User = "Test.Chess.Mangler";
+            jabberClient.Server = "gmail.com";  // use gmail.com for GoogleTalk
+            jabberClient.Password = "Ch3$$Mangl3r";
 
-            j.NetworkHost = "talk.l.google.com";  // Note: that's an "L", not a "1".
+            jabberClient.NetworkHost = "talk.l.google.com";  // Note: that's an "L", not a "1".
 
             // don't do extra stuff, please.
-            j.AutoPresence = false;
-            j.AutoRoster = false;
-            j.AutoReconnect = -1;
+            jabberClient.AutoPresence = false;
+            jabberClient.AutoRoster = false;
+            jabberClient.AutoReconnect = -1;
 
             // listen for errors.  Always do this!
-            j.OnError += new bedrock.ExceptionHandler(j_OnError);
+            jabberClient.OnError += new bedrock.ExceptionHandler(j_OnError);
 
             // what to do when login completes
-            j.OnAuthenticate += new bedrock.ObjectHandler(j_OnAuthenticate);
-
-            j.OnMessage += new MessageHandler(j_OnMessage);
+            jabberClient.OnAuthenticate += new bedrock.ObjectHandler(j_OnAuthenticate);
 
             // listen for XMPP wire protocol
-            if (VERBOSE)
-            {
-                j.OnReadText += new bedrock.TextHandler(j_OnReadText);
-                j.OnWriteText += new bedrock.TextHandler(j_OnWriteText);
-            }
+            //if (VERBOSE)
+            //{
+                //jabberClient.OnReadText += new bedrock.TextHandler(j_OnReadText);
+                jabberClient.OnWriteText += new bedrock.TextHandler(j_OnWriteText);
+                jabberClient.OnMessage += new MessageHandler(j_OnMessage);
+            //}
 
             // Set everything in motion
-            j.Connect();
+            jabberClient.Connect();
 
             //j.Write("This is a test");
 
@@ -79,8 +78,10 @@ namespace ChessMangler.TestHarness.JabberNet
 
             //*********  send messa
 
+            System.Threading.Thread.Sleep(10000);
+
             // logout cleanly
-            j.Close();
+            jabberClient.Close();
         }
 
         private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
@@ -100,25 +101,27 @@ namespace ChessMangler.TestHarness.JabberNet
         {
             if (txt == " ") return;  // ignore keep-alive spaces
             //Console.WriteLine("SEND: " + txt);
-            System.Windows.Forms.MessageBox.Show(txt, "--- WRITE ---");
+            ///System.Windows.Forms.MessageBox.Show(txt, "--- WRITE ---");
         }
-        static void j_OnReadText(object sender, string txt)
-        {
-            if (txt == " ") return;  // ignore keep-alive spaces
-            //Console.WriteLine("RECV: " + txt);
-            System.Windows.Forms.MessageBox.Show(txt, "*** READ ***");
 
-            //can we use jabber to parse an XML message?
+        //this guy is not necessary
+        //static void j_OnReadText(object sender, string txt)
+        //{
+        //    if (txt == " ") return;  // ignore keep-alive spaces
+        //    //Console.WriteLine("RECV: " + txt);
+        //    //System.Windows.Forms.MessageBox.Show(txt, "*** READ ***");
+
+        //    //can we use jabber to parse an XML message?
 
 
-            XmlDocument xx = new XmlDocument();
+        //    XmlDocument xx = new XmlDocument();
 
 
-            //Message x = new Message(txt);
+        //    //Message x = new Message(txt);
 
-            //System.Windows.Forms.MessageBox.Show(x.Body);
+        //    //System.Windows.Forms.MessageBox.Show(x.Body);
 
-        }
+        //}
         static void j_OnAuthenticate(object sender)
         {
             // Sender is always the JabberClient.

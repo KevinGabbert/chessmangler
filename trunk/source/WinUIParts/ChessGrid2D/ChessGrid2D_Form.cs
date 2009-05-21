@@ -3,8 +3,13 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 using System.Xml;
+using System.Threading;
 
 using System.Collections.Generic;
+
+using jabber.client;
+using jabber.protocol;
+using jabber.protocol.client;
 
 using ChessMangler.Engine.Interfaces;
 using ChessMangler.Engine.Config;
@@ -22,6 +27,19 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
     {
         static DebugForm _debugForm;
 
+        //**** jabber proto code ****
+
+        //We should know all this by this point (will be set in options form
+        JabberClient jabberClient = new JabberClient();
+
+        // we will wait on this event until we're done sending
+        static ManualResetEvent done = new ManualResetEvent(false);
+
+        //Our proto Target..
+        const string TARGET = "kevingabbert@gmail.com";
+
+        //**** jabber proto code ****
+
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
@@ -29,6 +47,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             InitializeComponent();
 
+            this.InitJabber();
             this.InitGrid();
             this.InitForms();
         }
@@ -36,6 +55,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             InitializeComponent();
 
+            this.InitJabber();
             this.InitGrid();
             this.Grid.SetUp_FreeFormBoard(this, board, squareSize);
 
@@ -43,6 +63,39 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.InitForms();
         }
 
+        //**** Refactor ****
+        //This should probably be in another object
+        private void InitJabber()
+        {
+            // what user/pass to log in as
+            jabberClient.User = "Test.Chess.Mangler";
+            jabberClient.Server = "gmail.com";  // use gmail.com for GoogleTalk
+            jabberClient.Password = "Ch3$$Mangl3r";
+
+            jabberClient.NetworkHost = "talk.l.google.com";  // Note: that's an "L", not a "1".
+
+            // don't do extra stuff, please.
+            jabberClient.AutoPresence = false;
+            jabberClient.AutoRoster = false;
+            jabberClient.AutoReconnect = -1;
+
+            // listen for errors.  Always do this!
+            jabberClient.OnError += new bedrock.ExceptionHandler(j_OnError);
+
+            // what to do when login completes
+            jabberClient.OnAuthenticate += new bedrock.ObjectHandler(j_OnAuthenticate);
+
+            // listen for XMPP wire protocol
+            //jabberClient.OnWriteText += new bedrock.TextHandler(j_OnWriteText);
+            jabberClient.OnMessage += new MessageHandler(j_OnMessage);
+
+            // Set everything in motion
+            jabberClient.Connect();
+
+            //wait until sending a message is complete
+            done.WaitOne();
+        }
+        
         #region Event Handlers
 
         private void ChessGrid2D_Load(object sender, EventArgs e)
@@ -112,6 +165,56 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //msg.Body = txtBody.Text;
             //m_jc.Write(msg);
             //this.Close();
+            
+            jabberClient.Message(TARGET, this.txtChat.Text);
+            this.txtChat.Clear();
+        }
+
+        //**** Refactor ****
+        //jabber events
+        private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
+        {
+            //jabber.protocol.x.Data x = msg["x", URI.XDATA] as jabber.protocol.x.Data;
+            //if (x != null)
+            //{
+            //    //muzzle.XDataForm f = new muzzle.XDataForm(msg);
+            //    //f.ShowDialog(this);
+            //    //j.Write(f.GetResponse());
+            //}
+            //else
+            //    System.Windows.Forms.MessageBox.Show(msg.Body, msg.From);
+
+
+            //Cross-Thread operation not valid
+            //this.txtChat.Text = this.txtChat.Text + msg.Body;
+
+
+            //This is good enuf for chat proof of concept.
+            MessageBox.Show(msg.Body, msg.From, MessageBoxButtons.OK);
+        }
+        private void j_OnAuthenticate(object sender)
+        {
+            // Sender is always the JabberClient.
+            JabberClient j = (JabberClient)sender;
+            j.Message(TARGET, "ChessMangler <Session> Connected @ " + DateTime.Now.ToString());
+
+            done.Set(); // Finished sending.  Shut down.
+        }
+        private void j_OnError(object sender, Exception ex)
+        {
+            // There was an error!
+            MessageBox.Show("Error: " + ex.ToString(), "Jabber-Net TestHarness");
+
+            // Shut down.
+            done.Set();
+        }
+
+        private void ChessGrid2D_Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (jabberClient.IsAuthenticated)
+            {
+                jabberClient.Close();
+            }
         }
     }
 }
