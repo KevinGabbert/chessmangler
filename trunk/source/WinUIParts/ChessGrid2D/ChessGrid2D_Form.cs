@@ -156,6 +156,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.resetPiecesToolStripMenuItem.Click -= new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
         }
 
+
         private void btnChatSend_Click(object sender, EventArgs e)
         {
             //jabber.protocol.client.Message msg = new jabber.protocol.client.Message(m_jc.Document);
@@ -165,13 +166,60 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //msg.Body = txtBody.Text;
             //m_jc.Write(msg);
             //this.Close();
-            
+
+            this.SendChat();
+        }
+        private void txtChat_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.SendChat();
+            }
+        }
+
+        public void SendChat()
+        {
             jabberClient.Message(TARGET, this.txtChat.Text);
+
+            //if options say so, then beep.
+
+            //TODO: if option is set, then preface with time or contact name
+
+            this.txtChatHistory.Text += Environment.NewLine + this.txtChat.Text;
+            this.Scroll_ChatHistory_Box();
             this.txtChat.Clear();
+
+            //If message was sent and not recieved then post back to ChatHistory box as well. (it won't be here of course)
         }
 
         //**** Refactor ****
         //jabber events
+
+        private delegate void ChatDelegate(string message);
+        public void AddChat(string message)
+        {
+            if (this.txtChat.InvokeRequired)
+            {
+                this.txtChat.Invoke(new ChatDelegate(this.AddChat), message);
+            }
+            else
+            {
+                //if options say so, then beep.
+
+                //TODO: if option is set, then preface with time or contact name
+
+                this.txtChatHistory.Text += Environment.NewLine + message;
+                this.Scroll_ChatHistory_Box();
+                this.txtChat.Clear();
+            }
+        }
+
+        private void Scroll_ChatHistory_Box()
+        {
+            this.txtChatHistory.Select(txtChatHistory.Text.Length + 1, 2);
+            this.txtChatHistory.ScrollToCaret();
+        }
+
         private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
         {
             //jabber.protocol.x.Data x = msg["x", URI.XDATA] as jabber.protocol.x.Data;
@@ -181,16 +229,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //    //f.ShowDialog(this);
             //    //j.Write(f.GetResponse());
             //}
-            //else
-            //    System.Windows.Forms.MessageBox.Show(msg.Body, msg.From);
 
-
-            //Cross-Thread operation not valid
-            //this.txtChat.Text = this.txtChat.Text + msg.Body;
-
-
-            //This is good enuf for chat proof of concept.
-            MessageBox.Show(msg.Body, msg.From, MessageBoxButtons.OK);
+            this.AddChat(this.txtChat.Text + msg.Body);
         }
         private void j_OnAuthenticate(object sender)
         {
@@ -208,7 +248,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             // Shut down.
             done.Set();
         }
-
         private void ChessGrid2D_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (jabberClient.IsAuthenticated)

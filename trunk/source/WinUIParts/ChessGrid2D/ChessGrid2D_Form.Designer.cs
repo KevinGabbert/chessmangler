@@ -75,6 +75,7 @@
             this.modeButton = new System.Windows.Forms.ToolStripStatusLabel();
             this.dgvMoves = new System.Windows.Forms.DataGridView();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.txtChatHistory = new System.Windows.Forms.TextBox();
             this.btnChatSend = new System.Windows.Forms.Button();
             this.txtChat = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -438,17 +439,27 @@
             // 
             // splitContainer.Panel2
             // 
+            this.splitContainer.Panel2.Controls.Add(this.txtChatHistory);
             this.splitContainer.Panel2.Controls.Add(this.btnChatSend);
             this.splitContainer.Panel2.Controls.Add(this.txtChat);
             this.splitContainer.Size = new System.Drawing.Size(657, 85);
             this.splitContainer.SplitterDistance = 219;
             this.splitContainer.TabIndex = 3;
             // 
+            // txtChatHistory
+            // 
+            this.txtChatHistory.Location = new System.Drawing.Point(3, 4);
+            this.txtChatHistory.Multiline = true;
+            this.txtChatHistory.Name = "txtChatHistory";
+            this.txtChatHistory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtChatHistory.Size = new System.Drawing.Size(428, 41);
+            this.txtChatHistory.TabIndex = 2;
+            // 
             // btnChatSend
             // 
-            this.btnChatSend.Location = new System.Drawing.Point(376, 6);
+            this.btnChatSend.Location = new System.Drawing.Point(376, 51);
             this.btnChatSend.Name = "btnChatSend";
-            this.btnChatSend.Size = new System.Drawing.Size(55, 75);
+            this.btnChatSend.Size = new System.Drawing.Size(55, 30);
             this.btnChatSend.TabIndex = 1;
             this.btnChatSend.Text = "Send";
             this.btnChatSend.UseVisualStyleBackColor = true;
@@ -456,11 +467,12 @@
             // 
             // txtChat
             // 
-            this.txtChat.Location = new System.Drawing.Point(3, 4);
+            this.txtChat.Location = new System.Drawing.Point(3, 51);
             this.txtChat.Multiline = true;
             this.txtChat.Name = "txtChat";
-            this.txtChat.Size = new System.Drawing.Size(368, 77);
+            this.txtChat.Size = new System.Drawing.Size(368, 30);
             this.txtChat.TabIndex = 0;
+            this.txtChat.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtChat_KeyDown);
             // 
             // tabControl1
             // 
@@ -579,6 +591,7 @@
         private System.Windows.Forms.ToolStripMenuItem resetPiecesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearPiecesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem1;
+        private System.Windows.Forms.TextBox txtChatHistory;
 
 
 
