@@ -17,6 +17,7 @@ using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 using ChessMangler.Settings.Types.WinUI;
 using ChessMangler.Engine.Enums;
+using ChessMangler.Communications;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
@@ -265,26 +266,47 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             message.To = new jabber.JID(TARGET);
 
-            your.protocol.YourQuery yq = new your.protocol.YourQuery(message.OwnerDocument); 
-            yq.InnerText = "I am a test"; 
+            ChessMangler.Communications.MovePacket yq = new ChessMangler.Communications.MovePacket(message.OwnerDocument);
+ 
+            //This is what we want:
+            //<ChessMangler version=".1">
+            //   <MovePacket>
+            //      <Hash>1234</Hash>
+            //      <GameID>5678</GameID>
+            //      <Piece>King</Piece>
+            //      <Prev>E1</Prev>
+            //      <New>E2</New>
+            //      <Rules>No</Rules>; 
+            //   <MovePacket>
+            //<ChessMangler />
 
-            message.AddChild(yq);
+            XmlDocument x = new XmlDocument();
+
+            XmlElement root = new MovePacket("prefix", new XmlQualifiedName("ChessMangler"), x);       
+            XmlElement movePacket = new MovePacket("prefix", new XmlQualifiedName("MovePacket"), x);
+            XmlElement hash = new MovePacket("prefix", new XmlQualifiedName("MoveHash"), x);
+            hash.InnerText = "abcd";
+
+            root.AppendChild(movePacket);
+            movePacket.AppendChild(hash);
+
+            message.AddChild(root);
 
             jabberClient.Write(message);
 
+            //Here's what this makes so far..
             //<message id="JN_4" to="kevingabbert@gmail.com">
-            //    <query xmlns="your:namespace">I am a test</query>
+            //   <ChessMangler>
+            //      <MovePacket>
+            //         <MoveHash>abcd</MoveHash>
+            //      </MovePacket>
+            //   </ChessMangler>
             //</message>
-
-
-            //jabberClient.Message(TARGET, this.txtChat.Text);
         }
 
         static void j_OnWriteText(object sender, string txt)
         {
             if (txt == " ") return;  // ignore keep-alive spaces
-            //Console.WriteLine("SEND: " + txt);
-            ///System.Windows.Forms.MessageBox.Show(txt, "--- WRITE ---");
         }
     }
 }
@@ -303,19 +325,19 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 // </query>
 //</iq>
 
-namespace your.protocol
+namespace ChessMangler.Communications
 {
-    public class YourQuery : Element
+    public class MovePacket : Element
     {
-        public const string YOUR_NS = "your:namespace";
+        public const string YOUR_NS = "ChessMangler:Communications";
 
         // used when creating elements to send
-        public YourQuery(XmlDocument doc)
+        public MovePacket(XmlDocument doc)
             : base("query", YOUR_NS, doc)
         { }
 
         // used to create elements for inbound protocol
-        public YourQuery(string prefix, XmlQualifiedName qname, XmlDocument doc)
+        public MovePacket(string prefix, XmlQualifiedName qname, XmlDocument doc)
             : base(prefix, qname, doc)
         { }
 
@@ -326,7 +348,7 @@ namespace your.protocol
     {
         private static QnameType[] s_qnt = new QnameType[] 
         {
-            new QnameType("query", YourQuery.YOUR_NS, typeof(your.protocol.YourQuery))
+            new QnameType("query", MovePacket.YOUR_NS, typeof(ChessMangler.Communications.MovePacket))
             // Add other types here, perhaps sub-elements of query...
         };
 
@@ -334,7 +356,7 @@ namespace your.protocol
 
         private void jabberClient_OnStreamInit(object sender, ElementStream stream)
         {
-            stream.AddFactory(new your.protocol.Factory());
+            stream.AddFactory(new ChessMangler.Communications.Factory());
         }
     }
 }
