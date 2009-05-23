@@ -272,6 +272,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             jabberClient.Write(message);
 
+            //<message id="JN_4" to="kevingabbert@gmail.com">
+            //    <query xmlns="your:namespace">I am a test</query>
+            //</message>
+
 
             //jabberClient.Message(TARGET, this.txtChat.Text);
         }
