@@ -85,6 +85,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             // what to do when login completes
             jabberClient.OnAuthenticate += new bedrock.ObjectHandler(j_OnAuthenticate);
 
+            //extra
+            jabberClient.OnWriteText += new bedrock.TextHandler(j_OnWriteText);
+
             // listen for XMPP wire protocol
             //jabberClient.OnWriteText += new bedrock.TextHandler(j_OnWriteText);
             jabberClient.OnMessage += new MessageHandler(j_OnMessage);
@@ -254,6 +257,80 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             {
                 jabberClient.Close();
             }
+        }
+
+        private void btnSubmitMove_Click(object sender, EventArgs e)
+        {
+            jabber.protocol.client.Message message = new jabber.protocol.client.Message(new XmlDocument()); 
+
+            message.To = new jabber.JID(TARGET);
+
+            your.protocol.YourQuery yq = new your.protocol.YourQuery(message.OwnerDocument); 
+            yq.InnerText = "I am a test"; 
+
+            message.AddChild(yq);
+
+            jabberClient.Write(message);
+
+
+            //jabberClient.Message(TARGET, this.txtChat.Text);
+        }
+
+        static void j_OnWriteText(object sender, string txt)
+        {
+            if (txt == " ") return;  // ignore keep-alive spaces
+            //Console.WriteLine("SEND: " + txt);
+            ///System.Windows.Forms.MessageBox.Show(txt, "--- WRITE ---");
+        }
+    }
+}
+
+//**more proto code
+
+//<!-- get your own list of all your objects... -->
+//<iq type='get' to='self' id='n0'>
+// <query xmlns='your:namespace'/>
+//</iq>
+
+//<!-- reply with list of objects... -->
+//<iq type='result' to='self' id='n0'>
+// <query xmlns='your:namespace'>
+//  <yourobj key='Object1' other='value1'/>
+// </query>
+//</iq>
+
+namespace your.protocol
+{
+    public class YourQuery : Element
+    {
+        public const string YOUR_NS = "your:namespace";
+
+        // used when creating elements to send
+        public YourQuery(XmlDocument doc)
+            : base("query", YOUR_NS, doc)
+        { }
+
+        // used to create elements for inbound protocol
+        public YourQuery(string prefix, XmlQualifiedName qname, XmlDocument doc)
+            : base(prefix, qname, doc)
+        { }
+
+        // put your accessor methods here
+    }
+
+    public class Factory : jabber.protocol.IPacketTypes
+    {
+        private static QnameType[] s_qnt = new QnameType[] 
+        {
+            new QnameType("query", YourQuery.YOUR_NS, typeof(your.protocol.YourQuery))
+            // Add other types here, perhaps sub-elements of query...
+        };
+
+        QnameType[] IPacketTypes.Types { get { return s_qnt; } }
+
+        private void jabberClient_OnStreamInit(object sender, ElementStream stream)
+        {
+            stream.AddFactory(new your.protocol.Factory());
         }
     }
 }
