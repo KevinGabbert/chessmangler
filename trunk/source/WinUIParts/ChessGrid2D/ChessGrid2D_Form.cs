@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Drawing;
-using System.IO;
 using System.Xml;
 using System.Threading;
 
-using System.Collections.Generic;
+using jabber.client; //TODO: This needs to be refactored out.
+using JabberMessage = jabber.protocol.client.Message; //This is the only one that should stay
 
-using jabber.client;
-using jabber.protocol;
-using jabber.protocol.client;
-
-using ChessMangler.Engine.Interfaces;
-using ChessMangler.Engine.Config;
-using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
 using ChessMangler.Settings.Types.WinUI;
-using ChessMangler.Engine.Enums;
-using ChessMangler.Communications;
+using ChessMangler.Communications.Types;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
@@ -28,18 +19,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
     {
         static DebugForm _debugForm;
 
-        //**** jabber proto code ****
+        //TODO: Move to Jabber_EventHandler **** jabber proto code ****
 
         //We should know all this by this point (will be set in options form
         JabberClient jabberClient = new JabberClient();
 
-        // we will wait on this event until we're done sending
+        //TODO:  this goes in Jabber_EventHandler we will wait on this event until we're done sending
         static ManualResetEvent done = new ManualResetEvent(false);
 
-        //Our proto Target..
+        //TODO: **** jabber proto code **** This target will eventually be set by the Start Form when the user chooses who to play.
         const string TARGET = "kevingabbert@gmail.com";
-
-        //**** jabber proto code ****
 
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
@@ -111,6 +100,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             this.Grid.Redraw();
         }
+        private void ChessGrid2D_Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //TODO: tell the Jabber_EventHandler to Dispose.
+
+            //TODO: Move this code to the Jabber_EventHandler
+            if (jabberClient.IsAuthenticated)
+            {
+                jabberClient.Close();
+            }
+        }
         private void ChessGrid2D_Form_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Dispose();
@@ -121,7 +120,71 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             this.Grid.Toggle_BoardMode();
         }
+        private void btnSubmitMove_Click(object sender, EventArgs e)
+        {
+            //TODO: Move this to a "JabberTasks" static class in Comms. (later this will be abstracted out as well)
+            JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
+            message.To = new jabber.JID(TARGET);
+            message.AddChild(MovePacket.SetupPacket("1234", "5678", "King", "E1", "E2", false));
 
+            jabberClient.Write(message);
+        }
+        private void btnChatSend_Click(object sender, EventArgs e)
+        {
+            this.SendChat();
+        }
+        private void txtChat_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.SendChat();
+            }
+        }
+
+        #region TODO: These events need to be placed in a Jabber_EventHandler
+
+        private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
+        {
+            //jabber.protocol.x.Data x = msg["x", URI.XDATA] as jabber.protocol.x.Data;
+            //if (x != null)
+            //{
+            //    //muzzle.XDataForm f = new muzzle.XDataForm(msg);
+            //    //f.ShowDialog(this);
+            //    //j.Write(f.GetResponse());
+            //}
+
+            //if (msg.Supports(typeof(MovePacket)))
+            //{
+
+            //    //MovePacket move = msg.SelectSingleNode(typeof(MovePacket)) as MovePacket;
+
+            //    //Console.WriteLine(move.Hash.InnerText);
+            //}
+
+            this.AddChat(this.txtChat.Text + msg.Body);
+        }
+        private void j_OnAuthenticate(object sender)
+        {
+            // Sender is always the JabberClient.
+            JabberClient j = (JabberClient)sender;
+            j.Message(TARGET, "ChessMangler <Session> Connected @ " + DateTime.Now.ToString());
+
+            done.Set(); // Finished sending.  Shut down.
+        }
+        private void j_OnError(object sender, Exception ex)
+        {
+            // There was an error!
+            MessageBox.Show("Error: " + ex.ToString(), "Jabber-Net TestHarness");
+
+            // Shut down.
+            done.Set();
+        }
+        static void j_OnWriteText(object sender, string txt)
+        {
+            if (txt == " ") return;  // ignore keep-alive spaces
+        }
+
+        #endregion
         #endregion
 
         public void InitGrid()
@@ -160,30 +223,12 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.resetPiecesToolStripMenuItem.Click -= new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
         }
 
-
-        private void btnChatSend_Click(object sender, EventArgs e)
-        {
-            //jabber.protocol.client.Message msg = new jabber.protocol.client.Message(m_jc.Document);
-            //msg.To = txtTo.Text;
-            //if (txtSubject.Text != "")
-            //    msg.Subject = txtSubject.Text;
-            //msg.Body = txtBody.Text;
-            //m_jc.Write(msg);
-            //this.Close();
-
-            this.SendChat();
-        }
-        private void txtChat_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                this.SendChat();
-            }
-        }
-
         public void SendChat()
         {
             jabberClient.Message(TARGET, this.txtChat.Text);
+
+            //This message needs to be logged in the database (remember to also add the ID of the latest move so we know at what point of the game that this was sent..)
+            //Make an option later to create a PGN file annotated with chats.
 
             //if options say so, then beep.
 
@@ -195,9 +240,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             //If message was sent and not recieved then post back to ChatHistory box as well. (it won't be here of course)
         }
-
-        //**** Refactor ****
-        //jabber events
 
         private delegate void ChatDelegate(string message);
         public void AddChat(string message)
@@ -223,141 +265,5 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.txtChatHistory.Select(txtChatHistory.Text.Length + 1, 2);
             this.txtChatHistory.ScrollToCaret();
         }
-
-        private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
-        {
-            //jabber.protocol.x.Data x = msg["x", URI.XDATA] as jabber.protocol.x.Data;
-            //if (x != null)
-            //{
-            //    //muzzle.XDataForm f = new muzzle.XDataForm(msg);
-            //    //f.ShowDialog(this);
-            //    //j.Write(f.GetResponse());
-            //}
-
-            this.AddChat(this.txtChat.Text + msg.Body);
-        }
-        private void j_OnAuthenticate(object sender)
-        {
-            // Sender is always the JabberClient.
-            JabberClient j = (JabberClient)sender;
-            j.Message(TARGET, "ChessMangler <Session> Connected @ " + DateTime.Now.ToString());
-
-            done.Set(); // Finished sending.  Shut down.
-        }
-        private void j_OnError(object sender, Exception ex)
-        {
-            // There was an error!
-            MessageBox.Show("Error: " + ex.ToString(), "Jabber-Net TestHarness");
-
-            // Shut down.
-            done.Set();
-        }
-        private void ChessGrid2D_Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (jabberClient.IsAuthenticated)
-            {
-                jabberClient.Close();
-            }
-        }
-
-        private void btnSubmitMove_Click(object sender, EventArgs e)
-        {
-            jabber.protocol.client.Message message = new jabber.protocol.client.Message(new XmlDocument()); 
-
-            message.To = new jabber.JID(TARGET);
-
-            ChessMangler.Communications.MovePacket yq = new ChessMangler.Communications.MovePacket(message.OwnerDocument);
- 
-            //This is what we want:
-            //<ChessMangler version=".1">
-            //   <MovePacket>
-            //      <Hash>1234</Hash>
-            //      <GameID>5678</GameID>
-            //      <Piece>King</Piece>
-            //      <Prev>E1</Prev>
-            //      <New>E2</New>
-            //      <Rules>No</Rules>; 
-            //   <MovePacket>
-            //<ChessMangler />
-
-            XmlDocument x = new XmlDocument();
-
-            XmlElement root = new MovePacket("prefix", new XmlQualifiedName("ChessMangler"), x);       
-            XmlElement movePacket = new MovePacket("prefix", new XmlQualifiedName("MovePacket"), x);
-            XmlElement hash = new MovePacket("prefix", new XmlQualifiedName("MoveHash"), x);
-            hash.InnerText = "abcd";
-
-            root.AppendChild(movePacket);
-            movePacket.AppendChild(hash);
-
-            message.AddChild(root);
-
-            jabberClient.Write(message);
-
-            //Here's what this makes so far..
-            //<message id="JN_4" to="kevingabbert@gmail.com">
-            //   <ChessMangler>
-            //      <MovePacket>
-            //         <MoveHash>abcd</MoveHash>
-            //      </MovePacket>
-            //   </ChessMangler>
-            //</message>
-        }
-
-        static void j_OnWriteText(object sender, string txt)
-        {
-            if (txt == " ") return;  // ignore keep-alive spaces
-        }
     }
 }
-
-//**more proto code
-
-//<!-- get your own list of all your objects... -->
-//<iq type='get' to='self' id='n0'>
-// <query xmlns='your:namespace'/>
-//</iq>
-
-//<!-- reply with list of objects... -->
-//<iq type='result' to='self' id='n0'>
-// <query xmlns='your:namespace'>
-//  <yourobj key='Object1' other='value1'/>
-// </query>
-//</iq>
-
-namespace ChessMangler.Communications
-{
-    public class MovePacket : Element
-    {
-        public const string YOUR_NS = "ChessMangler:Communications";
-
-        // used when creating elements to send
-        public MovePacket(XmlDocument doc)
-            : base("query", YOUR_NS, doc)
-        { }
-
-        // used to create elements for inbound protocol
-        public MovePacket(string prefix, XmlQualifiedName qname, XmlDocument doc)
-            : base(prefix, qname, doc)
-        { }
-
-        // put your accessor methods here
-    }
-
-    public class Factory : jabber.protocol.IPacketTypes
-    {
-        private static QnameType[] s_qnt = new QnameType[] 
-        {
-            new QnameType("query", MovePacket.YOUR_NS, typeof(ChessMangler.Communications.MovePacket))
-            // Add other types here, perhaps sub-elements of query...
-        };
-
-        QnameType[] IPacketTypes.Types { get { return s_qnt; } }
-
-        private void jabberClient_OnStreamInit(object sender, ElementStream stream)
-        {
-            stream.AddFactory(new ChessMangler.Communications.Factory());
-        }
-    }
-}
-

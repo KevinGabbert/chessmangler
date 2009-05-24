@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.Engine", "Engi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.WinUIParts", "WinUIParts\ChessMangler.WinUIParts.csproj", "{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessManger.Communications", "Communications\ChessManger.Communications.csproj", "{6348BF5C-3245-406C-B823-4291C154FEB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.Communications", "Communications\ChessMangler.Communications.csproj", "{6348BF5C-3245-406C-B823-4291C154FEB1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.Data", "Data\ChessMangler.Data.csproj", "{17795A05-4EA8-4331-A124-CFCC89D25212}"
 EndProject

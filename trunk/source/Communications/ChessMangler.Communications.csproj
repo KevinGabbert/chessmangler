@@ -8,8 +8,8 @@
     <ProjectGuid>{6348BF5C-3245-406C-B823-4291C154FEB1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChessManger.Communications</RootNamespace>
-    <AssemblyName>ChessManger.Communications</AssemblyName>
+    <RootNamespace>ChessMangler.Communications</RootNamespace>
+    <AssemblyName>ChessMangler.Communications</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
@@ -33,11 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="jabber-net, Version=2.1.0.702, Culture=neutral, PublicKeyToken=924c5b18328d6f09, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\3rdParty\JabberNet\jabber-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IMovePacket.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\MoveBase.cs" />
@@ -48,7 +53,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interfaces\" />
     <Folder Include="Jabber-Net\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

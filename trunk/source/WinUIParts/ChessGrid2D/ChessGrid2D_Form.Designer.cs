@@ -478,8 +478,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tabControl1.HotTrack = true;
             this.tabControl1.Location = new System.Drawing.Point(0, 482);
@@ -510,7 +510,7 @@
             // 
             // btnSubmitMove
             // 
-            this.btnSubmitMove.Location = new System.Drawing.Point(67, 26);
+            this.btnSubmitMove.Location = new System.Drawing.Point(253, 28);
             this.btnSubmitMove.Name = "btnSubmitMove";
             this.btnSubmitMove.Size = new System.Drawing.Size(100, 37);
             this.btnSubmitMove.TabIndex = 0;
