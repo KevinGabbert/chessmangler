@@ -204,7 +204,7 @@ namespace ChessMangler.WinUIParts
             this.SizeMode = PictureBoxSizeMode.CenterImage;  //TODO: this needs to be pulled from config ( > v1.0)
 
             //TODO:  This needs to be pulled from config
-            this.BorderStyle = BorderStyle.FixedSingle;
+            this.BorderStyle = BorderStyle.None;
             //config will have a BorderStyle attribute for the form (and later perhaps for each square)
         }
 

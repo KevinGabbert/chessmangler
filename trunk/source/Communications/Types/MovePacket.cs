@@ -70,6 +70,11 @@ namespace ChessMangler.Communications.Types
             //</message>
         }
 
+        //public string Body
+        //{
+        //    get { return GetAttribute("Body"); } set { MovePacket.SetAttribute("Body", value); } 
+        //} 
+
         public static XmlElement CreateElement(string name, string innerText, XmlDocument document)
         {
             XmlElement element = new JabberElement("prefix", new XmlQualifiedName(name), document);
