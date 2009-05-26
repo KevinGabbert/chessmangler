@@ -254,8 +254,19 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             {
                 //Show Piece context menu
                 (new UniquePieceMenu()).Build_ConfigFile_PieceMenu(clickedSquare, "Transform Piece", "TransFormPieceMenu");
+
+                MenuItem addPieceFromMenu = ChessGrid2D_SquareHandlers.NewMenuItem("Change Style", "ChangeStyle");
+                clickedSquare.ContextMenu.MenuItems.Add(addPieceFromMenu);
+                clickedSquare.ContextMenu.MenuItems["ChangeStyle"].MenuItems.Add(ChessGrid2D_SquareHandlers.NewMenuItem("All Pieces on Board", "apob"));
+                clickedSquare.ContextMenu.MenuItems["ChangeStyle"].MenuItems.Add(ChessGrid2D_SquareHandlers.NewMenuItem("All Pieces of this color", "apotc"));
+                clickedSquare.ContextMenu.MenuItems["ChangeStyle"].MenuItems.Add(ChessGrid2D_SquareHandlers.NewMenuItem("All Pieces in this set", "apit"));
+                clickedSquare.ContextMenu.MenuItems["ChangeStyle"].MenuItems.Add(ChessGrid2D_SquareHandlers.NewMenuItem("This Piece Only", "tpo"));
+
+                //TODO: Each one of these should have a submenu (built on the fly like Build_ConfigFile_PieceMenu) that lists out the names of all sets in the images (or pieces) folder
+
                 (new UISquareDeleteMenu()).CreatePieceDeleteMenu(clickedSquare);
 
+                //future features:
                 //clickedSquare.ContextMenu.MenuItems.Add("Rules for this piece"); // > .5 feature
                 //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Add Rule for this piece"); // > 1.0 feature
                 //(submenuitem):  clickedSquare.ContextMenu.MenuItems.Add("Delete Rule for this piece"); // > 1.0 feature
@@ -275,6 +286,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 catch
                 {
                 }
+            }
+
+            //TODO: put this in a "Common Menu Tasks" object
+            public static MenuItem NewMenuItem(string caption, string name)
+            {
+                MenuItem addPieceMenu = new MenuItem();
+                addPieceMenu.Name = name;
+                addPieceMenu.Text = caption;
+
+                return addPieceMenu;
             }
 
         #endregion

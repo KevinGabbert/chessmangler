@@ -19,6 +19,32 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
     {
         static DebugForm _debugForm;
 
+        string _jabberOpponent;
+        public string JabberOpponent
+        {
+            get
+            {
+                return _jabberOpponent;
+            }
+            set
+            {
+                _jabberOpponent = value;
+            }
+        }
+
+        string _version = "Alpha";
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+
         //TODO: Move to Jabber_EventHandler **** jabber proto code ****
 
         //We should know all this by this point (will be set in options form
@@ -26,9 +52,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         //TODO:  this goes in Jabber_EventHandler we will wait on this event until we're done sending
         static ManualResetEvent done = new ManualResetEvent(false);
-
-        //TODO: **** jabber proto code **** This target will eventually be set by the Start Form when the user chooses who to play.
-        const string TARGET = "kevingabbert@gmail.com";
 
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
@@ -41,7 +64,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.InitGrid();
             this.InitForms();
         }
-        public ChessGrid2D_Form(BoardDef board, string imagesDirectory, short squareSize)
+        public ChessGrid2D_Form(BoardDef board, string imagesDirectory, short squareSize, string jabberOpponent)
         {
             InitializeComponent();
 
@@ -95,6 +118,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             this.Grid.SetUp_DefaultUIBoard(this);
             this.InitHandlers();
+
+            this.Text = "Chess Mangler " + this.Version + " ~ Opponent:  " + this.JabberOpponent;
         }
         private void ChessGrid2D_Resize(object sender, EventArgs e)
         {
@@ -124,7 +149,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             //TODO: Move this to a "JabberTasks" static class in Comms. (later this will be abstracted out as well)
             JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
-            message.To = new jabber.JID(TARGET);
+            message.To = new jabber.JID(this.JabberOpponent);
             message.AddChild(MovePacket.SetupPacket("1234", "5678", "King", "E1", "E2", false));
 
             jabberClient.Write(message);
@@ -165,9 +190,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         }
         private void j_OnAuthenticate(object sender)
         {
-            // Sender is always the JabberClient.
             JabberClient j = (JabberClient)sender;
-            j.Message(TARGET, "ChessMangler <Session> Connected @ " + DateTime.Now.ToString());
+            j.Message(this.JabberOpponent, "Chess Mangler " + this.Version + " <Proto> Connected @ " + DateTime.Now.ToString());
 
             done.Set(); // Finished sending.  Shut down.
         }
@@ -225,7 +249,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         public void SendChat()
         {
-            jabberClient.Message(TARGET, this.txtChat.Text);
+            jabberClient.Message(this.JabberOpponent, this.txtChat.Text);
 
             //This message needs to be logged in the database (remember to also add the ID of the latest move so we know at what point of the game that this was sent..)
             //Make an option later to create a PGN file annotated with chats.

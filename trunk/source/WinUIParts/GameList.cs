@@ -67,7 +67,16 @@ namespace ChessMangler.WinUIParts
             if (this.tabControlGames.SelectedTab == tabFreeForm)
             {
                 BoardDef board = new BoardDef((short)udGridX.Value, (short)udGridY.Value);
-                ChessGrid2D_Form open = new ChessGrid2D_Form(board, this.txtImages.Text, (short)udSquareSize.Value);
+
+                //TODO: That last argument needs to be the selected item from a list of opponents on this page:
+
+                //List<string>opponents = new List<string>();
+                ///opponents.Add("kevingabbert@gmail.com");
+
+                //this.cboOpponents.DataSource = opponents;
+                //this.cboOpponents.SelectedItem = this.cboOpponents[0];
+
+                ChessGrid2D_Form open = new ChessGrid2D_Form(board, this.txtImages.Text, (short)udSquareSize.Value, "kevingabbert@gmail.com");
                 open.Show();
             }
 
@@ -140,6 +149,7 @@ namespace ChessMangler.WinUIParts
         private void OpenChosenConfigFile()
         {
             ChessGrid2D_Form open = new ChessGrid2D_Form();
+            open.JabberOpponent = "kevingabbert@gmail.com";
 
             if (this.configList.SelectedValue.ToString() != null)
             {
