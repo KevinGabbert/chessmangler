@@ -5,6 +5,10 @@ using ChessMangler.Engine.Enums;
 using ChessMangler.Engine.Types;
 using ChessMangler.WinUIParts.Menus;
 
+using System.Xml;
+
+using ChessMangler.Communications.Types;
+
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
     public class ChessGrid2D_SquareHandlers: ChessGrid2D_Base
@@ -21,6 +25,19 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             set
             {
                 _dragStartSquare = value;
+            }
+        }
+
+        XmlElement _outBox;
+        public XmlElement OutBox
+        {
+            get
+            {
+                return _outBox;
+            }
+            set
+            {
+                _outBox = value;
             }
         }
 
@@ -162,24 +179,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
                     if (weCanMove)
                     {
-                        //Set the new piece
-                        dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
-
-                        //On the engineboard too.
-                        this.UIBoard.EngineBoard.GetByName(dragEndSquare.BoardLocation).CurrentPiece = dragEndSquare.CurrentPiece;
-                        this.UIBoard.EngineBoard.GetByName(_dragStartSquare.BoardLocation).CurrentPiece = null;
-
-                        if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
-                        {
-                            this.DebugForm.debugTextBox.Text += "\r\n Set Piece";
-                        }
-
-                        this.UIBoard.ClearSquare(_dragStartSquare, true);
-
-                        if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
-                        {
-                            this.DebugForm.debugTextBox.Text += "\r\n Clear Square";
-                        }
+                        this.SetPiece(dragEndSquare);
 
                     }
                     else
@@ -195,8 +195,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 }
                 else
                 {
-                    //uh oh.. this is a problem.  You shouldn't be here
-                    throw new System.Exception();
+                    //TODO: uh oh.. this is a problem.  You shouldn't be here
+                    throw new System.Exception("uh oh.. this is a problem.  You shouldn't be here");
                 }
 
                 if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
@@ -206,6 +206,20 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
                 //Data_Layer.Record_Move_In_DB
                 //Communications_Layer.Send_Move_To_opponent
+
+                //TODO: refactor this
+
+                this.OutBox = MovePacket.SetupPacket("movehash", "GameID", dragEndSquare.CurrentPiece.Name, _dragStartSquare.BoardLocation, dragEndSquare.BoardLocation, false); //no rules for now
+
+                //dragEndSquare.CurrentPiece.Image.Visibility = 50%
+
+
+                //TODO: Cache the Squares' previous colors.
+                _dragStartSquare.BackColor = Color.LightBlue;
+                dragEndSquare.BackColor = Color.Blue;
+
+                //Disable any further movement (RCV Handler will reenable)
+                this.UIBoard.Squares.LockMovement(_dragStartSquare, dragEndSquare);
             }
             catch (Exception ex)
             {
@@ -255,6 +269,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 //Show Piece context menu
                 (new UniquePieceMenu()).Build_ConfigFile_PieceMenu(clickedSquare, "Transform Piece", "TransFormPieceMenu");
 
+                //Change Style menu should be in both freeform and standard.
                 MenuItem addPieceFromMenu = ChessGrid2D_SquareHandlers.NewMenuItem("Change Style", "ChangeStyle");
                 clickedSquare.ContextMenu.MenuItems.Add(addPieceFromMenu);
                 clickedSquare.ContextMenu.MenuItems["ChangeStyle"].MenuItems.Add(ChessGrid2D_SquareHandlers.NewMenuItem("All Pieces on Board", "apob"));
@@ -299,5 +314,27 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
 
         #endregion
+
+        public void SetPiece(UISquare dragEndSquare)
+        {
+            //Set the new piece
+            dragEndSquare.CurrentPiece = _dragStartSquare.CurrentPiece;
+
+            //On the engineboard too.
+            this.UIBoard.EngineBoard.GetByName(dragEndSquare.BoardLocation).CurrentPiece = dragEndSquare.CurrentPiece;
+            this.UIBoard.EngineBoard.GetByName(_dragStartSquare.BoardLocation).CurrentPiece = null;
+
+            if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
+            {
+                this.DebugForm.debugTextBox.Text += "\r\n Set Piece";
+            }
+
+            this.UIBoard.ClearSquare(_dragStartSquare, true);
+
+            if (this.ChessGrid2D_Form.Grid.UIBoard.DebugMode)
+            {
+                this.DebugForm.debugTextBox.Text += "\r\n Clear Square";
+            }
+        }
     }
 }

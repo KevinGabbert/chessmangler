@@ -19,6 +19,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
     {
         static DebugForm _debugForm;
 
+        #region Properties
+
         string _jabberOpponent;
         public string JabberOpponent
         {
@@ -29,6 +31,19 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             set
             {
                 _jabberOpponent = value;
+            }
+        }
+
+        MovePacket _outBox;
+        public MovePacket Move_OutBox
+        {
+            get
+            {
+                return _outBox;
+            }
+            set
+            {
+                _outBox = value;
             }
         }
 
@@ -44,6 +59,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 _version = value;
             }
         }
+
+        #endregion
 
         //TODO: Move to Jabber_EventHandler **** jabber proto code ****
 
@@ -101,6 +118,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //extra
             jabberClient.OnWriteText += new bedrock.TextHandler(j_OnWriteText);
 
+            jabberClient.OnReadText += new bedrock.TextHandler(j_OnReadText);
+
             // listen for XMPP wire protocol
             //jabberClient.OnWriteText += new bedrock.TextHandler(j_OnWriteText);
             jabberClient.OnMessage += new MessageHandler(j_OnMessage);
@@ -150,9 +169,15 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //TODO: Move this to a "JabberTasks" static class in Comms. (later this will be abstracted out as well)
             JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
             message.To = new jabber.JID(this.JabberOpponent);
-            message.AddChild(MovePacket.SetupPacket("1234", "5678", "King", "E1", "E2", false));
+            message.AddChild(this._squareHandlers.OutBox);
 
             jabberClient.Write(message);
+
+
+            //This is temporary
+            MessageBox.Show(message.ToString());
+
+            this.Grid.UIBoard.Squares.Disable();  //Until we recieve a good packet from the opponent
         }
         private void btnChatSend_Click(object sender, EventArgs e)
         {
@@ -203,9 +228,18 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             // Shut down.
             done.Set();
         }
-        static void j_OnWriteText(object sender, string txt)
+        private void j_OnWriteText(object sender, string txt)
         {
             if (txt == " ") return;  // ignore keep-alive spaces
+        }
+        private void j_OnReadText(object sender, string txt)
+        {
+            //verify Return packet
+
+            //if packet is good, then
+            //this.Grid.UIBoard.Squares.Enable();
+            //this.Grid.UIBoard.Squares.UnlockAll();
+            this._squareHandlers.OutBox = null;
         }
 
         #endregion
@@ -288,6 +322,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             this.txtChatHistory.Select(txtChatHistory.Text.Length + 1, 2);
             this.txtChatHistory.ScrollToCaret();
+        }
+
+
+        //TODO: This button will only be seen in Debug Mode
+        private void btnEnableSquares_Click(object sender, EventArgs e)
+        {
+            //TODO:  We need some visual indicators of all these things!
+            this.Grid.UIBoard.Squares.Enable();
+            this.Grid.UIBoard.Squares.ResetColors();
+            this._squareHandlers.OutBox = null;
         }
     }
 }

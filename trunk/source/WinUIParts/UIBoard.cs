@@ -53,8 +53,8 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        List<UISquare> _squares = new List<UISquare>();
-        public List<UISquare> Squares
+        Squares _squares = new Squares();
+        public Squares Squares
         {
             get
             {

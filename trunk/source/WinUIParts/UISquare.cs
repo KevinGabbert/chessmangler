@@ -106,7 +106,21 @@ namespace ChessMangler.WinUIParts
             }
             set
             {
+                this.PreviousColor = this.BackColor;
                 this.BackColor = value;
+            }
+        }
+
+        protected Color _previousColor;
+        public Color PreviousColor
+        {
+            get
+            {
+                return _previousColor;
+            }
+            set
+            {
+                _previousColor = value;
             }
         }
 

@@ -89,6 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Squares.cs" />
     <Compile Include="UIBoard.cs" />
     <Compile Include="UISquare.cs">
       <SubType>Component</SubType>

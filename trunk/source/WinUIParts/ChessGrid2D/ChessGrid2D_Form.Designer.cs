@@ -79,9 +79,10 @@
             this.btnChatSend = new System.Windows.Forms.Button();
             this.txtChat = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnEnableSquares = new System.Windows.Forms.Button();
             this.btnSubmitMove = new System.Windows.Forms.Button();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.chessMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMoves)).BeginInit();
@@ -89,8 +90,8 @@
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // chessMenu
@@ -488,18 +489,9 @@
             this.tabControl1.Size = new System.Drawing.Size(669, 117);
             this.tabControl1.TabIndex = 4;
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.splitContainer);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(661, 91);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnEnableSquares);
             this.tabPage2.Controls.Add(this.btnSubmitMove);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -507,6 +499,16 @@
             this.tabPage2.Size = new System.Drawing.Size(661, 91);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnEnableSquares
+            // 
+            this.btnEnableSquares.Location = new System.Drawing.Point(483, 28);
+            this.btnEnableSquares.Name = "btnEnableSquares";
+            this.btnEnableSquares.Size = new System.Drawing.Size(150, 27);
+            this.btnEnableSquares.TabIndex = 1;
+            this.btnEnableSquares.Text = "Enable/Unlock Squares";
+            this.btnEnableSquares.UseVisualStyleBackColor = true;
+            this.btnEnableSquares.Click += new System.EventHandler(this.btnEnableSquares_Click);
             // 
             // btnSubmitMove
             // 
@@ -517,6 +519,16 @@
             this.btnSubmitMove.Text = "Submit";
             this.btnSubmitMove.UseVisualStyleBackColor = true;
             this.btnSubmitMove.Click += new System.EventHandler(this.btnSubmitMove_Click);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.splitContainer);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(661, 91);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // ChessGrid2D_Form
             // 
@@ -545,8 +557,8 @@
             this.splitContainer.Panel2.PerformLayout();
             this.splitContainer.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -607,6 +619,7 @@
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem1;
         private System.Windows.Forms.TextBox txtChatHistory;
         private System.Windows.Forms.Button btnSubmitMove;
+        private System.Windows.Forms.Button btnEnableSquares;
 
 
 
