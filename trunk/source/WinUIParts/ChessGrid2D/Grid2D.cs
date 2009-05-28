@@ -38,6 +38,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         }
 
         int _adjust2 = 20;
+        /// <summary>
+        /// This function is all about resetting the location of the UISquares that were originally created in UIBoard.BuildUISquares
+        /// </summary>
         public void Redraw()
         {
             if (this.ConstrainProportions)
@@ -53,25 +56,29 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 int columnCount = 0;
 
                 BoardDef board = this.UIBoard.EngineBoard.Definition;
-                foreach (Square2D currentSquare in this.UIBoard.EngineBoard.BoardEnumerator(board))
+
+                foreach (Square2D currentSquare in this.UIBoard.EngineBoard.EnumerateBoard(board, false))
                 {
-                    UISquare currentUISquare = this.UIBoard.GetSquare_ByLocation(currentSquare.Column, currentSquare.Row);
-
-                    if (currentUISquare != null)
+                    if (currentSquare != null)
                     {
-                        //Can these go into UISquare?
-                        this.Square_SetLocation(newRow, board, currentSquare, currentUISquare);
-                        this.Square_SetSize(board, currentUISquare);
-                        Grid2D.Square_SetPiece(currentSquare, currentUISquare);
+                        UISquare currentUISquare = this.UIBoard.GetSquare_ByLocation(currentSquare.Column, currentSquare.Row);
 
-                        this.Square_DoDebugStuff(currentSquare, currentUISquare);
-                    }
+                        if (currentUISquare != null)
+                        {
+                            //Can these go into UISquare?
+                            this.Square_SetLocation(newRow, board, currentSquare, currentUISquare);
+                            this.Square_SetSize(board, currentUISquare);
+                            Grid2D.Square_SetPiece(currentSquare, currentUISquare);
 
-                    //This is what we use to impose a new order (different than the Square2D list)
-                    if (++columnCount > board.Columns - 1)
-                    {
-                        columnCount = 0;
-                        newRow++;
+                            this.Square_DoDebugStuff(currentSquare, currentUISquare);
+                        }
+
+                        //This is what we use to impose a new order (different than the Square2D list)
+                        if (++columnCount > board.Columns - 1)
+                        {
+                            columnCount = 0;
+                            newRow++;
+                        }
                     }
                 }
             }
@@ -144,7 +151,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         public static UIBoard SetUp_NewUIBoard()
         {
-            return new UIBoard(0, 0, 0);
+            return new UIBoard();
         }
         public void SetUp_DefaultUIBoard(GridForm formToPlaceBoard)
         {

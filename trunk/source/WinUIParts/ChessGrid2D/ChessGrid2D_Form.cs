@@ -239,7 +239,15 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //if packet is good, then
             //this.Grid.UIBoard.Squares.Enable();
             //this.Grid.UIBoard.Squares.UnlockAll();
-            this._squareHandlers.OutBox = null;
+
+            try
+            {
+                //if Packet is good, then
+                //this._squareHandlers.OutBox = null;
+            }
+            catch
+            {
+            }
         }
 
         #endregion
@@ -323,7 +331,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.txtChatHistory.Select(txtChatHistory.Text.Length + 1, 2);
             this.txtChatHistory.ScrollToCaret();
         }
-
 
         //TODO: This button will only be seen in Debug Mode
         private void btnEnableSquares_Click(object sender, EventArgs e)

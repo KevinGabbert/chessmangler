@@ -18,13 +18,6 @@ namespace ChessMangler.WinUIParts
     /// </summary>
     public class UIBoard: IBoardMode
     {
-        public UIBoard(int columnStart, int rowStart, int topMenuOffset)
-        {
-            _currentColumn = columnStart;
-            _currentRow = rowStart;
-            _topMenuOffset = topMenuOffset;
-        }
-
         #region Properties
 
         bool _debugMode = false;
@@ -94,10 +87,6 @@ namespace ChessMangler.WinUIParts
 
         #region Form Stuff
 
-        int _topMenuOffset = 0;
-        int _currentColumn = 0;
-        int _currentRow = 0;
-
         public void Create(Form formForBoard, XmlDocument configFile, string directory)
         {
             this.EngineBoard = new Board2D(configFile, directory);
@@ -105,7 +94,7 @@ namespace ChessMangler.WinUIParts
 
             //TODO:  keep these "adjustment numbers" somewhere
             formForBoard.Width = (squareSize * this.EngineBoard.Definition.Columns);
-            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + _topMenuOffset + 50;
+            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + 50;
 
             this.BuildUISquares(formForBoard, this.EngineBoard.Definition, squareSize);
         }
@@ -115,48 +104,30 @@ namespace ChessMangler.WinUIParts
 
             //TODO:  keep these "adjustment numbers" somewhere
             formForBoard.Width = (squareSize * this.EngineBoard.Definition.Columns);
-            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + _topMenuOffset + 50;
+            formForBoard.Height = (squareSize * this.EngineBoard.Definition.Rows) + 50;
 
             this.BuildUISquares(formForBoard, boardDef, squareSize);
         }
 
-        protected void BuildUISquares(Form formForBoard, BoardDef boardDef, Int16 squareSize)
+        /// <summary>
+        /// All this function does is to create the UISquares that will be used in the game.
+        /// Square Location, size, columns, rows, etc. are set by Grid2D.Redraw()
+        /// </summary>
+        /// <param name="formForBoard"></param>
+        /// <param name="boardDef"></param>
+        /// <param name="squareSize"></param>
+        public void BuildUISquares(Form formForBoard, BoardDef boardDef, Int16 squareSize)
         {
-            //Use board logic to iterate through the board.
-            //Translates Engine stuff to UI Stuff
-
-            //Hmmmmm.. the alternative is to do a for..i.. using BoardDef and GetByLocation, but SquareLogic already does this!, also, this allows for less complication in the UI..
-            foreach (Square2D currentSquare in this.EngineBoard.BoardEnumerator(boardDef))
+            foreach (Square2D currentSquare in this.EngineBoard.EnumerateBoard(boardDef, false))
             {
-                UISquare newUISquare = new UISquare(new Point(_currentColumn, _currentRow), squareSize);
-
-                Square_DebugStuff(currentSquare, newUISquare);
-
-                //xfer variables over
-                newUISquare.X = _currentColumn;
-                newUISquare.Y = _currentRow;
-                newUISquare.SquareSize = squareSize;
-
-                UIBoard.TranslateEngineStuffToUI(currentSquare, newUISquare);
-
-                formForBoard.Controls.Add(newUISquare); //Place our newly built square on the grid
-                this.Squares.Add(newUISquare);
-
-
-                //**** This is disposable test code, as the UI SquarePositions will be set in Engine.Board (XmlDocument) *****
-
-                //They will??  Oh yes.. They will need to be if we are going to have custom boards, such as a chess board in
-                //the shape of a triangle or something..
-
-                //Set the position of our new square to be drawn
-                if (currentSquare.Column == boardDef.Columns - 1)
+                if (currentSquare != null)
                 {
-                    _currentRow = _currentRow + squareSize;
-                    _currentColumn = 0 - squareSize;
-                }
+                    UISquare newUISquare = new UISquare();
+                    UIBoard.TranslateEngineStuffToUI(currentSquare, newUISquare);
 
-                _currentColumn = _currentColumn + squareSize;
-                //**** This is disposable test code, as the UI SquarePositions will be set in Engine.Board (XmlDocument) *****
+                    formForBoard.Controls.Add(newUISquare); //Place our newly built square on the grid
+                    this.Squares.Add(newUISquare);
+                }
             }
         }
 
@@ -175,17 +146,20 @@ namespace ChessMangler.WinUIParts
         //These should all map 1 to 1..
         public static void TranslateEngineStuffToUI(ISquare currentSquare, UISquare newUISquare)
         {
-            //This is the only code that will remain in this loop when we are done.
-            newUISquare.Color = currentSquare.Color;
-            newUISquare.Row = currentSquare.Row;
-            newUISquare.Column = currentSquare.Column;
-            newUISquare.Disabled = currentSquare.Disabled;
-            newUISquare.BoardLocation = currentSquare.BoardLocation;
-            //newUISquare.Image = currentSquare.Image;
-
-            if (currentSquare.CurrentPiece != null)
+            if (currentSquare != null)
             {
-                newUISquare.CurrentPiece = currentSquare.CurrentPiece; //Ah, the power of interfaces..
+                //This is the only code that will remain in this loop when we are done.
+                newUISquare.Color = currentSquare.Color;
+                newUISquare.Row = currentSquare.Row;
+                newUISquare.Column = currentSquare.Column;
+                newUISquare.Disabled = currentSquare.Disabled;
+                newUISquare.BoardLocation = currentSquare.BoardLocation;
+                //newUISquare.Image = currentSquare.Image;
+
+                if (currentSquare.CurrentPiece != null)
+                {
+                    newUISquare.CurrentPiece = currentSquare.CurrentPiece; //Ah, the power of interfaces..
+                }
             }
         }
 

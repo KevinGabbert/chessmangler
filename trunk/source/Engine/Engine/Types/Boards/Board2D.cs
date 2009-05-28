@@ -97,7 +97,7 @@ namespace ChessMangler.Engine.Types
             this.Definition = boardDef;
 
             //This foreach construct may be temporary, as I'm evaluating whether this is a good idea..
-            foreach (Square2D currentSquare in this.BoardEnumerator(boardDef))
+            foreach (Square2D currentSquare in this.EnumerateBoard(boardDef, false))
             {
                 //this empty foreach executes BoardEnumerator. We may need to put something here later..
             }
@@ -119,8 +119,11 @@ namespace ChessMangler.Engine.Types
                         //TODO:  Temporary Code (as this will be eventually pulled from a config file)
                         pieceDef.ImageDirectory = directory + @"\images\";
 
-                        //TODO: >v1.0? this dir can be overridden by a config file setting
-                        squareForPiece.CurrentPiece = new Piece(pieceDef);
+                        if (squareForPiece != null)
+                        {
+                            //TODO: >v1.0? this dir can be overridden by a config file setting
+                            squareForPiece.CurrentPiece = new Piece(pieceDef);
+                        }
                         break;
                 }
             }
@@ -206,35 +209,117 @@ namespace ChessMangler.Engine.Types
             return newSquare;
         }
 
+
         /// <summary>
         /// Expose our inner board logic so the UI can use it.
         /// This function enumerates through our board for those functions that want to traverse all the squares
         /// </summary>
         /// <param name="boardDef"></param>
         /// <returns></returns>
-        public IEnumerable<Square2D> BoardEnumerator(BoardDef boardDef)
+        public IEnumerable<Square2D> EnumerateBoard(BoardDef boardDef, bool reverse)
         {
-            for (Int16 currentRow = 0; currentRow < boardDef.Rows; currentRow++)
+            if (!reverse)
             {
-                Int16 refRow = (Int16)(boardDef.Rows - (currentRow + 1));
-
-                for (Int16 currentColumn = 0; currentColumn < boardDef.Columns; currentColumn++)
+                //loop thru rows
+                for (Int16 currentRow = 0; currentRow < boardDef.Rows; currentRow++)
                 {
-                    if (this.IsNew)
+                    Int16 refRow = (Int16)(boardDef.Rows - (currentRow + 1));
+
+                    //loop thru columns
+                    for (Int16 currentColumn = 0; currentColumn < boardDef.Columns; currentColumn++)
                     {
-                        //Hand out this new square to those who want it..
-                        yield return this.AddNewSquare(boardDef, currentColumn, refRow);
+                        if (this.IsNew)
+                        {
+                            //Hand out this new square to those who want it..
+                            yield return this.AddNewSquare(boardDef, currentColumn, refRow);
+                        }
+                        else
+                        {
+                            //This would normally be called by the UI via a for loop.
+                            yield return this.GetByLocation(refRow, currentColumn);
+                        }
                     }
-                    else
+                }
+            }
+            else
+            {
+                //Lame attempt at reversing the board..
+
+                //loop thru rows
+                for (Int16 currentRow = boardDef.Rows; currentRow > 0; currentRow--)
+                {
+                    Int16 refRow = (Int16)(boardDef.Rows - (currentRow));
+
+                    //loop thru columns
+                    for (Int16 currentColumn = boardDef.Columns; currentColumn > 0; currentColumn--)
                     {
-                        //This would normally be called by the UI via a for loop.
-                        yield return this.GetByLocation(refRow, currentColumn);
+                        if (this.IsNew)
+                        {
+                            //Hand out this new square to those who want it..
+                            yield return this.AddNewSquare(boardDef, currentColumn, refRow);
+                        }
+                        else
+                        {
+                            //This would normally be called by the UI via a for loop.
+                            yield return this.GetByLocation(refRow, currentColumn);
+                        }
                     }
                 }
             }
 
             this.IsNew = false;
         }
+
+        #endregion
+        #region Utility Functions
+
+        public bool isDiagonal(Point p1, Point p2)
+        {
+            if (p2.Equals(p1))
+            {
+                return false;
+            }
+            else if (Math.Abs(p2.X - p1.X) == Math.Abs(p2.Y - p1.Y))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool isHorizontal(Point p1, Point p2)
+        {
+            if (p2.Equals(p1))
+            {
+                return false;
+            }
+            else if (p2.Y == p1.Y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool isVertical(Point p1, Point p2)
+        {
+            if (p2.Equals(p1))
+            {
+                return false;
+            }
+            else if (p2.X == p1.X)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //IsPinned
 
         #endregion
     }

@@ -20,10 +20,16 @@ namespace ChessMangler.WinUIParts
     {
         protected const string SQUARE = "Square";
         
-        protected UISquare()
+        public UISquare()
         {
+            this.AllowDrop = true;
         }
 
+        /// <summary>
+        /// The only time that this is at present is when a "blank" square is requested.. (in SquareHandlers.CellMouseDown)
+        /// </summary>
+        /// <param name="formlocation"></param>
+        /// <param name="size"></param>
         public UISquare(Point formlocation, int size)
         {
             this.MakeSquare(formlocation, size);
