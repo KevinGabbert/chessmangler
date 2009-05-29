@@ -57,6 +57,7 @@
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flipBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.constrainBoardProportionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotateBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -133,7 +134,7 @@
             this.monsterChessToolStripMenuItem});
             this.newToolStripMenuItem.Enabled = false;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.newToolStripMenuItem.Text = "New";
             // 
             // oneToolStripMenuItem
@@ -188,14 +189,14 @@
             // 
             this.loadToolStripMenuItem.Enabled = false;
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.loadToolStripMenuItem.Text = "Load";
             // 
             // configToolStripMenuItem
             // 
             this.configToolStripMenuItem.Enabled = false;
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
-            this.configToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.configToolStripMenuItem.Text = "Config";
             // 
             // gameToolStripMenuItem
@@ -217,7 +218,7 @@
             this.googleJoeblowToolStripMenuItem});
             this.accountsToolStripMenuItem1.Enabled = false;
             this.accountsToolStripMenuItem1.Name = "accountsToolStripMenuItem1";
-            this.accountsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.accountsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.accountsToolStripMenuItem1.Text = "Accounts";
             // 
             // jabberToolStripMenuItem1
@@ -248,7 +249,7 @@
             // 
             this.optionsToolStripMenuItem1.Enabled = false;
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.optionsToolStripMenuItem1.Text = "Options";
             // 
             // movesToolStripMenuItem
@@ -268,28 +269,28 @@
             // 
             this.movesToolStripMenuItem1.Enabled = false;
             this.movesToolStripMenuItem1.Name = "movesToolStripMenuItem1";
-            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.movesToolStripMenuItem1.Size = new System.Drawing.Size(130, 22);
             this.movesToolStripMenuItem1.Text = "Moves";
             // 
             // annotateToolStripMenuItem
             // 
             this.annotateToolStripMenuItem.Enabled = false;
             this.annotateToolStripMenuItem.Name = "annotateToolStripMenuItem";
-            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.annotateToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.annotateToolStripMenuItem.Text = "Annotate";
             // 
             // capturedToolStripMenuItem
             // 
             this.capturedToolStripMenuItem.Enabled = false;
             this.capturedToolStripMenuItem.Name = "capturedToolStripMenuItem";
-            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.capturedToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.capturedToolStripMenuItem.Text = "Captured";
             // 
             // uIConfigToolStripMenuItem
             // 
             this.uIConfigToolStripMenuItem.Enabled = false;
             this.uIConfigToolStripMenuItem.Name = "uIConfigToolStripMenuItem";
-            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.uIConfigToolStripMenuItem.Text = "UI Config";
             // 
             // debugToolStripMenuItem
@@ -297,13 +298,14 @@
             this.debugToolStripMenuItem.Enabled = false;
             this.debugToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("debugToolStripMenuItem.Image")));
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.debugToolStripMenuItem.Text = "Debug";
             // 
             // actionsToolStripMenuItem
             // 
             this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.flipBoardToolStripMenuItem,
+            this.constrainBoardProportionsToolStripMenuItem,
             this.rotateBoardToolStripMenuItem,
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem,
             this.debugToolStripMenuItem1,
@@ -315,27 +317,34 @@
             // flipBoardToolStripMenuItem
             // 
             this.flipBoardToolStripMenuItem.Name = "flipBoardToolStripMenuItem";
-            this.flipBoardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.flipBoardToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.flipBoardToolStripMenuItem.Text = "Flip Board";
+            // 
+            // constrainBoardProportionsToolStripMenuItem
+            // 
+            this.constrainBoardProportionsToolStripMenuItem.Name = "constrainBoardProportionsToolStripMenuItem";
+            this.constrainBoardProportionsToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.constrainBoardProportionsToolStripMenuItem.Text = "Constrain Board Proportions";
+
             // 
             // rotateBoardToolStripMenuItem
             // 
             this.rotateBoardToolStripMenuItem.Enabled = false;
             this.rotateBoardToolStripMenuItem.Name = "rotateBoardToolStripMenuItem";
-            this.rotateBoardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rotateBoardToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.rotateBoardToolStripMenuItem.Text = "Rotate Board";
             // 
             // undoshouldThisBeSetInTheRulesFileToolStripMenuItem
             // 
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Enabled = false;
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Name = "undoshouldThisBeSetInTheRulesFileToolStripMenuItem";
-            this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.undoshouldThisBeSetInTheRulesFileToolStripMenuItem.Text = "Undo";
             // 
             // debugToolStripMenuItem1
             // 
             this.debugToolStripMenuItem1.Name = "debugToolStripMenuItem1";
-            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(220, 22);
             this.debugToolStripMenuItem1.Text = "Debug";
             // 
             // toggleDebugModeToolStripMenuItem
@@ -344,7 +353,7 @@
             this.resetPiecesToolStripMenuItem,
             this.clearPiecesToolStripMenuItem});
             this.toggleDebugModeToolStripMenuItem.Name = "toggleDebugModeToolStripMenuItem";
-            this.toggleDebugModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.toggleDebugModeToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.toggleDebugModeToolStripMenuItem.Text = "Toggle Debug Mode";
             // 
             // resetPiecesToolStripMenuItem
@@ -404,13 +413,13 @@
             // 
             this.onlineHelpToolStripMenuItem.Enabled = false;
             this.onlineHelpToolStripMenuItem.Name = "onlineHelpToolStripMenuItem";
-            this.onlineHelpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.onlineHelpToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.onlineHelpToolStripMenuItem.Text = "Online Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // statusBar
@@ -640,6 +649,7 @@
         private System.Windows.Forms.TextBox txtChatHistory;
         private System.Windows.Forms.Button btnSubmitMove;
         private System.Windows.Forms.Button btnEnableSquares;
+        private System.Windows.Forms.ToolStripMenuItem constrainBoardProportionsToolStripMenuItem;
 
 
 

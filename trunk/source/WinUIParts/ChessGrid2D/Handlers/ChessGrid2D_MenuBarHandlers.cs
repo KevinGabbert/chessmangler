@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 
 using ChessMangler.WinUIParts;
 using ChessMangler.Engine.Types;
@@ -80,6 +81,14 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             //TODO:  this setting needs to be saved in the database.
             this.ChessGrid2D_Form.Grid.UIBoard.Flipped = !this.ChessGrid2D_Form.Grid.UIBoard.Flipped;
+            this.ChessGrid2D_Form.Grid.Redraw(this.ChessGrid2D_Form.Grid.UIBoard.Flipped);
+        }
+
+        public void constrainBoardProportionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ChessGrid2D_Form.Grid.ConstrainProportions = !this.ChessGrid2D_Form.Grid.ConstrainProportions;
+            ((ToolStripMenuItem)sender).Checked = this.ChessGrid2D_Form.Grid.ConstrainProportions;
+
             this.ChessGrid2D_Form.Grid.Redraw(this.ChessGrid2D_Form.Grid.UIBoard.Flipped);
         }
 

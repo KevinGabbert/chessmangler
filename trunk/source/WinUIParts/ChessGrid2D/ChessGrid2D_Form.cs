@@ -277,6 +277,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.resetPiecesToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
             this.clearPiecesToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.clearPiecesToolStripMenuItem_Click);
             this.flipBoardToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.flipBoardToolStripMenuItem_Click);
+            this.constrainBoardProportionsToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.constrainBoardProportionsToolStripMenuItem_Click);
         }
         public void InitForms()
         {
@@ -345,6 +346,5 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.Grid.UIBoard.Squares.ResetColors();
             this._squareHandlers.OutBox = null;
         }
-
     }
 }
