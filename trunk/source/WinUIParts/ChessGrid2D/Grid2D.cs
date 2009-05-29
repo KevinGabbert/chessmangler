@@ -14,6 +14,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
     /// </summary>
     public class Grid2D : ChessGrid2D_Base
     {
+        //TODO: refactor all references of ChessGrid2D out of here!
         #region Properties
 
         bool _constrainProportions;
@@ -29,6 +30,19 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
         }
 
+        int _verticalSquish = 0;
+        public int VerticalSquish
+        {
+            get
+            {
+                return _verticalSquish;
+            }
+            set
+            {
+                _verticalSquish = value;
+            }
+        }
+
         #endregion
 
         public Grid2D(ChessGrid2D_Form formWithGrid)
@@ -37,7 +51,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.DebugForm = new DebugForm();
         }
 
-        int _adjust2 = 20;
         /// <summary>
         /// This function is all about resetting the location of the UISquares that were originally created in UIBoard.BuildUISquares
         /// </summary>
@@ -52,8 +65,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             {
                 BoardDef board = this.UIBoard.EngineBoard.Definition;
 
-                int newRow;
-                int columnCount;
+                int newRow = 0;
+                int columnCount = 0;
 
                 if (!flipTheBoard)
                 {
@@ -71,7 +84,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 {
                     if (currentSquare != null)
                     {
-                        this.Set_And_PlaceUISquare(board, newRow, currentSquare, _adjust2);
+                        this.Set_And_PlaceUISquare(board, newRow, currentSquare, _verticalSquish);
                         UIBoard.Set_Square_Order(flipTheBoard, board, ref newRow, ref columnCount);
                     }
                 }
@@ -79,7 +92,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         }
 
         //TODO: I'd like to eventually move this to UIBoard, if possible
-        public void Set_And_PlaceUISquare(BoardDef board, int newRow, Square2D currentSquare, int unknownAdjustment)
+        public void Set_And_PlaceUISquare(BoardDef board, int newRow, Square2D currentSquare, int verticalSquish)
         {
             UISquare currentUISquare = this.UIBoard.GetSquare_ByLocation(currentSquare.Column, currentSquare.Row);
 
@@ -89,9 +102,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 int clientHeight = this.ChessGrid2D_Form.ClientSize.Height;
                 int clientWidth = this.ChessGrid2D_Form.ClientSize.Width;
 
-                this.Square_SetLocation(menuHeight, clientWidth, unknownAdjustment, newRow, board, currentSquare, currentUISquare);
+                this.Square_SetLocation(menuHeight, clientWidth, verticalSquish, newRow, board, currentSquare, currentUISquare);
 
-                UISquare.Square_SetSize(clientHeight, clientWidth, unknownAdjustment, board, currentUISquare);
+                UISquare.Square_SetSize(clientHeight, clientWidth, verticalSquish, board, currentUISquare);
                 UISquare.Square_SetPiece(currentSquare, currentUISquare);
 
                 currentUISquare.SizeMode = PictureBoxSizeMode.CenterImage; //Centers the piece in the PictureBox
@@ -100,27 +113,28 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
         }
 
-        public void Square_SetLocation(int height, int width, int adjustment, int newRow, BoardDef boardDef, Square2D currentSquare, UISquare currentUISquare)
+        public void Square_SetLocation(int menuHeight, int width, int verticalSquish, int newRow, BoardDef boardDef, Square2D currentSquare, UISquare currentUISquare)
         {
             //Adjusts "Board Width" (Board being all the squares)
             int x = currentSquare.Column * width / boardDef.Columns;
-            int y = Grid_AdjustHeight(height, newRow, boardDef, adjustment);
+            int y = Grid_AdjustHeight(menuHeight, newRow, boardDef, verticalSquish);
 
             currentUISquare.Location = new Point(x, y);
             currentUISquare.BoardLocation = currentSquare.BoardLocation; //sync up square name with engine square
         }
-        private int Grid_AdjustHeight(int height, int row, BoardDef board, int unknownAdjustment)
+        private int Grid_AdjustHeight(int menuHeight, int row, BoardDef board, int verticalSquish)
         {
-            int heightAdjustment = height - unknownAdjustment; //unknown why I need this.  is this a total of cumulative errors??
+            //TODO:  this needs to be simplified.  Why is verticalSquish used multiple times??
+            int heightAdjustment = menuHeight - verticalSquish;
 
-            int controlsHeight = this.ChessGrid2D_Form.chessMenu.Height + heightAdjustment + this.ChessGrid2D_Form.tabControl1.Height + unknownAdjustment;
-            int chessBoardHeight = this.ChessGrid2D_Form.ClientSize.Height - controlsHeight - heightAdjustment - unknownAdjustment;
+            int controlsHeight = menuHeight + heightAdjustment + this.ChessGrid2D_Form.tabControl1.Height + verticalSquish;
+            int chessBoardHeight = this.ChessGrid2D_Form.ClientSize.Height - controlsHeight - heightAdjustment - verticalSquish;
 
             int y = 0;
 
             y = (row * chessBoardHeight) / board.Rows;
             y = y + (heightAdjustment * row);
-            y = y + this.ChessGrid2D_Form.chessMenu.Height; //adding in the chessMenu Height controls where the grid begi
+            y = y + menuHeight; //adding in the chessMenu Height controls where the grid begi
 
             return y;
         }

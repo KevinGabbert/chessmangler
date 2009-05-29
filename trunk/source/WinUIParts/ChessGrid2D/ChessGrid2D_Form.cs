@@ -256,6 +256,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         public void InitGrid()
         {
             this.Grid = new Grid2D(this);
+
+            //TODO:  Make this pull from game config DB
+            this.Grid.VerticalSquish = 21; //This number is likely due to the TabControl height, but is more likely a divisor of it
+            //this.Grid.ClientHeight = this.ClientSize.Height;
         }
         public void InitHandlers()
         {
