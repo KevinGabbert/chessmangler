@@ -178,6 +178,32 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        /// <summary>
+        ///             //This is what we use to impose an order on the UISquares.  (The Square2D List is an unordered list)
+        /// </summary>
+        /// <param name="flipTheBoard"></param>
+        /// <param name="board"></param>
+        /// <param name="newRow"></param>
+        /// <param name="columnCount"></param>
+        public static void Set_Square_Order(bool flipTheBoard, BoardDef board, ref int newRow, ref int columnCount)
+        {
+            if (!flipTheBoard)
+            {
+                if (++columnCount > board.Columns - 1)
+                {
+                    columnCount = 0;
+                    newRow++;
+                }
+            }
+            else
+            {
+                if (--columnCount < 0)
+                {
+                    columnCount = board.Columns - 1;
+                    newRow--;
+                }
+            }
+        }
         public void ClearSquare(UISquare squareToClear, bool clearImage)
         {
             //This UISquare is actually a ref to square on a form.. but doesn't *have* to be..

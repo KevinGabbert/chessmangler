@@ -41,7 +41,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         /// <summary>
         /// This function is all about resetting the location of the UISquares that were originally created in UIBoard.BuildUISquares
         /// </summary>
-        public void Redraw(bool flipBoard)
+        public void Redraw(bool flipTheBoard)
         {
             if (this.ConstrainProportions)
             {
@@ -55,7 +55,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 int newRow;
                 int columnCount;
 
-                if (!flipBoard)
+                if (!flipTheBoard)
                 {
                     newRow = 0;
                     columnCount = 0;
@@ -71,71 +71,50 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 {
                     if (currentSquare != null)
                     {
-                        UISquare currentUISquare = this.UIBoard.GetSquare_ByLocation(currentSquare.Column, currentSquare.Row);
-
-                        if (currentUISquare != null)
-                        {
-                            //Can these go into UISquare?
-                            this.Square_SetLocation(newRow, board, currentSquare, currentUISquare);
-                            this.Square_SetSize(board, currentUISquare);
-                            Grid2D.Square_SetPiece(currentSquare, currentUISquare);
-
-                            this.Square_DoDebugStuff(currentSquare, currentUISquare);
-                        }
-
-                        if (!flipBoard)
-                        {
-                            //This is what we use to impose a new order (different than the Square2D list)
-                            if (++columnCount > board.Columns - 1)
-                            {
-                                columnCount = 0;
-                                newRow++;
-                            }
-                        }
-                        else
-                        {
-                            //This is what we use to impose a new order (different than the Square2D list)
-                            if (--columnCount < 0)
-                            {
-                                columnCount = board.Columns - 1;
-                                newRow--;
-                            }
-
-                        }
+                        this.Set_And_PlaceUISquare(board, newRow, currentSquare, _adjust2);
+                        UIBoard.Set_Square_Order(flipTheBoard, board, ref newRow, ref columnCount);
                     }
                 }
             }
         }
 
-        public void Square_SetSize(BoardDef board, UISquare currentUISquare)
+        //TODO: I'd like to eventually move this to UIBoard, if possible
+        public void Set_And_PlaceUISquare(BoardDef board, int newRow, Square2D currentSquare, int unknownAdjustment)
         {
-            currentUISquare.Height = (this.ChessGrid2D_Form.ClientSize.Height / board.Columns) - _adjust2;
-            currentUISquare.Width = (this.ChessGrid2D_Form.ClientSize.Width) / board.Rows;
+            UISquare currentUISquare = this.UIBoard.GetSquare_ByLocation(currentSquare.Column, currentSquare.Row);
+
+            if (currentUISquare != null)
+            {
+                int menuHeight = this.ChessGrid2D_Form.chessMenu.Height;
+                int clientHeight = this.ChessGrid2D_Form.ClientSize.Height;
+                int clientWidth = this.ChessGrid2D_Form.ClientSize.Width;
+
+                this.Square_SetLocation(menuHeight, clientWidth, unknownAdjustment, newRow, board, currentSquare, currentUISquare);
+
+                UISquare.Square_SetSize(clientHeight, clientWidth, unknownAdjustment, board, currentUISquare);
+                UISquare.Square_SetPiece(currentSquare, currentUISquare);
+
+                currentUISquare.SizeMode = PictureBoxSizeMode.CenterImage; //Centers the piece in the PictureBox
+
+                this.Square_DoDebugStuff(currentSquare, currentUISquare);
+            }
         }
-        public void Square_SetLocation(int newRow, BoardDef boardDef, Square2D currentSquare, UISquare currentUISquare)
+
+        public void Square_SetLocation(int height, int width, int adjustment, int newRow, BoardDef boardDef, Square2D currentSquare, UISquare currentUISquare)
         {
             //Adjusts "Board Width" (Board being all the squares)
-            int x = currentSquare.Column * this.ChessGrid2D_Form.ClientSize.Width / boardDef.Columns;
-            int y = Grid_AdjustHeight(newRow, boardDef);
+            int x = currentSquare.Column * width / boardDef.Columns;
+            int y = Grid_AdjustHeight(height, newRow, boardDef, adjustment);
 
             currentUISquare.Location = new Point(x, y);
             currentUISquare.BoardLocation = currentSquare.BoardLocation; //sync up square name with engine square
         }
-        private static void Square_SetPiece(Square2D currentSquare, UISquare currentUISquare)
+        private int Grid_AdjustHeight(int height, int row, BoardDef board, int unknownAdjustment)
         {
-            currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
+            int heightAdjustment = height - unknownAdjustment; //unknown why I need this.  is this a total of cumulative errors??
 
-            //TODO: is this still necessary?
-            //pull a new piece image from a cached image
-            //currentUISquare.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + currentSquare.CurrentPiece.Name);
-        }
-
-        private int Grid_AdjustHeight(int row, BoardDef board)
-        {
-            int heightAdjustment = this.ChessGrid2D_Form.statusBar.Height - _adjust2;//unknown why I need this.  is this a total of cumulative errors??
-            
-            int controlsHeight = this.ChessGrid2D_Form.chessMenu.Height + heightAdjustment + this.ChessGrid2D_Form.tabControl1.Height + _adjust2;
-            int chessBoardHeight = this.ChessGrid2D_Form.ClientSize.Height - controlsHeight - heightAdjustment - _adjust2;
+            int controlsHeight = this.ChessGrid2D_Form.chessMenu.Height + heightAdjustment + this.ChessGrid2D_Form.tabControl1.Height + unknownAdjustment;
+            int chessBoardHeight = this.ChessGrid2D_Form.ClientSize.Height - controlsHeight - heightAdjustment - unknownAdjustment;
 
             int y = 0;
 

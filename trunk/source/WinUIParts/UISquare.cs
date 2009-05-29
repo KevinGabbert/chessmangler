@@ -9,6 +9,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using ChessMangler.Engine.Interfaces;
+using ChessMangler.Engine.Types;
 using ChessMangler.Rules.Interfaces;
 
 namespace ChessMangler.WinUIParts
@@ -221,11 +222,24 @@ namespace ChessMangler.WinUIParts
 
             //this.Piece = piece;
             //this.Image = this.Piece.Image;
-            this.SizeMode = PictureBoxSizeMode.CenterImage;  //TODO: this needs to be pulled from config ( > v1.0)
+            //this.SizeMode = PictureBoxSizeMode.CenterImage;  //TODO: this needs to be pulled from config ( > v1.0)
 
             //TODO:  This needs to be pulled from config
-            this.BorderStyle = BorderStyle.None;
+            //this.BorderStyle = BorderStyle.None;
             //config will have a BorderStyle attribute for the form (and later perhaps for each square)
+        }
+        public static void Square_SetPiece(Square2D currentSquare, UISquare currentUISquare)
+        {
+            currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
+
+            //TODO: is this still necessary?
+            //pull a new piece image from a cached image
+            //currentUISquare.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + currentSquare.CurrentPiece.Name);
+        }
+        public static void Square_SetSize(int height, int width, int adjustment, BoardDef board, UISquare currentUISquare)
+        {
+            currentUISquare.Height = (height / board.Columns) - adjustment;
+            currentUISquare.Width = width / board.Rows;
         }
 
         //This will probably need to be refactored to a generic UI library
