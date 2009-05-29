@@ -41,23 +41,33 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         /// <summary>
         /// This function is all about resetting the location of the UISquares that were originally created in UIBoard.BuildUISquares
         /// </summary>
-        public void Redraw()
+        public void Redraw(bool flipBoard)
         {
             if (this.ConstrainProportions)
             {
                 this.Form_KeepSquare();
             }
 
-            //Use our good friend BoardEnumerator to help us find all the squares on the board, and reset their locations
-
             if (this.UIBoard != null)
             {
-                int newRow = 0;
-                int columnCount = 0;
-
                 BoardDef board = this.UIBoard.EngineBoard.Definition;
 
-                foreach (Square2D currentSquare in this.UIBoard.EngineBoard.EnumerateBoard(board, false))
+                int newRow;
+                int columnCount;
+
+                if (!flipBoard)
+                {
+                    newRow = 0;
+                    columnCount = 0;
+                }
+                else
+                {
+                    newRow = board.Rows - 1;
+                    columnCount = board.Columns - 1;
+                }
+
+                //Use our good friend BoardEnumerator to help us find all the squares on the board, and reset their locations
+                foreach (Square2D currentSquare in this.UIBoard.EngineBoard.EnumerateBoard(board))
                 {
                     if (currentSquare != null)
                     {
@@ -73,11 +83,24 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                             this.Square_DoDebugStuff(currentSquare, currentUISquare);
                         }
 
-                        //This is what we use to impose a new order (different than the Square2D list)
-                        if (++columnCount > board.Columns - 1)
+                        if (!flipBoard)
                         {
-                            columnCount = 0;
-                            newRow++;
+                            //This is what we use to impose a new order (different than the Square2D list)
+                            if (++columnCount > board.Columns - 1)
+                            {
+                                columnCount = 0;
+                                newRow++;
+                            }
+                        }
+                        else
+                        {
+                            //This is what we use to impose a new order (different than the Square2D list)
+                            if (--columnCount < 0)
+                            {
+                                columnCount = board.Columns - 1;
+                                newRow--;
+                            }
+
                         }
                     }
                 }

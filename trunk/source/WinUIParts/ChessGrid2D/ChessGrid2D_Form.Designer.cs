@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
+
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChessGrid2D_Form));
             this.chessMenu = new System.Windows.Forms.MenuStrip();
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,6 +110,7 @@
             this.chessMenu.Size = new System.Drawing.Size(669, 24);
             this.chessMenu.TabIndex = 0;
             this.chessMenu.Text = "menuStrip1";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // connectionToolStripMenuItem
             // 
@@ -133,6 +136,7 @@
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.newToolStripMenuItem.Text = "New";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // oneToolStripMenuItem
             // 
@@ -145,6 +149,7 @@
             this.entryToolStripMenuItem.Name = "entryToolStripMenuItem";
             this.entryToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.entryToolStripMenuItem.Text = "entry";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // forToolStripMenuItem
             // 
@@ -157,6 +162,7 @@
             this.eachToolStripMenuItem.Name = "eachToolStripMenuItem";
             this.eachToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.eachToolStripMenuItem.Text = "each";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // configToolStripMenuItem1
             // 
@@ -175,6 +181,7 @@
             this.standardChessToolStripMenuItem.Name = "standardChessToolStripMenuItem";
             this.standardChessToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.standardChessToolStripMenuItem.Text = "Standard Chess";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // monsterChessToolStripMenuItem
             // 
@@ -202,6 +209,7 @@
             this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
             this.gameToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.gameToolStripMenuItem.Text = "Connection";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // accountsToolStripMenuItem1
             // 
@@ -219,6 +227,7 @@
             this.jabberToolStripMenuItem1.Name = "jabberToolStripMenuItem1";
             this.jabberToolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
             this.jabberToolStripMenuItem1.Text = "Manage";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // yahooToolStripMenuItem1
             // 
@@ -231,6 +240,7 @@
             this.aIMFredFarkelToolStripMenuItem.Name = "aIMFredFarkelToolStripMenuItem";
             this.aIMFredFarkelToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.aIMFredFarkelToolStripMenuItem.Text = "(AIM) Fred Farkel";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // googleJoeblowToolStripMenuItem
             // 
@@ -243,6 +253,7 @@
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
             this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.optionsToolStripMenuItem1.Text = "Options";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // movesToolStripMenuItem
             // 
@@ -255,30 +266,35 @@
             this.movesToolStripMenuItem.Name = "movesToolStripMenuItem";
             this.movesToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.movesToolStripMenuItem.Text = "Window";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // movesToolStripMenuItem1
             // 
             this.movesToolStripMenuItem1.Name = "movesToolStripMenuItem1";
             this.movesToolStripMenuItem1.Size = new System.Drawing.Size(130, 22);
             this.movesToolStripMenuItem1.Text = "Moves";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // annotateToolStripMenuItem
             // 
             this.annotateToolStripMenuItem.Name = "annotateToolStripMenuItem";
             this.annotateToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.annotateToolStripMenuItem.Text = "Annotate";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // capturedToolStripMenuItem
             // 
             this.capturedToolStripMenuItem.Name = "capturedToolStripMenuItem";
             this.capturedToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.capturedToolStripMenuItem.Text = "Captured";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // uIConfigToolStripMenuItem
             // 
             this.uIConfigToolStripMenuItem.Name = "uIConfigToolStripMenuItem";
             this.uIConfigToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.uIConfigToolStripMenuItem.Text = "UI Config";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // debugToolStripMenuItem
             // 
@@ -286,6 +302,7 @@
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.debugToolStripMenuItem.Text = "Debug";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // actionsToolStripMenuItem
             // 
@@ -298,12 +315,15 @@
             this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
             this.actionsToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.actionsToolStripMenuItem.Text = "Actions";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // flipBoardToolStripMenuItem
             // 
             this.flipBoardToolStripMenuItem.Name = "flipBoardToolStripMenuItem";
             this.flipBoardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.flipBoardToolStripMenuItem.Text = "Flip Board";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
+
             // 
             // rotateBoardToolStripMenuItem
             // 
@@ -331,6 +351,7 @@
             this.toggleDebugModeToolStripMenuItem.Name = "toggleDebugModeToolStripMenuItem";
             this.toggleDebugModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.toggleDebugModeToolStripMenuItem.Text = "Toggle Debug Mode";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // resetPiecesToolStripMenuItem
             // 
@@ -343,6 +364,7 @@
             this.clearPiecesToolStripMenuItem.Name = "clearPiecesToolStripMenuItem";
             this.clearPiecesToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.clearPiecesToolStripMenuItem.Text = "Clear Pieces";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // chatToolStripMenuItem
             // 
@@ -353,6 +375,7 @@
             this.chatToolStripMenuItem.Name = "chatToolStripMenuItem";
             this.chatToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.chatToolStripMenuItem.Text = "Chat";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // messageWindowToolStripMenuItem
             // 
@@ -365,6 +388,7 @@
             this.configToolStripMenuItem2.Name = "configToolStripMenuItem2";
             this.configToolStripMenuItem2.Size = new System.Drawing.Size(197, 22);
             this.configToolStripMenuItem2.Text = "Config";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // showLogToolStripMenuItem
             // 
@@ -380,6 +404,7 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "Help";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // onlineHelpToolStripMenuItem
             // 
@@ -392,6 +417,7 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.aboutToolStripMenuItem.Text = "About";
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // statusBar
             // 
@@ -402,6 +428,7 @@
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(669, 22);
             this.statusBar.TabIndex = 1;
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // connectionLabel
             // 
@@ -448,6 +475,7 @@
             this.splitContainer.Size = new System.Drawing.Size(657, 85);
             this.splitContainer.SplitterDistance = 219;
             this.splitContainer.TabIndex = 3;
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // txtChatHistory
             // 
@@ -457,6 +485,7 @@
             this.txtChatHistory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtChatHistory.Size = new System.Drawing.Size(428, 41);
             this.txtChatHistory.TabIndex = 2;
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // btnChatSend
             // 
@@ -499,6 +528,7 @@
             this.tabPage2.Size = new System.Drawing.Size(661, 91);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.UseVisualStyleBackColor = true;
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // btnEnableSquares
             // 
@@ -529,6 +559,7 @@
             this.tabPage1.Size = new System.Drawing.Size(661, 91);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.UseVisualStyleBackColor = true;
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
             // 
             // ChessGrid2D_Form
             // 
@@ -561,7 +592,7 @@
             this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-
+            //For handlers, go to ChessGrid2D_Form.InitHandlers
         }
 
         #endregion

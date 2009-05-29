@@ -82,7 +82,7 @@ namespace ChessMangler.TestHarness.Engine
         [Test(Description = "This function verifies that the 'yield return' clause is called.")]
         public void VerifySquareLogicElse()
         {
-            foreach (Square2D currentSquare in _testBoard.EnumerateBoard(new BoardDef(8,8), false))
+            foreach (Square2D currentSquare in _testBoard.EnumerateBoard(new BoardDef(8,8)))
             {
                Assert.IsFalse(_testBoard.IsNew); 
                Assert.AreEqual(_testBoard.GetByLocation(7, 0).BoardLocation, currentSquare.BoardLocation);

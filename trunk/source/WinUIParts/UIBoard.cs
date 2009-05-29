@@ -33,6 +33,21 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+
+        //TODO: perhaps later (>.5) this can be replaced by an "Orientation" prop.. (can support 4 angles)
+        bool _flipped = false;
+        public bool Flipped
+        {
+            get
+            {
+                return _flipped;
+            }
+            set
+            {
+                _flipped = value;
+            }
+        }
+
         int _name;
         public int Name
         {
@@ -118,7 +133,7 @@ namespace ChessMangler.WinUIParts
         /// <param name="squareSize"></param>
         public void BuildUISquares(Form formForBoard, BoardDef boardDef, Int16 squareSize)
         {
-            foreach (Square2D currentSquare in this.EngineBoard.EnumerateBoard(boardDef, false))
+            foreach (Square2D currentSquare in this.EngineBoard.EnumerateBoard(boardDef))
             {
                 if (currentSquare != null)
                 {

@@ -97,7 +97,7 @@ namespace ChessMangler.Engine.Types
             this.Definition = boardDef;
 
             //This foreach construct may be temporary, as I'm evaluating whether this is a good idea..
-            foreach (Square2D currentSquare in this.EnumerateBoard(boardDef, false))
+            foreach (Square2D currentSquare in this.EnumerateBoard(boardDef))
             {
                 //this empty foreach executes BoardEnumerator. We may need to put something here later..
             }
@@ -216,53 +216,25 @@ namespace ChessMangler.Engine.Types
         /// </summary>
         /// <param name="boardDef"></param>
         /// <returns></returns>
-        public IEnumerable<Square2D> EnumerateBoard(BoardDef boardDef, bool reverse)
+        public IEnumerable<Square2D> EnumerateBoard(BoardDef boardDef)
         {
-            if (!reverse)
+            //Rows
+            for (Int16 currentRow = 0; currentRow < boardDef.Rows; currentRow++)
             {
-                //loop thru rows
-                for (Int16 currentRow = 0; currentRow < boardDef.Rows; currentRow++)
-                {
-                    Int16 refRow = (Int16)(boardDef.Rows - (currentRow + 1));
+                Int16 refRow = (Int16)(boardDef.Rows - (currentRow + 1));
 
-                    //loop thru columns
-                    for (Int16 currentColumn = 0; currentColumn < boardDef.Columns; currentColumn++)
+                //Columns
+                for (Int16 currentColumn = 0; currentColumn < boardDef.Columns; currentColumn++)
+                {
+                    if (this.IsNew)
                     {
-                        if (this.IsNew)
-                        {
-                            //Hand out this new square to those who want it..
-                            yield return this.AddNewSquare(boardDef, currentColumn, refRow);
-                        }
-                        else
-                        {
-                            //This would normally be called by the UI via a for loop.
-                            yield return this.GetByLocation(refRow, currentColumn);
-                        }
+                        //Hand out this new square to those who want it..
+                        yield return this.AddNewSquare(boardDef, currentColumn, refRow);
                     }
-                }
-            }
-            else
-            {
-                //Lame attempt at reversing the board..
-
-                //loop thru rows
-                for (Int16 currentRow = boardDef.Rows; currentRow > 0; currentRow--)
-                {
-                    Int16 refRow = (Int16)(boardDef.Rows - (currentRow));
-
-                    //loop thru columns
-                    for (Int16 currentColumn = boardDef.Columns; currentColumn > 0; currentColumn--)
+                    else
                     {
-                        if (this.IsNew)
-                        {
-                            //Hand out this new square to those who want it..
-                            yield return this.AddNewSquare(boardDef, currentColumn, refRow);
-                        }
-                        else
-                        {
-                            //This would normally be called by the UI via a for loop.
-                            yield return this.GetByLocation(refRow, currentColumn);
-                        }
+                        //This would normally be called by the UI via a for loop.
+                        yield return this.GetByLocation(refRow, currentColumn);
                     }
                 }
             }

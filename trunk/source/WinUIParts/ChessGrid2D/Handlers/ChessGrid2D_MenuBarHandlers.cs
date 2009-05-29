@@ -35,7 +35,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             _userSetDebugMode = !this._userSetDebugMode;
 
             this.UIBoard.DebugMode = this._userSetDebugMode;
-            this.ChessGrid2D_Form.Grid.Redraw();
+            this.ChessGrid2D_Form.Grid.Redraw(this.ChessGrid2D_Form.Grid.UIBoard.Flipped);
         }
         public void resetPiecesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -64,7 +64,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             this.ChessGrid2D_Form.Grid.UIBoard.EngineBoard.Squares = new List<Square2D>();
             this.ChessGrid2D_Form.Grid.UIBoard.EngineBoard.IsNew = true;
-            this.ChessGrid2D_Form.Grid.Redraw();
+            this.ChessGrid2D_Form.Grid.Redraw(this.ChessGrid2D_Form.Grid.UIBoard.Flipped);
 
             //this.ChessGrid2D_Form.DitchHandlers();
             //this.ChessGrid2D_Form.Grid = new Grid2D(this.ChessGrid2D_Form);
@@ -76,6 +76,13 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //this.ChessGrid2D_Form.Grid.Redraw();
         }
 
+        public void flipBoardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //TODO:  this setting needs to be saved in the database.
+            this.ChessGrid2D_Form.Grid.UIBoard.Flipped = !this.ChessGrid2D_Form.Grid.UIBoard.Flipped;
+            this.ChessGrid2D_Form.Grid.Redraw(this.ChessGrid2D_Form.Grid.UIBoard.Flipped);
+        }
+
         public void ClearPieces()
         {
             BoardDef board = this.ChessGrid2D_Form.Grid.UIBoard.EngineBoard.Definition;
@@ -83,7 +90,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             this.ChessGrid2D_Form.Grid.UIBoard.EngineBoard.Squares = new List<Square2D>();
             this.ChessGrid2D_Form.Grid.UIBoard.EngineBoard.IsNew = true;
-            this.ChessGrid2D_Form.Grid.Redraw();
+            this.ChessGrid2D_Form.Grid.Redraw(this.ChessGrid2D_Form.Grid.UIBoard.Flipped);
         }
     }
 }
