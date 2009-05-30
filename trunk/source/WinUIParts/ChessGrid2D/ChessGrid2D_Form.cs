@@ -212,6 +212,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //}
 
             this.AddChat(this.txtChat.Text + msg.Body);
+            Console.Beep(37, 70);
         }
         private void j_OnAuthenticate(object sender)
         {
@@ -230,7 +231,14 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         }
         private void j_OnWriteText(object sender, string txt)
         {
-            if (txt == " ") return;  // ignore keep-alive spaces
+            if (txt == " ")
+            {
+                return;  // ignore keep-alive spaces
+            }
+            else
+            {
+                Console.Beep(3000, 20);
+            }
         }
         private void j_OnReadText(object sender, string txt)
         {
@@ -244,6 +252,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             {
                 //if Packet is good, then
                 //this._squareHandlers.OutBox = null;
+                Console.Beep(5000, 20);
             }
             catch
             {
