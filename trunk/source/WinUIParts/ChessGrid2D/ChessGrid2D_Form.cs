@@ -219,8 +219,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         private void j_OnAuthenticate(object sender)
         {
             JabberClient j = (JabberClient)sender;
-            j.Message(this.JabberOpponent, "Chess Mangler " + this.Version + " <Proto> Connected @ " + DateTime.Now.ToString());
-
+            j.Message(this.JabberOpponent, "Chess Mangler " + this.Version + " <Proto> Connecting @ " + DateTime.Now.ToString());
+            Console.Beep(1000, 20);
             done.Set(); // Finished sending.  Shut down.
         }
         private void j_OnError(object sender, Exception ex)
@@ -235,12 +235,15 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (txt == " ")
             {
+                this.AddChat("Ping" + DateTime.Now.ToString());
                 return;  // ignore keep-alive spaces
             }
             else
             {
-                Console.Beep(3000, 20);
+                
             }
+
+            Console.Beep(3000, 20);
         }
         private void j_OnReadText(object sender, string txt)
         {
