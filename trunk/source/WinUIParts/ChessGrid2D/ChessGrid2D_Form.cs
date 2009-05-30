@@ -166,18 +166,20 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         }
         private void btnSubmitMove_Click(object sender, EventArgs e)
         {
-            //TODO: Move this to a "JabberTasks" static class in Comms. (later this will be abstracted out as well)
-            JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
-            message.To = new jabber.JID(this.JabberOpponent);
-            message.AddChild(this._squareHandlers.OutBox);
+            if (this._squareHandlers.OutBox != null)
+            {
+                //TODO: Move this to a "JabberTasks" static class in Comms. (later this will be abstracted out as well)
+                JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
+                message.To = new jabber.JID(this.JabberOpponent);
+                message.AddChild(this._squareHandlers.OutBox);
 
-            jabberClient.Write(message);
+                jabberClient.Write(message);
 
+                //This is temporary
+                MessageBox.Show(message.ToString());
 
-            //This is temporary
-            MessageBox.Show(message.ToString());
-
-            this.Grid.UIBoard.Squares.Disable();  //Until we recieve a good packet from the opponent
+                this.Grid.UIBoard.Squares.Disable();  //Until we recieve a good packet from the opponent
+            }
         }
         private void btnChatSend_Click(object sender, EventArgs e)
         {
