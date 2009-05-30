@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Threading;
 
+using jabber.protocol.client; //presence
 using jabber.client; //TODO: This needs to be refactored out.
 using JabberMessage = jabber.protocol.client.Message; //This is the only one that should stay
 
@@ -97,6 +98,14 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         //This should probably be in another object
         private void InitJabber()
         {
+            jabberClient.AutoReconnect = 3F;
+            jabberClient.AutoStartCompression = true;
+            jabberClient.AutoStartTLS = true;
+            jabberClient.InvokeControl = this;
+            jabberClient.LocalCertificate = null;
+            jabberClient.KeepAlive = 30F;
+            
+
             // what user/pass to log in as
             jabberClient.User = "Test.Chess.Mangler";
             jabberClient.Server = "gmail.com";  // use gmail.com for GoogleTalk
@@ -197,23 +206,20 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
         {
-            //jabber.protocol.x.Data x = msg["x", URI.XDATA] as jabber.protocol.x.Data;
-            //if (x != null)
-            //{
-            //    //muzzle.XDataForm f = new muzzle.XDataForm(msg);
-            //    //f.ShowDialog(this);
-            //    //j.Write(f.GetResponse());
-            //}
+            jabber.protocol.x.Data x = msg["x", jabber.protocol.URI.XDATA] as jabber.protocol.x.Data;
+            if (x != null)
+            {
+                //muzzle.XDataForm f = new muzzle.XDataForm(msg);
+                //f.ShowDialog(this);
+                //jc.Write(f.GetResponse());
 
-            //if (msg.Supports(typeof(MovePacket)))
-            //{
+                Console.Beep(50, 70);
 
-            //    //MovePacket move = msg.SelectSingleNode(typeof(MovePacket)) as MovePacket;
-
-            //    //Console.WriteLine(move.Hash.InnerText);
-            //}
-
-            this.AddChat(this.txtChat.Text + msg.Body);
+            }
+            else
+            {
+                this.AddChat(this.txtChat.Text + msg.Body);
+            }
             Console.Beep(37, 70);
         }
         private void j_OnAuthenticate(object sender)
@@ -222,6 +228,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             j.Message(this.JabberOpponent, "Chess Mangler " + this.Version + " <Proto> Connecting @ " + DateTime.Now.ToString());
             Console.Beep(1000, 20);
             done.Set(); // Finished sending.  Shut down.
+
+            jabberClient.Presence(PresenceType.available, "ChessMangler Online", "show", 2);
         }
         private void j_OnError(object sender, Exception ex)
         {
@@ -235,7 +243,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (txt == " ")
             {
-                this.AddChat("Ping" + DateTime.Now.ToString());
+                this.AddChat("Ping " + DateTime.Now.ToString());
                 return;  // ignore keep-alive spaces
             }
             else
@@ -296,6 +304,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         public void InitForms()
         {
             ChessGrid2D_Form._debugForm = this.Grid.DebugForm;
+
+            this.txtChat.Text = "ChessMangler Ready";
+            this.SendChat();
+            this.txtChat.Text = "";
         }
 
         //used in some cases to reset things.
