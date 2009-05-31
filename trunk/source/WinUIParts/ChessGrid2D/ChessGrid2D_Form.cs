@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Threading;
 
+using jabber.protocol;
+using jabber.protocol.x;
 using jabber.protocol.client; //presence
 using jabber.client; //TODO: This needs to be refactored out.
 using JabberMessage = jabber.protocol.client.Message; //This is the only one that should stay
@@ -184,9 +186,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
                 jabberClient.Write(message);
 
-                //This is temporary
-                MessageBox.Show(message.ToString());
-
                 this.Grid.UIBoard.Squares.Disable();  //Until we recieve a good packet from the opponent
             }
         }
@@ -206,26 +205,21 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
         {
-            jabber.protocol.x.Data x = msg["x", jabber.protocol.URI.XDATA] as jabber.protocol.x.Data;
-            if (x != null)
-            {
-                //muzzle.XDataForm f = new muzzle.XDataForm(msg);
-                //f.ShowDialog(this);
-                //jc.Write(f.GetResponse());
-
-                Console.Beep(50, 70);
-
-            }
-            else
+            if (msg.Body != null)
             {
                 this.AddChat(this.txtChat.Text + msg.Body);
             }
-            Console.Beep(37, 70);
+            else
+            {
+                this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
+                Console.Beep(37, 70);
+
+            }
         }
         private void j_OnAuthenticate(object sender)
         {
-            JabberClient j = (JabberClient)sender;
-            j.Message(this.JabberOpponent, "Chess Mangler " + this.Version + " <Proto> Connecting @ " + DateTime.Now.ToString());
+            //JabberClient j = (JabberClient)sender;
+            //j.Message(this.JabberOpponent, "Chess Mangler " + this.Version + " <Proto> Connecting @ " + DateTime.Now.ToString());
             Console.Beep(1000, 20);
             done.Set(); // Finished sending.  Shut down.
 
@@ -243,15 +237,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (txt == " ")
             {
-                this.AddChat("Ping " + DateTime.Now.ToString());
                 return;  // ignore keep-alive spaces
             }
-            else
-            {
-                
-            }
-
-            Console.Beep(3000, 20);
         }
         private void j_OnReadText(object sender, string txt)
         {
@@ -304,10 +291,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         public void InitForms()
         {
             ChessGrid2D_Form._debugForm = this.Grid.DebugForm;
-
-            this.txtChat.Text = "ChessMangler Ready";
-            this.SendChat();
-            this.txtChat.Text = "";
         }
 
         //used in some cases to reset things.
