@@ -126,13 +126,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             // what to do when login completes
             jabberClient.OnAuthenticate += new bedrock.ObjectHandler(j_OnAuthenticate);
 
-            //extra
-            jabberClient.OnWriteText += new bedrock.TextHandler(j_OnWriteText);
-
-            jabberClient.OnReadText += new bedrock.TextHandler(j_OnReadText);
-
             // listen for XMPP wire protocol
-            //jabberClient.OnWriteText += new bedrock.TextHandler(j_OnWriteText);
             jabberClient.OnMessage += new MessageHandler(j_OnMessage);
 
             // Set everything in motion
@@ -214,6 +208,19 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
                 Console.Beep(37, 70);
 
+                //Load up Move Packet
+                  //if we have problems here, send a REJECT packet or something
+
+                //If we got this far then the move packet is good
+                //Send out a RECV Packet (no need to wait for any return msg)
+
+                //Tell Engine to execute a move (pass it the move packet)
+
+                this.Grid.Redraw(Grid.UIBoard.Flipped); 
+
+                this.Grid.UIBoard.Squares.Enable();
+                this.Grid.UIBoard.Squares.UnlockAll();
+                this._squareHandlers.OutBox = null;
             }
         }
         private void j_OnAuthenticate(object sender)
@@ -232,31 +239,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             // Shut down.
             done.Set();
-        }
-        private void j_OnWriteText(object sender, string txt)
-        {
-            if (txt == " ")
-            {
-                return;  // ignore keep-alive spaces
-            }
-        }
-        private void j_OnReadText(object sender, string txt)
-        {
-            //verify Return packet
-
-            //if packet is good, then
-            //this.Grid.UIBoard.Squares.Enable();
-            //this.Grid.UIBoard.Squares.UnlockAll();
-
-            try
-            {
-                //if Packet is good, then
-                //this._squareHandlers.OutBox = null;
-                Console.Beep(5000, 20);
-            }
-            catch
-            {
-            }
         }
 
         #endregion
