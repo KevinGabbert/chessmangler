@@ -37,19 +37,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
         }
 
-        MovePacket _outBox;
-        public MovePacket Move_OutBox
-        {
-            get
-            {
-                return _outBox;
-            }
-            set
-            {
-                _outBox = value;
-            }
-        }
-
         string _version = "Alpha";
         public string Version
         {
@@ -60,6 +47,21 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             set
             {
                 _version = value;
+            }
+        }
+
+
+        //TODO:  This will need to be moved somewhere
+        MovePacket _inBox;
+        public MovePacket InBox
+        {
+            get
+            {
+                return _inBox;
+            }
+            set
+            {
+                _inBox = value;
             }
         }
 
@@ -205,24 +207,64 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
             else
             {
+                //*** If DebugMode
                 this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
                 Console.Beep(37, 70);
+                //*** If DebugMode
 
-                //Load up Move Packet
-                  //if we have problems here, send a REJECT packet or something
+                MovePacket recievedMove = new MovePacket(msg);
 
-                //If we got this far then the move packet is good
-                //Send out a RECV Packet (no need to wait for any return msg)
+                if (recievedMove.Invalid)
+                {
+                    //if we have problems here, send a REJECT packet or something
+                    this._squareHandlers.OutBox = recievedMove.GenerateRejectPacket();
 
-                //Tell Engine to execute a move (pass it the move packet)
+                    //so.. at this point, we are back to our previous state.  Nothing gained.
 
-                this.Grid.Redraw(Grid.UIBoard.Flipped); 
+                    //Tell the user about it, however..
 
-                this.Grid.UIBoard.Squares.Enable();
-                this.Grid.UIBoard.Squares.UnlockAll();
-                this._squareHandlers.OutBox = null;
+                    //Flash something yellow, like the title bar to the chat window or something.
+                    //This would be good for all erroneous move communication
+
+                    //also, cue up the chat window.  Select its tab.  Make the text red with asterisks.
+                    this.AddChat("Invalid Move recieved. " + recievedMove.InvalidMoveReason + " Try again?");
+                }
+
+                this.InBox = recievedMove; 
+
+                this.Process_InBox();
+                this.SendOutBox();
             }
         }
+
+        private void Process_InBox()
+        {
+            //Load up Move Packet
+            MovePacket recievedMove = this.InBox;
+
+            this._squareHandlers.OutBox = recievedMove.GenerateRCVPacket();
+
+            //Make sure this move is for this game (as we can have several going.)
+            //not sure how this might be a problem, but I want to be prepared if we ever do..
+            //_recievedMove.GameID;
+
+            //This keeps us from getting this move confused with other moves. somebody needs to check this.  I don't know who..
+            //_recievedMove.MoveHash;
+
+            //If we got this far then the move packet is good
+            //Send out a RECV Packet (no need to wait for any return msg)
+
+            this.Grid.UIBoard.EngineBoard.ExecuteMove(recievedMove);
+            this.Grid.Redraw(Grid.UIBoard.Flipped); //Syncs the UIBoard with the newly changed EngineBoard
+
+            this.Grid.UIBoard.Squares.Enable();
+            this.Grid.UIBoard.Squares.UnlockAll();
+        }
+        private void SendOutBox()
+        {
+            //throw new NotImplementedException();
+        }
+
         private void j_OnAuthenticate(object sender)
         {
             //JabberClient j = (JabberClient)sender;

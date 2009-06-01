@@ -8,6 +8,8 @@ using ChessMangler.Engine.Config;
 using ChessMangler.Engine.Interfaces;
 using ChessMangler.Engine.Enums;
 
+using ChessMangler.Communications.Types;
+
 namespace ChessMangler.Engine.Types
 {
     public class Board2D: IBoardMode
@@ -294,5 +296,35 @@ namespace ChessMangler.Engine.Types
         //IsPinned
 
         #endregion
+
+        public void ExecuteMove(MovePacket _recievedMove)
+        {
+            ISquare from = this.GetByName(_recievedMove.Previous);
+            ISquare to = this.GetByName(_recievedMove.New);
+
+            if (_recievedMove.Rules)
+            {
+                if (Board2D.IsThisMoveOkay(from, to))
+                {
+                    Board2D.MoveThePieceOver(from, to);
+                }
+                else
+                {
+                    //Make a big stink.  Throw exception?
+                    throw new SystemException("MoveException here");
+                }
+            }
+            else
+            {
+                Board2D.MoveThePieceOver(from, to);
+            }
+        }
+
+        //nobody but this class needs this function.
+        private static void MoveThePieceOver(ISquare from, ISquare to)
+        {
+            to.CurrentPiece = from.CurrentPiece;
+            from.CurrentPiece = null; //Piece has move.  Dump it from the old square
+        }
     }
 }

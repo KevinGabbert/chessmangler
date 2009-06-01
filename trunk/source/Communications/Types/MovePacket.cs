@@ -37,7 +37,116 @@ namespace ChessMangler.Communications.Types
     //This needs to evolve into an instance class with properties
     public class MovePacket
     {
-        public static XmlElement SetupPacket(string hash, string gameID, string piece, string prevMove, string newMove, bool useRules)
+        #region Properties
+
+        string _gameID;
+        public string GameID
+        {
+            get
+            {
+                return _gameID;
+            }
+            set
+            {
+                _gameID = value;
+            }
+        }
+
+        string _moveHash;
+        public string MoveHash
+        {
+            get
+            {
+                return _moveHash;
+            }
+            set
+            {
+                _moveHash = value;
+            }
+        }
+
+        string _piece;
+        public string Piece
+        {
+            get
+            {
+                return _piece;
+            }
+            set
+            {
+                _piece = value;
+            }
+        }
+
+        string _previous;
+        public string Previous
+        {
+            get
+            {
+                return _previous;
+            }
+            set
+            {
+                _previous = value;
+            }
+        }
+
+        string _new;
+        public string New
+        {
+            get
+            {
+                return _new;
+            }
+            set
+            {
+                _new = value;
+            }
+        }
+
+        bool _rules;
+        public bool Rules
+        {
+            get
+            {
+                return _rules;
+            }
+            set
+            {
+                _rules = value;
+            }
+        }
+
+        #region Internal props
+
+        bool _invalid;
+        public bool Invalid
+        {
+            get
+            {
+                return _invalid;
+            }
+        }
+
+        string _invalidMoveReason;
+        public string InvalidMoveReason
+        {
+            get
+            {
+                return _invalidMoveReason;
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        public MovePacket(Message jabberMessage)
+        {
+            //parse the message into this object
+        }
+
+        public static XmlElement GenerateXml(string hash, string gameID, string piece, string prevMove, string newMove, bool useRules)
         {
             XmlDocument __newDoc = new XmlDocument();
 
@@ -81,6 +190,16 @@ namespace ChessMangler.Communications.Types
             element.InnerText = innerText;
 
             return element;
+        }
+
+        public XmlElement GenerateRejectPacket()
+        {
+            throw new NotImplementedException();
+        }
+
+        public XmlElement GenerateRCVPacket()
+        {
+            throw new NotImplementedException();
         }
     }
 

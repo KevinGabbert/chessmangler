@@ -41,6 +41,20 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
         }
 
+
+        //MovePacket _outBox;
+        //public MovePacket OutBox
+        //{
+        //    get
+        //    {
+        //        return _outBox;
+        //    }
+        //    set
+        //    {
+        //        _outBox = value;
+        //    }
+        //}
+
         #endregion
 
         /// <summary>
@@ -209,7 +223,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
                 //TODO: refactor this
 
-                this.OutBox = MovePacket.SetupPacket("movehash", "GameID", dragEndSquare.CurrentPiece.Name, _dragStartSquare.BoardLocation, dragEndSquare.BoardLocation, false); //no rules for now
+                this.OutBox = MovePacket.GenerateXml("movehash", "GameID", dragEndSquare.CurrentPiece.Name, _dragStartSquare.BoardLocation, dragEndSquare.BoardLocation, false); //no rules for now
 
                 //dragEndSquare.CurrentPiece.Image.Visibility = 50%
 
