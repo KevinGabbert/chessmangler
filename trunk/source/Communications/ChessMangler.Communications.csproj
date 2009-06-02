@@ -46,6 +46,9 @@
     <Compile Include="Handlers\ChessGrid2D_JabberHandlers.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Handlers\IM_Handler_Base.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Interfaces\IMovePacket.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

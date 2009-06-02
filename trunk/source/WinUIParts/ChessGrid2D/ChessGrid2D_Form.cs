@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml;
-using System.Threading;
-
-using jabber.protocol;
-using jabber.protocol.x;
-using jabber.protocol.client; //presence
-using jabber.client; //TODO: This needs to be refactored out.
-using JabberMessage = jabber.protocol.client.Message; //This is the only one that should stay
 
 using ChessMangler.Engine.Types;
 using ChessMangler.Settings.Types.WinUI;
 using ChessMangler.Communications.Types;
-//using ChessMangler.Communications.Handlers;
+using ChessMangler.Communications.Handlers;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
@@ -68,15 +61,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         #endregion
 
-        //TODO: Move to Jabber_EventHandler **** jabber proto code ****
-
-        //We should know all this by this point (will be set in options form
-        JabberClient jabberClient = new JabberClient();
-
-        //TODO:  this goes in Jabber_EventHandler we will wait on this event until we're done sending
-        static ManualResetEvent done = new ManualResetEvent(false);
-
-
+        JabberHandler _jabberHandlers = new JabberHandler();
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
@@ -84,7 +69,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             InitializeComponent();
 
-            this.InitJabber();
+            this.InitJabber2();
+
+
             this.InitGrid();
             this.InitForms();
         }
@@ -92,7 +79,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             InitializeComponent();
 
-            this.InitJabber();
+            this.InitJabber2();
             this.InitGrid();
             this.Grid.SetUp_FreeFormBoard(this, board, squareSize);
 
@@ -100,49 +87,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.InitForms();
         }
 
-        //**** Refactor ****
-        //This should probably be in another object
-        private void InitJabber()
+        private void InitJabber2()
         {
-            //if Login infor isn't filled out by this point, then pop up the login form
-
-            jabberClient.AutoReconnect = 3F;
-            jabberClient.AutoStartCompression = true;
-            jabberClient.AutoStartTLS = true;
-            jabberClient.InvokeControl = this;
-            jabberClient.LocalCertificate = null;
-            jabberClient.KeepAlive = 30F;
-            
-
-            // what user/pass to log in as
-            jabberClient.User = "Test.Chess.Mangler";
-            jabberClient.Server = "gmail.com";  // use gmail.com for GoogleTalk
-            jabberClient.Password = "Ch3$$Mangl3r";
-            jabberClient.NetworkHost = "talk.l.google.com";  // Note: that's an "L", not a "1".
-
-            // don't do extra stuff, please.
-            jabberClient.AutoPresence = false;
-            jabberClient.AutoRoster = false;
-            jabberClient.AutoReconnect = -1;
-
-            // listen for errors.  Always do this!
-            jabberClient.OnError += new bedrock.ExceptionHandler(j_OnError);
-
-            // what to do when login completes
-            jabberClient.OnAuthenticate += new bedrock.ObjectHandler(j_OnAuthenticate);
-
-            // listen for XMPP wire protocol
-            jabberClient.OnMessage += new MessageHandler(j_OnMessage);
-
-
-            // Set everything in motion
-            jabberClient.Connect();
-
-            //wait until sending a message is complete
-            done.WaitOne();
+            _jabberHandlers.OpponentChat_Recieved += new JabberHandler.OpponentChat(On_Opponent_RCV);
         }
-        
-        #region Event Handlers
+
+        public void On_Opponent_RCV(string sender)
+        {
+            Console.Beep(37, 70);
+            this.AddChat(this.txtChat.Text + " " + sender.ToString());
+        }
 
         private void ChessGrid2D_Load(object sender, EventArgs e)
         {
@@ -159,11 +113,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             //TODO: tell the Jabber_EventHandler to Dispose.
 
-            //TODO: Move this code to the Jabber_EventHandler
-            if (jabberClient.IsAuthenticated)
-            {
-                jabberClient.Close();
-            }
+            ////TODO: Move this code to the Jabber_EventHandler
+            //if (jabberClient.IsAuthenticated)
+            //{
+            //    jabberClient.Close();
+            //}
         }
         private void ChessGrid2D_Form_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -179,12 +133,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (this._squareHandlers.OutBox != null)
             {
-                //TODO: Move this to a "JabberTasks" static class in Comms. (later this will be abstracted out as well)
-                JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
-                message.To = new jabber.JID(this.JabberOpponent);
-                message.AddChild(this._squareHandlers.OutBox);
-
-                jabberClient.Write(message);
+                _jabberHandlers.Write(this.JabberOpponent, this._squareHandlers.OutBox);
 
                 this.Grid.UIBoard.Squares.Disable();  //Until we recieve a good packet from the opponent
             }
@@ -201,45 +150,45 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
         }
 
-        #region TODO: These events need to be placed in a Jabber_EventHandler
+        //#region TODO: These events need to be placed in a Jabber_EventHandler
 
-        private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
-        {
-            if (msg.Body != null)
-            {
-                this.AddChat(this.txtChat.Text + msg.Body);
-            }
-            else
-            {
-                //*** If DebugMode
-                //this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
-                Console.Beep(37, 70);
-                //*** If DebugMode
+        //private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
+        //{
+        //    if (msg.Body != null)
+        //    {
+        //        this.AddChat(this.txtChat.Text + msg.Body);
+        //    }
+        //    else
+        //    {
+        //        //*** If DebugMode
+        //        //this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
+        //        Console.Beep(37, 70);
+        //        //*** If DebugMode
 
-                MovePacket recievedMove = new MovePacket(msg);
+        //        MovePacket recievedMove = new MovePacket(msg);
 
-                if (recievedMove.Invalid)
-                {
-                    //if we have problems here, send a REJECT packet or something
-                    this._squareHandlers.OutBox = recievedMove.GenerateRejectPacket();
+        //        if (recievedMove.Invalid)
+        //        {
+        //            //if we have problems here, send a REJECT packet or something
+        //            this._squareHandlers.OutBox = recievedMove.GenerateRejectPacket();
 
-                    //so.. at this point, we are back to our previous state.  Nothing gained.
+        //            //so.. at this point, we are back to our previous state.  Nothing gained.
 
-                    //Tell the user about it, however..
+        //            //Tell the user about it, however..
 
-                    //Flash something yellow, like the title bar to the chat window or something.
-                    //This would be good for all erroneous move communication
+        //            //Flash something yellow, like the title bar to the chat window or something.
+        //            //This would be good for all erroneous move communication
 
-                    //also, cue up the chat window.  Select its tab.  Make the text red with asterisks.
-                    this.AddChat("Invalid Move recieved. " + recievedMove.InvalidMoveReason + " Try again?");
-                }
+        //            //also, cue up the chat window.  Select its tab.  Make the text red with asterisks.
+        //            this.AddChat("Invalid Move recieved. " + recievedMove.InvalidMoveReason + " Try again?");
+        //        }
 
-                this.InBox = recievedMove; 
+        //        this.InBox = recievedMove; 
 
-                this.Process_InBox();
-                this.SendOutBox();
-            }
-        }
+        //        this.Process_InBox();
+        //        this.SendOutBox();
+        //    }
+        //}
 
         private void Process_InBox()
         {
@@ -268,27 +217,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             //throw new NotImplementedException();
         }
-
-        private void j_OnAuthenticate(object sender)
-        {
-            //JabberClient j = (JabberClient)sender;
-            //j.Message(this.JabberOpponent, "Chess Mangler " + this.Version + " <Proto> Connecting @ " + DateTime.Now.ToString());
-            Console.Beep(1000, 20);
-            done.Set(); // Finished sending.  Shut down.
-
-            jabberClient.Presence(PresenceType.available, "ChessMangler Online", "show", 2);
-        }
-        private void j_OnError(object sender, Exception ex)
-        {
-            // There was an error!
-            MessageBox.Show("Error: " + ex.ToString(), "Jabber-Net TestHarness");
-
-            // Shut down.
-            done.Set();
-        }
-
-        #endregion
-        #endregion
 
         public void InitGrid()
         {
@@ -334,7 +262,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         public void SendChat()
         {
-            jabberClient.Message(this.JabberOpponent, this.txtChat.Text);
+            _jabberHandlers.Message(this.JabberOpponent, this.txtChat.Text);
 
             //This message needs to be logged in the database (remember to also add the ID of the latest move so we know at what point of the game that this was sent..)
             //Make an option later to create a PGN file annotated with chats.

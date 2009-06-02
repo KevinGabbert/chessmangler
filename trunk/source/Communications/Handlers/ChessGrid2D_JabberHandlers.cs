@@ -1,28 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Xml;
 using System.Threading;
 
-using System.Windows.Forms;
-
 //using ChessMangler.Engine.Types;
-using ChessMangler.Settings.Types.WinUI;
 using ChessMangler.Communications.Types;
-using ChessMangler.Communications.Handlers;
 
 using jabber.protocol;
 using jabber.protocol.x;
 using jabber.protocol.client; //presence
 using jabber.client; //TODO: This needs to be refactored out.
-using JabberMessage = jabber.protocol.client.Message;
-using System.ComponentModel; //This is the only one that should stay
+using JabberMessage = jabber.protocol.client.Message; //This is the only one that should stay
 
 namespace ChessMangler.Communications.Handlers
 {
-    public class ChessGrid2D_JabberHandlers : System.Windows.Forms.Control //ISynchronizeInvoke
+    public class JabberHandler : IM_Handler_Base
     {
         //TODO:  this goes in Jabber_EventHandler we will wait on this event until we're done sending
-        static ManualResetEvent done2 = new ManualResetEvent(false);
+        static ManualResetEvent done = new ManualResetEvent(false);
 
         #region Properties
 
@@ -80,6 +74,11 @@ namespace ChessMangler.Communications.Handlers
 
         #endregion
 
+        public JabberHandler()
+        {
+            this.InitJabber();
+        }
+
         //We should know all this by this point (will be set in options form
         JabberClient jabberClient = new JabberClient();
 
@@ -124,16 +123,17 @@ namespace ChessMangler.Communications.Handlers
             jabberClient.Connect();
 
             //wait until sending a message is complete
-            done2.WaitOne();
+            done.WaitOne();
         }
 
-        #region TODO: These events need to be placed in a Jabber_EventHandler
+        #region Events
 
         private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
         {
             if (msg.Body != null)
             {
-                ///////this.AddChat(this.txtChat.Text + msg.Body);
+                Console.Beep(37, 70);
+                this.On_OpponentChat_RCV(msg.Body);              
             }
             else
             {
@@ -159,61 +159,36 @@ namespace ChessMangler.Communications.Handlers
                     //also, cue up the chat window.  Select its tab.  Make the text red with asterisks.
                     ///////this.AddChat("Invalid Move recieved. " + recievedMove.InvalidMoveReason + " Try again?");
                 }
-
-                /////this.InBox = recievedMove;
-
-                /////this.Process_InBox();
-                this.SendOutBox();
             }
-        }
-
-        private void SendOutBox()
-        {
-            //throw new NotImplementedException();
         }
 
         private void j_OnAuthenticate(object sender)
         {
-            //JabberClient j = (JabberClient)sender;
-            //j.Message(this.JabberOpponent, "Chess Mangler " + this.Version + " <Proto> Connecting @ " + DateTime.Now.ToString());
             Console.Beep(1000, 20);
-            done2.Set(); // Finished sending.  Shut down.
+            done.Set(); // Finished sending.  Shut down.
 
             jabberClient.Presence(PresenceType.available, "ChessMangler Online", "show", 2);
         }
         private void j_OnError(object sender, Exception ex)
         {
-            // There was an error!
-            MessageBox.Show("Error: " + ex.ToString(), "Jabber-Net TestHarness");
-
             // Shut down.
-            done2.Set();
+            done.Set();
         }
 
         #endregion
 
-        //#region ISynchronizeInvoke Members
+        public void Write(string opponent, XmlElement stuffToWrite)
+        {
+            JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
+            message.To = new jabber.JID(opponent);
+            message.AddChild(stuffToWrite);
 
-        //public IAsyncResult BeginInvoke(Delegate method, object[] args)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            jabberClient.Write(message);
+        }
 
-        //public object EndInvoke(IAsyncResult result)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public object Invoke(Delegate method, object[] args)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public bool InvokeRequired
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //#endregion
+        public void Message(string to, string body)
+        {
+            jabberClient.Message(to, body);
+        }
     }
 }
