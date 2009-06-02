@@ -242,7 +242,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //Load up Move Packet
             MovePacket recievedMove = this.InBox;
 
-            this._squareHandlers.OutBox = recievedMove.GenerateRCVPacket();
+            //this._squareHandlers.OutBox = recievedMove.GenerateRCVPacket();
 
             //Make sure this move is for this game (as we can have several going.)
             //not sure how this might be a problem, but I want to be prepared if we ever do..

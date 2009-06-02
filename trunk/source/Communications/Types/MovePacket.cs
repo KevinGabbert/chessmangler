@@ -143,7 +143,10 @@ namespace ChessMangler.Communications.Types
 
         public MovePacket(Message jabberMessage)
         {
-            //parse the message into this object
+            XmlDocument msgDoc = new XmlDocument();
+            msgDoc.LoadXml(jabberMessage.OuterXml);
+
+            this.Parse(msgDoc, "message");
         }
 
         public static XmlElement GenerateXml(string hash, string gameID, string piece, string prevMove, string newMove, bool useRules)
@@ -196,10 +199,65 @@ namespace ChessMangler.Communications.Types
         {
             throw new NotImplementedException();
         }
-
         public XmlElement GenerateRCVPacket()
         {
             throw new NotImplementedException();
+        }
+
+        public void Parse(XmlDocument messageXml, string rootNode)
+        {
+            foreach (XmlNode xmlNode in messageXml)
+            {
+                if (xmlNode.Name == rootNode)
+                {
+                    foreach (XmlNode childNode in xmlNode)
+                    {
+                        if (childNode.Name == "ChessMangler")
+                        {
+                            foreach (XmlNode gameFeatureNode in childNode)
+                            {
+                                if (gameFeatureNode.Name == "MovePacket")
+                                {
+                                    Parse_MovePacket(gameFeatureNode);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Parse_MovePacket(XmlNode gameFeatureNode)
+        {
+            foreach (XmlNode MovePacketNode in gameFeatureNode)
+            {
+                switch (MovePacketNode.Name)
+                {
+                    case "MoveHash":
+                        this.MoveHash = MovePacketNode.InnerText;
+                        break;
+
+                    case "GameID":
+                        this.GameID = MovePacketNode.InnerText;
+                        break;
+
+                    case "Piece":
+                        this.Piece = MovePacketNode.InnerText;
+                        break;
+
+                    case "PreviousMove":
+                        this.Previous = MovePacketNode.InnerText;
+                        break;
+
+                    case "NewMove":
+                        this.New = MovePacketNode.InnerText;
+                        break;
+
+                    case "UseRules":
+                        this.Rules = Convert.ToBoolean(MovePacketNode.InnerText);
+                        break;
+                }
+            }
         }
     }
 
