@@ -12,6 +12,7 @@ using JabberMessage = jabber.protocol.client.Message; //This is the only one tha
 using ChessMangler.Engine.Types;
 using ChessMangler.Settings.Types.WinUI;
 using ChessMangler.Communications.Types;
+using ChessMangler.Communications.Handlers;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
@@ -75,6 +76,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         //TODO:  this goes in Jabber_EventHandler we will wait on this event until we're done sending
         static ManualResetEvent done = new ManualResetEvent(false);
 
+        ChessGrid2D_JabberHandlers _jabberHandlers;
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
@@ -102,6 +104,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         //This should probably be in another object
         private void InitJabber()
         {
+            //if Login infor isn't filled out by this point, then pop up the login form
+
             jabberClient.AutoReconnect = 3F;
             jabberClient.AutoStartCompression = true;
             jabberClient.AutoStartTLS = true;
@@ -114,7 +118,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             jabberClient.User = "Test.Chess.Mangler";
             jabberClient.Server = "gmail.com";  // use gmail.com for GoogleTalk
             jabberClient.Password = "Ch3$$Mangl3r";
-
             jabberClient.NetworkHost = "talk.l.google.com";  // Note: that's an "L", not a "1".
 
             // don't do extra stuff, please.
@@ -130,6 +133,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             // listen for XMPP wire protocol
             jabberClient.OnMessage += new MessageHandler(j_OnMessage);
+
 
             // Set everything in motion
             jabberClient.Connect();
@@ -208,7 +212,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             else
             {
                 //*** If DebugMode
-                this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
+                //this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
                 Console.Beep(37, 70);
                 //*** If DebugMode
 
