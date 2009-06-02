@@ -12,7 +12,7 @@ using JabberMessage = jabber.protocol.client.Message; //This is the only one tha
 using ChessMangler.Engine.Types;
 using ChessMangler.Settings.Types.WinUI;
 using ChessMangler.Communications.Types;
-using ChessMangler.Communications.Handlers;
+//using ChessMangler.Communications.Handlers;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
@@ -76,7 +76,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         //TODO:  this goes in Jabber_EventHandler we will wait on this event until we're done sending
         static ManualResetEvent done = new ManualResetEvent(false);
 
-        ChessGrid2D_JabberHandlers _jabberHandlers;
+
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 

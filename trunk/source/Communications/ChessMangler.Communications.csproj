@@ -39,9 +39,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\ChessGrid2D_JabberHandlers.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Interfaces\IMovePacket.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,6 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Settings\ChessMangler.Settings.csproj">
+      <Project>{985BBB78-43C5-49BF-A6D4-C7F602C4ACB5}</Project>
+      <Name>ChessMangler.Settings</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Jabber-Net\" />
