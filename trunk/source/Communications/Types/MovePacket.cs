@@ -8,6 +8,7 @@ using jabber.protocol;
 using jabber.protocol.client;
 
 using ChessMangler.Communications.Interfaces;
+using ChessMangler.Communications.Jabber_Net;
 
 namespace ChessMangler.Communications.Types
 {
@@ -22,17 +23,6 @@ namespace ChessMangler.Communications.Types
     //      <Rules>No</Rules>; 
     //   <MovePacket>
     //<ChessMangler />
-
-    public class JabberElement : Element, IMovePacket
-    {
-        public const string NAMESPACE = "ChessMangler:Communications";
-
-        // used when creating elements to send
-        public JabberElement(XmlDocument doc) : base("query", NAMESPACE, doc) { }
-
-        // used to create elements for inbound protocol
-        public JabberElement(string prefix, XmlQualifiedName qname, XmlDocument doc) : base(prefix, qname, doc) { }
-    }
 
     //This needs to evolve into an instance class with properties
     public class MovePacket
@@ -258,22 +248,6 @@ namespace ChessMangler.Communications.Types
                         break;
                 }
             }
-        }
-    }
-
-    public class JabberFactory : jabber.protocol.IPacketTypes
-    {
-        private static QnameType[] s_qnt = new QnameType[] 
-        {
-            new QnameType("query", JabberElement.NAMESPACE, typeof(JabberElement))
-            // Add other types here, perhaps sub-elements of query...
-        };
-
-        QnameType[] IPacketTypes.Types { get { return s_qnt; } }
-
-        private void jabberClient_OnStreamInit(object sender, ElementStream stream)
-        {
-            stream.AddFactory(new JabberFactory());
         }
     }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Xml;
 
 using ChessMangler.Engine.Types;
 using ChessMangler.Settings.Types.WinUI;
@@ -69,7 +68,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             InitializeComponent();
 
-            this.InitJabber2();
+            this.InitJabber();
 
 
             this.InitGrid();
@@ -79,7 +78,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             InitializeComponent();
 
-            this.InitJabber2();
+            this.InitJabber();
             this.InitGrid();
             this.Grid.SetUp_FreeFormBoard(this, board, squareSize);
 
@@ -87,13 +86,13 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.InitForms();
         }
 
-        private void InitJabber2()
+        private void InitJabber()
         {
             _jabberHandlers.OpponentChat_Recieved += new JabberHandler.OpponentChat(On_Opponent_RCV);
-            _jabberHandlers.OpponentMove_Recieved += new IM_Handler_Base.OpponentMove_Handler(_jabberHandlers_OpponentMove_Recieved);
+            _jabberHandlers.OpponentMove_Recieved += new IM_Handler_Base.OpponentMove_Handler(On_OpponentMove_RCV);
         }
 
-        void _jabberHandlers_OpponentMove_Recieved(object move)
+        public void On_OpponentMove_RCV(object move)
         {
             Console.Beep(37, 70);
 
@@ -101,7 +100,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.Process_InBox();
             this.SendOutBox();
         }
-
         public void On_Opponent_RCV(string sender)
         {
             Console.Beep(37, 70);

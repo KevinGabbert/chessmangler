@@ -5,8 +5,6 @@ using System.Threading;
 //using ChessMangler.Engine.Types;
 using ChessMangler.Communications.Types;
 
-using jabber.protocol;
-using jabber.protocol.x;
 using jabber.protocol.client; //presence
 using jabber.client; //TODO: This needs to be refactored out.
 using JabberMessage = jabber.protocol.client.Message; //This is the only one that should stay
@@ -15,7 +13,7 @@ namespace ChessMangler.Communications.Handlers
 {
     public class JabberHandler : IM_Handler_Base
     {
-        //TODO:  this goes in Jabber_EventHandler we will wait on this event until we're done sending
+        // we will wait on this event until we're done sending
         static ManualResetEvent done = new ManualResetEvent(false);
 
         #region Properties
@@ -79,11 +77,8 @@ namespace ChessMangler.Communications.Handlers
             this.InitJabber();
         }
 
-        //We should know all this by this point (will be set in options form
         JabberClient jabberClient = new JabberClient();
 
-        //**** Refactor ****
-        //This should probably be in another object
         private void InitJabber()
         {
             //if Login infor isn't filled out by this point, then pop up the login form
@@ -167,7 +162,6 @@ namespace ChessMangler.Communications.Handlers
 
             done.Set();
         }
-
         private void j_OnAuthenticate(object sender)
         {
             Console.Beep(1000, 20);
@@ -193,7 +187,6 @@ namespace ChessMangler.Communications.Handlers
 
             done.Set();
         }
-
         public void Message(string to, string body)
         {
             jabberClient.Message(to, body);
