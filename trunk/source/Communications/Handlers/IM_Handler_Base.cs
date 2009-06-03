@@ -4,11 +4,11 @@ using System.Text;
 
 namespace ChessMangler.Communications.Handlers
 {
+    public delegate void OpponentChat(string chatMessage);
+    public delegate void OpponentMove_Handler(object move);
+
     public class IM_Handler_Base: System.Windows.Forms.Control
     {
-        public delegate void OpponentChat(string chatMessage);
-        public delegate void OpponentMove_Handler(object move); //MovePacket?
-
         public event OpponentMove_Handler OpponentMove_Recieved;
         public event OpponentChat OpponentChat_Recieved;
 

@@ -2,16 +2,17 @@
 using System.Xml;
 using System.Threading;
 
-//using ChessMangler.Engine.Types;
 using ChessMangler.Communications.Types;
 
 using jabber.protocol.client; //presence
-using jabber.client; //TODO: This needs to be refactored out.
-using JabberMessage = jabber.protocol.client.Message; //This is the only one that should stay
+using jabber.client; 
+using JabberMessage = jabber.protocol.client.Message;
+
+using ChessMangler.Communications.Interfaces;
 
 namespace ChessMangler.Communications.Handlers
 {
-    public class JabberHandler : IM_Handler_Base
+    public class JabberHandler : IM_Handler_Base, ICommsHandlers 
     {
         // we will wait on this event until we're done sending
         static ManualResetEvent done = new ManualResetEvent(false);

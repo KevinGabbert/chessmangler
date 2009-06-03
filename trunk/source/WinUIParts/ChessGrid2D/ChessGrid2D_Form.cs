@@ -5,6 +5,7 @@ using ChessMangler.Engine.Types;
 using ChessMangler.Settings.Types.WinUI;
 using ChessMangler.Communications.Types;
 using ChessMangler.Communications.Handlers;
+using ChessMangler.Communications.Interfaces;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
@@ -17,16 +18,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         #region Properties
 
-        string _jabberOpponent;
-        public string JabberOpponent
+        string _opponent;
+        public string Opponent
         {
             get
             {
-                return _jabberOpponent;
+                return _opponent;
             }
             set
             {
-                _jabberOpponent = value;
+                _opponent = value;
             }
         }
 
@@ -42,7 +43,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 _version = value;
             }
         }
-
 
         //TODO:  This will need to be moved somewhere
         MovePacket _inBox;
@@ -60,7 +60,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         #endregion
 
-        JabberHandler _jabberHandlers = new JabberHandler();
+        ICommsHandlers _comms = Comms.GetHandler(CommsType.Google); //TODO: later this will be assigned via a saved value in the DB, or User selection
+
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
@@ -68,17 +69,15 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             InitializeComponent();
 
-            this.InitJabber();
-
-
+            this.InitComms();
             this.InitGrid();
             this.InitForms();
         }
-        public ChessGrid2D_Form(BoardDef board, string imagesDirectory, short squareSize, string jabberOpponent)
+        public ChessGrid2D_Form(BoardDef board, string imagesDirectory, short squareSize, string opponent)
         {
             InitializeComponent();
 
-            this.InitJabber();
+            this.InitComms();
             this.InitGrid();
             this.Grid.SetUp_FreeFormBoard(this, board, squareSize);
 
@@ -86,17 +85,20 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.InitForms();
         }
 
-        private void InitJabber()
+        private void InitComms()
         {
-            _jabberHandlers.OpponentChat_Recieved += new JabberHandler.OpponentChat(On_Opponent_RCV);
-            _jabberHandlers.OpponentMove_Recieved += new IM_Handler_Base.OpponentMove_Handler(On_OpponentMove_RCV);
+            _comms.OpponentChat_Recieved += new OpponentChat(On_Opponent_RCV);
+            _comms.OpponentMove_Recieved += new OpponentMove_Handler(On_OpponentMove_RCV);
         }
+
+        #region Comms Events
 
         public void On_OpponentMove_RCV(object move)
         {
             Console.Beep(37, 70);
 
             this.InBox = (MovePacket)move;
+
             this.Process_InBox();
             this.SendOutBox();
         }
@@ -106,12 +108,15 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.AddChat(this.txtChat.Text + " " + sender.ToString());
         }
 
+        #endregion
+        #region Form Events
+
         private void ChessGrid2D_Load(object sender, EventArgs e)
         {
             this.Grid.SetUp_DefaultUIBoard(this);
             this.InitHandlers();
 
-            this.Text = "Chess Mangler " + this.Version + " ~ Opponent:  " + this.JabberOpponent;
+            this.Text = "Chess Mangler " + this.Version + " ~ Opponent:  " + this.Opponent;
         }
         private void ChessGrid2D_Resize(object sender, EventArgs e)
         {
@@ -119,12 +124,12 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         }
         private void ChessGrid2D_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //TODO: tell the Jabber_EventHandler to Dispose.
+            //TODO: tell the Comms_EventHandler to Dispose. //Is this still needed?
 
-            ////TODO: Move this code to the Jabber_EventHandler
-            //if (jabberClient.IsAuthenticated)
+            ////TODO: Move this code to the Comms_EventHandler
+            //if (_comms.IsAuthenticated)
             //{
-            //    jabberClient.Close();
+            //    _comms.Close();
             //}
         }
         private void ChessGrid2D_Form_FormClosed(object sender, FormClosedEventArgs e)
@@ -141,7 +146,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (this._squareHandlers.OutBox != null)
             {
-                _jabberHandlers.Write(this.JabberOpponent, this._squareHandlers.OutBox);
+                _comms.Write(this.Opponent, this._squareHandlers.OutBox);
 
                 this.Grid.UIBoard.Squares.Disable();  //Until we recieve a good packet from the opponent
             }
@@ -158,45 +163,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
         }
 
-        //#region TODO: These events need to be placed in a Jabber_EventHandler
+        //TODO: This button will only be seen in Debug Mode
+        private void btnEnableSquares_Click(object sender, EventArgs e)
+        {
+            //TODO:  We need some visual indicators of all these things!
+            this.Grid.UIBoard.Squares.Enable();
+            this.Grid.UIBoard.Squares.ResetColors();
+            this._squareHandlers.OutBox = null;
+        }
 
-        //private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
-        //{
-        //    if (msg.Body != null)
-        //    {
-        //        this.AddChat(this.txtChat.Text + msg.Body);
-        //    }
-        //    else
-        //    {
-        //        //*** If DebugMode
-        //        //this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
-        //        Console.Beep(37, 70);
-        //        //*** If DebugMode
-
-        //        MovePacket recievedMove = new MovePacket(msg);
-
-        //        if (recievedMove.Invalid)
-        //        {
-        //            //if we have problems here, send a REJECT packet or something
-        //            this._squareHandlers.OutBox = recievedMove.GenerateRejectPacket();
-
-        //            //so.. at this point, we are back to our previous state.  Nothing gained.
-
-        //            //Tell the user about it, however..
-
-        //            //Flash something yellow, like the title bar to the chat window or something.
-        //            //This would be good for all erroneous move communication
-
-        //            //also, cue up the chat window.  Select its tab.  Make the text red with asterisks.
-        //            this.AddChat("Invalid Move recieved. " + recievedMove.InvalidMoveReason + " Try again?");
-        //        }
-
-        //        this.InBox = recievedMove; 
-
-        //        this.Process_InBox();
-        //        this.SendOutBox();
-        //    }
-        //}
+        #endregion
 
         private void Process_InBox()
         {
@@ -226,6 +202,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //throw new NotImplementedException();
         }
 
+        public void InitForms()
+        {
+            ChessGrid2D_Form._debugForm = this.Grid.DebugForm;
+        }
         public void InitGrid()
         {
             this.Grid = new Grid2D(this);
@@ -234,6 +214,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.Grid.VerticalSquish = 21; //This number is likely due to the TabControl height, but is more likely a divisor of it
             //this.Grid.ClientHeight = this.ClientSize.Height;
         }
+
         public void InitHandlers()
         {
             _menuBarHandlers = new ChessGrid2D_MenuBarHandlers(_debugForm, this);
@@ -252,12 +233,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.flipBoardToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.flipBoardToolStripMenuItem_Click);
             this.constrainBoardProportionsToolStripMenuItem.Click += new System.EventHandler(this._menuBarHandlers.constrainBoardProportionsToolStripMenuItem_Click);
         }
-        public void InitForms()
-        {
-            ChessGrid2D_Form._debugForm = this.Grid.DebugForm;
-        }
-
-        //used in some cases to reset things.
         public void DitchHandlers()
         {
             this._squareHandlers.Delete_Required_Square_Handlers(this);
@@ -268,25 +243,12 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.resetPiecesToolStripMenuItem.Click -= new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
         }
 
-        public void SendChat()
-        {
-            _jabberHandlers.Message(this.JabberOpponent, this.txtChat.Text);
-
-            //This message needs to be logged in the database (remember to also add the ID of the latest move so we know at what point of the game that this was sent..)
-            //Make an option later to create a PGN file annotated with chats.
-
-            //if options say so, then beep.
-
-            //TODO: if option is set, then preface with time or contact name
-
-            this.txtChatHistory.Text += Environment.NewLine + this.txtChat.Text;
-            this.Scroll_ChatHistory_Box();
-            this.txtChat.Clear();
-
-            //If message was sent and not recieved then post back to ChatHistory box as well. (it won't be here of course)
-        }
-
         private delegate void ChatDelegate(string message);
+
+        /// <summary>
+        /// When a chat is recieved, this guy is called
+        /// </summary>
+        /// <param name="message"></param>
         public void AddChat(string message)
         {
             if (this.txtChat.InvokeRequired)
@@ -305,19 +267,31 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
         }
 
+        /// <summary>
+        /// When the user hits "Send" in the Chat box, this is where it goes
+        /// </summary>
+        public void SendChat()
+        {
+            _comms.Message(this.Opponent, this.txtChat.Text);
+
+            //This message needs to be logged in the database (remember to also add the ID of the latest move so we know at what point of the game that this was sent..)
+            //Make an option later to create a PGN file annotated with chats.
+
+            //if options say so, then beep.
+
+            //TODO: if option is set, then preface with time or contact name
+
+            this.txtChatHistory.Text += Environment.NewLine + this.txtChat.Text;
+            this.Scroll_ChatHistory_Box();
+            this.txtChat.Clear();
+
+            //If message was sent and not recieved then post back to ChatHistory box as well. (it won't be here of course)
+        }
+
         private void Scroll_ChatHistory_Box()
         {
             this.txtChatHistory.Select(txtChatHistory.Text.Length + 1, 2);
             this.txtChatHistory.ScrollToCaret();
-        }
-
-        //TODO: This button will only be seen in Debug Mode
-        private void btnEnableSquares_Click(object sender, EventArgs e)
-        {
-            //TODO:  We need some visual indicators of all these things!
-            this.Grid.UIBoard.Squares.Enable();
-            this.Grid.UIBoard.Squares.ResetColors();
-            this._squareHandlers.OutBox = null;
         }
     }
 }

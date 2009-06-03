@@ -149,7 +149,7 @@ namespace ChessMangler.WinUIParts
         private void OpenChosenConfigFile()
         {
             ChessGrid2D_Form open = new ChessGrid2D_Form();
-            open.JabberOpponent = "kevingabbert@gmail.com";
+            open.Opponent = "kevingabbert@gmail.com";
 
             if (this.configList.SelectedValue.ToString() != null)
             {
