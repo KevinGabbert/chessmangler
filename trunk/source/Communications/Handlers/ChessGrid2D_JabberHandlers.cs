@@ -159,7 +159,13 @@ namespace ChessMangler.Communications.Handlers
                     //also, cue up the chat window.  Select its tab.  Make the text red with asterisks.
                     ///////this.AddChat("Invalid Move recieved. " + recievedMove.InvalidMoveReason + " Try again?");
                 }
+                else
+                {
+                    this.On_OpponentMove(recievedMove);
+                }
             }
+
+            done.Set();
         }
 
         private void j_OnAuthenticate(object sender)
@@ -184,11 +190,15 @@ namespace ChessMangler.Communications.Handlers
             message.AddChild(stuffToWrite);
 
             jabberClient.Write(message);
+
+            done.Set();
         }
 
         public void Message(string to, string body)
         {
             jabberClient.Message(to, body);
+
+            done.Set();
         }
     }
 }

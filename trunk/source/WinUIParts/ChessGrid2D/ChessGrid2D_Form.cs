@@ -90,6 +90,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         private void InitJabber2()
         {
             _jabberHandlers.OpponentChat_Recieved += new JabberHandler.OpponentChat(On_Opponent_RCV);
+            _jabberHandlers.OpponentMove_Recieved += new IM_Handler_Base.OpponentMove_Handler(_jabberHandlers_OpponentMove_Recieved);
+        }
+
+        void _jabberHandlers_OpponentMove_Recieved(object move)
+        {
+            Console.Beep(37, 70);
+
+            this.InBox = (MovePacket)move;
+            this.Process_InBox();
+            this.SendOutBox();
         }
 
         public void On_Opponent_RCV(string sender)

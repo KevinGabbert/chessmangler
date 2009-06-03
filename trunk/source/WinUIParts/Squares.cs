@@ -32,11 +32,20 @@ namespace ChessMangler.WinUIParts
             this.EnableSquares(this.Enabled);
         }
 
+        //fie, fie, how franticly I square my talk!
+        private delegate void SquareDelegate(bool enabled);
         public void EnableSquares(bool enabled)
         {
             foreach (UISquare square in this)
             {
-                square.Enabled = enabled;
+                if (square.InvokeRequired)
+                {
+                    square.Invoke(new SquareDelegate(this.EnableSquares), enabled);
+                }
+                else
+                {
+                    square.Enabled = enabled;
+                }
             }
         }
         public void LockMovement(UISquare startSquare, UISquare endSquare)
