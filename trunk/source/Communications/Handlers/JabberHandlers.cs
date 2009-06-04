@@ -118,12 +118,14 @@ namespace ChessMangler.Communications.Handlers
             // listen for XMPP wire protocol
             jabberClient.OnMessage += new MessageHandler(j_OnMessage);
 
+            if ((this.User != "") && (this.Password != ""))
+            {
+                // Set everything in motion
+                jabberClient.Connect();
 
-            // Set everything in motion
-            jabberClient.Connect();
-
-            //wait until sending a message is complete
-            done.WaitOne();
+                //wait until sending a message is complete
+                done.WaitOne();
+            }
         }
 
         #region Events

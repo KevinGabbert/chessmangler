@@ -134,7 +134,15 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             y = (row * chessBoardHeight) / board.Rows;
             y = y + (heightAdjustment * row);
-            y = y + menuHeight; //adding in the chessMenu Height controls where the grid begi
+
+            if (row > 0)
+            {
+                y = y - menuHeight; //adding in the chessMenu Height controls where the grid begi
+            }
+            else
+            {
+                y = y + menuHeight;
+            }
 
             return y;
         }

@@ -55,10 +55,10 @@
     <Compile Include="Interfaces\IMovePacket.cs" />
     <Compile Include="Jabber-Net\JabberElement.cs" />
     <Compile Include="Jabber-Net\JabberFactory.cs" />
-    <Compile Include="Jabber-Net\Login_Form.cs">
+    <Compile Include="Forms\Login_Form.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Jabber-Net\Login_Form.Designer.cs">
+    <Compile Include="Forms\Login_Form.Designer.cs">
       <DependentUpon>Login_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Move.cs" />
@@ -79,12 +79,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Jabber-Net\Login_Form.resx">
+    <EmbeddedResource Include="Forms\Login_Form.resx">
       <DependentUpon>Login_Form.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Forms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
