@@ -12,7 +12,7 @@ using ChessMangler.Communications.Interfaces;
 
 namespace ChessMangler.Communications.Handlers
 {
-    public class JabberHandler : IM_Handler_Base, ICommsHandlers 
+    public class JabberHandler : IM_Handler_Base, ICommsHandlers, IJabberCredentials
     {
         // we will wait on this event until we're done sending
         static ManualResetEvent done = new ManualResetEvent(false);
@@ -73,8 +73,13 @@ namespace ChessMangler.Communications.Handlers
 
         #endregion
 
-        public JabberHandler()
+        public JabberHandler(string userName, string password, string server, string networkHost)
         {
+            this.User = userName;
+            this.Password = password;
+            this.Server = server;
+            this.NetworkHost = networkHost;
+
             this.InitJabber();
         }
 
@@ -82,7 +87,7 @@ namespace ChessMangler.Communications.Handlers
 
         private void InitJabber()
         {
-            //if Login infor isn't filled out by this point, then pop up the login form
+            //TODO: if Login information isn't filled out by this point, then pop up the login form
 
             jabberClient.AutoReconnect = 3F;
             jabberClient.AutoStartCompression = true;
@@ -93,12 +98,11 @@ namespace ChessMangler.Communications.Handlers
             jabberClient.LocalCertificate = null;
             jabberClient.KeepAlive = 30F;
 
-
             // what user/pass to log in as
-            jabberClient.User = "Test.Chess.Mangler";
-            jabberClient.Server = "gmail.com";  // use gmail.com for GoogleTalk
-            jabberClient.Password = "Ch3$$Mangl3r";
-            jabberClient.NetworkHost = "talk.l.google.com";  // Note: that's an "L", not a "1".
+            jabberClient.User = this.User; // "Test.Chess.Mangler";
+            jabberClient.Server = this.Server; // "gmail.com";  // use gmail.com for GoogleTalk
+            jabberClient.Password = this.Password; //sorry.. changed it.
+            jabberClient.NetworkHost = this.NetworkHost; // "talk.l.google.com";  // Note: that's an "L", not a "1".
 
             // don't do extra stuff, please.
             jabberClient.AutoPresence = false;

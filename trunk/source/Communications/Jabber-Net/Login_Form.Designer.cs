@@ -1,4 +1,6 @@
-﻿namespace ChessMangler.WinUIParts
+﻿using System.Drawing;
+
+namespace ChessMangler.Communications.Forms
 {
     partial class Login_Form
     {
@@ -60,7 +62,7 @@
             this.checkBox1.Location = new System.Drawing.Point(12, 292);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(150, 17);
-            this.checkBox1.TabIndex = 2;
+            this.checkBox1.TabIndex = 4;
             this.checkBox1.Text = "Save Login and Password";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
@@ -69,23 +71,26 @@
             this.btnOK.Location = new System.Drawing.Point(87, 315);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 3;
+            this.btnOK.TabIndex = 5;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // mtxtPassword
             // 
             this.mtxtPassword.Location = new System.Drawing.Point(12, 158);
             this.mtxtPassword.Name = "mtxtPassword";
+            this.mtxtPassword.PasswordChar = '*';
             this.mtxtPassword.Size = new System.Drawing.Size(218, 20);
-            this.mtxtPassword.TabIndex = 4;
+            this.mtxtPassword.TabIndex = 1;
+            this.mtxtPassword.UseSystemPasswordChar = true;
             // 
             // txtLogin
             // 
             this.txtLogin.Location = new System.Drawing.Point(12, 110);
             this.txtLogin.Name = "txtLogin";
             this.txtLogin.Size = new System.Drawing.Size(217, 20);
-            this.txtLogin.TabIndex = 5;
+            this.txtLogin.TabIndex = 0;
             // 
             // label1
             // 
@@ -119,7 +124,7 @@
             this.txtServer.Location = new System.Drawing.Point(12, 205);
             this.txtServer.Name = "txtServer";
             this.txtServer.Size = new System.Drawing.Size(217, 20);
-            this.txtServer.TabIndex = 8;
+            this.txtServer.TabIndex = 2;
             this.txtServer.Text = "gmail.com";
             // 
             // label4
@@ -136,7 +141,7 @@
             this.txtNetworkHost.Location = new System.Drawing.Point(12, 254);
             this.txtNetworkHost.Name = "txtNetworkHost";
             this.txtNetworkHost.Size = new System.Drawing.Size(217, 20);
-            this.txtNetworkHost.TabIndex = 10;
+            this.txtNetworkHost.TabIndex = 3;
             this.txtNetworkHost.Text = "talk.l.google.com";
             // 
             // Login_Form

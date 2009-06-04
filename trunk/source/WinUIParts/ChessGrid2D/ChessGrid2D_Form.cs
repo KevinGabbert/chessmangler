@@ -60,7 +60,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         #endregion
 
-        ICommsHandlers _comms = Comms.GetHandler(CommsType.Google); //TODO: later this will be assigned via a saved value in the DB, or User selection
+        Comms _comms = new Comms();
+        ICommsHandlers _commsHandlers;
 
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
@@ -87,8 +88,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         private void InitComms()
         {
-            _comms.OpponentChat_Recieved += new OpponentChat(On_Opponent_RCV);
-            _comms.OpponentMove_Recieved += new OpponentMove_Handler(On_OpponentMove_RCV);
+            _commsHandlers = _comms.GetHandler(CommsType.Google); //TODO: later this will be assigned via a saved value in the DB, or User selection
+
+            _commsHandlers.OpponentChat_Recieved += new OpponentChat(On_Opponent_RCV);
+            _commsHandlers.OpponentMove_Recieved += new OpponentMove_Handler(On_OpponentMove_RCV);
         }
 
         #region Comms Events
@@ -146,7 +149,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (this._squareHandlers.OutBox != null)
             {
-                _comms.Write(this.Opponent, this._squareHandlers.OutBox);
+                _commsHandlers.Write(this.Opponent, this._squareHandlers.OutBox);
 
                 this.Grid.UIBoard.Squares.Disable();  //Until we recieve a good packet from the opponent
             }
@@ -272,7 +275,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         /// </summary>
         public void SendChat()
         {
-            _comms.Message(this.Opponent, this.txtChat.Text);
+            _commsHandlers.Message(this.Opponent, this.txtChat.Text);
 
             //This message needs to be logged in the database (remember to also add the ID of the latest move so we know at what point of the game that this was sent..)
             //Make an option later to create a PGN file annotated with chats.
