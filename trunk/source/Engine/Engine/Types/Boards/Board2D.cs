@@ -119,7 +119,11 @@ namespace ChessMangler.Engine.Types
                         Square2D squareForPiece = this.GetByName(pieceDef.StartingLocation);
 
                         //TODO:  Temporary Code (as this will be eventually pulled from a config file)
-                        pieceDef.ImageDirectory = directory + @"\images\";
+
+                        //if (pieceDef.ImageDirectory != null)
+                        //{
+                            pieceDef.ImageDirectory = directory + @"\images\";
+                        //}
 
                         if (squareForPiece != null)
                         {

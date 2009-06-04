@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using System.Text;
-
+using System.IO;
 using System.Drawing;
 
 using ChessMangler.Engine.Types.Rules;
@@ -220,12 +220,21 @@ namespace ChessMangler.Engine.Types
             this.Player = value.Player;
             this.ImageDirectory = value.ImageDirectory;
 
-            //TODO: Validate Path
-            //TODO: Validate Image
+            if (this.ImageDirectory == null)
+            {
+                throw new DirectoryNotFoundException("no image directory has been set up (null encountered)");
+            }
 
-            //Bitmap will say "Parameter not valid" if any part of the file name is messed up..
+            if(File.Exists(this.ImageDirectory + value.ImageName))
+            {
+                //Bitmap will say "Parameter not valid" if any part of the file name is messed up..
+                this.Image = new Bitmap(this.ImageDirectory + value.ImageName);
+            }
+            else
+            {
+                throw new FileNotFoundException("unable to find Piece Image:  " + this.ImageDirectory + value.ImageName);
+            }
 
-            this.Image = new Bitmap(this.ImageDirectory + value.ImageName);
             //TODO: this.Disabled = value.Disabled
         }
     }

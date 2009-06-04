@@ -175,6 +175,11 @@ namespace ChessMangler.Engine.Config
             {
                 newPiece.Color = Color.FromName(currentAttribute.Value);
             }
+
+            if (currentName == "ImageDirectory")
+            {
+                newPiece.ImageDirectory = currentAttribute.Value;
+            }
         }
 
         //TODO: Refactor these "Get" functions
