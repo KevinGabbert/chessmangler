@@ -118,6 +118,8 @@ namespace ChessMangler.Communications.Handlers
             // listen for XMPP wire protocol
             jabberClient.OnMessage += new MessageHandler(j_OnMessage);
 
+            jabberClient.OnDisconnect += new bedrock.ObjectHandler(j_OnDisconnect);
+
             if ((this.User != "") && (this.Password != ""))
             {
                 // Set everything in motion
@@ -180,6 +182,10 @@ namespace ChessMangler.Communications.Handlers
         {
             // Shut down.
             done.Set();
+        }
+        void j_OnDisconnect(object sender)
+        {
+            //call event.  this is for the client.
         }
 
         #endregion

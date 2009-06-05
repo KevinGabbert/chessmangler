@@ -124,6 +124,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         private void ChessGrid2D_Resize(object sender, EventArgs e)
         {
             this.Grid.Redraw(this.Grid.UIBoard.Flipped);
+            this.ResizeControls();
+        }
+
+        private void ResizeControls()
+        {
+            int cH = ClientSize.Height;
+            int cW = ClientSize.Width;
+
+            //if Chat tab is visible:
+            //this.txtChat.Size = new System.Drawing.Size(cW - 193, cH);
         }
         private void ChessGrid2D_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
