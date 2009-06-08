@@ -50,8 +50,8 @@
             this.tabFreeFormPresets = new System.Windows.Forms.TabPage();
             this.lstFreeFormPresets = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cboOpponents = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -141,7 +141,7 @@
             this.tabFreeForm.Location = new System.Drawing.Point(4, 22);
             this.tabFreeForm.Name = "tabFreeForm";
             this.tabFreeForm.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFreeForm.Size = new System.Drawing.Size(282, 156);
+            this.tabFreeForm.Size = new System.Drawing.Size(282, 186);
             this.tabFreeForm.TabIndex = 1;
             this.tabFreeForm.Text = "Free Form Game";
             this.tabFreeForm.UseVisualStyleBackColor = true;
@@ -265,7 +265,7 @@
             this.tabFreeFormPresets.Controls.Add(this.lstFreeFormPresets);
             this.tabFreeFormPresets.Location = new System.Drawing.Point(4, 22);
             this.tabFreeFormPresets.Name = "tabFreeFormPresets";
-            this.tabFreeFormPresets.Size = new System.Drawing.Size(282, 175);
+            this.tabFreeFormPresets.Size = new System.Drawing.Size(282, 186);
             this.tabFreeFormPresets.TabIndex = 2;
             this.tabFreeFormPresets.Text = "Free Form Presets";
             this.tabFreeFormPresets.UseVisualStyleBackColor = true;
@@ -289,17 +289,17 @@
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(56, 20);
-            this.toolStripMenuItem1.Text = "Options";
-            // 
             // connectionToolStripMenuItem
             // 
             this.connectionToolStripMenuItem.Name = "connectionToolStripMenuItem";
             this.connectionToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.connectionToolStripMenuItem.Text = "Connection";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(56, 20);
+            this.toolStripMenuItem1.Text = "Options";
             // 
             // cboOpponents
             // 
@@ -322,7 +322,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 406);
+            this.ClientSize = new System.Drawing.Size(292, 403);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.cboOpponents);

@@ -133,7 +133,17 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             int cW = ClientSize.Width;
 
             //if Chat tab is visible:
-            //this.txtChat.Size = new System.Drawing.Size(cW - 193, cH);
+
+            this.splitContainer.BorderStyle = BorderStyle.FixedSingle;
+            this.splitContainer.Size = new System.Drawing.Size(cW - 15, 85); //(657, 85)
+            
+            //The user needs to be able to manipulate this
+            this.splitContainer.SplitterDistance = (cW / 3);
+
+            this.txtChat.Size = new System.Drawing.Size(cW - 193, 30);
+            this.txtChatHistory.Size = new System.Drawing.Size(cW - 150, 30);
+            this.btnChatSend.Location = new System.Drawing.Point(376, 51); 
+            
         }
         private void ChessGrid2D_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
