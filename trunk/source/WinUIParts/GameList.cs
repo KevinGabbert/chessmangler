@@ -11,10 +11,15 @@ using System.IO;
 using ChessMangler.Engine.Types;
 using ChessMangler.WinUIParts.ChessGrid2D;
 
+using jabber.protocol.client;
+using jabber.protocol.iq;
+
 namespace ChessMangler.WinUIParts
 {
     public partial class GameList : Form
     {
+        private jabber.client.RosterManager rm;
+
         #region Properties
 
         string _configFilePath;
@@ -41,6 +46,8 @@ namespace ChessMangler.WinUIParts
 
         private void GameList_Load(object sender, EventArgs e)
         {
+            this.Init_RosterManager();
+
             //Looks through config directory, and list what Config files are found
             string configDir = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString() + "\\Config";
 
@@ -62,6 +69,19 @@ namespace ChessMangler.WinUIParts
 
             this.configList.DataSource = configFiles;
         }
+
+        private void Init_RosterManager()
+        {
+
+            this.rm = new jabber.client.RosterManager(this.components);
+            this.rm.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowIfSubscribed;
+            this.rm.AutoSubscribe = true;
+            //this.rm.Stream = this.jc;
+
+            this.rm.OnRosterEnd += new bedrock.ObjectHandler(this.rm_OnRosterEnd);
+            this.rm.OnSubscription += new jabber.client.SubscriptionHandler(this.rm_OnSubscription);
+            this.rm.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rm_OnUnsubscription);
+        }
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
             if (this.tabControlGames.SelectedTab == tabFreeForm)
@@ -70,8 +90,8 @@ namespace ChessMangler.WinUIParts
 
                 //TODO: That last argument needs to be the selected item from a list of opponents on this page:
 
-                //List<string>opponents = new List<string>();
-                ///opponents.Add("kevingabbert@gmail.com");
+                List<string> opponents = new List<string>();
+                opponents.Add("kevingabbert@gmail.com");
 
                 //this.cboOpponents.DataSource = opponents;
                 //this.cboOpponents.SelectedItem = this.cboOpponents[0];
@@ -89,7 +109,10 @@ namespace ChessMangler.WinUIParts
         {
             this.btnOpenGrid.Enabled = this.ValidSelectedFile();
         }
-
+        private void configList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.OpenChosenConfigFile();
+        }
         private void tabControlGames_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.tabControlGames.SelectedTab == tabFreeForm)
@@ -108,10 +131,36 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        private void configList_MouseDoubleClick(object sender, MouseEventArgs e)
+        #region Roster Manger Events
+
+        private void rm_OnSubscription(jabber.client.RosterManager manager, Item ri, Presence pres)
         {
-            this.OpenChosenConfigFile();
+            DialogResult res = MessageBox.Show("Allow incoming presence subscription request from: " + pres.From,
+                "Subscription Request",
+                MessageBoxButtons.YesNoCancel);
+            switch (res)
+            {
+                case DialogResult.Yes:
+                    manager.ReplyAllow(pres);
+                    break;
+                case DialogResult.No:
+                    manager.ReplyDeny(pres);
+                    break;
+                case DialogResult.Cancel:
+                    // do nothing;
+                    break;
+            }
         }
+        private void rm_OnUnsubscription(jabber.client.RosterManager manager, Presence pres, ref bool remove)
+        {
+            MessageBox.Show(pres.From + " has removed you from their roster.", "Unsubscription notification", MessageBoxButtons.OK);
+        }
+        private void rm_OnRosterEnd(object sender)
+        {
+            roster.ExpandAll();
+        }
+
+        #endregion
 
         #region FreeForm Game Tab events
         private void udGridX_ValueChanged(object sender, EventArgs e)

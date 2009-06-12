@@ -325,6 +325,7 @@
             this.constrainBoardProportionsToolStripMenuItem.Name = "constrainBoardProportionsToolStripMenuItem";
             this.constrainBoardProportionsToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.constrainBoardProportionsToolStripMenuItem.Text = "Constrain Board Proportions";
+
             // 
             // rotateBoardToolStripMenuItem
             // 
@@ -454,30 +455,27 @@
             // dgvMoves
             // 
             this.dgvMoves.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMoves.Location = new System.Drawing.Point(33, 21);
+            this.dgvMoves.Location = new System.Drawing.Point(0, 4);
             this.dgvMoves.Name = "dgvMoves";
-            this.dgvMoves.Size = new System.Drawing.Size(144, 50);
+            this.dgvMoves.Size = new System.Drawing.Size(216, 78);
             this.dgvMoves.TabIndex = 2;
             // 
             // splitContainer
             // 
-            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.splitContainer.IsSplitterFixed = true;
-            this.splitContainer.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer.Location = new System.Drawing.Point(3, 6);
             this.splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
             // 
             this.splitContainer.Panel1.Controls.Add(this.dgvMoves);
-            this.splitContainer.Panel1MinSize = 0;
             // 
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.txtChatHistory);
             this.splitContainer.Panel2.Controls.Add(this.btnChatSend);
             this.splitContainer.Panel2.Controls.Add(this.txtChat);
-            this.splitContainer.Panel2MinSize = 0;
-            this.splitContainer.Size = new System.Drawing.Size(150, 85);
+            this.splitContainer.Size = new System.Drawing.Size(657, 85);
+            this.splitContainer.SplitterDistance = 219;
             this.splitContainer.TabIndex = 3;
             // 
             // txtChatHistory
@@ -491,9 +489,9 @@
             // 
             // btnChatSend
             // 
-            this.btnChatSend.Location = new System.Drawing.Point(0, 0);
+            this.btnChatSend.Location = new System.Drawing.Point(376, 51);
             this.btnChatSend.Name = "btnChatSend";
-            this.btnChatSend.Size = new System.Drawing.Size(75, 23);
+            this.btnChatSend.Size = new System.Drawing.Size(55, 30);
             this.btnChatSend.TabIndex = 1;
             this.btnChatSend.Text = "Send";
             this.btnChatSend.UseVisualStyleBackColor = true;
@@ -504,7 +502,7 @@
             this.txtChat.Location = new System.Drawing.Point(3, 51);
             this.txtChat.Multiline = true;
             this.txtChat.Name = "txtChat";
-            this.txtChat.Size = new System.Drawing.Size(100, 20);
+            this.txtChat.Size = new System.Drawing.Size(368, 30);
             this.txtChat.TabIndex = 0;
             this.txtChat.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtChat_KeyDown);
             // 
