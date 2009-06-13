@@ -12,7 +12,7 @@ using ChessMangler.Communications.Interfaces;
 
 namespace ChessMangler.Communications.Handlers
 {
-    public class JabberHandler : IM_Handler_Base, ICommsHandlers, IJabberCredentials
+    public class JabberHandler : IM_Handler_Base, ICommsHandler, IJabberCredentials
     {
         // we will wait on this event until we're done sending
         static ManualResetEvent done = new ManualResetEvent(false);

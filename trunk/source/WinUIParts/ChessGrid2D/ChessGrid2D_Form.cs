@@ -18,6 +18,19 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         #region Properties
 
+        ICommsHandler _comms;
+        public ICommsHandler Comms
+        {
+            get
+            {
+                return _comms;
+            }
+            set
+            {
+                _comms = value;
+            }
+        }
+
         string _opponent;
         public string Opponent
         {
@@ -60,25 +73,22 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         #endregion
 
-        Comms _comms = new Comms();
-        ICommsHandlers _commsHandlers;
-
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
-        public ChessGrid2D_Form()
+        public ChessGrid2D_Form(ICommsHandler comms)
         {
             InitializeComponent();
 
-            this.InitComms();
+            this.InitComms(comms);
             this.InitGrid();
             this.InitForms();
         }
-        public ChessGrid2D_Form(BoardDef board, string imagesDirectory, short squareSize, string opponent)
+        public ChessGrid2D_Form(ICommsHandler comms, BoardDef board, string imagesDirectory, short squareSize, string opponent)
         {
             InitializeComponent();
 
-            this.InitComms();
+            this.InitComms(comms);
             this.InitGrid();
             this.Grid.SetUp_FreeFormBoard(this, board, squareSize);
 
@@ -86,12 +96,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.InitForms();
         }
 
-        private void InitComms()
+        private void InitComms(ICommsHandler newComms)
         {
-            _commsHandlers = _comms.GetHandler(CommsType.Google); //TODO: later this will be assigned via a saved value in the DB, or User selection
-
-            _commsHandlers.OpponentChat_Recieved += new OpponentChat(On_Opponent_RCV);
-            _commsHandlers.OpponentMove_Recieved += new OpponentMove_Handler(On_OpponentMove_RCV);
+            _comms = newComms;
+            _comms.OpponentChat_Recieved += new OpponentChat(On_Opponent_RCV);
+            _comms.OpponentMove_Recieved += new OpponentMove_Handler(On_OpponentMove_RCV);
         }
 
         #region Comms Events
@@ -149,7 +158,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (this._squareHandlers.OutBox != null)
             {
-                _commsHandlers.Write(this.Opponent, this._squareHandlers.OutBox);
+                _comms.Write(this.Opponent, this._squareHandlers.OutBox);
 
                 this.Grid.UIBoard.Squares.Disable();  //Until we recieve a good packet from the opponent
             }
@@ -275,7 +284,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         /// </summary>
         public void SendChat()
         {
-            _commsHandlers.Message(this.Opponent, this.txtChat.Text);
+            _comms.Message(this.Opponent, this.txtChat.Text);
 
             //This message needs to be logged in the database (remember to also add the ID of the latest move so we know at what point of the game that this was sent..)
             //Make an option later to create a PGN file annotated with chats.

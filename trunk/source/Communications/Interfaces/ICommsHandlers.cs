@@ -3,7 +3,7 @@ using ChessMangler.Communications.Handlers;
 
 namespace ChessMangler.Communications.Interfaces
 {
-    public interface ICommsHandlers
+    public interface ICommsHandler
     {
         event OpponentMove_Handler OpponentMove_Recieved;
         event OpponentChat OpponentChat_Recieved;

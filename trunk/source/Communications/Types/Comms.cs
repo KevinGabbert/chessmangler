@@ -66,9 +66,9 @@ namespace ChessMangler.Communications.Types
 
         #endregion
 
-        public ICommsHandlers GetHandler(CommsType commsType)
+        public ICommsHandler GetHandler(CommsType commsType)
         {
-            ICommsHandlers returnVal = null;
+            ICommsHandler returnVal = null;
 
             switch (commsType)
             {

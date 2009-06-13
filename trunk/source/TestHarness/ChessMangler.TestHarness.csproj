@@ -64,6 +64,10 @@
     <Compile Include="WinUIParts_Tester\UIBoard_Tester.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Communications\ChessMangler.Communications.csproj">
+      <Project>{6348BF5C-3245-406C-B823-4291C154FEB1}</Project>
+      <Name>ChessMangler.Communications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Engine\Engine\ChessMangler.Engine.csproj">
       <Project>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</Project>
       <Name>ChessMangler.Engine</Name>
