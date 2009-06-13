@@ -39,7 +39,7 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
-        Comms _comms = new Comms();
+        ICommsHandler _comms;
 
         public GameList()
         {
@@ -72,6 +72,7 @@ namespace ChessMangler.WinUIParts
             }
 
             this.configList.DataSource = configFiles;
+            this.btnOpenGrid.Enabled = false;
         }
 
         private void Init_RosterManager()
@@ -86,6 +87,28 @@ namespace ChessMangler.WinUIParts
             this.rm.OnSubscription += new jabber.client.SubscriptionHandler(this.rm_OnSubscription);
             this.rm.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rm_OnUnsubscription);
         }
+
+        private void txtOpponent_Leave(object sender, EventArgs e)
+        {
+            this.CheckForStart();
+        }
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            this._comms = this.GetGoogleComms();
+            this.CheckForStart();
+        }
+
+        private void CheckForStart()
+        {
+            if ((this._comms != null) && (this.txtOpponent.Text != null))
+            {
+                this.btnOpenGrid.Enabled = true;
+            }
+            //else
+            //{
+            //    MessageBox.Show("To start, you need to login and select an opponent");
+            //}
+        }
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
             if (this.tabControlGames.SelectedTab == tabFreeForm)
@@ -94,13 +117,13 @@ namespace ChessMangler.WinUIParts
 
                 //TODO: That last argument needs to be the selected item from a list of opponents on this page:
 
-                List<string> opponents = new List<string>();
-                opponents.Add("kevingabbert@gmail.com");
+                //List<string> opponents = new List<string>();
+                //opponents.Add("kevingabbert@gmail.com");
 
                 //this.cboOpponents.DataSource = opponents;
                 //this.cboOpponents.SelectedItem = this.cboOpponents[0];
 
-                ChessGrid2D_Form open = new ChessGrid2D_Form(this.GetComms(), board, this.txtImages.Text, (short)udSquareSize.Value, "kevingabbert@gmail.com");
+                ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms, board, this.txtImages.Text, (short)udSquareSize.Value, this.txtOpponent.Text);
                 open.Show();
             }
 
@@ -135,9 +158,9 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        private ICommsHandler GetComms()
+        private ICommsHandler GetGoogleComms()
         {
-            return _comms.GetHandler(CommsType.Google); //TODO: later this will be assigned via a saved value in the DB, or User selection
+            return (new Comms()).GetHandler(CommsType.Google); //TODO: later this will be assigned via a saved value in the DB, or User selection
         }
 
         #region Roster Manger Events
@@ -206,7 +229,7 @@ namespace ChessMangler.WinUIParts
 
         private void OpenChosenConfigFile()
         {
-            ChessGrid2D_Form open = new ChessGrid2D_Form(this.GetComms());
+            ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms);
             open.Opponent = "kevingabbert@gmail.com";
 
             if (this.configList.SelectedValue.ToString() != null)

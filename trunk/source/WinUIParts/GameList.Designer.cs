@@ -55,6 +55,8 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.label7 = new System.Windows.Forms.Label();
             this.roster = new muzzle.RosterTree();
+            this.btnLogin = new System.Windows.Forms.Button();
+            this.txtOpponent = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControlGames.SuspendLayout();
             this.tabRulesGame.SuspendLayout();
@@ -89,7 +91,7 @@
             // 
             // btnOpenGrid
             // 
-            this.btnOpenGrid.Location = new System.Drawing.Point(93, 427);
+            this.btnOpenGrid.Location = new System.Drawing.Point(93, 467);
             this.btnOpenGrid.Name = "btnOpenGrid";
             this.btnOpenGrid.Size = new System.Drawing.Size(114, 23);
             this.btnOpenGrid.TabIndex = 2;
@@ -324,16 +326,36 @@
             this.roster.SelectedImageIndex = 0;
             this.roster.ShowLines = false;
             this.roster.ShowRootLines = false;
-            this.roster.Size = new System.Drawing.Size(290, 104);
+            this.roster.Size = new System.Drawing.Size(290, 75);
             this.roster.Sorted = true;
             this.roster.StatusColor = System.Drawing.Color.Teal;
             this.roster.TabIndex = 7;
+            // 
+            // btnLogin
+            // 
+            this.btnLogin.Location = new System.Drawing.Point(93, 438);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(114, 23);
+            this.btnLogin.TabIndex = 8;
+            this.btnLogin.Text = "GTalk Login";
+            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            // 
+            // txtOpponent
+            // 
+            this.txtOpponent.Location = new System.Drawing.Point(2, 407);
+            this.txtOpponent.Name = "txtOpponent";
+            this.txtOpponent.Size = new System.Drawing.Size(289, 20);
+            this.txtOpponent.TabIndex = 9;
+            this.txtOpponent.Leave += new System.EventHandler(this.txtOpponent_Leave);
             // 
             // GameList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 454);
+            this.ClientSize = new System.Drawing.Size(294, 502);
+            this.Controls.Add(this.txtOpponent);
+            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.roster);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.menuStrip1);
@@ -389,5 +411,7 @@
         private System.Windows.Forms.ToolStripMenuItem connectionToolStripMenuItem;
         private System.Windows.Forms.Label label7;
         private muzzle.RosterTree roster;
+        private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.TextBox txtOpponent;
     }
 }
