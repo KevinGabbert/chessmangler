@@ -54,9 +54,10 @@
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.label7 = new System.Windows.Forms.Label();
-            this.roster = new muzzle.RosterTree();
+            this.opponentRoster = new muzzle.RosterTree();
             this.btnLogin = new System.Windows.Forms.Button();
             this.txtOpponent = new System.Windows.Forms.TextBox();
+            this.gameStatus = new System.Windows.Forms.StatusStrip();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControlGames.SuspendLayout();
             this.tabRulesGame.SuspendLayout();
@@ -313,23 +314,24 @@
             this.label7.TabIndex = 6;
             this.label7.Text = "Select Opponent";
             // 
-            // roster
+            // opponentRoster
             // 
-            this.roster.AllowDrop = true;
-            this.roster.Client = null;
-            this.roster.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
-            this.roster.ImageIndex = 1;
-            this.roster.Location = new System.Drawing.Point(2, 317);
-            this.roster.Name = "roster";
-            this.roster.PresenceManager = null;
-            this.roster.RosterManager = null;
-            this.roster.SelectedImageIndex = 0;
-            this.roster.ShowLines = false;
-            this.roster.ShowRootLines = false;
-            this.roster.Size = new System.Drawing.Size(290, 75);
-            this.roster.Sorted = true;
-            this.roster.StatusColor = System.Drawing.Color.Teal;
-            this.roster.TabIndex = 7;
+            this.opponentRoster.AllowDrop = true;
+            this.opponentRoster.Client = null;
+            this.opponentRoster.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
+            this.opponentRoster.ImageIndex = 1;
+            this.opponentRoster.Location = new System.Drawing.Point(2, 317);
+            this.opponentRoster.Name = "opponentRoster";
+            this.opponentRoster.PresenceManager = null;
+            this.opponentRoster.RosterManager = null;
+            this.opponentRoster.SelectedImageIndex = 0;
+            this.opponentRoster.ShowLines = false;
+            this.opponentRoster.ShowRootLines = false;
+            this.opponentRoster.Size = new System.Drawing.Size(290, 75);
+            this.opponentRoster.Sorted = true;
+            this.opponentRoster.StatusColor = System.Drawing.Color.Teal;
+            this.opponentRoster.TabIndex = 7;
+            this.opponentRoster.DoubleClick += new System.EventHandler(this.opponentRoster_DoubleClick);
             // 
             // btnLogin
             // 
@@ -349,14 +351,23 @@
             this.txtOpponent.TabIndex = 9;
             this.txtOpponent.Leave += new System.EventHandler(this.txtOpponent_Leave);
             // 
+            // gameStatus
+            // 
+            this.gameStatus.Location = new System.Drawing.Point(0, 497);
+            this.gameStatus.Name = "gameStatus";
+            this.gameStatus.Size = new System.Drawing.Size(294, 22);
+            this.gameStatus.TabIndex = 10;
+            this.gameStatus.Text = "statusStrip1";
+            // 
             // GameList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 502);
+            this.ClientSize = new System.Drawing.Size(294, 519);
+            this.Controls.Add(this.gameStatus);
             this.Controls.Add(this.txtOpponent);
             this.Controls.Add(this.btnLogin);
-            this.Controls.Add(this.roster);
+            this.Controls.Add(this.opponentRoster);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.tabControlGames);
@@ -410,8 +421,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem connectionToolStripMenuItem;
         private System.Windows.Forms.Label label7;
-        private muzzle.RosterTree roster;
+        private muzzle.RosterTree opponentRoster;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.TextBox txtOpponent;
+        private System.Windows.Forms.StatusStrip gameStatus;
     }
 }

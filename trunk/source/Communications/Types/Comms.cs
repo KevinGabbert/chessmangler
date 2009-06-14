@@ -66,7 +66,7 @@ namespace ChessMangler.Communications.Types
 
         #endregion
 
-        public ICommsHandler GetHandler(CommsType commsType)
+        public ICommsHandler Connect(CommsType commsType, Comms_Authenticate authenticateHandler)
         {
             ICommsHandler returnVal = null;
 
@@ -85,7 +85,7 @@ namespace ChessMangler.Communications.Types
                     this.Server = getUserInfo.Server; // "gmail.com";
                     this.NetworkHost = getUserInfo.NetworkHost; // "talk.l.google.com";
 
-                    returnVal = new JabberHandler(this.User, this.Password, this.Server, this.NetworkHost);
+                    returnVal = new JabberHandler(this.User, this.Password, this.Server, this.NetworkHost, authenticateHandler);
 
                     getUserInfo.Close();
                     getUserInfo.Dispose();

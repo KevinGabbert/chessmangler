@@ -37,7 +37,7 @@ namespace ChessMangler.TestHarness.WinUIParts_Tester
 
         private ICommsHandler GetComms()
         {
-            return _comms.GetHandler(CommsType.Google); //TODO: later this will be assigned via a saved value in the DB, or User selection
+            return _comms.Connect(CommsType.Google, null); //TODO: later this will be assigned via a saved value in the DB, or User selection
         }
     }
 }

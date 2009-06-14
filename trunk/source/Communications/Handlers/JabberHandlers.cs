@@ -73,8 +73,14 @@ namespace ChessMangler.Communications.Handlers
 
         #endregion
 
-        public JabberHandler(string userName, string password, string server, string networkHost)
+        public JabberHandler(string userName, string password, string server, string networkHost, Comms_Authenticate authenticateHandler)
         {
+            //TODO: if this works, then make this into a prop or an event
+            if (authenticateHandler != null)
+            {
+                this.authenticate += authenticateHandler;
+            }
+
             this.User = userName;
             this.Password = password;
             this.Server = server;
@@ -173,9 +179,11 @@ namespace ChessMangler.Communications.Handlers
         }
         private void j_OnAuthenticate(object sender)
         {
-            Console.Beep(1000, 20);
             done.Set(); // Finished sending.  Shut down.
+            this.On_Authenticate(sender);
 
+            //TODO:  We might need to access this via the IHandler, that way the user can arrange it so that they
+            //are not present if they don't want to be.
             jabberClient.Presence(PresenceType.available, "ChessMangler Online", "show", 2);
         }
         private void j_OnError(object sender, Exception ex)

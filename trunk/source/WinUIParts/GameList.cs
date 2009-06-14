@@ -9,10 +9,12 @@ using System.Windows.Forms;
 using System.IO;
 
 using ChessMangler.Engine.Types;
+using ChessMangler.Communications.Handlers;
 using ChessMangler.Communications.Interfaces;
 using ChessMangler.Communications.Types;
 using ChessMangler.WinUIParts.ChessGrid2D;
 
+using jabber.client;
 using jabber.protocol.client;
 using jabber.protocol.iq;
 
@@ -20,7 +22,7 @@ namespace ChessMangler.WinUIParts
 {
     public partial class GameList : Form
     {
-        private jabber.client.RosterManager rm;
+        private RosterManager rosterManager;
 
         #region Properties
 
@@ -48,6 +50,7 @@ namespace ChessMangler.WinUIParts
 
         #region Events
 
+        #region Form Events
         private void GameList_Load(object sender, EventArgs e)
         {
             this.Init_RosterManager();
@@ -74,20 +77,6 @@ namespace ChessMangler.WinUIParts
             this.configList.DataSource = configFiles;
             this.btnOpenGrid.Enabled = false;
         }
-
-        private void Init_RosterManager()
-        {
-
-            this.rm = new jabber.client.RosterManager(this.components);
-            this.rm.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowIfSubscribed;
-            this.rm.AutoSubscribe = true;
-            //this.rm.Stream = this.jc;
-
-            this.rm.OnRosterEnd += new bedrock.ObjectHandler(this.rm_OnRosterEnd);
-            this.rm.OnSubscription += new jabber.client.SubscriptionHandler(this.rm_OnSubscription);
-            this.rm.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rm_OnUnsubscription);
-        }
-
         private void txtOpponent_Leave(object sender, EventArgs e)
         {
             this.CheckForStart();
@@ -96,18 +85,6 @@ namespace ChessMangler.WinUIParts
         {
             this._comms = this.GetGoogleComms();
             this.CheckForStart();
-        }
-
-        private void CheckForStart()
-        {
-            if ((this._comms != null) && (this.txtOpponent.Text != null))
-            {
-                this.btnOpenGrid.Enabled = true;
-            }
-            //else
-            //{
-            //    MessageBox.Show("To start, you need to login and select an opponent");
-            //}
         }
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
@@ -157,15 +134,36 @@ namespace ChessMangler.WinUIParts
                 this.btnOpenGrid.Enabled = false;
             }
         }
+        #endregion
+        #region Comms Events
 
-        private ICommsHandler GetGoogleComms()
+        private void GameListAuthenticate(object sender)
         {
-            return (new Comms()).GetHandler(CommsType.Google); //TODO: later this will be assigned via a saved value in the DB, or User selection
+            this.SetStatus("Authenticated");
+
+            //TODO:  I'd like this to be here.. Right now it is in the JabberHandler.
+            //This means we are going to need to access the client somehow, so make a method in the interface to 
+            //deal with this.
+            //jabberClient.Presence(PresenceType.available, "ChessMangler Online", "show", 2);
         }
 
+        private delegate void StatusDelegate(string message);
+        private void SetStatus(string message)
+        {
+            if (this.txtOpponent.InvokeRequired)
+            {
+                this.txtOpponent.Invoke(new StatusDelegate(this.SetStatus), message);
+            }
+            else
+            {
+                this.txtOpponent.Text = message;
+            }
+        }
+
+        #endregion
         #region Roster Manger Events
 
-        private void rm_OnSubscription(jabber.client.RosterManager manager, Item ri, Presence pres)
+        private void rosterManager_OnSubscription(RosterManager manager, Item ri, Presence pres)
         {
             DialogResult res = MessageBox.Show("Allow incoming presence subscription request from: " + pres.From,
                 "Subscription Request",
@@ -183,17 +181,24 @@ namespace ChessMangler.WinUIParts
                     break;
             }
         }
-        private void rm_OnUnsubscription(jabber.client.RosterManager manager, Presence pres, ref bool remove)
+        private void rosterManager_OnUnsubscription(RosterManager manager, Presence pres, ref bool remove)
         {
             MessageBox.Show(pres.From + " has removed you from their roster.", "Unsubscription notification", MessageBoxButtons.OK);
         }
-        private void rm_OnRosterEnd(object sender)
+        private void rosterManager_OnRosterEnd(object sender)
         {
-            roster.ExpandAll();
+            opponentRoster.ExpandAll();
         }
 
         #endregion
+        #region OpponentRoster Events
 
+        private void opponentRoster_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
         #region FreeForm Game Tab events
         private void udGridX_ValueChanged(object sender, EventArgs e)
         {
@@ -226,6 +231,41 @@ namespace ChessMangler.WinUIParts
 
         #endregion
         #region Functions
+
+        private void Init_RosterManager()
+        {
+
+            this.rosterManager = new jabber.client.RosterManager(this.components);
+            this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowIfSubscribed;
+            this.rosterManager.AutoSubscribe = true;
+            //this.rm.Stream = this.jc;
+
+            this.rosterManager.OnRosterEnd += new bedrock.ObjectHandler(this.rosterManager_OnRosterEnd);
+            this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
+            this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);
+        }
+
+        private ICommsHandler GetGoogleComms()
+        {
+            //TODO:  At the moment, this event can't be reached via the interface.
+            //This needs to be doen correctly.
+            //For now, we are going to pass our authentication delegate directly into the Comms Handler
+            _comms = (new Comms()).Connect(CommsType.Google, new Comms_Authenticate(GameListAuthenticate)); //TODO: later this will be assigned via a saved value in the DB, or User selection
+            
+            return _comms;
+        }
+
+        private void CheckForStart()
+        {
+            if ((this._comms != null) && (this.txtOpponent.Text != null))
+            {
+                this.btnOpenGrid.Enabled = true;
+            }
+            //else
+            //{
+            //    MessageBox.Show("To start, you need to login and select an opponent");
+            //}
+        }
 
         private void OpenChosenConfigFile()
         {

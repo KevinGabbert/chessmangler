@@ -261,11 +261,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         /// When a chat is recieved, this guy is called
         /// </summary>
         /// <param name="message"></param>
-        public void AddChat(string message)
+        public void AddChat(string chatMessage)
         {
             if (this.txtChat.InvokeRequired)
             {
-                this.txtChat.Invoke(new ChatDelegate(this.AddChat), message);
+                this.txtChat.Invoke(new ChatDelegate(this.AddChat), chatMessage);
             }
             else
             {
@@ -273,7 +273,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
                 //TODO: if option is set, then preface with time or contact name
 
-                this.txtChatHistory.Text += Environment.NewLine + message;
+                this.txtChatHistory.Text += Environment.NewLine + chatMessage;
                 this.Scroll_ChatHistory_Box();
                 this.txtChat.Clear();
             }

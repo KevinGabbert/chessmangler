@@ -5,9 +5,11 @@ namespace ChessMangler.Communications.Interfaces
 {
     public interface ICommsHandler
     {
+        event Comms_Authenticate authenticate;
         event OpponentMove_Handler OpponentMove_Recieved;
         event OpponentChat OpponentChat_Recieved;
 
+        void On_Authenticate(object sender);
         void On_OpponentChat_RCV(string chatMessage);
         void On_OpponentMove(object sender);
 
