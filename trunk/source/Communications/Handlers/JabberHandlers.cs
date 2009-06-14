@@ -73,6 +73,7 @@ namespace ChessMangler.Communications.Handlers
 
         #endregion
 
+        //TODO:  remove authenticateHandler as a parameter
         public JabberHandler(string userName, string password, string server, string networkHost, Comms_Authenticate authenticateHandler)
         {
             //TODO: if this works, then make this into a prop or an event

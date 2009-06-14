@@ -84,7 +84,15 @@ namespace ChessMangler.WinUIParts
         private void btnLogin_Click(object sender, EventArgs e)
         {
             this._comms = this.GetGoogleComms();
-            this.CheckForStart();
+
+            if (this._comms == null)
+            {
+                this.SetStatus("Login Aborted: " + DateTime.Now.ToString());
+            }
+            else
+            {
+                this.CheckForStart();
+            }
         }
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
@@ -139,7 +147,7 @@ namespace ChessMangler.WinUIParts
 
         private void GameListAuthenticate(object sender)
         {
-            this.SetStatus("Authenticated");
+            this.SetStatus("Authenticated @ " + DateTime.Now.ToString());
 
             //TODO:  I'd like this to be here.. Right now it is in the JabberHandler.
             //This means we are going to need to access the client somehow, so make a method in the interface to 
@@ -150,13 +158,13 @@ namespace ChessMangler.WinUIParts
         private delegate void StatusDelegate(string message);
         private void SetStatus(string message)
         {
-            if (this.txtOpponent.InvokeRequired)
+            if (this.lblStatus.InvokeRequired)
             {
-                this.txtOpponent.Invoke(new StatusDelegate(this.SetStatus), message);
+                this.lblStatus.Invoke(new StatusDelegate(this.SetStatus), message);
             }
             else
             {
-                this.txtOpponent.Text = message;
+                this.lblStatus.Text = message;
             }
         }
 
@@ -244,7 +252,6 @@ namespace ChessMangler.WinUIParts
             this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
             this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);
         }
-
         private ICommsHandler GetGoogleComms()
         {
             //TODO:  At the moment, this event can't be reached via the interface.
@@ -254,19 +261,10 @@ namespace ChessMangler.WinUIParts
             
             return _comms;
         }
-
         private void CheckForStart()
         {
-            if ((this._comms != null) && (this.txtOpponent.Text != null))
-            {
-                this.btnOpenGrid.Enabled = true;
-            }
-            //else
-            //{
-            //    MessageBox.Show("To start, you need to login and select an opponent");
-            //}
+            this.btnOpenGrid.Enabled = (this._comms != null) && (this.txtOpponent.Text != "");
         }
-
         private void OpenChosenConfigFile()
         {
             ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms);

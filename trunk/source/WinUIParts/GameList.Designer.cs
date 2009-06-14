@@ -57,7 +57,7 @@
             this.opponentRoster = new muzzle.RosterTree();
             this.btnLogin = new System.Windows.Forms.Button();
             this.txtOpponent = new System.Windows.Forms.TextBox();
-            this.gameStatus = new System.Windows.Forms.StatusStrip();
+            this.lblStatus = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControlGames.SuspendLayout();
             this.tabRulesGame.SuspendLayout();
@@ -351,20 +351,22 @@
             this.txtOpponent.TabIndex = 9;
             this.txtOpponent.Leave += new System.EventHandler(this.txtOpponent_Leave);
             // 
-            // gameStatus
+            // lblStatus
             // 
-            this.gameStatus.Location = new System.Drawing.Point(0, 497);
-            this.gameStatus.Name = "gameStatus";
-            this.gameStatus.Size = new System.Drawing.Size(294, 22);
-            this.gameStatus.TabIndex = 10;
-            this.gameStatus.Text = "statusStrip1";
+            this.lblStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblStatus.Location = new System.Drawing.Point(0, 498);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(294, 21);
+            this.lblStatus.TabIndex = 10;
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // GameList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(294, 519);
-            this.Controls.Add(this.gameStatus);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.txtOpponent);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.opponentRoster);
@@ -424,6 +426,6 @@
         private muzzle.RosterTree opponentRoster;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.TextBox txtOpponent;
-        private System.Windows.Forms.StatusStrip gameStatus;
+        private System.Windows.Forms.Label lblStatus;
     }
 }

@@ -66,6 +66,7 @@ namespace ChessMangler.Communications.Types
 
         #endregion
 
+        //TODO:  remove authenticateHandler as a parameter
         public ICommsHandler Connect(CommsType commsType, Comms_Authenticate authenticateHandler)
         {
             ICommsHandler returnVal = null;
@@ -76,16 +77,27 @@ namespace ChessMangler.Communications.Types
 
                     //TODO:  Is this the best place for this?
                     Login_Form getUserInfo = new Login_Form(); //Is this a "Jabber Only" Login Form?
-                    getUserInfo.ShowDialog();
 
-                    //Code Execution will stop at this point and wait until user has dismissed the Login form.
+                    getUserInfo.ShowDialog();  //Code Execution will stop at this point and wait until user has dismissed the Login form.
 
                     this.User = getUserInfo.User; // "Test.Chess.Mangler";
                     this.Password = getUserInfo.Password;
                     this.Server = getUserInfo.Server; // "gmail.com";
                     this.NetworkHost = getUserInfo.NetworkHost; // "talk.l.google.com";
 
-                    returnVal = new JabberHandler(this.User, this.Password, this.Server, this.NetworkHost, authenticateHandler);
+                    bool success = ((this.User != null) && (this.User != "")) &&
+                                   ((this.Password != null) && (this.Password != "")) &&
+                                   ((this.Server != null) && (this.Server != "")) &&
+                                   ((this.NetworkHost != null) && (this.NetworkHost != ""));
+
+                    if (success)
+                    {
+                        returnVal = new JabberHandler(this.User, this.Password, this.Server, this.NetworkHost, authenticateHandler);
+                    }
+                    else
+                    {
+                        returnVal = null;
+                    }
 
                     getUserInfo.Close();
                     getUserInfo.Dispose();
