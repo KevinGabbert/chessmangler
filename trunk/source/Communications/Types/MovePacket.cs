@@ -158,7 +158,7 @@ namespace ChessMangler.Communications.Types
             return __root;
 
             //Here's what this makes so far..
-            //<message id="JN_4" to="kevingabbert@gmail.com">
+            //<message id="JN_4" to="xx@gmail.com">
             //   <ChessMangler>
             //      <MovePacket>
             //         <MoveHash>1234</MoveHash>

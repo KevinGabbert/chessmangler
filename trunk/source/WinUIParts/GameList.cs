@@ -118,7 +118,7 @@ namespace ChessMangler.WinUIParts
                 //TODO: That last argument needs to be the selected item from a list of opponents on this page:
 
                 //List<string> opponents = new List<string>();
-                //opponents.Add("kevingabbert@gmail.com");
+                //opponents.Add("");
 
                 //this.cboOpponents.DataSource = opponents;
                 //this.cboOpponents.SelectedItem = this.cboOpponents[0];
@@ -230,7 +230,7 @@ namespace ChessMangler.WinUIParts
         private void OpenChosenConfigFile()
         {
             ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms);
-            open.Opponent = "kevingabbert@gmail.com";
+            open.Opponent = this.txtOpponent.Text;
 
             if (this.configList.SelectedValue.ToString() != null)
             {
