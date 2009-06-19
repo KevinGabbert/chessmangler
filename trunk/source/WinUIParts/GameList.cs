@@ -15,14 +15,28 @@ using ChessMangler.Communications.Types;
 using ChessMangler.WinUIParts.ChessGrid2D;
 
 using jabber.client;
+using jabber.connection;
 using jabber.protocol.client;
 using jabber.protocol.iq;
+
+using bedrock.util;
 
 namespace ChessMangler.WinUIParts
 {
     public partial class GameList : Form
     {
+        //TODO: Jabber stuff to move into ICommsHandler
         private RosterManager rosterManager;
+        private PresenceManager presenceManager;
+
+        private DiscoManager discoManager;
+        private CapsManager capsManager;
+        private PubSubManager pubSubManager;
+        private IdleTime idler;
+
+
+        private JabberClient jabberClient = new JabberClient();
+        //TODO: Jabber stuff to move into ICommsHandler
 
         #region Properties
 
@@ -53,8 +67,6 @@ namespace ChessMangler.WinUIParts
         #region Form Events
         private void GameList_Load(object sender, EventArgs e)
         {
-            this.Init_RosterManager();
-
             //Looks through config directory, and list what Config files are found
             string configDir = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString() + "\\Config";
 
@@ -84,6 +96,17 @@ namespace ChessMangler.WinUIParts
         private void btnLogin_Click(object sender, EventArgs e)
         {
             this._comms = this.GetGoogleComms();
+            this.Init_RosterManager();
+            this.Init_PresenceManager();
+
+            this.capsManager = new jabber.connection.CapsManager(this.components);
+            this.pubSubManager = new jabber.connection.PubSubManager(this.components);
+            //this.idler = new bedrock.util.IdleTime();
+            //this.muc = new jabber.connection.ConferenceManager(this.components);
+
+
+
+            this.init_RosterTree();
 
             if (this._comms == null)
             {
@@ -94,6 +117,7 @@ namespace ChessMangler.WinUIParts
                 this.CheckForStart();
             }
         }
+
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
             if (this.tabControlGames.SelectedTab == tabFreeForm)
@@ -242,16 +266,54 @@ namespace ChessMangler.WinUIParts
 
         private void Init_RosterManager()
         {
+            if (this._comms.originalHandler != null)
+            {
+                this.rosterManager = new jabber.client.RosterManager(this.components);
+                this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowIfSubscribed;
+                this.rosterManager.AutoSubscribe = true;
+                this.rosterManager.Stream = (JabberClient)this._comms.originalHandler;
 
-            this.rosterManager = new jabber.client.RosterManager(this.components);
-            this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowIfSubscribed;
-            this.rosterManager.AutoSubscribe = true;
-            //this.rm.Stream = this.jc;
-
-            this.rosterManager.OnRosterEnd += new bedrock.ObjectHandler(this.rosterManager_OnRosterEnd);
-            this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
-            this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);
+                this.rosterManager.OnRosterEnd += new bedrock.ObjectHandler(this.rosterManager_OnRosterEnd);
+                this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
+                this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);
+            }
+            else
+            {
+                //TODO:  throw some kind of error telling the programmer he's a moron
+            }
         }
+        private void Init_PresenceManager()
+        {
+            this.presenceManager = new jabber.client.PresenceManager(this.components);
+
+            if (this._comms.originalHandler != null)
+            {
+                this.presenceManager.Stream = (JabberClient)this._comms.originalHandler;
+            }
+            else
+            {
+                //TODO:  throw some kind of error telling the programmer he's a moron
+            }
+
+            ((JabberClient)this._comms.originalHandler).Presence(PresenceType.available, "ChessMangler Online", "show", 2);
+        }
+
+        private void init_RosterTree()
+        {
+            //TODO: This should ref ICommsHandlers props
+            if (this._comms.originalHandler != null)
+            {
+                //This guys all need to be initialized by the time we get this far..
+                this.opponentRoster.Client = (JabberClient)this._comms.originalHandler;
+                this.opponentRoster.RosterManager = this.rosterManager;
+                this.opponentRoster.PresenceManager = this.presenceManager;
+            }
+            else
+            {
+                //TODO:  throw some kind of error telling the programmer he's a moron
+            }
+        }
+
         private ICommsHandler GetGoogleComms()
         {
             //TODO:  At the moment, this event can't be reached via the interface.

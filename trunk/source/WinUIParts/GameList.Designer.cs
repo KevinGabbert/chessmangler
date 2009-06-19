@@ -332,6 +332,7 @@
             this.opponentRoster.StatusColor = System.Drawing.Color.Teal;
             this.opponentRoster.TabIndex = 7;
             this.opponentRoster.DoubleClick += new System.EventHandler(this.opponentRoster_DoubleClick);
+
             // 
             // btnLogin
             // 

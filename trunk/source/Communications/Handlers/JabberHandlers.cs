@@ -71,6 +71,27 @@ namespace ChessMangler.Communications.Handlers
             }
         }
 
+        JabberClient _jabberClient = new JabberClient();
+        public JabberClient JabberClient
+        {
+            get
+            {
+                return _jabberClient;
+            }
+            set
+            {
+                _jabberClient = value;
+            }
+        }
+
+        public object originalHandler
+        {
+            get
+            {
+                return _jabberClient;
+            }
+        }
+
         #endregion
 
         //TODO:  remove authenticateHandler as a parameter
@@ -90,47 +111,45 @@ namespace ChessMangler.Communications.Handlers
             this.InitJabber();
         }
 
-        JabberClient jabberClient = new JabberClient();
-
         private void InitJabber()
         {
             //TODO: if Login information isn't filled out by this point, then pop up the login form
 
-            jabberClient.AutoReconnect = 3F;
-            jabberClient.AutoStartCompression = true;
-            jabberClient.AutoStartTLS = true;
+            _jabberClient.AutoReconnect = 3F;
+            _jabberClient.AutoStartCompression = true;
+            _jabberClient.AutoStartTLS = true;
 
             //Is this even needed here? 
-            jabberClient.InvokeControl = this;
-            jabberClient.LocalCertificate = null;
-            jabberClient.KeepAlive = 30F;
+            _jabberClient.InvokeControl = this;
+            _jabberClient.LocalCertificate = null;
+            _jabberClient.KeepAlive = 30F;
 
             // what user/pass to log in as
-            jabberClient.User = this.User; // "Test.Chess.Mangler";
-            jabberClient.Server = this.Server; // "gmail.com";  // use gmail.com for GoogleTalk
-            jabberClient.Password = this.Password; //sorry.. changed it.
-            jabberClient.NetworkHost = this.NetworkHost; // "talk.l.google.com";  // Note: that's an "L", not a "1".
+            _jabberClient.User = this.User; // "Test.Chess.Mangler";
+            _jabberClient.Server = this.Server; // "gmail.com";  // use gmail.com for GoogleTalk
+            _jabberClient.Password = this.Password; //sorry.. changed it.
+            _jabberClient.NetworkHost = this.NetworkHost; // "talk.l.google.com";  // Note: that's an "L", not a "1".
 
             // don't do extra stuff, please.
-            jabberClient.AutoPresence = false;
-            jabberClient.AutoRoster = false;
-            jabberClient.AutoReconnect = -1;
+            _jabberClient.AutoPresence = false;
+            _jabberClient.AutoRoster = false;
+            _jabberClient.AutoReconnect = -1;
 
             // listen for errors.  Always do this!
-            jabberClient.OnError += new bedrock.ExceptionHandler(j_OnError);
+            _jabberClient.OnError += new bedrock.ExceptionHandler(j_OnError);
 
             // what to do when login completes
-            jabberClient.OnAuthenticate += new bedrock.ObjectHandler(j_OnAuthenticate);
+            _jabberClient.OnAuthenticate += new bedrock.ObjectHandler(j_OnAuthenticate);
 
             // listen for XMPP wire protocol
-            jabberClient.OnMessage += new MessageHandler(j_OnMessage);
+            _jabberClient.OnMessage += new MessageHandler(j_OnMessage);
 
-            jabberClient.OnDisconnect += new bedrock.ObjectHandler(j_OnDisconnect);
+            _jabberClient.OnDisconnect += new bedrock.ObjectHandler(j_OnDisconnect);
 
             if ((this.User != "") && (this.Password != ""))
             {
                 // Set everything in motion
-                jabberClient.Connect();
+                _jabberClient.Connect();
 
                 //wait until sending a message is complete
                 done.WaitOne();
@@ -182,10 +201,6 @@ namespace ChessMangler.Communications.Handlers
         {
             done.Set(); // Finished sending.  Shut down.
             this.On_Authenticate(sender);
-
-            //TODO:  We might need to access this via the IHandler, that way the user can arrange it so that they
-            //are not present if they don't want to be.
-            jabberClient.Presence(PresenceType.available, "ChessMangler Online", "show", 2);
         }
         private void j_OnError(object sender, Exception ex)
         {
@@ -205,13 +220,13 @@ namespace ChessMangler.Communications.Handlers
             message.To = new jabber.JID(opponent);
             message.AddChild(stuffToWrite);
 
-            jabberClient.Write(message);
+            _jabberClient.Write(message);
 
             done.Set();
         }
         public void Message(string to, string body)
         {
-            jabberClient.Message(to, body);
+            _jabberClient.Message(to, body);
 
             done.Set();
         }
