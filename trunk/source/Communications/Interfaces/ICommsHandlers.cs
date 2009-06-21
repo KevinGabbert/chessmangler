@@ -1,5 +1,6 @@
 ﻿using System.Xml;
 using ChessMangler.Communications.Handlers;
+using jabber.client;
 
 namespace ChessMangler.Communications.Interfaces
 {

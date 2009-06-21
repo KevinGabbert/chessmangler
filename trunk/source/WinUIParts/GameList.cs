@@ -33,7 +33,7 @@ namespace ChessMangler.WinUIParts
 
         private DiscoManager discoManager;
         private CapsManager capsManager;
-        private PubSubManager pubSubManager;
+        //private PubSubManager pubSubManager;
         private IdleTime idler;
 
         jabber.connection.Ident ident1 = new jabber.connection.Ident();
@@ -58,7 +58,8 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
-        ICommsHandler _comms;
+        Comms _comms = new Comms();
+        //ICommsHandler _commsHandler;
 
         public GameList()
         {
@@ -100,20 +101,12 @@ namespace ChessMangler.WinUIParts
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            this.Init_PresenceManager();
-            this.Init_RosterManager();
-
-            this._comms = this.GetGoogleComms();
-
-            this.Init_PresenceManager();
-            this.Init_RosterManager();
-
             this.idler = new bedrock.util.IdleTime();
             this.idler.InvokeControl = this;
             this.idler.OnIdle += new bedrock.util.SpanEventHandler(this.idler_OnIdle);
             this.idler.OnUnIdle += new bedrock.util.SpanEventHandler(this.idler_OnUnIdle);
 
-            jc = (JabberClient)this._comms.originalHandler;
+            jc = (JabberClient)this._comms.CommsHandler.originalHandler;
             jc.OnIQ += new jabber.client.IQHandler(this.jc_OnIQ);
 
             this.discoManager = new jabber.connection.DiscoManager(this.components);
@@ -128,16 +121,57 @@ namespace ChessMangler.WinUIParts
             ident1.Lang = "en";
             ident1.Name = "Jabber-Net Test Client";
             ident1.Type = "pc";
-            this.capsManager.Identities = new jabber.connection.Ident[] {ident1};
+            this.capsManager.Identities = new jabber.connection.Ident[] { ident1 };
             this.capsManager.Node = "ChessManglerCapsMan";
             this.capsManager.Stream = this.jc;
 
-            //this.pubSubManager = new jabber.connection.PubSubManager(this.components);
-            //this.muc = new jabber.connection.ConferenceManager(this.components);
+
+            //-----------------------
+
+            //User = txtUserName.Text;
+            //Pwd = txtPassword.Text;
+            //pnlCredentials.Enabled = false;
+            //jabberClient1.User = User;
+            //jabberClient1.Server = "gmail.com";
+            //jabberClient1.Password = Pwd;
+            //jabberClient1.AutoRoster = true;
+
+            //rm = new RosterManager();
+            //rm.Stream = jabberClient1;
+            //rm.AutoSubscribe = true;
+            //rm.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowAll;
+            //rm.OnRosterBegin += new bedrock.ObjectHandler(rm_OnRosterBegin);
+            //rm.OnRosterEnd += new bedrock.ObjectHandler(rm_OnRosterEnd);
+            //rm.OnRosterItem += new RosterItemHandler(rm_OnRosterItem);
+
+
+            //pm = new PresenceManager();
+            //pm.Stream = jabberClient1;
+
+            //rosterTree1.RosterManager = rm;
+            //rosterTree1.PresenceManager = pm;
+            //rosterTree1.DoubleClick += new EventHandler(rosterTree1_DoubleClick);
+
+            //jabberClient1.Connect();
+            //jabberClient1.OnAuthenticate += new bedrock.ObjectHandler(jabberClient1_OnAuthenticate);
+            //lblUser.Text = jabberClient1.User;
+
+            this.Init_RosterManager();
+            this.Init_PresenceManager();
+
+            this.presenceManager.CapsManager = this.capsManager;
 
             this.init_RosterTree();
 
-            if (this._comms == null)
+            this.GetGoogleComms();
+            //this._comms.CommsHandler = this._comms.CommsHandler; // this.GetGoogleComms();
+
+
+            this.Init_RosterManager();
+            this.Init_PresenceManager();
+
+
+            if (this._comms.CommsHandler == null)
             {
                 this.SetStatus("Login Aborted: " + DateTime.Now.ToString());
             }
@@ -145,12 +179,9 @@ namespace ChessMangler.WinUIParts
             {
                 this.CheckForStart();
             }
-
-            
+ 
             opponentRoster.Refresh();
         }
-
-
 
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
@@ -166,7 +197,7 @@ namespace ChessMangler.WinUIParts
                 //this.cboOpponents.DataSource = opponents;
                 //this.cboOpponents.SelectedItem = this.cboOpponents[0];
 
-                ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms, board, this.txtImages.Text, (short)udSquareSize.Value, this.txtOpponent.Text);
+                ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms.CommsHandler, board, this.txtImages.Text, (short)udSquareSize.Value, this.txtOpponent.Text);
                 open.Show();
             }
 
@@ -206,6 +237,8 @@ namespace ChessMangler.WinUIParts
         private void GameListAuthenticate(object sender)
         {
             this.SetStatus("Authenticated @ " + DateTime.Now.ToString());
+
+            ((JabberClient)this._comms.CommsHandler.originalHandler).Presence(PresenceType.available, "ChessMangler Start", "show", 2);
 
             //TODO:  I'd like this to be here.. Right now it is in the JabberHandler.
             //This means we are going to need to access the client somehow, so make a method in the interface to 
@@ -252,12 +285,32 @@ namespace ChessMangler.WinUIParts
             MessageBox.Show(pres.From + " has removed you from their roster.", "Unsubscription notification", MessageBoxButtons.OK);
         }
 
+        
         private void rosterManager_OnBegin(object sender)
         {
-            
+            this.SetRoster(opponentRoster);
+        }
+
+        private delegate void RosterDelegate(muzzle.RosterTree xx);
+        private void SetRoster(muzzle.RosterTree xx)
+        {
+            if (this.opponentRoster.InvokeRequired)
+            {
+                this.opponentRoster.Invoke(new RosterDelegate(this.SetRoster), xx);
+            }
+            else
+            {
+                opponentRoster.BeginUpdate();
+            }
+        }
+
+        private void rosterManager_OnItem(object sender, Item rItem)
+        {
+            MessageBox.Show(rItem.Value);
         }
         private void rosterManager_OnRosterEnd(object sender)
         {
+            //TODO: need invoke here
             opponentRoster.ExpandAll();
         }
 
@@ -375,54 +428,54 @@ namespace ChessMangler.WinUIParts
 
         private void Init_RosterManager()
         {
-            if (this._comms != null)
-            {
-                if (this._comms.originalHandler != null)
-                {
+            //if (this._comms != null)
+            //{
+                //if (this._comms.originalHandler != null)
+                //{
                     this.rosterManager = new jabber.client.RosterManager(this.components);
                     this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowAll;
                     this.rosterManager.AutoSubscribe = true;
-                    this.rosterManager.Stream = (JabberClient)this._comms.originalHandler;
+                    this.rosterManager.Stream = (JabberClient)this._comms.CommsHandler.originalHandler;
 
                     this.rosterManager.OnRosterBegin += new bedrock.ObjectHandler(this.rosterManager_OnBegin);
-                    //this.rosterManager.OnRosterItem += new RosterItemHandler(this.rosterManager_OnItemX);
+                    this.rosterManager.OnRosterItem += new RosterItemHandler(this.rosterManager_OnItem);
                     this.rosterManager.OnRosterEnd += new bedrock.ObjectHandler(this.rosterManager_OnRosterEnd);
                     this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
                     this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);                  
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     //TODO:  throw some kind of error telling the programmer he's a moron
-                }
-            }
+                //}
+            //}
         }
         private void Init_PresenceManager()
         {
             this.presenceManager = new jabber.client.PresenceManager(this.components);
 
-            if (this._comms != null)
-            {
-                if (this._comms.originalHandler != null)
-                {
-                    this.presenceManager.Stream = (JabberClient)this._comms.originalHandler;
-                    ((JabberClient)this._comms.originalHandler).Presence(PresenceType.available, "ChessMangler Online", "show", 2);
-                }
-                else
-                {
+            //if (this._comms.CommsHandler != null)
+            //{
+                //if (this._comms.CommsHandler.originalHandler != null)
+                //{
+                    this.presenceManager.Stream = (JabberClient)this._comms.CommsHandler.originalHandler;
+                    //((JabberClient)this._comms.CommsHandler.originalHandler).Presence(PresenceType.available, "ChessMangler Online", "show", 2);
+                //}
+                //else
+                //{
                     //TODO:  throw some kind of error telling the programmer he's a moron
-                }
-            }
+                //}
+           // }
         }
 
         private void init_RosterTree()
         {
             //TODO: This should ref ICommsHandlers props
-            if (this._comms != null)
+            if (this._comms.CommsHandler != null)
             {
-                if (this._comms.originalHandler != null)
+                if (this._comms.CommsHandler.originalHandler != null)
                 {
                     //This guys all need to be initialized by the time we get this far..
-                    this.opponentRoster.Client = (JabberClient)this._comms.originalHandler;
+                    this.opponentRoster.Client = (JabberClient)this._comms.CommsHandler.originalHandler;
                     this.opponentRoster.RosterManager = this.rosterManager;
                     this.opponentRoster.PresenceManager = this.presenceManager;
                 }
@@ -433,22 +486,20 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        private ICommsHandler GetGoogleComms()
+        private void GetGoogleComms()
         {
             //TODO:  At the moment, this event can't be reached via the interface.
             //This needs to be doen correctly.
             //For now, we are going to pass our authentication delegate directly into the Comms Handler
-            _comms = (new Comms()).Connect(CommsType.Google, new Comms_Authenticate(GameListAuthenticate)); //TODO: later this will be assigned via a saved value in the DB, or User selection
-            
-            return _comms;
+            _comms.Connect(CommsType.Google, new Comms_Authenticate(GameListAuthenticate)); //TODO: later this will be assigned via a saved value in the DB, or User selection
         }
         private void CheckForStart()
         {
-            this.btnOpenGrid.Enabled = (this._comms != null) && (this.txtOpponent.Text != "");
+            this.btnOpenGrid.Enabled = (this._comms.CommsHandler != null) && (this.txtOpponent.Text != "");
         }
         private void OpenChosenConfigFile()
         {
-            ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms);
+            ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms.CommsHandler);
             open.Opponent = this.txtOpponent.Text;
 
             if (this.configList.SelectedValue.ToString() != null)

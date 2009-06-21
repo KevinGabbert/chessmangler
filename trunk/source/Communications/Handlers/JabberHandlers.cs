@@ -94,6 +94,11 @@ namespace ChessMangler.Communications.Handlers
 
         #endregion
 
+        public JabberHandler()
+        {
+
+        }
+
         //TODO:  remove authenticateHandler as a parameter
         public JabberHandler(string userName, string password, string server, string networkHost, Comms_Authenticate authenticateHandler)
         {
@@ -130,9 +135,8 @@ namespace ChessMangler.Communications.Handlers
             _jabberClient.Password = this.Password; //sorry.. changed it.
             _jabberClient.NetworkHost = this.NetworkHost; // "talk.l.google.com";  // Note: that's an "L", not a "1".
 
-            // don't do extra stuff, please.
             _jabberClient.AutoPresence = false;
-            _jabberClient.AutoRoster = false;
+            _jabberClient.AutoRoster = true;
             _jabberClient.AutoReconnect = -1;
 
             // listen for errors.  Always do this!

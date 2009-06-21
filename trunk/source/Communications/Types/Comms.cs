@@ -64,13 +64,29 @@ namespace ChessMangler.Communications.Types
             }
         }
 
+        ICommsHandler _commsHandler = new JabberHandler();
+        public ICommsHandler CommsHandler
+        {
+            get
+            {
+                return _commsHandler;
+            }
+            set
+            {
+                _commsHandler = value;
+            }
+        }
+
         #endregion
 
-        //TODO:  remove authenticateHandler as a parameter
-        public ICommsHandler Connect(CommsType commsType, Comms_Authenticate authenticateHandler)
+        public Comms()
         {
-            ICommsHandler returnVal = null;
 
+        }
+
+        //TODO:  remove authenticateHandler as a parameter
+        public void Connect(CommsType commsType, Comms_Authenticate authenticateHandler)
+        {
             switch (commsType)
             {
                 case CommsType.Google:
@@ -92,11 +108,11 @@ namespace ChessMangler.Communications.Types
 
                     if (success)
                     {
-                        returnVal = new JabberHandler(this.User, this.Password, this.Server, this.NetworkHost, authenticateHandler);
+                        this.CommsHandler = new JabberHandler(this.User, this.Password, this.Server, this.NetworkHost, authenticateHandler);
                     }
                     else
                     {
-                        returnVal = null;
+                        this.CommsHandler = null;
                     }
 
                     getUserInfo.Close();
@@ -104,8 +120,6 @@ namespace ChessMangler.Communications.Types
 
                     break;
             }
-
-            return returnVal;
         }
     }
 }
