@@ -317,13 +317,13 @@
             // opponentRoster
             // 
             this.opponentRoster.AllowDrop = true;
-            this.opponentRoster.Client = null;
+            this.opponentRoster.Client = this.jc;
             this.opponentRoster.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
             this.opponentRoster.ImageIndex = 1;
             this.opponentRoster.Location = new System.Drawing.Point(2, 317);
             this.opponentRoster.Name = "opponentRoster";
-            this.opponentRoster.PresenceManager = null;
-            this.opponentRoster.RosterManager = null;
+            this.opponentRoster.PresenceManager = this.presenceManager;
+            this.opponentRoster.RosterManager = this.rosterManager;
             this.opponentRoster.SelectedImageIndex = 0;
             this.opponentRoster.ShowLines = false;
             this.opponentRoster.ShowRootLines = false;

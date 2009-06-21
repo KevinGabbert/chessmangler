@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,6 +27,7 @@ namespace ChessMangler.WinUIParts
     public partial class GameList : Form
     {
         //TODO: Jabber stuff to move into ICommsHandler
+        private JabberClient jc;
         private RosterManager rosterManager;
         private PresenceManager presenceManager;
 
@@ -34,6 +36,7 @@ namespace ChessMangler.WinUIParts
         private PubSubManager pubSubManager;
         private IdleTime idler;
 
+        jabber.connection.Ident ident1 = new jabber.connection.Ident();
 
         private JabberClient jabberClient = new JabberClient();
         //TODO: Jabber stuff to move into ICommsHandler
@@ -60,6 +63,8 @@ namespace ChessMangler.WinUIParts
         public GameList()
         {
             InitializeComponent();
+
+
         }
 
         #region Events
@@ -99,12 +104,32 @@ namespace ChessMangler.WinUIParts
             this.Init_RosterManager();
             this.Init_PresenceManager();
 
+            this.idler = new bedrock.util.IdleTime();
+            this.idler.InvokeControl = this;
+            this.idler.OnIdle += new bedrock.util.SpanEventHandler(this.idler_OnIdle);
+            this.idler.OnUnIdle += new bedrock.util.SpanEventHandler(this.idler_OnUnIdle);
+
+            jc = (JabberClient)this._comms.originalHandler;
+            jc.OnIQ += new jabber.client.IQHandler(this.jc_OnIQ);
+
+            this.discoManager = new jabber.connection.DiscoManager(this.components);
+            this.discoManager.Stream = this.jc;
+
             this.capsManager = new jabber.connection.CapsManager(this.components);
-            this.pubSubManager = new jabber.connection.PubSubManager(this.components);
-            //this.idler = new bedrock.util.IdleTime();
+            this.capsManager.DiscoManager = this.discoManager;
+            this.capsManager.Features = new string[0];
+            //this.capsManager.FileName = "caps.xml";
+
+            ident1.Category = "client";
+            ident1.Lang = "en";
+            ident1.Name = "Jabber-Net Test Client";
+            ident1.Type = "pc";
+            this.capsManager.Identities = new jabber.connection.Ident[] {ident1};
+            this.capsManager.Node = "ChessManglerCapsMan";
+            this.capsManager.Stream = this.jc;
+
+            //this.pubSubManager = new jabber.connection.PubSubManager(this.components);
             //this.muc = new jabber.connection.ConferenceManager(this.components);
-
-
 
             this.init_RosterTree();
 
@@ -116,7 +141,12 @@ namespace ChessMangler.WinUIParts
             {
                 this.CheckForStart();
             }
+
+            
+            opponentRoster.Refresh();
         }
+
+
 
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
@@ -217,9 +247,84 @@ namespace ChessMangler.WinUIParts
         {
             MessageBox.Show(pres.From + " has removed you from their roster.", "Unsubscription notification", MessageBoxButtons.OK);
         }
+
+        private void rosterManager_OnBegin(object sender)
+        {
+            
+        }
         private void rosterManager_OnRosterEnd(object sender)
         {
             opponentRoster.ExpandAll();
+        }
+
+        //TODO: this needs to be send to JabberHandlers
+        private void jc_OnIQ(object sender, IQ iq)
+        {
+            if (iq.Type != IQType.get)
+                return;
+
+            XmlElement query = iq.Query;
+            if (query == null)
+                return;
+
+            // <iq id="jcl_8" to="me" from="you" type="get"><query xmlns="jabber:iq:version"/></iq>
+            if (query is jabber.protocol.iq.Version)
+            {
+                iq = iq.GetResponse(jc.Document);
+                jabber.protocol.iq.Version ver = iq.Query as jabber.protocol.iq.Version;
+                if (ver != null)
+                {
+                    ver.OS = Environment.OSVersion.ToString();
+                    ver.EntityName = Application.ProductName;
+                    ver.Ver = Application.ProductVersion;
+                }
+                jc.Write(iq);
+                return;
+            }
+
+            if (query is Time)
+            {
+                iq = iq.GetResponse(jc.Document);
+                Time tim = iq.Query as Time;
+                if (tim != null) tim.SetCurrentTime();
+                jc.Write(iq);
+                return;
+            }
+
+            if (query is Last)
+            {
+                iq = iq.GetResponse(jc.Document);
+                Last last = iq.Query as Last;
+                if (last != null) last.Seconds = (int)IdleTime.GetIdleTime();
+                jc.Write(iq);
+                return;
+            }
+        }
+
+        //TODO:  Idler event needs to be put into CommsHandlers
+        void idler_OnUnIdle(object sender, TimeSpan span)
+        {
+            if (jc != null)
+            {
+                if (this.jc.IsAuthenticated)
+                {
+                    jc.Presence(PresenceType.available, "ChessMangler Available", null, 0);
+                    //pnlPresence.Text = "Available";
+                }
+            }
+        }
+
+        //TODO:  Idler event needs to be put into CommsHandlers
+        private void idler_OnIdle(object sender, TimeSpan span)
+        {
+            if (jc != null)
+            {
+                if (this.jc.IsAuthenticated)
+                {
+                    jc.Presence(PresenceType.available, "ChessMangler Auto-away", "away", 0);
+                    //pnlPresence.Text = "Away";
+                }
+            }
         }
 
         #endregion
@@ -266,51 +371,62 @@ namespace ChessMangler.WinUIParts
 
         private void Init_RosterManager()
         {
-            if (this._comms.originalHandler != null)
+            if (this._comms != null)
             {
-                this.rosterManager = new jabber.client.RosterManager(this.components);
-                this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowIfSubscribed;
-                this.rosterManager.AutoSubscribe = true;
-                this.rosterManager.Stream = (JabberClient)this._comms.originalHandler;
+                if (this._comms.originalHandler != null)
+                {
+                    this.rosterManager = new jabber.client.RosterManager(this.components);
+                    this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowIfSubscribed;
+                    this.rosterManager.AutoSubscribe = true;
+                    this.rosterManager.Stream = (JabberClient)this._comms.originalHandler;
 
-                this.rosterManager.OnRosterEnd += new bedrock.ObjectHandler(this.rosterManager_OnRosterEnd);
-                this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
-                this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);
-            }
-            else
-            {
-                //TODO:  throw some kind of error telling the programmer he's a moron
+                    this.rosterManager.OnRosterBegin += new bedrock.ObjectHandler(this.rosterManager_OnBegin);
+                    this.rosterManager.OnRosterEnd += new bedrock.ObjectHandler(this.rosterManager_OnRosterEnd);
+                    this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
+                    this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);
+
+                   
+                }
+                else
+                {
+                    //TODO:  throw some kind of error telling the programmer he's a moron
+                }
             }
         }
         private void Init_PresenceManager()
         {
             this.presenceManager = new jabber.client.PresenceManager(this.components);
 
-            if (this._comms.originalHandler != null)
+            if (this._comms != null)
             {
-                this.presenceManager.Stream = (JabberClient)this._comms.originalHandler;
+                if (this._comms.originalHandler != null)
+                {
+                    this.presenceManager.Stream = (JabberClient)this._comms.originalHandler;
+                    ((JabberClient)this._comms.originalHandler).Presence(PresenceType.available, "ChessMangler Online", "show", 2);
+                }
+                else
+                {
+                    //TODO:  throw some kind of error telling the programmer he's a moron
+                }
             }
-            else
-            {
-                //TODO:  throw some kind of error telling the programmer he's a moron
-            }
-
-            ((JabberClient)this._comms.originalHandler).Presence(PresenceType.available, "ChessMangler Online", "show", 2);
         }
 
         private void init_RosterTree()
         {
             //TODO: This should ref ICommsHandlers props
-            if (this._comms.originalHandler != null)
+            if (this._comms != null)
             {
-                //This guys all need to be initialized by the time we get this far..
-                this.opponentRoster.Client = (JabberClient)this._comms.originalHandler;
-                this.opponentRoster.RosterManager = this.rosterManager;
-                this.opponentRoster.PresenceManager = this.presenceManager;
-            }
-            else
-            {
-                //TODO:  throw some kind of error telling the programmer he's a moron
+                if (this._comms.originalHandler != null)
+                {
+                    //This guys all need to be initialized by the time we get this far..
+                    this.opponentRoster.Client = (JabberClient)this._comms.originalHandler;
+                    this.opponentRoster.RosterManager = this.rosterManager;
+                    this.opponentRoster.PresenceManager = this.presenceManager;
+                }
+                else
+                {
+                    //TODO:  throw some kind of error telling the programmer he's a moron
+                }
             }
         }
 
