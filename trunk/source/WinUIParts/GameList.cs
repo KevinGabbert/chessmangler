@@ -100,9 +100,13 @@ namespace ChessMangler.WinUIParts
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            this._comms = this.GetGoogleComms();
-            this.Init_RosterManager();
             this.Init_PresenceManager();
+            this.Init_RosterManager();
+
+            this._comms = this.GetGoogleComms();
+
+            this.Init_PresenceManager();
+            this.Init_RosterManager();
 
             this.idler = new bedrock.util.IdleTime();
             this.idler.InvokeControl = this;
@@ -376,16 +380,15 @@ namespace ChessMangler.WinUIParts
                 if (this._comms.originalHandler != null)
                 {
                     this.rosterManager = new jabber.client.RosterManager(this.components);
-                    this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowIfSubscribed;
+                    this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowAll;
                     this.rosterManager.AutoSubscribe = true;
                     this.rosterManager.Stream = (JabberClient)this._comms.originalHandler;
 
                     this.rosterManager.OnRosterBegin += new bedrock.ObjectHandler(this.rosterManager_OnBegin);
+                    //this.rosterManager.OnRosterItem += new RosterItemHandler(this.rosterManager_OnItemX);
                     this.rosterManager.OnRosterEnd += new bedrock.ObjectHandler(this.rosterManager_OnRosterEnd);
                     this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
-                    this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);
-
-                   
+                    this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);                  
                 }
                 else
                 {
