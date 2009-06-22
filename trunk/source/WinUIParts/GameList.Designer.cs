@@ -55,7 +55,6 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.label7 = new System.Windows.Forms.Label();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.txtOpponent = new System.Windows.Forms.TextBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.dgvOpponents = new System.Windows.Forms.DataGridView();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
@@ -79,7 +78,7 @@
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(2, 27);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(290, 83);
+            this.pictureBox1.Size = new System.Drawing.Size(415, 83);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -95,9 +94,9 @@
             // 
             // btnOpenGrid
             // 
-            this.btnOpenGrid.Location = new System.Drawing.Point(93, 467);
+            this.btnOpenGrid.Location = new System.Drawing.Point(298, 304);
             this.btnOpenGrid.Name = "btnOpenGrid";
-            this.btnOpenGrid.Size = new System.Drawing.Size(114, 23);
+            this.btnOpenGrid.Size = new System.Drawing.Size(119, 23);
             this.btnOpenGrid.TabIndex = 2;
             this.btnOpenGrid.Text = "Start Game";
             this.btnOpenGrid.UseVisualStyleBackColor = true;
@@ -292,7 +291,7 @@
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(294, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(420, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -311,7 +310,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 301);
+            this.label7.Location = new System.Drawing.Point(298, 116);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(87, 13);
             this.label7.TabIndex = 6;
@@ -319,7 +318,7 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(93, 438);
+            this.btnLogin.Location = new System.Drawing.Point(2, 304);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(114, 23);
             this.btnLogin.TabIndex = 8;
@@ -327,32 +326,27 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // txtOpponent
-            // 
-            this.txtOpponent.Location = new System.Drawing.Point(-1, 452);
-            this.txtOpponent.Name = "txtOpponent";
-            this.txtOpponent.Size = new System.Drawing.Size(88, 20);
-            this.txtOpponent.TabIndex = 9;
-            this.txtOpponent.Leave += new System.EventHandler(this.txtOpponent_Leave);
-            // 
             // lblStatus
             // 
             this.lblStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblStatus.Location = new System.Drawing.Point(0, 498);
+            this.lblStatus.Location = new System.Drawing.Point(0, 334);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(294, 21);
+            this.lblStatus.Size = new System.Drawing.Size(420, 21);
             this.lblStatus.TabIndex = 10;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dgvOpponents
             // 
             this.dgvOpponents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvOpponents.Location = new System.Drawing.Point(6, 318);
+            this.dgvOpponents.ColumnHeadersVisible = false;
+            this.dgvOpponents.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvOpponents.Location = new System.Drawing.Point(298, 138);
             this.dgvOpponents.Name = "dgvOpponents";
             this.dgvOpponents.RowHeadersVisible = false;
-            this.dgvOpponents.Size = new System.Drawing.Size(285, 114);
+            this.dgvOpponents.Size = new System.Drawing.Size(119, 160);
             this.dgvOpponents.TabIndex = 11;
+            this.dgvOpponents.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOpponents_CellDoubleClick);
             // 
             // errorProvider1
             // 
@@ -362,10 +356,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 519);
+            this.ClientSize = new System.Drawing.Size(420, 355);
             this.Controls.Add(this.dgvOpponents);
             this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.txtOpponent);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.menuStrip1);
@@ -423,7 +416,6 @@
         private System.Windows.Forms.ToolStripMenuItem connectionToolStripMenuItem;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.TextBox txtOpponent;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.DataGridView dgvOpponents;
         private System.Windows.Forms.ErrorProvider errorProvider1;

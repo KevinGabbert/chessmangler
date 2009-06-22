@@ -36,7 +36,7 @@ namespace ChessMangler.WinUIParts
         //private PubSubManager pubSubManager;
         private IdleTime idler;
 
-        jabber.connection.Ident ident1 = new jabber.connection.Ident();
+        Ident ident1 = new Ident();
 
         private JabberClient jabberClient = new JabberClient();
         //TODO: Jabber stuff to move into ICommsHandler
@@ -59,7 +59,7 @@ namespace ChessMangler.WinUIParts
         #endregion
 
         Comms _comms = new Comms();
-        //ICommsHandler _commsHandler;
+        string _opponent;
 
         public GameList()
         {
@@ -151,6 +151,11 @@ namespace ChessMangler.WinUIParts
 
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
+            StartGame();
+        }
+
+        private void StartGame()
+        {
             if (this.tabControlGames.SelectedTab == tabFreeForm)
             {
                 BoardDef board = new BoardDef((short)udGridX.Value, (short)udGridY.Value);
@@ -163,7 +168,7 @@ namespace ChessMangler.WinUIParts
                 //this.cboOpponents.DataSource = opponents;
                 //this.cboOpponents.SelectedItem = this.cboOpponents[0];
 
-                ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms.CommsHandler, board, this.txtImages.Text, (short)udSquareSize.Value, this.txtOpponent.Text);
+                ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms.CommsHandler, board, this.txtImages.Text, (short)udSquareSize.Value, _opponent);
                 open.Show();
             }
 
@@ -225,42 +230,6 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        //TODO:  We will need these for the roster replacement
-        //
-        //private void SetRoster(muzzle.RosterTree xx)
-        //{
-        //    if (this.opponentRoster.InvokeRequired)
-        //    {
-        //        this.opponentRoster.Invoke(new RosterDelegate(this.SetRoster), xx);
-        //    }
-        //    else
-        //    {
-        //        opponentRoster.BeginUpdate();
-        //    }
-        //}
-        //private void ExpandRoster(muzzle.RosterTree yy)
-        //{
-        //    if (this.opponentRoster.InvokeRequired)
-        //    {
-        //        this.opponentRoster.Invoke(new RosterDelegate(this.ExpandRoster), yy);
-        //    }
-        //    else
-        //    {
-        //        opponentRoster.ExpandAll();
-        //    }
-        //}
-        //private void EndUpdateRoster(muzzle.RosterTree yy)
-        //{
-        //    if (this.opponentRoster.InvokeRequired)
-        //    {
-        //        this.opponentRoster.Invoke(new RosterDelegate(this.EndUpdateRoster), yy);
-        //    }
-        //    else
-        //    {
-        //        opponentRoster.EndUpdate();
-        //    }
-        //}
-
         #endregion
         #region Roster Manger Events
 
@@ -290,10 +259,9 @@ namespace ChessMangler.WinUIParts
         private void rosterManager_OnBegin(object sender)
         {
             //this.SetRoster(opponentRoster);
-
         }
 
-        BindingList<MyList> xx = new BindingList<MyList>();
+        BindingList<OpponentList> xx = new BindingList<OpponentList>();
 
         private void rosterManager_OnItem(object sender, Item rItem)
         {
@@ -303,7 +271,7 @@ namespace ChessMangler.WinUIParts
             {
                 if (user.Length > 0)
                 {
-                    xx.Add(new MyList(user));
+                    xx.Add(new OpponentList(user));
                 }
             }
         }
@@ -315,13 +283,11 @@ namespace ChessMangler.WinUIParts
             //jabberClient1.Presence(jabber.protocol.client.PresenceType.available, tbStatus.Text, null, 0);
             //lblPresence.Text = "Available";
 
-            //this.ExpandRoster(opponentRoster);
-            
             this.SetDataSource(xx);
         }
 
-        private delegate void RosterDelegate(BindingList<MyList> dataSource);
-        private void SetDataSource(BindingList<MyList> dataSource)
+        private delegate void RosterDelegate(BindingList<OpponentList> dataSource);
+        private void SetDataSource(BindingList<OpponentList> dataSource)
         {
             if (this.dgvOpponents.InvokeRequired)
             {
@@ -332,8 +298,6 @@ namespace ChessMangler.WinUIParts
                 this.dgvOpponents.DataSource = dataSource;
             }
         }
-
-
 
         //TODO: this needs to be send to JabberHandlers
         private void jc_OnIQ(object sender, IQ iq)
@@ -487,7 +451,6 @@ namespace ChessMangler.WinUIParts
                 //}
            // }
         }
-
         private void init_RosterTree()
         {
             //TODO: This should ref ICommsHandlers props
@@ -516,12 +479,12 @@ namespace ChessMangler.WinUIParts
         }
         private void CheckForStart()
         {
-            this.btnOpenGrid.Enabled = (this._comms.CommsHandler != null) && (this.txtOpponent.Text != "");
+            this.btnOpenGrid.Enabled = (this._comms.CommsHandler != null) && (_opponent != "");
         }
         private void OpenChosenConfigFile()
         {
             ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms.CommsHandler);
-            open.Opponent = this.txtOpponent.Text;
+            open.Opponent = _opponent;
 
             if (this.configList.SelectedValue.ToString() != null)
             {
@@ -541,13 +504,21 @@ namespace ChessMangler.WinUIParts
         }
 
         #endregion
+
+        private void dgvOpponents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string cellContents = ((DataGridView)sender).CurrentCell.Value.ToString();
+
+            this._opponent = cellContents + "@gmail.com";
+            this.StartGame();
+        }
     }
 
-    public class MyList
+    public class OpponentList
     {
         private string Itemname;
 
-        public MyList(string _ListItem)
+        public OpponentList(string _ListItem)
         {
             ListItem = _ListItem;
         }
