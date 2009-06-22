@@ -125,50 +125,18 @@ namespace ChessMangler.WinUIParts
             this.capsManager.Node = "ChessManglerCapsMan";
             this.capsManager.Stream = this.jc;
 
-
-            //-----------------------
-
-            //User = txtUserName.Text;
-            //Pwd = txtPassword.Text;
-            //pnlCredentials.Enabled = false;
-            //jabberClient1.User = User;
-            //jabberClient1.Server = "gmail.com";
-            //jabberClient1.Password = Pwd;
-            //jabberClient1.AutoRoster = true;
-
-            //rm = new RosterManager();
-            //rm.Stream = jabberClient1;
-            //rm.AutoSubscribe = true;
-            //rm.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowAll;
-            //rm.OnRosterBegin += new bedrock.ObjectHandler(rm_OnRosterBegin);
-            //rm.OnRosterEnd += new bedrock.ObjectHandler(rm_OnRosterEnd);
-            //rm.OnRosterItem += new RosterItemHandler(rm_OnRosterItem);
-
-
-            //pm = new PresenceManager();
-            //pm.Stream = jabberClient1;
-
-            //rosterTree1.RosterManager = rm;
-            //rosterTree1.PresenceManager = pm;
-            //rosterTree1.DoubleClick += new EventHandler(rosterTree1_DoubleClick);
-
-            //jabberClient1.Connect();
-            //jabberClient1.OnAuthenticate += new bedrock.ObjectHandler(jabberClient1_OnAuthenticate);
-            //lblUser.Text = jabberClient1.User;
-
             this.Init_RosterManager();
             this.Init_PresenceManager();
 
             this.presenceManager.CapsManager = this.capsManager;
 
-            this.init_RosterTree();
-
             this.GetGoogleComms();
-            //this._comms.CommsHandler = this._comms.CommsHandler; // this.GetGoogleComms();
 
+            this.init_RosterTree();
 
             this.Init_RosterManager();
             this.Init_PresenceManager();
+
 
 
             if (this._comms.CommsHandler == null)
@@ -259,6 +227,41 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        private delegate void RosterDelegate(muzzle.RosterTree xx);
+        private void SetRoster(muzzle.RosterTree xx)
+        {
+            if (this.opponentRoster.InvokeRequired)
+            {
+                this.opponentRoster.Invoke(new RosterDelegate(this.SetRoster), xx);
+            }
+            else
+            {
+                opponentRoster.BeginUpdate();
+            }
+        }
+        private void ExpandRoster(muzzle.RosterTree yy)
+        {
+            if (this.opponentRoster.InvokeRequired)
+            {
+                this.opponentRoster.Invoke(new RosterDelegate(this.ExpandRoster), yy);
+            }
+            else
+            {
+                opponentRoster.ExpandAll();
+            }
+        }
+        private void EndUpdateRoster(muzzle.RosterTree yy)
+        {
+            if (this.opponentRoster.InvokeRequired)
+            {
+                this.opponentRoster.Invoke(new RosterDelegate(this.EndUpdateRoster), yy);
+            }
+            else
+            {
+                opponentRoster.EndUpdate();
+            }
+        }
+
         #endregion
         #region Roster Manger Events
 
@@ -284,34 +287,30 @@ namespace ChessMangler.WinUIParts
         {
             MessageBox.Show(pres.From + " has removed you from their roster.", "Unsubscription notification", MessageBoxButtons.OK);
         }
-
         
         private void rosterManager_OnBegin(object sender)
         {
             this.SetRoster(opponentRoster);
-        }
 
-        private delegate void RosterDelegate(muzzle.RosterTree xx);
-        private void SetRoster(muzzle.RosterTree xx)
-        {
-            if (this.opponentRoster.InvokeRequired)
-            {
-                this.opponentRoster.Invoke(new RosterDelegate(this.SetRoster), xx);
-            }
-            else
-            {
-                opponentRoster.BeginUpdate();
-            }
         }
-
         private void rosterManager_OnItem(object sender, Item rItem)
         {
-            MessageBox.Show(rItem.Value);
+            string user = rItem.JID.User;
+
+            if (user.Length > 0)
+            {
+                MessageBox.Show(user);
+            }
         }
         private void rosterManager_OnRosterEnd(object sender)
         {
-            //TODO: need invoke here
-            opponentRoster.ExpandAll();
+            this.rosterManager = (RosterManager)sender;
+            //done.Set();
+            this.EndUpdateRoster(opponentRoster);
+            //jabberClient1.Presence(jabber.protocol.client.PresenceType.available, tbStatus.Text, null, 0);
+            //lblPresence.Text = "Available";
+
+            this.ExpandRoster(opponentRoster);
         }
 
         //TODO: this needs to be send to JabberHandlers

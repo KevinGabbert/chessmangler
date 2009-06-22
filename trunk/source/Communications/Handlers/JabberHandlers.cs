@@ -150,6 +150,10 @@ namespace ChessMangler.Communications.Handlers
 
             _jabberClient.OnDisconnect += new bedrock.ObjectHandler(j_OnDisconnect);
 
+            //jabberClient1.OnDisconnect += new bedrock.ObjectHandler(jabberClient1_OnDisconnect);
+            //jabberClient1.OnError += new bedrock.ExceptionHandler(jabberClient1_OnError);
+            //jabberClient1.OnAuthError += new jabber.protocol.ProtocolHandler(jabberClient1_OnAuthError);
+
             if ((this.User != "") && (this.Password != ""))
             {
                 // Set everything in motion
