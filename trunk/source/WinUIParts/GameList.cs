@@ -60,6 +60,7 @@ namespace ChessMangler.WinUIParts
 
         Comms _comms = new Comms();
         string _opponent;
+        BindingList<OpponentList> opponentList = new BindingList<OpponentList>();
 
         public GameList()
         {
@@ -93,6 +94,7 @@ namespace ChessMangler.WinUIParts
             this.configList.DataSource = configFiles;
             this.btnOpenGrid.Enabled = false;
         }
+
         private void txtOpponent_Leave(object sender, EventArgs e)
         {
             this.CheckForStart();
@@ -148,7 +150,6 @@ namespace ChessMangler.WinUIParts
  
             //opponentRoster.Refresh();
         }
-
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
             StartGame();
@@ -156,6 +157,9 @@ namespace ChessMangler.WinUIParts
 
         private void StartGame()
         {
+            //TODO: we should probably send a quick chat to start the game.
+
+
             if (this.tabControlGames.SelectedTab == tabFreeForm)
             {
                 BoardDef board = new BoardDef((short)udGridX.Value, (short)udGridY.Value);
@@ -177,6 +181,7 @@ namespace ChessMangler.WinUIParts
                 this.OpenChosenConfigFile();
             }
         }
+
         private void configList_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.btnOpenGrid.Enabled = this.ValidSelectedFile();
@@ -185,6 +190,7 @@ namespace ChessMangler.WinUIParts
         {
             this.OpenChosenConfigFile();
         }
+
         private void tabControlGames_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.tabControlGames.SelectedTab == tabFreeForm)
@@ -202,6 +208,21 @@ namespace ChessMangler.WinUIParts
                 this.btnOpenGrid.Enabled = false;
             }
         }
+
+        private void dgvOpponents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string cellContents = ((DataGridView)sender).CurrentCell.Value.ToString();
+
+
+            //TODO:  Do they have ChessMangler?
+            //string x = ((DataGridView)sender).CurrentRow.Cells["HasChessMangler"].ToString();
+
+            this._opponent = cellContents + "@gmail.com";
+
+
+            this.StartGame();
+        }
+
         #endregion
         #region Comms Events
 
@@ -260,9 +281,6 @@ namespace ChessMangler.WinUIParts
         {
             //this.SetRoster(opponentRoster);
         }
-
-        BindingList<OpponentList> xx = new BindingList<OpponentList>();
-
         private void rosterManager_OnItem(object sender, Item rItem)
         {
             string user = rItem.JID.User;
@@ -271,33 +289,49 @@ namespace ChessMangler.WinUIParts
             {
                 if (user.Length > 0)
                 {
-                    xx.Add(new OpponentList(user));
+                    //TODO: param for presence
+                    //TODO: param for if they have chessMangler
+
+                    opponentList.Add(new OpponentList(user, "GTalk")); 
                 }
             }
         }
         private void rosterManager_OnRosterEnd(object sender)
         {
             this.rosterManager = (RosterManager)sender;
-            //done.Set();
-            //this.EndUpdateRoster(opponentRoster);
             //jabberClient1.Presence(jabber.protocol.client.PresenceType.available, tbStatus.Text, null, 0);
             //lblPresence.Text = "Available";
 
-            this.SetDataSource(xx);
+            //TODO: is the DGV formatted by this point?  it should be..  (columnsize, etc)
+            this.SetOpponentsDataSource(opponentList);
         }
 
-        private delegate void RosterDelegate(BindingList<OpponentList> dataSource);
-        private void SetDataSource(BindingList<OpponentList> dataSource)
+        #endregion
+        #region OpponentRoster Events
+
+        private void opponentRoster_DoubleClick(object sender, EventArgs e)
         {
-            if (this.dgvOpponents.InvokeRequired)
-            {
-                this.dgvOpponents.Invoke(new RosterDelegate(this.SetDataSource), dataSource);
-            }
-            else
-            {
-                this.dgvOpponents.DataSource = dataSource;
-            }
+
         }
+
+        #endregion
+        #region FreeForm Game Tab events
+        private void udGridX_ValueChanged(object sender, EventArgs e)
+        {
+            this.btnOpenGrid.Enabled = this.ValidFreeFormGame();
+        }
+
+        private void udGridY_ValueChanged(object sender, EventArgs e)
+        {
+            this.btnOpenGrid.Enabled = this.ValidFreeFormGame();
+        }
+
+        private void udSquareSize_ValueChanged(object sender, EventArgs e)
+        {
+            this.btnOpenGrid.Enabled = this.ValidFreeFormGame();
+        }
+
+        #endregion
 
         //TODO: this needs to be send to JabberHandlers
         private void jc_OnIQ(object sender, IQ iq)
@@ -368,33 +402,6 @@ namespace ChessMangler.WinUIParts
                 }
             }
         }
-
-        #endregion
-        #region OpponentRoster Events
-
-        private void opponentRoster_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
-
-        #endregion
-        #region FreeForm Game Tab events
-        private void udGridX_ValueChanged(object sender, EventArgs e)
-        {
-            this.btnOpenGrid.Enabled = this.ValidFreeFormGame();
-        }
-
-        private void udGridY_ValueChanged(object sender, EventArgs e)
-        {
-            this.btnOpenGrid.Enabled = this.ValidFreeFormGame();
-        }
-
-        private void udSquareSize_ValueChanged(object sender, EventArgs e)
-        {
-            this.btnOpenGrid.Enabled = this.ValidFreeFormGame();
-        }
-
-        #endregion
 
         private bool ValidFreeFormGame()
         {
@@ -503,29 +510,20 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+
+        private delegate void RosterDelegate(BindingList<OpponentList> dataSource);
+        private void SetOpponentsDataSource(BindingList<OpponentList> dataSource)
+        {
+            if (this.dgvOpponents.InvokeRequired)
+            {
+                this.dgvOpponents.Invoke(new RosterDelegate(this.SetOpponentsDataSource), dataSource);
+            }
+            else
+            {
+                this.dgvOpponents.DataSource = dataSource;
+            }
+        }
+
         #endregion
-
-        private void dgvOpponents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            string cellContents = ((DataGridView)sender).CurrentCell.Value.ToString();
-
-            this._opponent = cellContents + "@gmail.com";
-            this.StartGame();
-        }
-    }
-
-    public class OpponentList
-    {
-        private string Itemname;
-
-        public OpponentList(string _ListItem)
-        {
-            ListItem = _ListItem;
-        }
-        public string ListItem
-        {
-            get { return Itemname; }
-            set { Itemname = value; }
-        }
     }
 }
