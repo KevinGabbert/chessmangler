@@ -64,8 +64,6 @@ namespace ChessMangler.WinUIParts
         public GameList()
         {
             InitializeComponent();
-
-
         }
 
         #region Events
@@ -228,7 +226,7 @@ namespace ChessMangler.WinUIParts
         }
 
         //TODO:  We will need these for the roster replacement
-        //private delegate void RosterDelegate(muzzle.RosterTree xx);
+        //
         //private void SetRoster(muzzle.RosterTree xx)
         //{
         //    if (this.opponentRoster.InvokeRequired)
@@ -294,13 +292,19 @@ namespace ChessMangler.WinUIParts
             //this.SetRoster(opponentRoster);
 
         }
+
+        BindingList<MyList> xx = new BindingList<MyList>();
+
         private void rosterManager_OnItem(object sender, Item rItem)
         {
             string user = rItem.JID.User;
 
-            if (user.Length > 0)
+            if (user != null)
             {
-                MessageBox.Show(user);
+                if (user.Length > 0)
+                {
+                    xx.Add(new MyList(user));
+                }
             }
         }
         private void rosterManager_OnRosterEnd(object sender)
@@ -312,7 +316,24 @@ namespace ChessMangler.WinUIParts
             //lblPresence.Text = "Available";
 
             //this.ExpandRoster(opponentRoster);
+            
+            this.SetDataSource(xx);
         }
+
+        private delegate void RosterDelegate(BindingList<MyList> dataSource);
+        private void SetDataSource(BindingList<MyList> dataSource)
+        {
+            if (this.dgvOpponents.InvokeRequired)
+            {
+                this.dgvOpponents.Invoke(new RosterDelegate(this.SetDataSource), dataSource);
+            }
+            else
+            {
+                this.dgvOpponents.DataSource = dataSource;
+            }
+        }
+
+
 
         //TODO: this needs to be send to JabberHandlers
         private void jc_OnIQ(object sender, IQ iq)
@@ -520,5 +541,20 @@ namespace ChessMangler.WinUIParts
         }
 
         #endregion
+    }
+
+    public class MyList
+    {
+        private string Itemname;
+
+        public MyList(string _ListItem)
+        {
+            ListItem = _ListItem;
+        }
+        public string ListItem
+        {
+            get { return Itemname; }
+            set { Itemname = value; }
+        }
     }
 }

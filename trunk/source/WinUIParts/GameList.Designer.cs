@@ -57,6 +57,8 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.txtOpponent = new System.Windows.Forms.TextBox();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.dgvOpponents = new System.Windows.Forms.DataGridView();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControlGames.SuspendLayout();
             this.tabRulesGame.SuspendLayout();
@@ -67,6 +69,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.udGridY)).BeginInit();
             this.tabFreeFormPresets.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOpponents)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -312,26 +316,6 @@
             this.label7.Size = new System.Drawing.Size(87, 13);
             this.label7.TabIndex = 6;
             this.label7.Text = "Select Opponent";
-            //// 
-            //// opponentRoster
-            //// 
-            //this.opponentRoster.AllowDrop = true;
-            //this.opponentRoster.Client = this.jc;
-            //this.opponentRoster.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
-            //this.opponentRoster.ImageIndex = 1;
-            //this.opponentRoster.Location = new System.Drawing.Point(2, 317);
-            //this.opponentRoster.Name = "opponentRoster";
-            //this.opponentRoster.PresenceManager = this.presenceManager;
-            //this.opponentRoster.RosterManager = this.rosterManager;
-            //this.opponentRoster.SelectedImageIndex = 0;
-            //this.opponentRoster.ShowLines = false;
-            //this.opponentRoster.ShowRootLines = false;
-            //this.opponentRoster.Size = new System.Drawing.Size(290, 75);
-            //this.opponentRoster.Sorted = true;
-            //this.opponentRoster.StatusColor = System.Drawing.Color.Teal;
-            //this.opponentRoster.TabIndex = 7;
-            //this.opponentRoster.DoubleClick += new System.EventHandler(this.opponentRoster_DoubleClick);
-
             // 
             // btnLogin
             // 
@@ -345,9 +329,9 @@
             // 
             // txtOpponent
             // 
-            this.txtOpponent.Location = new System.Drawing.Point(2, 407);
+            this.txtOpponent.Location = new System.Drawing.Point(-1, 452);
             this.txtOpponent.Name = "txtOpponent";
-            this.txtOpponent.Size = new System.Drawing.Size(289, 20);
+            this.txtOpponent.Size = new System.Drawing.Size(88, 20);
             this.txtOpponent.TabIndex = 9;
             this.txtOpponent.Leave += new System.EventHandler(this.txtOpponent_Leave);
             // 
@@ -361,11 +345,25 @@
             this.lblStatus.TabIndex = 10;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // dgvOpponents
+            // 
+            this.dgvOpponents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOpponents.Location = new System.Drawing.Point(6, 318);
+            this.dgvOpponents.Name = "dgvOpponents";
+            this.dgvOpponents.RowHeadersVisible = false;
+            this.dgvOpponents.Size = new System.Drawing.Size(285, 114);
+            this.dgvOpponents.TabIndex = 11;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // GameList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(294, 519);
+            this.Controls.Add(this.dgvOpponents);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.txtOpponent);
             this.Controls.Add(this.btnLogin);
@@ -391,6 +389,8 @@
             this.tabFreeFormPresets.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOpponents)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -425,5 +425,7 @@
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.TextBox txtOpponent;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.DataGridView dgvOpponents;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
