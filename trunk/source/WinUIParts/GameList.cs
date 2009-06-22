@@ -148,7 +148,7 @@ namespace ChessMangler.WinUIParts
                 this.CheckForStart();
             }
  
-            opponentRoster.Refresh();
+            //opponentRoster.Refresh();
         }
 
         private void btnOpenGrid_Click(object sender, EventArgs e)
@@ -227,40 +227,41 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        private delegate void RosterDelegate(muzzle.RosterTree xx);
-        private void SetRoster(muzzle.RosterTree xx)
-        {
-            if (this.opponentRoster.InvokeRequired)
-            {
-                this.opponentRoster.Invoke(new RosterDelegate(this.SetRoster), xx);
-            }
-            else
-            {
-                opponentRoster.BeginUpdate();
-            }
-        }
-        private void ExpandRoster(muzzle.RosterTree yy)
-        {
-            if (this.opponentRoster.InvokeRequired)
-            {
-                this.opponentRoster.Invoke(new RosterDelegate(this.ExpandRoster), yy);
-            }
-            else
-            {
-                opponentRoster.ExpandAll();
-            }
-        }
-        private void EndUpdateRoster(muzzle.RosterTree yy)
-        {
-            if (this.opponentRoster.InvokeRequired)
-            {
-                this.opponentRoster.Invoke(new RosterDelegate(this.EndUpdateRoster), yy);
-            }
-            else
-            {
-                opponentRoster.EndUpdate();
-            }
-        }
+        //TODO:  We will need these for the roster replacement
+        //private delegate void RosterDelegate(muzzle.RosterTree xx);
+        //private void SetRoster(muzzle.RosterTree xx)
+        //{
+        //    if (this.opponentRoster.InvokeRequired)
+        //    {
+        //        this.opponentRoster.Invoke(new RosterDelegate(this.SetRoster), xx);
+        //    }
+        //    else
+        //    {
+        //        opponentRoster.BeginUpdate();
+        //    }
+        //}
+        //private void ExpandRoster(muzzle.RosterTree yy)
+        //{
+        //    if (this.opponentRoster.InvokeRequired)
+        //    {
+        //        this.opponentRoster.Invoke(new RosterDelegate(this.ExpandRoster), yy);
+        //    }
+        //    else
+        //    {
+        //        opponentRoster.ExpandAll();
+        //    }
+        //}
+        //private void EndUpdateRoster(muzzle.RosterTree yy)
+        //{
+        //    if (this.opponentRoster.InvokeRequired)
+        //    {
+        //        this.opponentRoster.Invoke(new RosterDelegate(this.EndUpdateRoster), yy);
+        //    }
+        //    else
+        //    {
+        //        opponentRoster.EndUpdate();
+        //    }
+        //}
 
         #endregion
         #region Roster Manger Events
@@ -290,7 +291,7 @@ namespace ChessMangler.WinUIParts
         
         private void rosterManager_OnBegin(object sender)
         {
-            this.SetRoster(opponentRoster);
+            //this.SetRoster(opponentRoster);
 
         }
         private void rosterManager_OnItem(object sender, Item rItem)
@@ -306,11 +307,11 @@ namespace ChessMangler.WinUIParts
         {
             this.rosterManager = (RosterManager)sender;
             //done.Set();
-            this.EndUpdateRoster(opponentRoster);
+            //this.EndUpdateRoster(opponentRoster);
             //jabberClient1.Presence(jabber.protocol.client.PresenceType.available, tbStatus.Text, null, 0);
             //lblPresence.Text = "Available";
 
-            this.ExpandRoster(opponentRoster);
+            //this.ExpandRoster(opponentRoster);
         }
 
         //TODO: this needs to be send to JabberHandlers
@@ -473,10 +474,10 @@ namespace ChessMangler.WinUIParts
             {
                 if (this._comms.CommsHandler.originalHandler != null)
                 {
-                    //This guys all need to be initialized by the time we get this far..
-                    this.opponentRoster.Client = (JabberClient)this._comms.CommsHandler.originalHandler;
-                    this.opponentRoster.RosterManager = this.rosterManager;
-                    this.opponentRoster.PresenceManager = this.presenceManager;
+                    ////This guys all need to be initialized by the time we get this far..
+                    //this.opponentRoster.Client = (JabberClient)this._comms.CommsHandler.originalHandler;
+                    //this.opponentRoster.RosterManager = this.rosterManager;
+                    //this.opponentRoster.PresenceManager = this.presenceManager;
                 }
                 else
                 {
