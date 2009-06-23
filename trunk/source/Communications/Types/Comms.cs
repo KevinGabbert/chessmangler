@@ -92,7 +92,7 @@ namespace ChessMangler.Communications.Types
                 case CommsType.Google:
 
                     //TODO:  Is this the best place for this?
-                    Login_Form getUserInfo = new Login_Form(); //Is this a "Jabber Only" Login Form?
+                    Login_Form getUserInfo = new Login_Form(commsType); //Is this a "Jabber Only" Login Form?
 
                     getUserInfo.ShowDialog();  //Code Execution will stop at this point and wait until user has dismissed the Login form.
 

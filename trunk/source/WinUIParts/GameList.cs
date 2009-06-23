@@ -32,11 +32,7 @@ namespace ChessMangler.WinUIParts
         private PresenceManager presenceManager;
 
         private DiscoManager discoManager;
-        private CapsManager capsManager;
-        //private PubSubManager pubSubManager;
         private IdleTime idler;
-
-        Ident ident1 = new Ident();
 
         private JabberClient jabberClient = new JabberClient();
         //TODO: Jabber stuff to move into ICommsHandler
@@ -112,23 +108,8 @@ namespace ChessMangler.WinUIParts
             this.discoManager = new jabber.connection.DiscoManager(this.components);
             this.discoManager.Stream = this.jc;
 
-            this.capsManager = new jabber.connection.CapsManager(this.components);
-            this.capsManager.DiscoManager = this.discoManager;
-            this.capsManager.Features = new string[0];
-            //this.capsManager.FileName = "caps.xml";
-
-            ident1.Category = "client";
-            ident1.Lang = "en";
-            ident1.Name = "Jabber-Net Test Client";
-            ident1.Type = "pc";
-            this.capsManager.Identities = new jabber.connection.Ident[] { ident1 };
-            this.capsManager.Node = "ChessManglerCapsMan";
-            this.capsManager.Stream = this.jc;
-
             this.Init_RosterManager();
             this.Init_PresenceManager();
-
-            this.presenceManager.CapsManager = this.capsManager;
 
             this.GetGoogleComms();
 

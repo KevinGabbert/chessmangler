@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ChessMangler.Communications.Interfaces;
+using ChessMangler.Communications.Types;
 
 namespace ChessMangler.Communications.Forms
 {
@@ -70,15 +71,37 @@ namespace ChessMangler.Communications.Forms
             }
         }
 
+        CommsType _commsType;
+        public CommsType CommsType
+        {
+            get
+            {
+                return _commsType;
+            }
+            set
+            {
+                _commsType = value;
+            }
+        }
+
         #endregion
 
-        public Login_Form()
+        public Login_Form(CommsType commsType)
         {
             InitializeComponent();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            //TODO: please break this out more if this needs to be added to..
+            if (this.CommsType == CommsType.Google)
+            {
+                if (!this.txtLogin.Text.Contains("@"))
+                {
+                    this.txtLogin.Text += "@gmail.com";
+                }
+            }
+
             this.User = this.txtLogin.Text;
             this.Password = this.mtxtPassword.Text;
             this.Server = this.txtServer.Text;
