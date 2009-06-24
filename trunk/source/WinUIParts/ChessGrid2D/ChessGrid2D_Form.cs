@@ -7,6 +7,10 @@ using ChessMangler.Communications.Types;
 using ChessMangler.Communications.Handlers;
 using ChessMangler.Communications.Interfaces;
 
+//TODO: this needs to be in ICommsHandler
+//This is temporary
+using jabber.client;
+
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
     /// <summary>
@@ -76,6 +80,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         ChessGrid2D_MenuBarHandlers _menuBarHandlers;
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
+        //TODO: this needs to be in ICommsHandler
+        private PresenceManager presenceManager;
+
         public ChessGrid2D_Form(ICommsHandler comms)
         {
             InitializeComponent();
@@ -101,6 +108,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             _comms = newComms;
             _comms.OpponentChat_Recieved += new OpponentChat(On_Opponent_RCV);
             _comms.OpponentMove_Recieved += new OpponentMove_Handler(On_OpponentMove_RCV);
+        }
+
+
+        //TODO: this is temporary code, and needs to be moved to ICommsHandler
+        private void Init_PresenceManager()
+        {
+            this.presenceManager = new jabber.client.PresenceManager(this.components);
+            this.presenceManager.Stream = (JabberClient)_comms.originalHandler;
+
+            this.presenceManager.OnPrimarySessionChange += new PrimarySessionHandler(this.presenceManager_OnPrimarySessionChange);
         }
 
         #region Comms Events
@@ -182,6 +199,17 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.Grid.UIBoard.Squares.Enable();
             this.Grid.UIBoard.Squares.ResetColors();
             this._squareHandlers.OutBox = null;
+        }
+
+        #endregion
+
+        #region PresenceManager Events
+
+        public void presenceManager_OnPrimarySessionChange(object sender, jabber.JID bare)
+        {
+            //TODO:  This does not work yet
+
+            //Update this user's presence field on the chess form
         }
 
         #endregion

@@ -8,11 +8,13 @@ namespace ChessMangler.WinUIParts
     {
         private string _name;
         private string _service;
+        private OnlineType _online;
 
-        public OpponentList(string opponentName, string imService)
+        public OpponentList(string opponentName, string imService, OnlineType online)
         {
             this.Name = opponentName;
             this.Service = imService;
+            this.Online = online;
         }
         public string Name
         {
@@ -24,5 +26,18 @@ namespace ChessMangler.WinUIParts
             get { return _service; }
             set { _service = value; }
         }
+        public OnlineType Online
+        {
+            get { return _online; }
+            set { _online = value; }
+        }
+    }
+
+    public enum OnlineType
+    {
+        Online,
+        Offline,
+        Away,
+        Other
     }
 }

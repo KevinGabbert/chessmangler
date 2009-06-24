@@ -29,9 +29,12 @@ namespace ChessMangler.WinUIParts
         //TODO: Jabber stuff to move into ICommsHandler
         private JabberClient jc;
         private RosterManager rosterManager;
+
+
+        //TODO: this needs to be in ICommsHandler
         private PresenceManager presenceManager;
 
-        private DiscoManager discoManager;
+        //private DiscoManager discoManager;
         private IdleTime idler;
 
         private JabberClient jabberClient = new JabberClient();
@@ -103,22 +106,15 @@ namespace ChessMangler.WinUIParts
             this.idler.OnUnIdle += new bedrock.util.SpanEventHandler(this.idler_OnUnIdle);
 
             jc = (JabberClient)this._comms.CommsHandler.originalHandler;
-            jc.OnIQ += new jabber.client.IQHandler(this.jc_OnIQ);
+            jc.OnIQ += new IQHandler(this.jc_OnIQ);
 
-            this.discoManager = new jabber.connection.DiscoManager(this.components);
-            this.discoManager.Stream = this.jc;
-
-            this.Init_RosterManager();
-            this.Init_PresenceManager();
+            //this.discoManager = new jabber.connection.DiscoManager(this.components);
+            //this.discoManager.Stream = this.jc;
 
             this.GetGoogleComms();
 
-            this.init_RosterTree();
-
             this.Init_RosterManager();
             this.Init_PresenceManager();
-
-
 
             if (this._comms.CommsHandler == null)
             {
@@ -128,8 +124,6 @@ namespace ChessMangler.WinUIParts
             {
                 this.CheckForStart();
             }
- 
-            //opponentRoster.Refresh();
         }
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
@@ -262,37 +256,31 @@ namespace ChessMangler.WinUIParts
         {
             //this.SetRoster(opponentRoster);
         }
-        private void rosterManager_OnItem(object sender, Item rItem)
+        private void rosterManager_OnItem(object sender, Item item)
         {
-            string user = rItem.JID.User;
-
+            string user = item.JID.User;
+            
             if (user != null)
             {
                 if (user.Length > 0)
                 {
-                    //TODO: param for presence
+                    OnlineType _onlineType = GetItemPresence(item);
+
                     //TODO: param for if they have chessMangler
 
-                    opponentList.Add(new OpponentList(user, "GTalk")); 
+                    opponentList.Add(new OpponentList(user, "GTalk", _onlineType)); 
                 }
             }
         }
+
         private void rosterManager_OnRosterEnd(object sender)
         {
             this.rosterManager = (RosterManager)sender;
             //jabberClient1.Presence(jabber.protocol.client.PresenceType.available, tbStatus.Text, null, 0);
             //lblPresence.Text = "Available";
 
-            //TODO: is the DGV formatted by this point?  it should be..  (columnsize, etc)
+            //TODO: is the DGV formatted by this point?  it should be..  (columnsize, text color, etc)
             this.SetOpponentsDataSource(opponentList);
-        }
-
-        #endregion
-        #region OpponentRoster Events
-
-        private void opponentRoster_DoubleClick(object sender, EventArgs e)
-        {
-
         }
 
         #endregion
@@ -310,6 +298,17 @@ namespace ChessMangler.WinUIParts
         private void udSquareSize_ValueChanged(object sender, EventArgs e)
         {
             this.btnOpenGrid.Enabled = this.ValidFreeFormGame();
+        }
+
+        #endregion
+        #region PresenceManager Events
+
+        public void presenceManager_OnPrimarySessionChange(object sender, jabber.JID bare)
+        {
+            //TODO:  This works correctly.
+
+            //Go into the Roster and update this user's presence field 
+            //(later this will be: color their text, or change icon)
         }
 
         #endregion
@@ -401,61 +400,51 @@ namespace ChessMangler.WinUIParts
 
         private void Init_RosterManager()
         {
-            //if (this._comms != null)
-            //{
-                //if (this._comms.originalHandler != null)
-                //{
-                    this.rosterManager = new jabber.client.RosterManager(this.components);
-                    this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowAll;
-                    this.rosterManager.AutoSubscribe = true;
-                    this.rosterManager.Stream = (JabberClient)this._comms.CommsHandler.originalHandler;
+            this.rosterManager = new jabber.client.RosterManager(this.components);
+            this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowAll;
+            this.rosterManager.AutoSubscribe = true;
+            this.rosterManager.Stream = (JabberClient)this._comms.CommsHandler.originalHandler;
 
-                    this.rosterManager.OnRosterBegin += new bedrock.ObjectHandler(this.rosterManager_OnBegin);
-                    this.rosterManager.OnRosterItem += new RosterItemHandler(this.rosterManager_OnItem);
-                    this.rosterManager.OnRosterEnd += new bedrock.ObjectHandler(this.rosterManager_OnRosterEnd);
-                    this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
-                    this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);                  
-                //}
-                //else
-                //{
-                    //TODO:  throw some kind of error telling the programmer he's a moron
-                //}
-            //}
+            this.rosterManager.OnRosterBegin += new bedrock.ObjectHandler(this.rosterManager_OnBegin);
+            this.rosterManager.OnRosterItem += new RosterItemHandler(this.rosterManager_OnItem);
+            this.rosterManager.OnRosterEnd += new bedrock.ObjectHandler(this.rosterManager_OnRosterEnd);
+            this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
+            this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);                  
         }
         private void Init_PresenceManager()
         {
             this.presenceManager = new jabber.client.PresenceManager(this.components);
+            this.presenceManager.Stream = (JabberClient)this._comms.CommsHandler.originalHandler;
 
-            //if (this._comms.CommsHandler != null)
-            //{
-                //if (this._comms.CommsHandler.originalHandler != null)
-                //{
-                    this.presenceManager.Stream = (JabberClient)this._comms.CommsHandler.originalHandler;
-                    //((JabberClient)this._comms.CommsHandler.originalHandler).Presence(PresenceType.available, "ChessMangler Online", "show", 2);
-                //}
-                //else
-                //{
-                    //TODO:  throw some kind of error telling the programmer he's a moron
-                //}
-           // }
+            this.presenceManager.OnPrimarySessionChange += new PrimarySessionHandler(this.presenceManager_OnPrimarySessionChange);
         }
-        private void init_RosterTree()
+
+        private OnlineType GetItemPresence(Item item)
         {
-            //TODO: This should ref ICommsHandlers props
-            if (this._comms.CommsHandler != null)
+            //TODO: refactor this to comms layer
+            Presence p = this.presenceManager[item.JID];
+            OnlineType _onlineType;
+
+            if (p == null)
             {
-                if (this._comms.CommsHandler.originalHandler != null)
+                _onlineType = OnlineType.Offline;
+            }
+            else
+            {
+                switch (p.Show)
                 {
-                    ////This guys all need to be initialized by the time we get this far..
-                    //this.opponentRoster.Client = (JabberClient)this._comms.CommsHandler.originalHandler;
-                    //this.opponentRoster.RosterManager = this.rosterManager;
-                    //this.opponentRoster.PresenceManager = this.presenceManager;
-                }
-                else
-                {
-                    //TODO:  throw some kind of error telling the programmer he's a moron
+                    case "Online":
+                        _onlineType = OnlineType.Online;
+                        break;
+                    case "away":
+                        _onlineType = OnlineType.Away;
+                        break;
+                    default:
+                        _onlineType = OnlineType.Other;
+                        break;
                 }
             }
+            return _onlineType;
         }
 
         private void GetGoogleComms()
