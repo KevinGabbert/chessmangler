@@ -83,15 +83,19 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         //TODO: this needs to be in ICommsHandler
         private PresenceManager presenceManager;
 
-        public ChessGrid2D_Form(ICommsHandler comms)
+        public ChessGrid2D_Form(PresenceManager presenceManager, ICommsHandler comms)
         {
             InitializeComponent();
 
             this.InitComms(comms);
             this.InitGrid();
             this.InitForms();
+
+            //This will need to move to the ICommsHandler
+            this.presenceManager = presenceManager;
+            this.Init_PresenceManager();
         }
-        public ChessGrid2D_Form(ICommsHandler comms, BoardDef board, string imagesDirectory, short squareSize, string opponent)
+        public ChessGrid2D_Form(PresenceManager presenceManager, ICommsHandler comms, BoardDef board, string imagesDirectory, short squareSize, string opponent)
         {
             InitializeComponent();
 
@@ -101,6 +105,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             this.InitHandlers();
             this.InitForms();
+
+
+            //This will need to move to the ICommsHandler
+            this.presenceManager = presenceManager;
+            this.Init_PresenceManager();
         }
 
         private void InitComms(ICommsHandler newComms)
@@ -110,14 +119,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             _comms.OpponentMove_Recieved += new OpponentMove_Handler(On_OpponentMove_RCV);
         }
 
-
         //TODO: this is temporary code, and needs to be moved to ICommsHandler
-        private void Init_PresenceManager()
+        public void Init_PresenceManager()
         {
-            this.presenceManager = new jabber.client.PresenceManager(this.components);
-            this.presenceManager.Stream = (JabberClient)_comms.originalHandler;
+            //if (this.components != null)
+            //{
+                //this.presenceManager = new jabber.client.PresenceManager(this.components);
+                //this.presenceManager.Stream = (JabberClient)_comms.originalHandler;
 
-            this.presenceManager.OnPrimarySessionChange += new PrimarySessionHandler(this.presenceManager_OnPrimarySessionChange);
+                this.presenceManager.OnPrimarySessionChange += new PrimarySessionHandler(this.presenceManager_OnPrimarySessionChange);
+            //}
         }
 
         #region Comms Events
@@ -144,6 +155,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             this.Grid.SetUp_DefaultUIBoard(this);
             this.InitHandlers();
+            //this.Init_PresenceManager();
 
             this.Text = "Chess Mangler " + this.Version + " ~ Opponent:  " + this.Opponent;
         }
@@ -207,7 +219,9 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         public void presenceManager_OnPrimarySessionChange(object sender, jabber.JID bare)
         {
-            //TODO:  This does not work yet
+            //TODO:  This works now
+            //however, it really needs to come in from the ICommsHandler, not passed in from the previous form.  
+            
 
             //Update this user's presence field on the chess form
         }

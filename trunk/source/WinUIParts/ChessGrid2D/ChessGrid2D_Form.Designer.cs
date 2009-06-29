@@ -325,7 +325,6 @@
             this.constrainBoardProportionsToolStripMenuItem.Name = "constrainBoardProportionsToolStripMenuItem";
             this.constrainBoardProportionsToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.constrainBoardProportionsToolStripMenuItem.Text = "Constrain Board Proportions";
-
             // 
             // rotateBoardToolStripMenuItem
             // 

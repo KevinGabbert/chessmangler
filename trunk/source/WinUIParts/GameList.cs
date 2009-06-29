@@ -30,11 +30,9 @@ namespace ChessMangler.WinUIParts
         private JabberClient jc;
         private RosterManager rosterManager;
 
-
         //TODO: this needs to be in ICommsHandler
         private PresenceManager presenceManager;
 
-        //private DiscoManager discoManager;
         private IdleTime idler;
 
         private JabberClient jabberClient = new JabberClient();
@@ -108,9 +106,6 @@ namespace ChessMangler.WinUIParts
             jc = (JabberClient)this._comms.CommsHandler.originalHandler;
             jc.OnIQ += new IQHandler(this.jc_OnIQ);
 
-            //this.discoManager = new jabber.connection.DiscoManager(this.components);
-            //this.discoManager.Stream = this.jc;
-
             this.GetGoogleComms();
 
             this.Init_RosterManager();
@@ -147,7 +142,7 @@ namespace ChessMangler.WinUIParts
                 //this.cboOpponents.DataSource = opponents;
                 //this.cboOpponents.SelectedItem = this.cboOpponents[0];
 
-                ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms.CommsHandler, board, this.txtImages.Text, (short)udSquareSize.Value, _opponent);
+                ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, board, this.txtImages.Text, (short)udSquareSize.Value, _opponent);
                 open.Show();
             }
 
@@ -159,7 +154,7 @@ namespace ChessMangler.WinUIParts
 
         private void configList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.btnOpenGrid.Enabled = this.ValidSelectedFile();
+            this.CheckForStart();
         }
         private void configList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -392,7 +387,14 @@ namespace ChessMangler.WinUIParts
         }
         private bool ValidSelectedFile()
         {
-            return File.Exists(this.ConfigFilePath + "\\" + this.configList.SelectedValue.ToString() + ".config");
+            bool retval = File.Exists(this.ConfigFilePath + "\\" + this.configList.SelectedValue.ToString() + ".config");
+
+            if (!retval)
+            {
+                MessageBox.Show("Invalid config file for selected item");
+            }
+
+            return retval;
         }
 
         #endregion
@@ -456,11 +458,14 @@ namespace ChessMangler.WinUIParts
         }
         private void CheckForStart()
         {
-            this.btnOpenGrid.Enabled = (this._comms.CommsHandler != null) && (_opponent != "");
+            this.btnOpenGrid.Enabled = (this._comms.CommsHandler != null) && 
+                                       (_opponent != "") && 
+                                       (_opponent != null) &&
+                                       (this.ValidSelectedFile());
         }
         private void OpenChosenConfigFile()
         {
-            ChessGrid2D_Form open = new ChessGrid2D_Form(this._comms.CommsHandler);
+            ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler);
             open.Opponent = _opponent;
 
             if (this.configList.SelectedValue.ToString() != null)
