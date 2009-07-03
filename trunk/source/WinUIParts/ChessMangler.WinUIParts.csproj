@@ -77,7 +77,6 @@
       <DependentUpon>GameList.cs</DependentUpon>
     </Compile>
     <Compile Include="Menus\UISquareDeleteMenu.cs" />
-    <Compile Include="OpponentList.cs" />
     <Compile Include="Options.cs">
       <SubType>Form</SubType>
     </Compile>

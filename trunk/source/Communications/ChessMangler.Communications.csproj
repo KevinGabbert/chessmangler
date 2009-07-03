@@ -68,6 +68,8 @@
     <Compile Include="Types\MoveBase.cs" />
     <Compile Include="Types\MovePacket.cs" />
     <Compile Include="Types\MoveResponsePacket.cs" />
+    <Compile Include="Types\OnlineType.cs" />
+    <Compile Include="Types\OpponentList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

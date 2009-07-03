@@ -221,9 +221,19 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             //TODO:  This works now
             //however, it really needs to come in from the ICommsHandler, not passed in from the previous form.  
+
+            PresenceManager pm = (PresenceManager)sender;
+
+
+            
+
+            //OnlineType onlineType = JabberHandler.GetItemPresence(jabber.protocol.iq.item, this.presenceManager);
+
             
 
             //Update this user's presence field on the chess form
+
+            this.AddChat(bare.User + " has changed status");
         }
 
         #endregion

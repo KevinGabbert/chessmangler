@@ -259,7 +259,7 @@ namespace ChessMangler.WinUIParts
             {
                 if (user.Length > 0)
                 {
-                    OnlineType _onlineType = GetItemPresence(item);
+                    OnlineType _onlineType = JabberHandler.GetItemPresence(item, this.presenceManager);
 
                     //TODO: param for if they have chessMangler
 
@@ -421,33 +421,6 @@ namespace ChessMangler.WinUIParts
             this.presenceManager.OnPrimarySessionChange += new PrimarySessionHandler(this.presenceManager_OnPrimarySessionChange);
         }
 
-        private OnlineType GetItemPresence(Item item)
-        {
-            //TODO: refactor this to comms layer
-            Presence p = this.presenceManager[item.JID];
-            OnlineType _onlineType;
-
-            if (p == null)
-            {
-                _onlineType = OnlineType.Offline;
-            }
-            else
-            {
-                switch (p.Show)
-                {
-                    case "Online":
-                        _onlineType = OnlineType.Online;
-                        break;
-                    case "away":
-                        _onlineType = OnlineType.Away;
-                        break;
-                    default:
-                        _onlineType = OnlineType.Other;
-                        break;
-                }
-            }
-            return _onlineType;
-        }
 
         private void GetGoogleComms()
         {
@@ -485,6 +458,33 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        //public OnlineType GetItemPresence(Item item, PresenceManager pp)
+        //{
+        //    //TODO: refactor this to comms layer
+        //    Presence p = pp[item.JID];
+        //    OnlineType _onlineType;
+
+        //    if (p == null)
+        //    {
+        //        _onlineType = OnlineType.Offline;
+        //    }
+        //    else
+        //    {
+        //        switch (p.Show)
+        //        {
+        //            case "Online":
+        //                _onlineType = OnlineType.Online;
+        //                break;
+        //            case "away":
+        //                _onlineType = OnlineType.Away;
+        //                break;
+        //            default:
+        //                _onlineType = OnlineType.Other;
+        //                break;
+        //        }
+        //    }
+        //    return _onlineType;
+        //}
 
         private delegate void RosterDelegate(BindingList<OpponentList> dataSource);
         private void SetOpponentsDataSource(BindingList<OpponentList> dataSource)

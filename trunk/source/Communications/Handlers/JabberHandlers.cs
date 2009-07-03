@@ -8,6 +8,8 @@ using jabber.protocol.client; //presence
 using jabber.client; 
 using JabberMessage = jabber.protocol.client.Message;
 
+using jabber.protocol.iq;
+
 using ChessMangler.Communications.Interfaces;
 
 namespace ChessMangler.Communications.Handlers
@@ -221,7 +223,33 @@ namespace ChessMangler.Communications.Handlers
         }
 
         #endregion
+        public static OnlineType GetItemPresence(Item item, PresenceManager presenceManager)
+        {
+            //TODO: refactor this to comms layer
+            Presence p = presenceManager[item.JID];
+            OnlineType _onlineType;
 
+            if (p == null)
+            {
+                _onlineType = OnlineType.Offline;
+            }
+            else
+            {
+                switch (p.Show)
+                {
+                    case "Online":
+                        _onlineType = OnlineType.Online;
+                        break;
+                    case "away":
+                        _onlineType = OnlineType.Away;
+                        break;
+                    default:
+                        _onlineType = OnlineType.Other;
+                        break;
+                }
+            }
+            return _onlineType;
+        }
         public void Write(string opponent, XmlElement stuffToWrite)
         {
             JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
