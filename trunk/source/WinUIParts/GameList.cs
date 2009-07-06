@@ -438,8 +438,7 @@ namespace ChessMangler.WinUIParts
         }
         private void OpenChosenConfigFile()
         {
-            ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler);
-            open.Opponent = _opponent;
+            ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, _opponent);
 
             if (this.configList.SelectedValue.ToString() != null)
             {

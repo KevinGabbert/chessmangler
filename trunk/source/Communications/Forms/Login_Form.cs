@@ -116,6 +116,8 @@ namespace ChessMangler.Communications.Forms
 
             //TODO if user hits return (and all boxes have text in them) then hit OK.
             //problem is, currently hitting return 
+
+            
         }
     }
 }

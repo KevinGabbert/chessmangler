@@ -43,10 +43,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             {
                 return _opponent;
             }
-            set
-            {
-                _opponent = value;
-            }
+            //set
+            //{
+            //    _opponent = value;
+            //}
         }
 
         string _version = "Alpha";
@@ -82,23 +82,27 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         ChessGrid2D_Settings _gridOptions = new ChessGrid2D_Settings();
 
         //TODO: this needs to be in ICommsHandler
-        private PresenceManager presenceManager;
+        private PresenceManager localPresenceManager;
 
-        public ChessGrid2D_Form(PresenceManager presenceManager, ICommsHandler comms)
+        public ChessGrid2D_Form(PresenceManager presenceManager, ICommsHandler comms, string opponent)
         {
             InitializeComponent();
+
+            this._opponent = opponent;
 
             this.InitComms(comms);
             this.InitGrid();
             this.InitForms();
 
             //This will need to move to the ICommsHandler
-            this.presenceManager = presenceManager;
+            this.localPresenceManager = presenceManager;
             this.Init_PresenceManager();
         }
         public ChessGrid2D_Form(PresenceManager presenceManager, ICommsHandler comms, BoardDef board, string imagesDirectory, short squareSize, string opponent)
         {
             InitializeComponent();
+
+            this._opponent = opponent;
 
             this.InitComms(comms);
             this.InitGrid();
@@ -107,9 +111,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.InitHandlers();
             this.InitForms();
 
-
             //This will need to move to the ICommsHandler
-            this.presenceManager = presenceManager;
+            this.localPresenceManager = presenceManager;
             this.Init_PresenceManager();
         }
 
@@ -123,13 +126,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         //TODO: this is temporary code, and needs to be moved to ICommsHandler
         public void Init_PresenceManager()
         {
-            //if (this.components != null)
-            //{
-                //this.presenceManager = new jabber.client.PresenceManager(this.components);
-                //this.presenceManager.Stream = (JabberClient)_comms.originalHandler;
+            this.localPresenceManager.OnPrimarySessionChange += new PrimarySessionHandler(this.presenceManager_OnPrimarySessionChange);
 
-                this.presenceManager.OnPrimarySessionChange += new PrimarySessionHandler(this.presenceManager_OnPrimarySessionChange);
-            //}
+            this.UpdateStatusText(this.connectionLabel, "**");
+            this.GetOpponentStatus();
         }
 
         #region Comms Events
@@ -220,11 +220,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         public void presenceManager_OnPrimarySessionChange(object sender, jabber.JID bare)
         {
-            //TODO:  This  really needs to come in from the ICommsHandler, not passed in from the previous form.  
-            Presence p = presenceManager[this.Opponent];
-            string here = p.Status;
-
-            this.UpdateStatusText(this.connectionLabel, p);
+            //sender is a presenceManager
+            string here = this.GetOpponentStatus();
             this.AddChat(bare.User + " has changed status to " + here); //TODO: This message needs to show the time.
         }
 
@@ -324,7 +321,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
         }
 
-        private delegate void ControlTextDelegate(ToolStripStatusLabel tssLabel, Presence presence);
+        //private delegate void ControlTextDelegate(ToolStripStatusLabel tssLabel, Presence presence);
         private void UpdateStatusText(ToolStripStatusLabel tssLabel, Presence presence)    
         {
             string presenceType = String.Empty;
@@ -332,7 +329,17 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             switch (presence.Type)
             {
                 case PresenceType.available:
-                    presenceType = "(Available)";
+
+                    if ((presence.Show == "dnd") || (presence.Show == "away"))
+                    {
+                        //see the following for more info:  http://code.google.com/p/jabber-net/issues/detail?id=70#c1
+                        presenceType = "*Busy*";
+                    }
+                    else
+                    {
+                        presenceType = "(Available)";
+                    }
+
                     break;
 
                 case PresenceType.invisible:
@@ -350,17 +357,22 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 case PresenceType.probe:
                     presenceType = "(probe)";
                     break;
-
             }
 
+            //string status = presence.Status.Substring(0, 50); 
+
             tssLabel.Text = presence.Status + " " + presenceType;
-        }    
+        }
+        private void UpdateStatusText(ToolStripStatusLabel tssLabel, string status)
+        {
+            tssLabel.Text = status;
+        }
             
-        public void UpdateTSSLabel()   
-        {    
-               ControlTextDelegate updater = UpdateStatusText;    
-               this.Invoke(updater, this.connectionLabel);    
-        }   
+        //public void UpdateTSSLabel()
+        //{    
+        //       ControlTextDelegate updater = UpdateStatusText;    
+        //       this.Invoke(updater, this.connectionLabel);    
+        //}   
 
         /// <summary>
         /// When the user hits "Send" in the Chat box, this is where it goes
@@ -387,6 +399,23 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             this.txtChatHistory.Select(txtChatHistory.Text.Length + 1, 2);
             this.txtChatHistory.ScrollToCaret();
+        }
+
+        private string GetOpponentStatus()
+        {
+            string here = "---";
+
+            //TODO:  This  really needs to come in from the ICommsHandler, not passed in from the previous form.  
+
+            if (this.Opponent != null)
+            {
+                Presence p = localPresenceManager[this.Opponent];
+                here = p.Status;
+
+                this.UpdateStatusText(this.connectionLabel, p);
+            }
+
+            return here;
         }
     }
 }
