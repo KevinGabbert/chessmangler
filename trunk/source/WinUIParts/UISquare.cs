@@ -232,8 +232,7 @@ namespace ChessMangler.WinUIParts
         {
             currentUISquare.CurrentPiece = currentSquare.CurrentPiece;
 
-            //TODO: is this still necessary?
-            //pull a new piece image from a cached image
+            //TODO: is this still necessary? pull a new piece image from a cached image
             //currentUISquare.CurrentPiece.Image = new Bitmap(directory + "\\images\\" + currentSquare.CurrentPiece.Name);
         }
         public static void Square_SetSize(int height, int width, int adjustment, BoardDef board, UISquare currentUISquare)

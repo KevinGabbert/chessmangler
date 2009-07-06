@@ -10,6 +10,7 @@ using ChessMangler.Communications.Interfaces;
 //TODO: this needs to be in ICommsHandler
 //This is temporary
 using jabber.client;
+using jabber.protocol.client;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
@@ -219,21 +220,12 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
         public void presenceManager_OnPrimarySessionChange(object sender, jabber.JID bare)
         {
-            //TODO:  This works now
-            //however, it really needs to come in from the ICommsHandler, not passed in from the previous form.  
+            //TODO:  This  really needs to come in from the ICommsHandler, not passed in from the previous form.  
+            Presence p = presenceManager[this.Opponent];
+            string here = p.Status;
 
-            PresenceManager pm = (PresenceManager)sender;
-
-
-            
-
-            //OnlineType onlineType = JabberHandler.GetItemPresence(jabber.protocol.iq.item, this.presenceManager);
-
-            
-
-            //Update this user's presence field on the chess form
-
-            this.AddChat(bare.User + " has changed status");
+            this.UpdateStatusText(this.connectionLabel, p);
+            this.AddChat(bare.User + " has changed status to " + here); //TODO: This message needs to show the time.
         }
 
         #endregion
@@ -307,7 +299,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.resetPiecesToolStripMenuItem.Click -= new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
         }
 
-        private delegate void ChatDelegate(string message);
+        //TODO: it would be very nice to combine these delegate functions
+        private delegate void TextDelegate(string message);
 
         /// <summary>
         /// When a chat is recieved, this guy is called
@@ -317,7 +310,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         {
             if (this.txtChat.InvokeRequired)
             {
-                this.txtChat.Invoke(new ChatDelegate(this.AddChat), chatMessage);
+                this.txtChat.Invoke(new TextDelegate(this.AddChat), chatMessage);
             }
             else
             {
@@ -330,6 +323,44 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
                 this.txtChat.Clear();
             }
         }
+
+        private delegate void ControlTextDelegate(ToolStripStatusLabel tssLabel, Presence presence);
+        private void UpdateStatusText(ToolStripStatusLabel tssLabel, Presence presence)    
+        {
+            string presenceType = String.Empty;
+
+            switch (presence.Type)
+            {
+                case PresenceType.available:
+                    presenceType = "(Available)";
+                    break;
+
+                case PresenceType.invisible:
+                    presenceType = "(Invisible)";
+                    break;
+
+                case PresenceType.error:
+                    presenceType = "(Error)";
+                    break;
+
+                case PresenceType.unsubscribed:
+                    presenceType = "(Unsubscribed)";
+                    break;
+
+                case PresenceType.probe:
+                    presenceType = "(probe)";
+                    break;
+
+            }
+
+            tssLabel.Text = presence.Status + " " + presenceType;
+        }    
+            
+        public void UpdateTSSLabel()   
+        {    
+               ControlTextDelegate updater = UpdateStatusText;    
+               this.Invoke(updater, this.connectionLabel);    
+        }   
 
         /// <summary>
         /// When the user hits "Send" in the Chat box, this is where it goes

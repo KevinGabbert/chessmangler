@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessMangler.WinUIParts
+namespace ChessMangler.Communications.Types
 {
     public class OpponentList
     {
@@ -31,13 +31,5 @@ namespace ChessMangler.WinUIParts
             get { return _online; }
             set { _online = value; }
         }
-    }
-
-    public enum OnlineType
-    {
-        Online,
-        Offline,
-        Away,
-        Other
     }
 }

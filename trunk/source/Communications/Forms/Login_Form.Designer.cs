@@ -84,6 +84,7 @@ namespace ChessMangler.Communications.Forms
             this.mtxtPassword.Size = new System.Drawing.Size(218, 20);
             this.mtxtPassword.TabIndex = 1;
             this.mtxtPassword.UseSystemPasswordChar = true;
+            this.mtxtPassword.TextChanged += new System.EventHandler(this.LoginTextControls_TextChanged);
             // 
             // txtLogin
             // 
@@ -91,6 +92,7 @@ namespace ChessMangler.Communications.Forms
             this.txtLogin.Name = "txtLogin";
             this.txtLogin.Size = new System.Drawing.Size(217, 20);
             this.txtLogin.TabIndex = 0;
+            this.txtLogin.TextChanged += new System.EventHandler(this.LoginTextControls_TextChanged);
             // 
             // label1
             // 
@@ -126,6 +128,7 @@ namespace ChessMangler.Communications.Forms
             this.txtServer.Size = new System.Drawing.Size(217, 20);
             this.txtServer.TabIndex = 2;
             this.txtServer.Text = "gmail.com";
+            this.txtServer.TextChanged += new System.EventHandler(this.LoginTextControls_TextChanged);
             // 
             // label4
             // 
@@ -143,6 +146,7 @@ namespace ChessMangler.Communications.Forms
             this.txtNetworkHost.Size = new System.Drawing.Size(217, 20);
             this.txtNetworkHost.TabIndex = 3;
             this.txtNetworkHost.Text = "talk.l.google.com";
+            this.txtNetworkHost.TextChanged += new System.EventHandler(this.LoginTextControls_TextChanged);
             // 
             // Login_Form
             // 

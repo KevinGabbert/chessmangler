@@ -109,5 +109,13 @@ namespace ChessMangler.Communications.Forms
 
             this.Hide();
         }
+
+        private void LoginTextControls_TextChanged(object sender, EventArgs e)
+        {
+            TextBoxBase senderTB = (TextBoxBase)sender;
+
+            //TODO if user hits return (and all boxes have text in them) then hit OK.
+            //problem is, currently hitting return 
+        }
     }
 }
