@@ -85,8 +85,10 @@ namespace ChessMangler.Communications.Types
         }
 
         //TODO:  remove authenticateHandler as a parameter
-        public void Connect(CommsType commsType, Comms_Authenticate authenticateHandler)
+        public bool Connect(CommsType commsType, Comms_Authenticate authenticateHandler)
         {
+            bool success = false;
+
             switch (commsType)
             {
                 case CommsType.Google:
@@ -101,7 +103,7 @@ namespace ChessMangler.Communications.Types
                     this.Server = getUserInfo.Server; // "gmail.com";
                     this.NetworkHost = getUserInfo.NetworkHost; // "talk.l.google.com";
 
-                    bool success = ((this.User != null) && (this.User != "")) &&
+                    success = ((this.User != null) && (this.User != "")) &&
                                    ((this.Password != null) && (this.Password != "")) &&
                                    ((this.Server != null) && (this.Server != "")) &&
                                    ((this.NetworkHost != null) && (this.NetworkHost != ""));
@@ -110,16 +112,14 @@ namespace ChessMangler.Communications.Types
                     {
                         this.CommsHandler = new JabberHandler(this.User, this.Password, this.Server, this.NetworkHost, authenticateHandler);
                     }
-                    else
-                    {
-                        this.CommsHandler = null;
-                    }
 
                     getUserInfo.Close();
                     getUserInfo.Dispose();
 
                     break;
             }
+
+            return success;
         }
     }
 }

@@ -34,7 +34,6 @@ namespace ChessMangler.Communications.Forms
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
-            this.mtxtPassword = new System.Windows.Forms.MaskedTextBox();
             this.txtLogin = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -42,6 +41,7 @@ namespace ChessMangler.Communications.Forms
             this.txtServer = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtNetworkHost = new System.Windows.Forms.TextBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,16 +75,6 @@ namespace ChessMangler.Communications.Forms
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // mtxtPassword
-            // 
-            this.mtxtPassword.Location = new System.Drawing.Point(12, 158);
-            this.mtxtPassword.Name = "mtxtPassword";
-            this.mtxtPassword.PasswordChar = '*';
-            this.mtxtPassword.Size = new System.Drawing.Size(218, 20);
-            this.mtxtPassword.TabIndex = 1;
-            this.mtxtPassword.UseSystemPasswordChar = true;
-            this.mtxtPassword.TextChanged += new System.EventHandler(this.LoginTextControls_TextChanged);
             // 
             // txtLogin
             // 
@@ -148,11 +138,22 @@ namespace ChessMangler.Communications.Forms
             this.txtNetworkHost.Text = "talk.l.google.com";
             this.txtNetworkHost.TextChanged += new System.EventHandler(this.LoginTextControls_TextChanged);
             // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(13, 158);
+            this.txtPassword.Multiline = true;
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(217, 20);
+            this.txtPassword.TabIndex = 1;
+            this.txtPassword.TextChanged += new System.EventHandler(this.LoginTextControls_TextChanged);
+            // 
             // Login_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(243, 346);
+            this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtNetworkHost);
             this.Controls.Add(this.label3);
@@ -160,7 +161,6 @@ namespace ChessMangler.Communications.Forms
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtLogin);
-            this.Controls.Add(this.mtxtPassword);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.pictureBox1);
@@ -177,7 +177,6 @@ namespace ChessMangler.Communications.Forms
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.MaskedTextBox mtxtPassword;
         private System.Windows.Forms.TextBox txtLogin;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -185,5 +184,6 @@ namespace ChessMangler.Communications.Forms
         private System.Windows.Forms.TextBox txtServer;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtNetworkHost;
+        private System.Windows.Forms.TextBox txtPassword;
     }
 }

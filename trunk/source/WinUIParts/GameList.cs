@@ -90,6 +90,11 @@ namespace ChessMangler.WinUIParts
 
             this.configList.DataSource = configFiles;
             this.btnOpenGrid.Enabled = false;
+
+            this.idler = new bedrock.util.IdleTime();
+            this.idler.InvokeControl = this;
+            this.idler.OnIdle += new bedrock.util.SpanEventHandler(this.idler_OnIdle);
+            this.idler.OnUnIdle += new bedrock.util.SpanEventHandler(this.idler_OnUnIdle);
         }
 
         private void txtOpponent_Leave(object sender, EventArgs e)
@@ -98,27 +103,28 @@ namespace ChessMangler.WinUIParts
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            this.idler = new bedrock.util.IdleTime();
-            this.idler.InvokeControl = this;
-            this.idler.OnIdle += new bedrock.util.SpanEventHandler(this.idler_OnIdle);
-            this.idler.OnUnIdle += new bedrock.util.SpanEventHandler(this.idler_OnUnIdle);
-
             jc = (JabberClient)this._comms.CommsHandler.originalHandler;
             jc.OnIQ += new IQHandler(this.jc_OnIQ);
 
-            this.GetGoogleComms();
+            bool gotComms = this.GetGoogleComms();
 
-            this.Init_RosterManager();
-            this.Init_PresenceManager();
+            if (gotComms)
+            {
+                this.Init_RosterManager();
+                this.Init_PresenceManager();
 
-            if (this._comms.CommsHandler == null)
-            {
-                this.SetStatus("Login Aborted: " + DateTime.Now.ToString());
+                if (this._comms.CommsHandler == null)
+                {
+                    this.SetStatus("Login Aborted: " + DateTime.Now.ToString());
+                }
+                else
+                {
+                    this.CheckForStart();
+                }
             }
-            else
-            {
-                this.CheckForStart();
-            }
+
+            this.btnLogin.Enabled = !gotComms;
+            
         }
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
@@ -422,12 +428,12 @@ namespace ChessMangler.WinUIParts
         }
 
 
-        private void GetGoogleComms()
+        private bool GetGoogleComms()
         {
             //TODO:  At the moment, this event can't be reached via the interface.
             //This needs to be doen correctly.
             //For now, we are going to pass our authentication delegate directly into the Comms Handler
-            _comms.Connect(CommsType.Google, new Comms_Authenticate(GameListAuthenticate)); //TODO: later this will be assigned via a saved value in the DB, or User selection
+            return _comms.Connect(CommsType.Google, new Comms_Authenticate(GameListAuthenticate)); //TODO: later this will be assigned via a saved value in the DB, or User selection
         }
         private void CheckForStart()
         {

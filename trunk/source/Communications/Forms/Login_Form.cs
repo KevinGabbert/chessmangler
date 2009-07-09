@@ -103,7 +103,7 @@ namespace ChessMangler.Communications.Forms
             }
 
             this.User = this.txtLogin.Text;
-            this.Password = this.mtxtPassword.Text;
+            this.Password = this.txtPassword.Text;
             this.Server = this.txtServer.Text;
             this.NetworkHost = this.txtNetworkHost.Text;
 
@@ -117,7 +117,10 @@ namespace ChessMangler.Communications.Forms
             //TODO if user hits return (and all boxes have text in them) then hit OK.
             //problem is, currently hitting return 
 
-            
+            if (senderTB.Text.Contains(Environment.NewLine))
+            {
+                this.btnOK_Click(sender, e);
+            }
         }
     }
 }
