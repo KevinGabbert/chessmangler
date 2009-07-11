@@ -410,9 +410,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             if (this.Opponent != null)
             {
                 Presence p = localPresenceManager[this.Opponent];
-                here = p.Status;
 
-                this.UpdateStatusText(this.connectionLabel, p);
+                if (p != null)
+                {
+                    here = p.Status;
+                    this.UpdateStatusText(this.connectionLabel, p);
+                }
+                else
+                {
+                    this.UpdateStatusText(this.connectionLabel, "unknown");
+                }
             }
 
             return here;

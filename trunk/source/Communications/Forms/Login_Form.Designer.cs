@@ -140,16 +140,19 @@ namespace ChessMangler.Communications.Forms
             // 
             // txtPassword
             // 
+            this.txtPassword.AcceptsReturn = true;
             this.txtPassword.Location = new System.Drawing.Point(13, 158);
-            this.txtPassword.Multiline = true;
+            this.txtPassword.MaxLength = 50;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(217, 20);
             this.txtPassword.TabIndex = 1;
+            this.txtPassword.UseSystemPasswordChar = true;
             this.txtPassword.TextChanged += new System.EventHandler(this.LoginTextControls_TextChanged);
             // 
             // Login_Form
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(243, 346);
