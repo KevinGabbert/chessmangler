@@ -366,13 +366,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         private void UpdateStatusText(ToolStripStatusLabel tssLabel, string status)
         {
             tssLabel.Text = status;
-        }
-            
-        //public void UpdateTSSLabel()
-        //{    
-        //       ControlTextDelegate updater = UpdateStatusText;    
-        //       this.Invoke(updater, this.connectionLabel);    
-        //}   
+        } 
 
         /// <summary>
         /// When the user hits "Send" in the Chat box, this is where it goes

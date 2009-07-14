@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
+using System.Xml.Linq;
+
+using System.Linq;
+
 using System.Text;
 
 namespace ChessMangler.Engine.Xml
@@ -30,6 +34,16 @@ namespace ChessMangler.Engine.Xml
             }
 
             return gotDefNode;
+        }
+
+        public static string GetValue(string configFilePath, string rootNode, string defNode)
+        {
+            XDocument config = XDocument.Load(configFilePath);
+
+            IEnumerable<XElement> query = from c in config.Descendants(rootNode)
+                                          select c.Element(defNode);
+
+            return query.FirstOrDefault().Value;
         }
     }
 }

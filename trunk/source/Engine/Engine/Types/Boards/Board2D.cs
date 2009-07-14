@@ -73,6 +73,8 @@ namespace ChessMangler.Engine.Types
             }
         }
 
+        public int MovesLeft { get; set; }
+
         #endregion
 
         public Board2D(XmlDocument configFile, string UIDirectory)
@@ -134,9 +136,13 @@ namespace ChessMangler.Engine.Types
                 }
             }
         }
-        public static bool IsThisMoveOkay(ISquare startSquare, ISquare endSquare)
+        public bool IsThisMoveOkay(ISquare startSquare, ISquare endSquare)
         {
             //Temporary hardcoded rule.. (this will be in XML)
+
+            //Are there moves left in this turn?
+            bool movesOk = (this.MovesLeft - 1 > 0);
+            
 
             if ((endSquare.CurrentPiece != null) && (startSquare.CurrentPiece != null))
             {
@@ -308,7 +314,7 @@ namespace ChessMangler.Engine.Types
 
             if (_recievedMove.Rules)
             {
-                if (Board2D.IsThisMoveOkay(from, to))
+                if (this.IsThisMoveOkay(from, to))
                 {
                     Board2D.MoveThePieceOver(from, to);
                 }

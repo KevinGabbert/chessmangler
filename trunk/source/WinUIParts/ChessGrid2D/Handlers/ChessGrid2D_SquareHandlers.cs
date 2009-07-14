@@ -189,12 +189,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
                 if (this.DragStart_Square != null && dragEndSquare != null)
                 {
-                    bool weCanMove = Board2D.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
+                    bool weCanMove = this.UIBoard.EngineBoard.IsThisMoveOkay(_dragStartSquare, dragEndSquare);
 
                     if (weCanMove)
                     {
                         this.SetPiece(dragEndSquare);
-
                     }
                     else
                     {

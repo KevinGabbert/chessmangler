@@ -32,9 +32,7 @@ namespace ChessMangler.WinUIParts
 
         //TODO: this needs to be in ICommsHandler
         private PresenceManager presenceManager;
-
         private IdleTime idler;
-
         private JabberClient jabberClient = new JabberClient();
         //TODO: Jabber stuff to move into ICommsHandler
 
@@ -184,17 +182,14 @@ namespace ChessMangler.WinUIParts
                 this.btnOpenGrid.Enabled = false;
             }
         }
-
         private void dgvOpponents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             string cellContents = ((DataGridView)sender).CurrentCell.Value.ToString();
-
 
             //TODO:  Do they have ChessMangler?
             //string x = ((DataGridView)sender).CurrentRow.Cells["HasChessMangler"].ToString();
 
             this._opponent = cellContents + "@gmail.com";
-
 
             this.StartGame();
         }
@@ -252,7 +247,6 @@ namespace ChessMangler.WinUIParts
         {
             MessageBox.Show(pres.From + " has removed you from their roster.", "Unsubscription notification", MessageBoxButtons.OK);
         }
-        
         private void rosterManager_OnBegin(object sender)
         {
             //this.SetRoster(opponentRoster);
@@ -273,12 +267,9 @@ namespace ChessMangler.WinUIParts
                 }
             }
         }
-
         private void rosterManager_OnRosterEnd(object sender)
         {
             this.rosterManager = (RosterManager)sender;
-            //jabberClient1.Presence(jabber.protocol.client.PresenceType.available, tbStatus.Text, null, 0);
-            //lblPresence.Text = "Available";
 
             //TODO: is the DGV formatted by this point?  it should be..  (columnsize, text color, etc)
             this.SetOpponentsDataSource(opponentList);
@@ -359,7 +350,7 @@ namespace ChessMangler.WinUIParts
         }
 
         //TODO:  Idler event needs to be put into CommsHandlers
-        void idler_OnUnIdle(object sender, TimeSpan span)
+        private void idler_OnUnIdle(object sender, TimeSpan span)
         {
             if (jc != null)
             {
@@ -379,7 +370,6 @@ namespace ChessMangler.WinUIParts
                 if (this.jc.IsAuthenticated)
                 {
                     jc.Presence(PresenceType.available, "ChessMangler Auto-away", "away", 0);
-                    //pnlPresence.Text = "Away";
                 }
             }
         }
@@ -423,10 +413,8 @@ namespace ChessMangler.WinUIParts
         {
             this.presenceManager = new jabber.client.PresenceManager(this.components);
             this.presenceManager.Stream = (JabberClient)this._comms.CommsHandler.originalHandler;
-
             this.presenceManager.OnPrimarySessionChange += new PrimarySessionHandler(this.presenceManager_OnPrimarySessionChange);
         }
-
 
         private bool GetGoogleComms()
         {
@@ -462,34 +450,6 @@ namespace ChessMangler.WinUIParts
 
             }
         }
-
-        //public OnlineType GetItemPresence(Item item, PresenceManager pp)
-        //{
-        //    //TODO: refactor this to comms layer
-        //    Presence p = pp[item.JID];
-        //    OnlineType _onlineType;
-
-        //    if (p == null)
-        //    {
-        //        _onlineType = OnlineType.Offline;
-        //    }
-        //    else
-        //    {
-        //        switch (p.Show)
-        //        {
-        //            case "Online":
-        //                _onlineType = OnlineType.Online;
-        //                break;
-        //            case "away":
-        //                _onlineType = OnlineType.Away;
-        //                break;
-        //            default:
-        //                _onlineType = OnlineType.Other;
-        //                break;
-        //        }
-        //    }
-        //    return _onlineType;
-        //}
 
         private delegate void RosterDelegate(BindingList<OpponentList> dataSource);
         private void SetOpponentsDataSource(BindingList<OpponentList> dataSource)
