@@ -140,6 +140,9 @@ namespace ChessMangler.WinUIParts.Menus
                 ////newPiece.Capture = ?;
 
                 UniquePieceMenu._clickedSquare.CurrentPiece = newPiece;
+
+                //UniquePieceMenu._clickedSquare.Parent.OutBox = MovePacket.GenerateXml("movehash", "GameID", dragEndSquare.CurrentPiece.Name, _dragStartSquare.BoardLocation, dragEndSquare.BoardLocation, false); //no rules for no
+
             }
             catch (Exception ex)
             {

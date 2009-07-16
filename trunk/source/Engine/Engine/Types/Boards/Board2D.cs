@@ -142,6 +142,8 @@ namespace ChessMangler.Engine.Types
 
             //Are there moves left in this turn?
             bool movesOk = (this.MovesLeft - 1 > 0);
+
+            //TODO:  Where is all this math gonna happen?
             
 
             if ((endSquare.CurrentPiece != null) && (startSquare.CurrentPiece != null))
