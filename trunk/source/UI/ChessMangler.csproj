@@ -92,6 +92,10 @@
       <Project>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</Project>
       <Name>ChessMangler.Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Settings\ChessMangler.Settings.csproj">
+      <Project>{985BBB78-43C5-49BF-A6D4-C7F602C4ACB5}</Project>
+      <Name>ChessMangler.Settings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WinUIParts\ChessMangler.WinUIParts.csproj">
       <Project>{95A2CAE9-B7D5-4E46-B836-D2C4E4FB78A3}</Project>
       <Name>ChessMangler.WinUIParts</Name>

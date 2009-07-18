@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 using System.IO;
 
+using ChessMangler.Options.Interfaces;
 using ChessMangler.Engine.Types;
 using ChessMangler.Communications.Handlers;
 using ChessMangler.Communications.Interfaces;
@@ -24,7 +25,7 @@ using bedrock.util;
 
 namespace ChessMangler.WinUIParts
 {
-    public partial class GameList : Form
+    public partial class GameList : Form, IVersion
     {
         //TODO: Jabber stuff to move into ICommsHandler
         private JabberClient jc;
@@ -51,6 +52,8 @@ namespace ChessMangler.WinUIParts
             }
         }
 
+        public string Version { get; set; }
+
         #endregion
 
         Comms _comms = new Comms();
@@ -60,6 +63,8 @@ namespace ChessMangler.WinUIParts
         public GameList()
         {
             InitializeComponent();
+
+            //TODO: Load up my version packet:  <ChessMangler version="alpha" />
         }
 
         #region Events
@@ -126,14 +131,15 @@ namespace ChessMangler.WinUIParts
         }
         private void btnOpenGrid_Click(object sender, EventArgs e)
         {
-            StartGame();
+            //TODO: Check the other guy's version packet:  <ChessMangler version="alpha" />
+            //This can also be done upon "Game Resume", which is planned later.
+
+            this.StartGame();
         }
 
         private void StartGame()
         {
             //TODO: we should probably send a quick chat to start the game.
-
-
             if (this.tabControlGames.SelectedTab == tabFreeForm)
             {
                 BoardDef board = new BoardDef((short)udGridX.Value, (short)udGridY.Value);

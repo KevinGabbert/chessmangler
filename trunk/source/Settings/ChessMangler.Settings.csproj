@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\Communications\CommunicationsBase.cs" />
     <Compile Include="Types\Communications\JabberNet.cs" />

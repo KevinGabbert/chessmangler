@@ -33,11 +33,6 @@ namespace ChessMangler
 
             //Open up a *Game List* form
 
-
-
-
-
-
             Application.Run(new ChessMangler.WinUIParts.GameList());
         }
     }
