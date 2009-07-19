@@ -22,5 +22,7 @@ namespace ChessMangler.Communications.Interfaces
 
         void Write(string opponent, XmlElement stuffToWrite);
         void Message(string to, string body);
+
+        void RequestOpponentVersion(string opponentName); //serviceType?
     }
 }

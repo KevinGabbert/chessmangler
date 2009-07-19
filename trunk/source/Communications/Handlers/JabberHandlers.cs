@@ -266,5 +266,10 @@ namespace ChessMangler.Communications.Handlers
 
             done.Set();
         }
+
+        public void RequestOpponentVersion(string opponentName)
+        {
+            //throw new NotImplementedException();
+        }
     }
 }
