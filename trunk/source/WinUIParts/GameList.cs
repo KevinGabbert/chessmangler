@@ -152,7 +152,7 @@ namespace ChessMangler.WinUIParts
                 //this.cboOpponents.DataSource = opponents;
                 //this.cboOpponents.SelectedItem = this.cboOpponents[0];
 
-                ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, board, this.txtImages.Text, (short)udSquareSize.Value, _opponent);
+                ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, board, this.txtImages.Text, (short)udSquareSize.Value, _opponent, this.Version);
                 open.Show();
             }
 
@@ -438,7 +438,7 @@ namespace ChessMangler.WinUIParts
         }
         private void OpenChosenConfigFile()
         {
-            ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, _opponent);
+            ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, _opponent, this.Version);
 
             if (this.configList.SelectedValue.ToString() != null)
             {

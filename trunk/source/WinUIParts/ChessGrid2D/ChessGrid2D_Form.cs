@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using ChessMangler.Options.Interfaces;
 using ChessMangler.Engine.Types;
 using ChessMangler.Settings.Types.WinUI;
 using ChessMangler.Communications.Types;
@@ -17,7 +18,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
     /// <summary>
     /// This form only captures events from the form & scripts WinUIParts.  Nothing else.
     /// </summary>
-    public partial class ChessGrid2D_Form : GridForm
+    public partial class ChessGrid2D_Form : GridForm, IVersion
     {
         static DebugForm _debugForm;
 
@@ -84,7 +85,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         //TODO: this needs to be in ICommsHandler
         private PresenceManager localPresenceManager;
 
-        public ChessGrid2D_Form(PresenceManager presenceManager, ICommsHandler comms, string opponent)
+        public ChessGrid2D_Form(PresenceManager presenceManager, ICommsHandler comms, string opponent, string version)
         {
             InitializeComponent();
 
@@ -98,7 +99,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.localPresenceManager = presenceManager;
             this.Init_PresenceManager();
         }
-        public ChessGrid2D_Form(PresenceManager presenceManager, ICommsHandler comms, BoardDef board, string imagesDirectory, short squareSize, string opponent)
+        public ChessGrid2D_Form(PresenceManager presenceManager, ICommsHandler comms, BoardDef board, string imagesDirectory, short squareSize, string opponent, string version)
         {
             InitializeComponent();
 
@@ -261,7 +262,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         }
         public void InitGrid()
         {
-            this.Grid = new Grid2D(this);
+            this.Grid = new Grid2D(this, this.Version);
 
             //TODO:  Make this pull from game config DB
             this.Grid.VerticalSquish = 21; //This number is likely due to the TabControl height, but is more likely a divisor of it

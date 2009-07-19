@@ -3,6 +3,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
+
+using ChessMangler.Options.Interfaces;
 using ChessMangler.Engine.Config;
 using ChessMangler.Engine.Enums;
 using ChessMangler.Engine.Types;
@@ -12,7 +14,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
     /// <summary>
     /// 
     /// </summary>
-    public class Grid2D : ChessGrid2D_Base
+    public class Grid2D : ChessGrid2D_Base, IVersion
     {
         //TODO: refactor all references of ChessGrid2D out of here!
         #region Properties
@@ -43,9 +45,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
         }
 
+        public string Version { get; set; }
+
         #endregion
 
-        public Grid2D(ChessGrid2D_Form formWithGrid)
+        public Grid2D(ChessGrid2D_Form formWithGrid, string version)
         {
             this.ChessGrid2D_Form = formWithGrid;
             this.DebugForm = new DebugForm();
