@@ -133,6 +133,7 @@ namespace ChessMangler.WinUIParts
         {
             //TODO: Check the other guy's version packet:  <ChessMangler version="alpha" />
             //This can also be done upon "Game Resume", which is planned later.
+            //_comms.CommsHandler.RequestOpponentVersion(this.dgvOpponents.SelectedCells[1]);
 
             this.StartGame();
         }
