@@ -9,12 +9,14 @@ namespace ChessMangler.Communications.Types
         private string _name;
         private string _service;
         private OnlineType _online;
+        private string _cmVersion;
 
-        public OpponentList(string opponentName, string imService, OnlineType online)
+        public OpponentList(string opponentName, string imService, OnlineType online, string cmVersion)
         {
             this.Name = opponentName;
             this.Service = imService;
             this.Online = online;
+            this.CMVersion = cmVersion;
         }
         public string Name
         {
@@ -30,6 +32,17 @@ namespace ChessMangler.Communications.Types
         {
             get { return _online; }
             set { _online = value; }
+        }
+        public string CMVersion
+        {
+            get
+            {
+                return _cmVersion;
+            }
+            set
+            {
+                _cmVersion = value;
+            }
         }
     }
 }

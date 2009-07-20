@@ -135,6 +135,18 @@ namespace ChessMangler.WinUIParts
             //This can also be done upon "Game Resume", which is planned later.
             _comms.CommsHandler.RequestOpponentVersion(this.dgvOpponents.SelectedCells[1].Value.ToString());
 
+            //things could pause at this point as we wait for a response from the other side.. it should be instantaneous,
+            //but what if they are not online?
+
+            //Message:  Waiting for response from opponent
+
+            //If no response.. (because person is offline)
+            //   - Show the game as it currently exists. If not started yet, indicate with a message that the game has
+            //     not been accepted yet.
+
+            //If no response (and person is online) OR version = "Unknown"
+            //      Tell user that their client is either not there or is broken
+
             this.StartGame();
         }
 
@@ -270,7 +282,7 @@ namespace ChessMangler.WinUIParts
 
                     //TODO: param for if they have chessMangler
 
-                    opponentList.Add(new OpponentList(user, "GTalk", _onlineType)); 
+                    opponentList.Add(new OpponentList(user, "GTalk", _onlineType, _comms.CommsHandler.RequestOpponentVersion(user))); //TODO: comms.GetOpponentVersion 
                 }
             }
         }

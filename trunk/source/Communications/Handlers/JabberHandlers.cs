@@ -267,9 +267,20 @@ namespace ChessMangler.Communications.Handlers
             done.Set();
         }
 
-        public void RequestOpponentVersion(string opponentName)
+        public string RequestOpponentVersion(string opponentName)
         {
             //throw new NotImplementedException();
+
+            //this.write("whats yer version?")
+
+            //Do until (timeout (2 seconds? - set in options DB ~ remember this is gonna be called for all opponents in the DGV..)
+            //{
+               //wait here..
+            //}
+
+            //if we still don't know by this point, come back with version unknown
+
+            return "Not Implemented Yet " + opponentName;
         }
     }
 }
