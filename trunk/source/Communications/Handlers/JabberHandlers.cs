@@ -222,6 +222,7 @@ namespace ChessMangler.Communications.Handlers
             //call event.  this is for the client.
         }
 
+
         #endregion
         public static OnlineType GetItemPresence(Item item, PresenceManager presenceManager)
         {
@@ -267,6 +268,9 @@ namespace ChessMangler.Communications.Handlers
             done.Set();
         }
 
+
+        //TODO: This needs to be hidden by a child class
+        //Meaning.. ICommsHandler needs to be replaced by a class:  ChessManglerComms
         public string RequestOpponentVersion(string opponentName)
         {
             //throw new NotImplementedException();
@@ -275,12 +279,13 @@ namespace ChessMangler.Communications.Handlers
 
             //Do until (timeout (2 seconds? - set in options DB ~ remember this is gonna be called for all opponents in the DGV..)
             //{
-               //wait here..
+            //wait here..
             //}
 
             //if we still don't know by this point, come back with version unknown
 
-            return "ROV Not Implemented Yet " + opponentName;
+            return "KH ROV Not Implemented Yet " + opponentName;
         }
+
     }
 }

@@ -49,6 +49,10 @@ namespace ChessMangler.Communications.Types
                 if (board.IsThisMoveOkay(from, to))
                 {
                     Board2D.MoveThePieceOver(from, to);
+
+                    //Log the move to the Sqlite database
+
+                    //use recievedMove.GameID to figure out where to store it
                 }
                 else
                 {

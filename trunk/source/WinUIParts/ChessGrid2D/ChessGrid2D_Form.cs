@@ -120,7 +120,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
         private void InitComms(ICommsHandler newComms)
         {
             _comms = newComms;
-            _comms.OpponentChat_Recieved += new OpponentChat(On_Opponent_RCV);
+            _comms.OpponentChat_Recieved += new OpponentChat(On_OpponentChat_RCV);
             _comms.OpponentMove_Recieved += new OpponentMove_Handler(On_OpponentMove_RCV);
         }
 
@@ -133,6 +133,16 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.GetOpponentStatus();
         }
 
+        #region PresenceManager Events
+
+        public void presenceManager_OnPrimarySessionChange(object sender, jabber.JID bare)
+        {
+            //sender is a presenceManager
+            string here = this.GetOpponentStatus();
+            this.AddChat(bare.User + " has changed status to " + here); //TODO: This message needs to show the time.
+        }
+
+        #endregion
         #region Comms Events
 
         public void On_OpponentMove_RCV(object move)
@@ -144,7 +154,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.Process_InBox();
             this.SendOutBox();
         }
-        public void On_Opponent_RCV(string sender)
+        public void On_OpponentChat_RCV(string sender)
         {
             Console.Beep(37, 70);
             this.AddChat(this.txtChat.Text + " " + sender.ToString());
@@ -213,17 +223,6 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.Grid.UIBoard.Squares.Enable();
             this.Grid.UIBoard.Squares.ResetColors();
             this._squareHandlers.OutBox = null;
-        }
-
-        #endregion
-
-        #region PresenceManager Events
-
-        public void presenceManager_OnPrimarySessionChange(object sender, jabber.JID bare)
-        {
-            //sender is a presenceManager
-            string here = this.GetOpponentStatus();
-            this.AddChat(bare.User + " has changed status to " + here); //TODO: This message needs to show the time.
         }
 
         #endregion
