@@ -245,7 +245,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             //If we got this far then the move packet is good
             //Send out a RECV Packet (no need to wait for any return msg)
 
-            this.Grid.UIBoard.EngineBoard.ExecuteMove(recievedMove);
+            MoveBase.ExecuteMove(recievedMove, this.Grid.UIBoard.EngineBoard);
             this.Grid.Redraw(Grid.UIBoard.Flipped); //Syncs the UIBoard with the newly changed EngineBoard
 
             this.Grid.UIBoard.Squares.Enable();

@@ -11,6 +11,7 @@ using System.IO;
 
 using ChessMangler.Options.Interfaces;
 using ChessMangler.Engine.Types;
+using ChessMangler.Engine.Xml;
 using ChessMangler.Communications.Handlers;
 using ChessMangler.Communications.Interfaces;
 using ChessMangler.Communications.Types;
@@ -65,6 +66,8 @@ namespace ChessMangler.WinUIParts
             InitializeComponent();
 
             //TODO: Load up my version packet:  <ChessMangler version="alpha" />
+
+            //ApplicationInfo.GetVersion();
         }
 
         #region Events

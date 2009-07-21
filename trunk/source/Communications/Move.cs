@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using System.Text;
 
-namespace Communications
+namespace ChessMangler.Communications
 {
     public class Move
     {

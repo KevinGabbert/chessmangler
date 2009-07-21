@@ -54,6 +54,7 @@
     <Compile Include="Interfaces\IPiece.cs" />
     <Compile Include="Interfaces\IRulesPackage.cs" />
     <Compile Include="Interfaces\ISquare.cs" />
+    <Compile Include="Types\ApplicationInfo.cs" />
     <Compile Include="Types\Pieces\AttackPackage.cs" />
     <Compile Include="Types\Boards\Board2D.cs" />
     <Compile Include="Notes.cs" />
@@ -77,12 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Communications\ChessMangler.Communications.csproj">
-      <Project>{6348BF5C-3245-406C-B823-4291C154FEB1}</Project>
-      <Name>ChessMangler.Communications</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

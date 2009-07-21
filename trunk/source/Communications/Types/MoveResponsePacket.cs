@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessManger.Communications.Types
+namespace ChessMangler.Communications.Types
 {
     public class MoveResponsePacket: MoveBase
     {

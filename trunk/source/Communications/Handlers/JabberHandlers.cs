@@ -280,7 +280,7 @@ namespace ChessMangler.Communications.Handlers
 
             //if we still don't know by this point, come back with version unknown
 
-            return "Not Implemented Yet " + opponentName;
+            return "ROV Not Implemented Yet " + opponentName;
         }
     }
 }

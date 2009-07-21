@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChessMangler.Communications</RootNamespace>
     <AssemblyName>ChessMangler.Communications</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
@@ -38,6 +38,9 @@
       <HintPath>..\..\3rdParty\JabberNet\jabber-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -75,6 +78,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Engine\Engine\ChessMangler.Engine.csproj">
+      <Project>{3DAC8BDD-71A0-4292-8DA1-117878FFCBA2}</Project>
+      <Name>ChessMangler.Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Settings\ChessMangler.Settings.csproj">
       <Project>{985BBB78-43C5-49BF-A6D4-C7F602C4ACB5}</Project>
       <Name>ChessMangler.Settings</Name>

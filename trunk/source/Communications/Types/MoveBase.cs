@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessManger.Communications.Types
+using ChessMangler.Engine.Types;
+using ChessMangler.Engine.Interfaces;
+
+namespace ChessMangler.Communications.Types
 {
     public class MoveBase
     {
@@ -31,6 +34,31 @@ namespace ChessManger.Communications.Types
             set
             {
                 _newLocation = value;
+            }
+        }
+
+        //I'll put this here for now.. It might need to be moved elsewhere later.
+        //I really did it to resolve an architectural issue..
+        public static void ExecuteMove(MovePacket recievedMove, Board2D board)
+        {
+            ISquare from = board.GetByName(recievedMove.Previous);
+            ISquare to = board.GetByName(recievedMove.New);
+
+            if (recievedMove.Rules)
+            {
+                if (board.IsThisMoveOkay(from, to))
+                {
+                    Board2D.MoveThePieceOver(from, to);
+                }
+                else
+                {
+                    //Make a big stink.  Throw exception?
+                    throw new SystemException("MoveException here");
+                }
+            }
+            else
+            {
+                Board2D.MoveThePieceOver(from, to);
             }
         }
     }

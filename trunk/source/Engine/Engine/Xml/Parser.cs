@@ -46,20 +46,14 @@ namespace ChessMangler.Engine.Xml
             return query.FirstOrDefault().Value;
         }
 
-        public static string GetVersion(string configFilePath)
+        public static XElement Peek(string elementName)
         {
-
             //use a combination of XmlReader and LINQ to XML where you would use
             //XmlReader to parse through the big XML until you find the element
             //you are looking for and then you would use the ReadFrom method to
             //create an XElement from the XML element the reader is currently 
             //positioned on. 
 
-            return XmlParser.Peek("ChessConfig").Attribute("version").ToString();
-        }
-
-        public static XElement Peek(string elementName)
-        {
             throw new NotImplementedException();
         }
     }

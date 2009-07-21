@@ -4,6 +4,8 @@ using System.Xml;
 using System.IO;
 using System.Text;
 
+using ChessMangler.Engine.Xml;
+
 namespace ChessMangler.Engine.Config
 {
     //This class will probably be moved around later..
@@ -20,6 +22,11 @@ namespace ChessMangler.Engine.Config
             }
 
             return loader;
+        }
+
+        public static string GetConfigFileVersion(string configFilePath)
+        {
+            return XmlParser.Peek("ChessConfig").Attribute("version").ToString();
         }
     }
 }
