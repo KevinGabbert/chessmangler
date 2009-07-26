@@ -67,7 +67,7 @@ namespace ChessMangler.WinUIParts
 
             //TODO: Load up my version packet:  <ChessMangler version="alpha" />
 
-            //ApplicationInfo.GetVersion();
+            //ApplicationInfo.GetMyGameVersion(); //this is different than Comms.GetOpponentVersion
         }
 
         #region Events
@@ -136,7 +136,9 @@ namespace ChessMangler.WinUIParts
         {
             //TODO: Check the other guy's version packet:  <ChessMangler version="alpha" />
             //This can also be done upon "Game Resume", which is planned later.
-            _comms.CommsHandler.RequestOpponentVersion(this.dgvOpponents.SelectedCells[1].Value.ToString());
+
+            //we've already chosen our game by this point
+            _comms.CommsHandler.RequestOpponentCurrentGameVersion(this.dgvOpponents.SelectedCells[1].Value.ToString());
 
             //things could pause at this point as we wait for a response from the other side.. it should be instantaneous,
             //but what if they are not online?
@@ -285,7 +287,7 @@ namespace ChessMangler.WinUIParts
 
                     //TODO: param for if they have chessMangler
 
-                    opponentList.Add(new OpponentList(user, "GTalk", _onlineType, _comms.CommsHandler.RequestOpponentVersion(user))); //TODO: comms.GetOpponentVersion 
+                    opponentList.Add(new OpponentList(user, "GTalk", _onlineType, _comms.CommsHandler.RequestOpponentCurrentGameVersion(user))); //TODO: comms.GetOpponentVersion 
                 }
             }
         }

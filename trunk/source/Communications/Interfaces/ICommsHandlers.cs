@@ -23,6 +23,7 @@ namespace ChessMangler.Communications.Interfaces
         void Write(string opponent, XmlElement stuffToWrite);
         void Message(string to, string body);
 
-        string RequestOpponentVersion(string opponentName); //serviceType?
+        string RequestOpponentCurrentGameVersion(string opponentName); 
+        string RequestOpponentCMVersion(string opponentName); 
     }
 }

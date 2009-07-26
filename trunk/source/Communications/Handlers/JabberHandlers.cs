@@ -271,7 +271,7 @@ namespace ChessMangler.Communications.Handlers
 
         //TODO: This needs to be hidden by a child class
         //Meaning.. ICommsHandler needs to be replaced by a class:  ChessManglerComms
-        public string RequestOpponentVersion(string opponentName)
+        public string RequestOpponentCurrentGameVersion(string opponentName)
         {
             //throw new NotImplementedException();
 
@@ -285,6 +285,24 @@ namespace ChessMangler.Communications.Handlers
             //if we still don't know by this point, come back with version unknown
 
             return "KH ROV Not Implemented Yet " + opponentName;
+        }
+
+        //TODO: This needs to be hidden by a child class
+        //Meaning.. ICommsHandler needs to be replaced by a class:  ChessManglerComms
+        public string RequestOpponentCMVersion(string opponentName)
+        {
+            //throw new NotImplementedException();
+
+            //this.write("whats yer version?")
+
+            //Do until (timeout (2 seconds? - set in options DB ~ remember this is gonna be called for all opponents in the DGV..)
+            //{
+            //wait here..
+            //}
+
+            //if we still don't know by this point, come back with version unknown
+
+            return "CMVersion Not Implemented Yet " + opponentName;
         }
 
     }
