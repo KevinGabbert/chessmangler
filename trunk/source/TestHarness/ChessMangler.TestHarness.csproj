@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChessMangler.TestHarness</RootNamespace>
     <AssemblyName>ChessMangler.TestHarness</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
@@ -45,6 +45,9 @@
       <HintPath>..\..\Tools\NUnit\NUnit-2.4.8-net-2.0\binx\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data.SQLite, Version=1.0.60.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\3rdParty\SQLite\System.Data.SQLite\System.Data.SQLite.DLL</HintPath>
@@ -53,10 +56,14 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\SetUp.cs" />
     <Compile Include="Engine\Board_Tester.cs" />
+    <Compile Include="Engine\Xml_Tester.cs" />
     <Compile Include="JabberNet\JabberNet_Tester.cs" />
     <Compile Include="JabberNet\SendMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

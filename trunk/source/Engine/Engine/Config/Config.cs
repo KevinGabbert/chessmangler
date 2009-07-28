@@ -24,9 +24,9 @@ namespace ChessMangler.Engine.Config
             return loader;
         }
 
-        public static string GetConfigFileVersion(string configFilePath)
-        {
-            return XmlParser.Peek("ChessConfig").Attribute("version").ToString();
-        }
+        //public static string GetConfigFileVersion(string configFilePath)
+        //{
+        //    return XmlParser.Peek(configFilePath, "ChessConfig").Attribute("version").ToString();
+        //}
     }
 }
