@@ -31,7 +31,8 @@ namespace ChessMangler.TestHarness.JabberNet
             // what user/pass to log in as
             jabberClient.User = "Test.Chess.Mangler";
             jabberClient.Server = "gmail.com";  // use gmail.com for GoogleTalk
-            jabberClient.Password = "Ch3$$Mangl3r";
+            jabberClient.Password = "$00p3r$3cr3t";
+            //jabberClient.Password = "Ch3$$Mangl3r";
 
             jabberClient.NetworkHost = "talk.l.google.com";  // Note: that's an "L", not a "1".
 
