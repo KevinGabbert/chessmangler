@@ -131,7 +131,7 @@ namespace ChessMangler.WinUIParts.Menus
                 //This is called for every clicked Piece..
 
                 ////first of all, what Piece was clicked?  Because we can create a new instance of it if needed
-                Piece newPiece = new Piece((new UniquePieceMenu()).GetPieceDef(currentMenuItem.Name));
+                Piece newPiece = new Piece((new UniquePieceMenu()).GetPieceDef(currentMenuItem.Name), true);
 
                 newPiece.Row = UniquePieceMenu._clickedSquare.Row;
                 newPiece.Column = UniquePieceMenu._clickedSquare.Column;

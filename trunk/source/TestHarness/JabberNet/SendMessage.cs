@@ -12,6 +12,7 @@ using jabber.protocol.client;
 
 namespace ChessMangler.TestHarness.JabberNet
 {
+    [Ignore("only because these tests take a few seconds. get rid of this line to test Jabber functionality")]
     [TestFixture]
     public class Program
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using System.Drawing;
+using ChessMangler.Engine.Interfaces;
 
 namespace ChessMangler.Engine.Types
 {
@@ -21,16 +22,16 @@ namespace ChessMangler.Engine.Types
             }
         }
 
-        string _startingLocation;
-        public string StartingLocation
+        string _boardLocation;
+        public string BoardLocation
         {
             get
             {
-                return _startingLocation;
+                return _boardLocation;
             }
             set
             {
-                _startingLocation = value;
+                _boardLocation = value;
             }
         }
 

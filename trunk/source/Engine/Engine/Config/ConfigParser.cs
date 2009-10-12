@@ -158,7 +158,7 @@ namespace ChessMangler.Engine.Config
 
             if (currentName == "StartingLocation")
             {
-                newPiece.StartingLocation = currentAttribute.Value;
+                newPiece.BoardLocation = currentAttribute.Value;
             }
 
             if (currentName == "ImageName")

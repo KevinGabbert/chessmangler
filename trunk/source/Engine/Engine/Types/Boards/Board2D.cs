@@ -116,7 +116,7 @@ namespace ChessMangler.Engine.Types
                         break;
 
                     default:
-                        Square2D squareForPiece = this.GetByName(pieceDef.StartingLocation);
+                        Square2D squareForPiece = this.GetByName(pieceDef.BoardLocation);
 
                         //TODO:  Temporary Code (as this will be eventually pulled from a config file)
 
@@ -128,7 +128,7 @@ namespace ChessMangler.Engine.Types
                         if (squareForPiece != null)
                         {
                             //TODO: >v1.0? this dir can be overridden by a config file setting
-                            squareForPiece.CurrentPiece = new Piece(pieceDef);
+                            squareForPiece.CurrentPiece = new Piece(pieceDef, true);
                         }
                         break;
                 }

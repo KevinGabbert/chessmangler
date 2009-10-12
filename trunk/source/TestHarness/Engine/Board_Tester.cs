@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using NUnit.Framework;
 using ChessMangler.Engine.Types;
+using ChessMangler.Engine.Enums;
+using ChessMangler.Engine.Interfaces;
 
 using System.Collections.Generic;
 
@@ -45,6 +47,18 @@ namespace ChessMangler.TestHarness.Engine
             BoardDef testBoardDef = _testBoard.Definition;
 
             Assert.IsInstanceOfType((new BoardDef()).GetType(), testBoardDef);
+        }
+
+        [Test(Description = "")]
+        public void CreateBoard()
+        {
+            BoardDef testBoardDef = _testBoard.Definition;
+
+            Board2D testBoard = new Board2D(testBoardDef);
+            testBoard.BoardMode = BoardMode.Standard;
+            Assert.IsFalse(_testBoard.IsNew);
+
+            Assert.AreEqual(64, _testBoard.Squares.Count);
         }
 
         [Test(Description = "Tests the Get & Set of the List<Squares> prop")]
@@ -113,5 +127,62 @@ namespace ChessMangler.TestHarness.Engine
             Assert.AreEqual("a1", _testBoard.GetByLocation(0, 0).BoardLocation);
             Assert.AreEqual("b2", _testBoard.GetByLocation(1, 1).BoardLocation);
         }
+
+        [Test(Description = "This test also explores what it takes to map a piece to a square.")]
+        public void Test_MoveThePieceOver()
+        {
+            //Hmmmm.. why is a PieceDef a Piece, and an IPiece so different?
+
+            BoardDef testBoardDef = _testBoard.Definition;
+            Board2D testBoard = new Board2D(testBoardDef);
+
+            ISquare from = new Square2D();
+     
+            PieceDef testFromPieceDef = new PieceDef();
+            testFromPieceDef.Name = "Fred";
+            testFromPieceDef.Player = 1;
+            testFromPieceDef.Color = Color.Purple;
+            testFromPieceDef.ImageDirectory = @"C:\";
+            testFromPieceDef.ImageName = "FredImage";
+            testFromPieceDef.BoardLocation = "A1";
+
+            from.CurrentPiece = new Piece(testFromPieceDef, false);
+
+
+            ISquare to = new Square2D();
+            PieceDef testToPieceDef = new PieceDef();
+            testToPieceDef.Name = "Barney";
+            testToPieceDef.Player = 2;
+            testToPieceDef.Color = Color.Green;
+            testToPieceDef.ImageDirectory = "D:";
+            testToPieceDef.ImageName = "BarneyImage";
+            testToPieceDef.BoardLocation = "D1";
+
+            to.CurrentPiece = new Piece(testFromPieceDef, false);
+
+            Board2D.MoveThePieceOver(from, to);
+
+            //"Barney" has now been "taken" and replaced by "Fred"
+            Assert.AreEqual(to.CurrentPiece.Name, "Fred");
+            Assert.AreEqual(to.CurrentPiece.Player, 1);
+            Assert.AreEqual(to.CurrentPiece.Color, Color.Purple);
+            Assert.AreEqual(to.CurrentPiece.BoardLocation, "A1");
+            Assert.AreEqual(to.CurrentPiece.Image, null); //This test didn't verify the image
+        }
+
+        #region Check Properties
+
+        [Test(Description = "")]
+        public void BoardMode_Prop()
+        {
+            BoardDef testBoardDef = _testBoard.Definition;
+
+            Board2D testBoard = new Board2D(testBoardDef);
+            testBoard.BoardMode = BoardMode.FreeForm;
+
+            Assert.AreEqual(BoardMode.FreeForm, testBoard.BoardMode);
+        }
+
+        #endregion
     }
 }

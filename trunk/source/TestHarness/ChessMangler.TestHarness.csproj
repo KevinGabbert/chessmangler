@@ -63,8 +63,8 @@
   <ItemGroup>
     <Compile Include="Data\SetUp.cs" />
     <Compile Include="Engine\Board_Tester.cs" />
+    <Compile Include="Engine\Types\Piece_Tester.cs" />
     <Compile Include="Engine\Xml_Tester.cs" />
-    <Compile Include="JabberNet\JabberNet_Tester.cs" />
     <Compile Include="JabberNet\SendMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WinUIParts_Tester\Grid2D_Tester.cs" />

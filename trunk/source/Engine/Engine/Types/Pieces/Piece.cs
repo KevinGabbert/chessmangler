@@ -56,7 +56,7 @@ namespace ChessMangler.Engine.Types
 
                 if (this.AutoMapOnDefSet)
                 {
-                    this.Map_Info(value);
+                    this.Map_Info(value, true);
                 }
             }
         }
@@ -199,24 +199,24 @@ namespace ChessMangler.Engine.Types
         {
             this.AutoMapOnDefSet = autoMapOnDefSet;
         }
-        public Piece(PieceDef pieceDef)
+        public Piece(PieceDef pieceDef, bool verifyImage)
         {
             this.AutoMapOnDefSet = true;
 
-            this.Map_Info(pieceDef);
+            this.Map_Info(pieceDef, verifyImage);
         }
-        public Piece(PieceDef pieceDef, bool autoMapOnDefSet, string ImageDirectory)
+        public Piece(PieceDef pieceDef, bool autoMapOnDefSet, string ImageDirectory, bool verifyImage)
         {
-            this.Map_Info(pieceDef);
+            this.Map_Info(pieceDef, verifyImage);
         }
 
-        public void Map_Info(PieceDef value)
+        public void Map_Info(PieceDef value, bool verifyImage)
         {
             //Look up attributes in passed config file and assign (such as image, and movement rules, etc..)
 
             this.Name = value.Name;
             this.Color = value.Color;
-            this.BoardLocation = value.StartingLocation;
+            this.BoardLocation = value.BoardLocation;
             this.Player = value.Player;
             this.ImageDirectory = value.ImageDirectory;
 
@@ -225,14 +225,17 @@ namespace ChessMangler.Engine.Types
                 throw new DirectoryNotFoundException("no image directory has been set up (null encountered)");
             }
 
-            if(File.Exists(this.ImageDirectory + value.ImageName))
+            if (verifyImage)
             {
-                //Bitmap will say "Parameter not valid" if any part of the file name is messed up..
-                this.Image = new Bitmap(this.ImageDirectory + value.ImageName);
-            }
-            else
-            {
-                throw new FileNotFoundException("unable to find Piece Image:  " + this.ImageDirectory + value.ImageName);
+                if (File.Exists(this.ImageDirectory + value.ImageName))
+                {
+                    //Bitmap will say "Parameter not valid" if any part of the file name is messed up..
+                    this.Image = new Bitmap(this.ImageDirectory + value.ImageName);
+                }
+                else
+                {
+                    throw new FileNotFoundException("unable to find Piece Image:  " + this.ImageDirectory + value.ImageName);
+                }
             }
 
             //TODO: this.Disabled = value.Disabled

@@ -8,6 +8,10 @@ namespace ChessMangler.Engine.Interfaces
 {
     public interface IPiece: IChessObject
     {
-
+        int Player
+        {
+            get;
+            set;
+        }
     }
 }
