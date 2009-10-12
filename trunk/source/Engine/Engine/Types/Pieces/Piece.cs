@@ -220,13 +220,14 @@ namespace ChessMangler.Engine.Types
             this.Player = value.Player;
             this.ImageDirectory = value.ImageDirectory;
 
-            if (this.ImageDirectory == null)
-            {
-                throw new DirectoryNotFoundException("no image directory has been set up (null encountered)");
-            }
-
             if (verifyImage)
             {
+
+                if (this.ImageDirectory == null)
+                {
+                    throw new DirectoryNotFoundException("no image directory has been set up (null encountered)");
+                }
+
                 if (File.Exists(this.ImageDirectory + value.ImageName))
                 {
                     //Bitmap will say "Parameter not valid" if any part of the file name is messed up..

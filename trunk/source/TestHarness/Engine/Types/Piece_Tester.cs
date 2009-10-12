@@ -3,7 +3,6 @@ using ChessMangler.Engine.Interfaces;
 
 using NUnit.Framework;
 
-
 namespace ChessMangler.TestHarness.Engine.Types
 {
     [TestFixture]

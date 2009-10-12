@@ -15,20 +15,16 @@ namespace ChessMangler.WinUIParts
             {
                 return _enabled;
             }
-            set
-            {
-                _enabled = value;
-            }
         }
 
         public void Disable()
         {
-            this.Enabled = false;
+            _enabled = false;
             this.EnableSquares(this.Enabled);
         }
         public void Enable()
         {
-            this.Enabled = true;
+            _enabled = true;
             this.EnableSquares(this.Enabled);
         }
 

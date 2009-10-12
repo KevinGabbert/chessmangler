@@ -41,6 +41,14 @@ namespace ChessMangler.TestHarness.Engine
             Assert.IsFalse(_testBoard.IsNew);
         }
 
+        //TODO: IsThisMoveOK?
+        [Ignore]
+        [Test]
+        public void IsThisMoveOK()
+        {
+
+        }
+
         [Test(Description = "")]
         public void Verify_BoardDef_get()
         {
