@@ -29,18 +29,18 @@ namespace ChessMangler.WinUIParts
     public partial class GameList : Form, IVersion
     {
         //TODO: Jabber stuff to move into ICommsHandler
-        private JabberClient jc;
-        private RosterManager rosterManager;
+        protected JabberClient jc;
+        protected RosterManager rosterManager;
 
         //TODO: this needs to be in ICommsHandler
-        private PresenceManager presenceManager;
-        private IdleTime idler;
-        private JabberClient jabberClient = new JabberClient();
+        protected PresenceManager presenceManager;
+        protected IdleTime idler;
+        protected JabberClient jabberClient = new JabberClient();
         //TODO: Jabber stuff to move into ICommsHandler
 
         #region Properties
 
-        string _configFilePath;
+        protected string _configFilePath;
         public string ConfigFilePath
         {
             get
@@ -57,9 +57,9 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
-        Comms _comms = new Comms();
-        string _opponent;
-        BindingList<OpponentList> opponentList = new BindingList<OpponentList>();
+        protected Comms _comms = new Comms();
+        protected string _opponent;
+        protected BindingList<OpponentList> opponentList = new BindingList<OpponentList>();
 
         public GameList()
         {
@@ -73,7 +73,7 @@ namespace ChessMangler.WinUIParts
         #region Events
 
         #region Form Events
-        private void GameList_Load(object sender, EventArgs e)
+        protected void GameList_Load(object sender, EventArgs e)
         {
             //Looks through config directory, and list what Config files are found
             string configDir = Directory.GetParent(Directory.GetParent(System.Environment.CurrentDirectory).ToString()).ToString() + "\\Config";
@@ -103,11 +103,11 @@ namespace ChessMangler.WinUIParts
             this.idler.OnUnIdle += new bedrock.util.SpanEventHandler(this.idler_OnUnIdle);
         }
 
-        private void txtOpponent_Leave(object sender, EventArgs e)
+        protected void txtOpponent_Leave(object sender, EventArgs e)
         {
             this.CheckForStart();
         }
-        private void btnLogin_Click(object sender, EventArgs e)
+        protected void btnLogin_Click(object sender, EventArgs e)
         {
             jc = (JabberClient)this._comms.CommsHandler.originalHandler;
             jc.OnIQ += new IQHandler(this.jc_OnIQ);
@@ -132,7 +132,7 @@ namespace ChessMangler.WinUIParts
             this.btnLogin.Enabled = !gotComms;
             
         }
-        private void btnOpenGrid_Click(object sender, EventArgs e)
+        protected void btnOpenGrid_Click(object sender, EventArgs e)
         {
             //TODO: Check the other guy's version packet:  <ChessMangler version="alpha" />
             //This can also be done upon "Game Resume", which is planned later.
@@ -155,41 +155,16 @@ namespace ChessMangler.WinUIParts
             this.StartGame();
         }
 
-        private void StartGame()
-        {
-            //TODO: we should probably send a quick chat to start the game.
-            if (this.tabControlGames.SelectedTab == tabFreeForm)
-            {
-                BoardDef board = new BoardDef((short)udGridX.Value, (short)udGridY.Value);
-
-                //TODO: That last argument needs to be the selected item from a list of opponents on this page:
-
-                //List<string> opponents = new List<string>();
-                //opponents.Add("");
-
-                //this.cboOpponents.DataSource = opponents;
-                //this.cboOpponents.SelectedItem = this.cboOpponents[0];
-
-                ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, board, this.txtImages.Text, (short)udSquareSize.Value, _opponent, this.Version);
-                open.Show();
-            }
-
-            if (this.tabControlGames.SelectedTab == tabRulesGame)
-            {
-                this.OpenChosenConfigFile();
-            }
-        }
-
-        private void configList_SelectedIndexChanged(object sender, EventArgs e)
+        protected void configList_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.CheckForStart();
         }
-        private void configList_MouseDoubleClick(object sender, MouseEventArgs e)
+        protected void configList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.OpenChosenConfigFile();
         }
 
-        private void tabControlGames_SelectedIndexChanged(object sender, EventArgs e)
+        protected void tabControlGames_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.tabControlGames.SelectedTab == tabFreeForm)
             {
@@ -206,7 +181,7 @@ namespace ChessMangler.WinUIParts
                 this.btnOpenGrid.Enabled = false;
             }
         }
-        private void dgvOpponents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        protected void dgvOpponents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             string cellContents = ((DataGridView)sender).CurrentCell.Value.ToString();
 
@@ -221,7 +196,7 @@ namespace ChessMangler.WinUIParts
         #endregion
         #region Comms Events
 
-        private void GameListAuthenticate(object sender)
+        protected void GameListAuthenticate(object sender)
         {
             this.SetStatus("Authenticated @ " + DateTime.Now.ToString());
 
@@ -233,8 +208,8 @@ namespace ChessMangler.WinUIParts
             //jabberClient.Presence(PresenceType.available, "ChessMangler Online", "show", 2);
         }
 
-        private delegate void StatusDelegate(string message);
-        private void SetStatus(string message)
+        protected delegate void StatusDelegate(string message);
+        protected void SetStatus(string message)
         {
             if (this.lblStatus.InvokeRequired)
             {
@@ -249,7 +224,7 @@ namespace ChessMangler.WinUIParts
         #endregion
         #region Roster Manger Events
 
-        private void rosterManager_OnSubscription(RosterManager manager, Item ri, Presence pres)
+        protected void rosterManager_OnSubscription(RosterManager manager, Item ri, Presence pres)
         {
             DialogResult res = MessageBox.Show("Allow incoming presence subscription request from: " + pres.From,
                 "Subscription Request",
@@ -267,15 +242,15 @@ namespace ChessMangler.WinUIParts
                     break;
             }
         }
-        private void rosterManager_OnUnsubscription(RosterManager manager, Presence pres, ref bool remove)
+        protected void rosterManager_OnUnsubscription(RosterManager manager, Presence pres, ref bool remove)
         {
             MessageBox.Show(pres.From + " has removed you from their roster.", "Unsubscription notification", MessageBoxButtons.OK);
         }
-        private void rosterManager_OnBegin(object sender)
+        protected void rosterManager_OnBegin(object sender)
         {
             //this.SetRoster(opponentRoster);
         }
-        private void rosterManager_OnItem(object sender, Item item)
+        protected void rosterManager_OnItem(object sender, Item item)
         {
             string user = item.JID.User;
             
@@ -291,7 +266,7 @@ namespace ChessMangler.WinUIParts
                 }
             }
         }
-        private void rosterManager_OnRosterEnd(object sender)
+        protected void rosterManager_OnRosterEnd(object sender)
         {
             this.rosterManager = (RosterManager)sender;
 
@@ -301,17 +276,15 @@ namespace ChessMangler.WinUIParts
 
         #endregion
         #region FreeForm Game Tab events
-        private void udGridX_ValueChanged(object sender, EventArgs e)
+        protected void udGridX_ValueChanged(object sender, EventArgs e)
         {
             this.btnOpenGrid.Enabled = this.ValidFreeFormGame();
         }
-
-        private void udGridY_ValueChanged(object sender, EventArgs e)
+        protected void udGridY_ValueChanged(object sender, EventArgs e)
         {
             this.btnOpenGrid.Enabled = this.ValidFreeFormGame();
         }
-
-        private void udSquareSize_ValueChanged(object sender, EventArgs e)
+        protected void udSquareSize_ValueChanged(object sender, EventArgs e)
         {
             this.btnOpenGrid.Enabled = this.ValidFreeFormGame();
         }
@@ -330,7 +303,7 @@ namespace ChessMangler.WinUIParts
         #endregion
 
         //TODO: this needs to be send to JabberHandlers
-        private void jc_OnIQ(object sender, IQ iq)
+        protected void jc_OnIQ(object sender, IQ iq)
         {
             if (iq.Type != IQType.get)
                 return;
@@ -374,20 +347,19 @@ namespace ChessMangler.WinUIParts
         }
 
         //TODO:  Idler event needs to be put into CommsHandlers
-        private void idler_OnUnIdle(object sender, TimeSpan span)
+        protected void idler_OnUnIdle(object sender, TimeSpan span)
         {
             if (jc != null)
             {
                 if (this.jc.IsAuthenticated)
                 {
                     jc.Presence(PresenceType.available, "ChessMangler Available", null, 0);
-                    //pnlPresence.Text = "Available";
                 }
             }
         }
 
         //TODO:  Idler event needs to be put into CommsHandlers
-        private void idler_OnIdle(object sender, TimeSpan span)
+        protected void idler_OnIdle(object sender, TimeSpan span)
         {
             if (jc != null)
             {
@@ -398,14 +370,14 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        private bool ValidFreeFormGame()
+        protected bool ValidFreeFormGame()
         {
             bool validGrid = (udGridX.Value > 0) || (udGridY.Value > 0);
             bool validSquares = (udSquareSize.Value > 0);
 
             return validGrid && validSquares;
         }
-        private bool ValidSelectedFile()
+        protected bool ValidSelectedFile()
         {
             bool retval = File.Exists(this.ConfigFilePath + "\\" + this.configList.SelectedValue.ToString() + ".config");
 
@@ -420,7 +392,32 @@ namespace ChessMangler.WinUIParts
         #endregion
         #region Functions
 
-        private void Init_RosterManager()
+        protected void StartGame()
+        {
+            //TODO: we should probably send a quick chat to start the game.
+            if (this.tabControlGames.SelectedTab == tabFreeForm)
+            {
+                BoardDef board = new BoardDef((short)udGridX.Value, (short)udGridY.Value);
+
+                //TODO: That last argument needs to be the selected item from a list of opponents on this page:
+
+                //List<string> opponents = new List<string>();
+                //opponents.Add("");
+
+                //this.cboOpponents.DataSource = opponents;
+                //this.cboOpponents.SelectedItem = this.cboOpponents[0];
+
+                ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, board, this.txtImages.Text, (short)udSquareSize.Value, _opponent, this.Version);
+                open.Show();
+            }
+
+            if (this.tabControlGames.SelectedTab == tabRulesGame)
+            {
+                this.OpenChosenConfigFile();
+            }
+        }
+
+        protected void Init_RosterManager()
         {
             this.rosterManager = new jabber.client.RosterManager(this.components);
             this.rosterManager.AutoAllow = jabber.client.AutoSubscriptionHanding.AllowAll;
@@ -433,28 +430,28 @@ namespace ChessMangler.WinUIParts
             this.rosterManager.OnSubscription += new jabber.client.SubscriptionHandler(this.rosterManager_OnSubscription);
             this.rosterManager.OnUnsubscription += new jabber.client.UnsubscriptionHandler(this.rosterManager_OnUnsubscription);                  
         }
-        private void Init_PresenceManager()
+        protected void Init_PresenceManager()
         {
             this.presenceManager = new jabber.client.PresenceManager(this.components);
             this.presenceManager.Stream = (JabberClient)this._comms.CommsHandler.originalHandler;
             this.presenceManager.OnPrimarySessionChange += new PrimarySessionHandler(this.presenceManager_OnPrimarySessionChange);
         }
 
-        private bool GetGoogleComms()
+        public bool GetGoogleComms()
         {
             //TODO:  At the moment, this event can't be reached via the interface.
             //This needs to be doen correctly.
             //For now, we are going to pass our authentication delegate directly into the Comms Handler
             return _comms.Connect(CommsType.Google, new Comms_Authenticate(GameListAuthenticate)); //TODO: later this will be assigned via a saved value in the DB, or User selection
         }
-        private void CheckForStart()
+        protected void CheckForStart()
         {
             this.btnOpenGrid.Enabled = (this._comms.CommsHandler != null) && 
                                        (_opponent != "") && 
                                        (_opponent != null) &&
                                        (this.ValidSelectedFile());
         }
-        private void OpenChosenConfigFile()
+        protected void OpenChosenConfigFile()
         {
             ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, _opponent, this.Version);
 
@@ -475,8 +472,8 @@ namespace ChessMangler.WinUIParts
             }
         }
 
-        private delegate void RosterDelegate(BindingList<OpponentList> dataSource);
-        private void SetOpponentsDataSource(BindingList<OpponentList> dataSource)
+        protected delegate void RosterDelegate(BindingList<OpponentList> dataSource);
+        public void SetOpponentsDataSource(BindingList<OpponentList> dataSource)
         {
             if (this.dgvOpponents.InvokeRequired)
             {

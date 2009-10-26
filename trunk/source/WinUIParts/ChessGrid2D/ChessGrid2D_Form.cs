@@ -277,7 +277,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             //Menu Handlers
             //To add a new entry, create one in the form UI, double-click, and then add a handler in _menuBarHandlers.
-
+            this.resetSquareColorsToolStripMenuItem.Click += new EventHandler(_menuBarHandlers.resetSquareColorsToolStripMenuItem_Click);
             this.toggleDebugModeToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
             this.optionsToolStripMenuItem1.Click += new System.EventHandler(_menuBarHandlers.optionsToolStripMenuItem_Click);
             this.debugToolStripMenuItem.Click += new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
@@ -294,6 +294,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             this.toggleDebugModeToolStripMenuItem.Click -= new System.EventHandler(_menuBarHandlers.toggleDebugModeToolStripMenuItem_Click);
             this.debugToolStripMenuItem.Click -= new System.EventHandler(_menuBarHandlers.debugToolStripMenuItem_Click);
             this.resetPiecesToolStripMenuItem.Click -= new System.EventHandler(this._menuBarHandlers.resetPiecesToolStripMenuItem_Click);
+            this.resetSquareColorsToolStripMenuItem.Click -= new EventHandler(_menuBarHandlers.resetSquareColorsToolStripMenuItem_Click);
         }
 
         //TODO: it would be very nice to combine these delegate functions
@@ -417,6 +418,11 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             }
 
             return here;
+        }
+
+        private void resetSquareColorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

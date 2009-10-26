@@ -68,7 +68,7 @@ namespace ChessMangler.WinUIParts
             //TODO: this doesn't work very well
             foreach (UISquare square in this)
             {
-                if ((square.PreviousColor == Color.LightBlue) || (square.PreviousColor == Color.Blue))
+                if ((square.Color == Color.LightBlue) || (square.Color == Color.Blue))
                 {
                     square.Color = square.PreviousColor;
                 }

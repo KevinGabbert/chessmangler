@@ -228,8 +228,8 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
 
                 //TODO: Cache the Squares' previous colors.
-                //_dragStartSquare.BackColor = Color.LightBlue;
-                //dragEndSquare.BackColor = Color.Blue;
+                _dragStartSquare.BackColor = Color.LightBlue;
+                dragEndSquare.BackColor = Color.Blue;
 
                 //Disable any further movement (RCV Handler will reenable)
                 this.UIBoard.Squares.LockMovement(_dragStartSquare, dragEndSquare);

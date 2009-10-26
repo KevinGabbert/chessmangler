@@ -31,6 +31,10 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             _debugForm.debugTextBox.Text += "New Debug Form";
         }
 
+        public void resetSquareColorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.UIBoard.Squares.ResetColors();
+        }
         public void toggleDebugModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _userSetDebugMode = !this._userSetDebugMode;
