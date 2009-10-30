@@ -145,5 +145,45 @@ namespace ChessMangler.TestHarness.WinUIParts_Tester
             }
         }
 
+        [Test(Description = "The whole point of this function is to reset a 'flagged square' back to its previous color")]
+        public void Test_LockMovement()
+        {
+            Squares testSquares = new Squares();
+
+            UISquare unLockedSquare1 = new UISquare();
+            unLockedSquare1.Name = "startsquare";
+
+            UISquare unLockedSquare2 = new UISquare();
+            UISquare unLockedSquare3 = new UISquare();
+
+            UISquare unLockedSquare4 = new UISquare();
+            unLockedSquare4.Name = "endsquare";
+
+            UISquare unLockedSquare5 = new UISquare();
+
+            testSquares.Add(unLockedSquare1);
+            testSquares.Add(unLockedSquare2);
+            testSquares.Add(unLockedSquare3);
+            testSquares.Add(unLockedSquare4);
+            testSquares.Add(unLockedSquare5);
+
+            testSquares.LockMovement(unLockedSquare1, unLockedSquare4);
+
+            foreach (UISquare square in testSquares)
+            {
+                switch(square.Name)
+                {
+                    case "startsquare":
+                    case "endsquare":
+                    Assert.IsTrue(square.AllowDrop);
+                    break;
+
+                    case "":
+                    Assert.IsFalse(square.AllowDrop);
+                    break;
+                }
+            }
+        }
+
     }
 }
