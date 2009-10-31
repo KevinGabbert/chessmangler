@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WinUIParts_Tester\GameList\GameList_Tester.cs" />
     <Compile Include="WinUIParts_Tester\Grid2D_Tester.cs" />
+    <Compile Include="WinUIParts_Tester\Menus\UniquePieceMenu_Tester.cs" />
     <Compile Include="WinUIParts_Tester\Squares_Tester.cs" />
     <Compile Include="WinUIParts_Tester\UIBoard_Tester.cs" />
     <Compile Include="WinUIParts_Tester\UISquare_Tester.cs" />
