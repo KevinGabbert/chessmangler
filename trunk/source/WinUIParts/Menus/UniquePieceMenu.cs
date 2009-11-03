@@ -17,8 +17,8 @@ namespace ChessMangler.WinUIParts.Menus
     /// </summary>
     public class UniquePieceMenu
     {
-        static UISquare _clickedSquare;
-        static Dictionary<string, PieceDef> _tempCache = new Dictionary<string, PieceDef>();
+        protected static UISquare _clickedSquare;
+        protected static Dictionary<string, PieceDef> _tempCache = new Dictionary<string, PieceDef>();
 
         //TODO: put this in a "Common Menu Tasks" object
         public MenuItem NewMenuItem(string caption, string name)
@@ -110,7 +110,7 @@ namespace ChessMangler.WinUIParts.Menus
             }
         }
 
-        private PieceDef GetPieceDef(string name)
+        public PieceDef GetPieceDef(string name)
         {
             PieceDef gotValue;
 
@@ -120,6 +120,11 @@ namespace ChessMangler.WinUIParts.Menus
 
         #region Event Handlers
 
+        /// <summary>
+        /// This happens when you right-click a square and select a menu item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void pieceMenuItem_Click(object sender, EventArgs e)
         {
             MenuItem currentMenuItem;

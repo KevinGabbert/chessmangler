@@ -5,8 +5,10 @@ using System.Text;
 using NUnit.Framework;
 
 using System.Windows.Forms;
+using ChessMangler.Engine.Types;
 
 using ChessMangler.WinUIParts.Menus;
+using ChessMangler.TestHarness.Mocks.Menus;
 
 namespace ChessMangler.TestHarness.WinUIParts_Tester.Menus
 {
@@ -33,13 +35,20 @@ namespace ChessMangler.TestHarness.WinUIParts_Tester.Menus
             Assert.AreEqual(y.Text, "testMenuitem");
         }
 
-        [Ignore]
+        /// <summary>
+        /// Tests just GetPieceDef.  Does the minimum needed to get a piece object, pre-loads a mock with the piece we want.
+        /// </summary>
         [Test]
         public void GetPieceDef()
         {
-            //mock object and load tempcache
+            MenuItem currentMenuItem = new MenuItem();
 
-           // call GetPieceDef
+            currentMenuItem.Name = "Bishopc414a911-3bca-4d01-a1d7-5716961b410c";
+
+            Piece newPiece = new Piece((new UniquePieceMenu_Mock(currentMenuItem.Name, new PieceDef())).GetPieceDef(currentMenuItem.Name), false);
+
+            Assert.IsInstanceOfType(typeof(Piece), newPiece);
         }
     }
+
 }
