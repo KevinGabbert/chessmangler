@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="Mocks\Menus\UniquePieceMenu_Mock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WinUIParts_Tester\ChessPieceCursor_Tester.cs" />
     <Compile Include="WinUIParts_Tester\GameList\GameList_Tester.cs" />
     <Compile Include="WinUIParts_Tester\Grid2D_Tester.cs" />
     <Compile Include="WinUIParts_Tester\Menus\UniquePieceMenu_Tester.cs" />
