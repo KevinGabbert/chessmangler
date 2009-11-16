@@ -251,7 +251,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
                     if (clickedSquare.CurrentPiece != null)
                     {
-                        ChessGrid2D_SquareHandlers.ShowPieceMenu(clickedSquare);
+                        ChessGrid2D_SquareHandlers.BuildAndShowPieceMenu(clickedSquare);
                     }
                     else
                     {
@@ -270,17 +270,17 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
             private static void ShowSquareMenu(UISquare clickedSquare)
             {
-                (new UniquePieceMenu()).Build_ConfigFile_PieceMenu(clickedSquare, "Add Piece from: ", "AddPieceFromMenu");
+                (new UniquePieceMenu()).Init_ConfigFile_PieceMenu(clickedSquare, "Add Piece from: ", "AddPieceFromMenu");
 
                 //clickedSquare.ContextMenu.MenuItems.Add("Open Square 'Tool Window'");
                 //TODO: clickedSquare.ContextMenu.MenuItems.Add("Resize Square"); //> 1.0 feature
                 clickedSquare.ContextMenu.Show(clickedSquare, new Point(clickedSquare.Height / 2, clickedSquare.Width / 2)); //This needs to come from config db
             }
 
-            private static void ShowPieceMenu(UISquare clickedSquare)
+            private static void BuildAndShowPieceMenu(UISquare clickedSquare)
             {
                 //Show Piece context menu
-                (new UniquePieceMenu()).Build_ConfigFile_PieceMenu(clickedSquare, "Transform Piece", "TransFormPieceMenu");
+                (new UniquePieceMenu()).Init_ConfigFile_PieceMenu(clickedSquare, "Transform Piece", "TransFormPieceMenu");
 
                 //Change Style menu should be in both freeform and standard.
                 MenuItem addPieceFromMenu = ChessGrid2D_SquareHandlers.NewMenuItem("Change Style", "ChangeStyle");

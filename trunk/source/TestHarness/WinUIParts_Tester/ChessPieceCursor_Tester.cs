@@ -46,6 +46,7 @@ namespace ChessMangler.TestHarness.WinUIParts_Tester
 
             Bitmap bitmap = new Bitmap(new Bitmap(_testCursorImage), new Size(8,8));
             Cursor.Current = ChessPieceCursor.CreateCursor(bitmap, 35, 35);
+
             bitmap.Dispose();
 
             //so... what's the test?

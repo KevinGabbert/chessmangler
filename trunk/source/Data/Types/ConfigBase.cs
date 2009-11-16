@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ChessMangler.Data.Types
 {
-    class ConfigBase
+    public class ConfigBase
     {
     }
 }

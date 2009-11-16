@@ -22,7 +22,6 @@ namespace ChessMangler.TestHarness.WinUIParts_Tester.Menus
             Assert.IsInstanceOfType(typeof(UniquePieceMenu), x);
         }
 
-
         //This guy should move to another object
         [Test]
         public void NewMenuItem()
@@ -46,9 +45,10 @@ namespace ChessMangler.TestHarness.WinUIParts_Tester.Menus
             currentMenuItem.Name = "Bishopc414a911-3bca-4d01-a1d7-5716961b410c";
 
             Piece newPiece = new Piece((new UniquePieceMenu_Mock(currentMenuItem.Name, new PieceDef())).GetPieceDef(currentMenuItem.Name), false);
-
             Assert.IsInstanceOfType(typeof(Piece), newPiece);
         }
+
+
     }
 
 }

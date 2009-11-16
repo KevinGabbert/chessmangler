@@ -31,7 +31,7 @@ namespace ChessMangler.WinUIParts.Menus
         }
 
         //TODO: Refactor this
-        public void Build_ConfigFile_PieceMenu(UISquare clickedSquare, string menuItemName, string menuItemID)
+        public void Init_ConfigFile_PieceMenu(UISquare clickedSquare, string menuItemName, string menuItemID)
         {
             try
             {
