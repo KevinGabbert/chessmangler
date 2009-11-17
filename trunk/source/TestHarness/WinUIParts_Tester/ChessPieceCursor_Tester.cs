@@ -2,7 +2,7 @@
 using ChessMangler.WinUIParts;
 
 using System.Windows.Forms;
-
+using ChessMangler.Engine.Types;
 using System.Drawing;
 using System.IO;
 
@@ -42,12 +42,38 @@ namespace ChessMangler.TestHarness.WinUIParts_Tester
         [Test]
         public void Test_CreateCursor()
         {
-            ChessPieceCursor test = new ChessPieceCursor();
-
             Bitmap bitmap = new Bitmap(new Bitmap(_testCursorImage), new Size(8,8));
             Cursor.Current = ChessPieceCursor.CreateCursor(bitmap, 35, 35);
 
             bitmap.Dispose();
+
+            //so... what's the test?
+
+            //Well the good news is that if you got this far, then the API call was made.. but How do we test?
+        }
+
+        [Test]
+        public void Test_ShowPieceCursor()
+        {
+            UISquare square = new UISquare();
+            square.CurrentPiece = new Piece();
+            square.CurrentPiece.Image = new Bitmap(_testCursorImage);
+
+            ChessPieceCursor.ShowPieceCursor(square);
+
+            //Well I actually saw it flash on the screen during the run-through..
+
+            //so... what's the test?
+
+            //Well the good news is that if you got this far, then the API call was made.. but How do we test?
+        }
+
+        [Test]
+        public void Test_ShowPieceCursor2()
+        {
+            ChessPieceCursor.ShowPieceCursor(new Bitmap(_testCursorImage), new Size(78,78));
+
+            //Well I actually saw it flash on the screen during the run-through..
 
             //so... what's the test?
 
