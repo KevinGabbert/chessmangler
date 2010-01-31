@@ -11,6 +11,7 @@ using JabberMessage = jabber.protocol.client.Message;
 using jabber.protocol.iq;
 
 using ChessMangler.Communications.Interfaces;
+using ChessMangler.Communications.Types.Packets;
 
 namespace ChessMangler.Communications.Handlers
 {
@@ -269,16 +270,14 @@ namespace ChessMangler.Communications.Handlers
         }
 
 
-        //TODO: This needs to be hidden by a child class
-        //Meaning.. ICommsHandler needs to be replaced by a class:  ChessManglerComms
+        //TODO: This needs to be in the base class
         public string RequestOpponentCurrentGameVersion(string opponentName)
         {
-            //throw new NotImplementedException();
-
-            //this.write("whats yer version?")
+            this.Write(opponentName, VersionPacket.Generate());
 
             //Do until (timeout (2 seconds? - set in options DB ~ remember this is gonna be called for all opponents in the DGV..)
             //{
+            // Check the Message Recieved Event? to verify reply
             //wait here..
             //}
 
@@ -287,8 +286,7 @@ namespace ChessMangler.Communications.Handlers
             return "KH ROV Not Implemented Yet " + opponentName;
         }
 
-        //TODO: This needs to be hidden by a child class
-        //Meaning.. ICommsHandler needs to be replaced by a class:  ChessManglerComms
+        //TODO: This needs to be in the base class
         public string RequestOpponentCMVersion(string opponentName)
         {
             //throw new NotImplementedException();
@@ -304,6 +302,5 @@ namespace ChessMangler.Communications.Handlers
 
             return "CMVersion Not Implemented Yet " + opponentName;
         }
-
     }
 }

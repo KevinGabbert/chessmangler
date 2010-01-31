@@ -7,6 +7,7 @@ using ChessMangler.Settings.Types.WinUI;
 using ChessMangler.Communications.Types;
 using ChessMangler.Communications.Handlers;
 using ChessMangler.Communications.Interfaces;
+using ChessMangler.Communications.Types.Packets;
 
 //TODO: this needs to be in ICommsHandler
 //This is temporary

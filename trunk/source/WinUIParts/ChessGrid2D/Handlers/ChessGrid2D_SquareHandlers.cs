@@ -8,6 +8,7 @@ using ChessMangler.WinUIParts.Menus;
 using System.Xml;
 
 using ChessMangler.Communications.Types;
+using ChessMangler.Communications.Types.Packets;
 
 namespace ChessMangler.WinUIParts.ChessGrid2D
 {
@@ -222,7 +223,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
 
                 //TODO: refactor this
 
-                this.OutBox = MovePacket.GenerateXml("movehash", "GameID", dragEndSquare.CurrentPiece.Name, _dragStartSquare.BoardLocation, dragEndSquare.BoardLocation, false); //no rules for now
+                this.OutBox = MovePacket.Generate("movehash", "GameID", dragEndSquare.CurrentPiece.Name, _dragStartSquare.BoardLocation, dragEndSquare.BoardLocation, false); //no rules for now
 
                 //dragEndSquare.CurrentPiece.Image.Visibility = 50%
 

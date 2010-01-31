@@ -5,6 +5,7 @@ using System.Text;
 using ChessMangler.Communications.Interfaces;
 using ChessMangler.Communications.Handlers;
 using ChessMangler.Communications.Forms;
+using ChessMangler.Communications.Types.Packets;
 
 namespace ChessMangler.Communications.Types
 {
@@ -89,26 +90,6 @@ namespace ChessMangler.Communications.Types
         public void On_OpponentMove_RCV(object move)
         {
             MovePacket currentMove = (MovePacket)move;
-
-            
-
-        }
-
-
-        public string RequestOpponentVersion(string opponentName)
-        {
-            //throw new NotImplementedException();
-
-            //this.write("whats yer version?")
-
-            //Do until (timeout (2 seconds? - set in options DB ~ remember this is gonna be called for all opponents in the DGV..)
-            //{
-            //wait here..
-            //}
-
-            //if we still don't know by this point, come back with version unknown
-
-            return "ROV Not Implemented Yet " + opponentName;
         }
 
         //TODO:  remove authenticateHandler as a parameter

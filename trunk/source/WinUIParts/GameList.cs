@@ -1,28 +1,21 @@
 ﻿using System;
-using System.Xml;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
 using System.IO;
+using System.Windows.Forms;
+using System.Xml;
+using bedrock.util;
 
-using ChessMangler.Options.Interfaces;
-using ChessMangler.Engine.Types;
-using ChessMangler.Engine.Xml;
 using ChessMangler.Communications.Handlers;
-using ChessMangler.Communications.Interfaces;
 using ChessMangler.Communications.Types;
+using ChessMangler.Communications.Types.Packets;
+using ChessMangler.Engine.Types;
+using ChessMangler.Options.Interfaces;
 using ChessMangler.WinUIParts.ChessGrid2D;
 
 using jabber.client;
-using jabber.connection;
 using jabber.protocol.client;
 using jabber.protocol.iq;
-
-using bedrock.util;
 
 namespace ChessMangler.WinUIParts
 {
@@ -161,7 +154,14 @@ namespace ChessMangler.WinUIParts
         }
         protected void configList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.OpenChosenConfigFile();
+            if (_opponent != null)
+            {
+                this.OpenChosenConfigFile();
+            }
+            else
+            {
+                MessageBox.Show("An Opponent has not been selected.");
+            }
         }
 
         protected void tabControlGames_SelectedIndexChanged(object sender, EventArgs e)
@@ -261,7 +261,6 @@ namespace ChessMangler.WinUIParts
                     OnlineType _onlineType = JabberHandler.GetItemPresence(item, this.presenceManager);
 
                     //TODO: param for if they have chessMangler
-
                     opponentList.Add(new OpponentList(user, "GTalk", _onlineType, _comms.CommsHandler.RequestOpponentCurrentGameVersion(user))); //TODO: comms.GetOpponentVersion 
                 }
             }

@@ -56,6 +56,8 @@
     <Compile Include="Interfaces\ICommsHandlers.cs" />
     <Compile Include="Interfaces\IJabberCredentials.cs" />
     <Compile Include="Interfaces\IMovePacket.cs" />
+    <Compile Include="Interfaces\IPacket.cs" />
+    <Compile Include="Interfaces\IQueryVersion.cs" />
     <Compile Include="Jabber-Net\JabberElement.cs" />
     <Compile Include="Jabber-Net\JabberFactory.cs" />
     <Compile Include="Forms\Login_Form.cs">
@@ -69,10 +71,12 @@
     <Compile Include="Types\Comms.cs" />
     <Compile Include="Types\CommsType.cs" />
     <Compile Include="Types\MoveBase.cs" />
-    <Compile Include="Types\MovePacket.cs" />
+    <Compile Include="Types\Packets\MovePacket.cs" />
     <Compile Include="Types\MoveResponsePacket.cs" />
     <Compile Include="Types\OnlineType.cs" />
     <Compile Include="Types\OpponentList.cs" />
+    <Compile Include="Types\Packets\Packet_Base.cs" />
+    <Compile Include="Types\Packets\VersionPacket.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

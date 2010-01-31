@@ -4,7 +4,7 @@ using jabber.protocol;
 
 namespace ChessMangler.Communications.Jabber_Net
 {
-    public class JabberElement : Element //, IMovePacket
+    public class JabberElement : Element
     {
         public const string NAMESPACE = "ChessMangler:Communications";
 

@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
-
-using jabber.client;
-using jabber.protocol;
-using jabber.protocol.client;
-
 using ChessMangler.Communications.Interfaces;
 using ChessMangler.Communications.Jabber_Net;
+using jabber.protocol.client;
 
-namespace ChessMangler.Communications.Types
+namespace ChessMangler.Communications.Types.Packets
 {
     //This is what we want:
     //<ChessMangler version="Alpha">
@@ -25,7 +19,7 @@ namespace ChessMangler.Communications.Types
     //<ChessMangler />
 
     //This needs to evolve into an instance class with properties
-    public class MovePacket
+    public class MovePacket: IMovePacket
     {
         #region Properties
 
@@ -139,7 +133,7 @@ namespace ChessMangler.Communications.Types
             this.Parse(msgDoc, "message");
         }
 
-        public static XmlElement GenerateXml(string hash, string gameID, string piece, string prevMove, string newMove, bool useRules)
+        public static XmlElement Generate(string hash, string gameID, string piece, string prevMove, string newMove, bool useRules)
         {
             XmlDocument __newDoc = new XmlDocument();
 
@@ -159,7 +153,7 @@ namespace ChessMangler.Communications.Types
 
             //Here's what this makes so far..
             //<message id="JN_4" to="xx@gmail.com">
-            //   <ChessMangler>
+            //   <ChessMangler> //TODO: Add:  version="alpha" />
             //      <MovePacket>
             //         <MoveHash>1234</MoveHash>
             //         <GameID>5678</GameID>

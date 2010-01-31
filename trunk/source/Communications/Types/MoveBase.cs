@@ -4,6 +4,7 @@ using System.Text;
 
 using ChessMangler.Engine.Types;
 using ChessMangler.Engine.Interfaces;
+using ChessMangler.Communications.Types.Packets;
 
 namespace ChessMangler.Communications.Types
 {

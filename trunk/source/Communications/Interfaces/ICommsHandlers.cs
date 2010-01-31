@@ -4,7 +4,7 @@ using jabber.client;
 
 namespace ChessMangler.Communications.Interfaces
 {
-    public interface ICommsHandler
+    public interface ICommsHandler: IQueryVersion
     {
         //TODO: don't know if I want to keep this.. 
         object originalHandler
@@ -22,8 +22,5 @@ namespace ChessMangler.Communications.Interfaces
 
         void Write(string opponent, XmlElement stuffToWrite);
         void Message(string to, string body);
-
-        string RequestOpponentCurrentGameVersion(string opponentName); 
-        string RequestOpponentCMVersion(string opponentName); 
     }
 }
