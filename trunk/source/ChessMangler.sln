@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C# Express 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler", "UI\ChessMangler.csproj", "{9502F330-C0FB-4AF4-A89B-A19338CBD585}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMangler.TestHarness", "TestHarness\ChessMangler.TestHarness.csproj", "{D3665118-B129-446A-A20E-353130EECE00}"
