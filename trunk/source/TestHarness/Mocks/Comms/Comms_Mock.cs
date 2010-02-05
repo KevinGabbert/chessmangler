@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using jabber.client;
 using ChessMangler.Communications.Interfaces;
+using jabber.protocol.client; //presence, messageType
 
 namespace ChessMangler.TestHarness.Mocks.Comms
 {
@@ -37,7 +38,7 @@ namespace ChessMangler.TestHarness.Mocks.Comms
             throw new NotImplementedException();
         }
 
-        public void Write(string opponent, System.Xml.XmlElement stuffToWrite)
+        public void Write(string opponent, System.Xml.XmlElement stuffToWrite, MessageType type)
         {
             throw new NotImplementedException();
         }

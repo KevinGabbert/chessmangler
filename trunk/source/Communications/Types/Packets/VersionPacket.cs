@@ -6,9 +6,6 @@ namespace ChessMangler.Communications.Types.Packets
 {
     public class VersionPacket: IPacket
     {
-
-
-
         //<message id="JN_4" to="xx@gmail.com">
         //   <ChessMangler version="alpha" />
         //</message>

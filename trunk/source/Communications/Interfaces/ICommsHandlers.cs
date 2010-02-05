@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 using ChessMangler.Communications.Handlers;
-using jabber.client;
+using jabber.protocol.client; //presence, messageType
 
 namespace ChessMangler.Communications.Interfaces
 {
@@ -20,7 +20,7 @@ namespace ChessMangler.Communications.Interfaces
         void On_OpponentChat_RCV(string chatMessage);
         void On_OpponentMove(object sender);
 
-        void Write(string opponent, XmlElement stuffToWrite);
+        void Write(string opponent, XmlElement stuffToWrite, MessageType type);
         void Message(string to, string body);
     }
 }

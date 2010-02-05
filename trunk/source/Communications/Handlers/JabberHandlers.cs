@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 using ChessMangler.Communications.Types;
 
-using jabber.protocol.client; //presence
+using jabber.protocol.client; //presence, messageType
 using jabber.client; 
 using JabberMessage = jabber.protocol.client.Message;
 
@@ -181,72 +181,72 @@ namespace ChessMangler.Communications.Handlers
             }
             else
             {
-                if (msg.Type != MessageType.error)
-                {
-                    //We need to know who the hell this person is. so we need to read the friend name as well as 
-                    //packet type
-
-                    
-
-
-                    //is this a version packet?
-
-                    //if(msg.blah blah is a version packet
-
-                    XmlElement version;
-
-                    //Who is this?
-
-                   // string opponent = version.Attributes["userName"].InnerText;
-                   // _potentialOpponents[opponent] = parseVersionFromMsg2();
-
-
-                    //Is this a Move Packet?
-
-
-
-
-                    //*** If DebugMode
-                    //this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
-                    Console.Beep(37, 70);
-                    //*** If DebugMode
-
-                    MovePacket recievedMove = new MovePacket(msg);
-
-                    if (recievedMove.Invalid)
-                    {
-                        //if we have problems here, send a REJECT packet or something
-                        //////this._squareHandlers.OutBox = recievedMove.GenerateRejectPacket();
-
-                        //so.. at this point, we are back to our previous state.  Nothing gained.
-
-                        //Tell the user about it, however..
-
-                        //Flash something yellow, like the title bar to the chat window or something.
-                        //This would be good for all erroneous move communication
-
-                        //also, cue up the chat window.  Select its tab.  Make the text red with asterisks.
-                        ///////this.AddChat("Invalid Move recieved. " + recievedMove.InvalidMoveReason + " Try again?");
-                    }
-                    else
-                    {
-                        this.On_OpponentMove(recievedMove);
-                    }
-                }
+                this.ParseMsg(msg);
             }
 
             done.Set();
         }
 
-        private XmlElement parseVersionFromMsg2()
+        private void ParseMsg(jabber.protocol.client.Message msg)
         {
-            throw new NotImplementedException();
+            if (msg.Type != MessageType.error)
+            {
+                //We need to know who the hell this person is. so we need to read the friend name as well as 
+                //packet type
+
+                //is this a version packet?
+
+                //if(msg.blah blah is a version packet
+                if (msg.Attributes["something"].InnerText == "?")
+                {
+                    this.ParseVersionPacket(msg);
+                }
+
+                //Is this a Move Packet?
+                this.ParseMovePacket(msg);
+            }
         }
 
-        private VersionPacket parseVersionFromMsg()
+        private void ParseVersionPacket(jabber.protocol.client.Message msg)
         {
-            throw new NotImplementedException();
+            XmlElement version;
+
+            //Who is this?
+
+            // string opponent = version.Attributes["userName"].InnerText;
+            // _potentialOpponents[opponent] = parseVersionFromMsg2();
         }
+        private void ParseMovePacket(jabber.protocol.client.Message msg)
+        {
+
+            //*** If DebugMode
+            //this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
+            Console.Beep(37, 70);
+            //*** If DebugMode
+
+            MovePacket recievedMove = new MovePacket(msg);
+
+            if (recievedMove.Invalid)
+            {
+                //if we have problems here, send a REJECT packet or something
+                //////this._squareHandlers.OutBox = recievedMove.GenerateRejectPacket();
+
+                //so.. at this point, we are back to our previous state.  Nothing gained.
+
+                //Tell the user about it, however..
+
+                //Flash something yellow, like the title bar to the chat window or something.
+                //This would be good for all erroneous move communication
+
+                //also, cue up the chat window.  Select its tab.  Make the text red with asterisks.
+                ///////this.AddChat("Invalid Move recieved. " + recievedMove.InvalidMoveReason + " Try again?");
+            }
+            else
+            {
+                this.On_OpponentMove(recievedMove);
+            }
+        }
+
         private void j_OnAuthenticate(object sender)
         {
             done.Set(); // Finished sending.  Shut down.
@@ -290,9 +290,10 @@ namespace ChessMangler.Communications.Handlers
             }
             return _onlineType;
         }
-        public void Write(string opponent, XmlElement stuffToWrite)
+        public void Write(string opponent, XmlElement stuffToWrite, MessageType type)
         {
             JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
+            message.Type = type;
             message.To = new jabber.JID(opponent);
             message.AddChild(stuffToWrite);
 
@@ -314,7 +315,7 @@ namespace ChessMangler.Communications.Handlers
             _potentialOpponents.Add(opponentJabberName, null);
             XmlElement versionPacket = VersionPacket.GenerateMyVersion(myJabberName);
 
-            this.Write(myJabberName, versionPacket);
+            this.Write(myJabberName, versionPacket, MessageType.normal);
 
             //Do until (timeout (2 seconds? - set in options DB ~ remember this is gonna be called for all opponents in the DGV..)
             //{
