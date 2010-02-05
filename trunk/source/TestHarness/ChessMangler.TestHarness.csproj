@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Data\SetUp.cs" />
     <Compile Include="Engine\Board_Tester.cs" />
+    <Compile Include="Engine\Types\Packets\Version_Packet_Tester.cs" />
     <Compile Include="Engine\Types\Piece_Tester.cs" />
     <Compile Include="Engine\Xml_Tester.cs" />
     <Compile Include="JabberNet\SendMessage.cs" />

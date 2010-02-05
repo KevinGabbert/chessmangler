@@ -47,7 +47,7 @@ namespace ChessMangler.TestHarness.Mocks.Comms
             throw new NotImplementedException();
         }
 
-        public string RequestOpponentCurrentGameVersion(string opponentName)
+        public string RequestOpponentCurrentGameVersion(string opponentJabberName, string myJabberName)
         {
             throw new NotImplementedException();
         }

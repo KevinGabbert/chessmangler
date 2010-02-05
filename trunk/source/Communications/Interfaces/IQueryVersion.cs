@@ -2,7 +2,7 @@
 {
     public interface IQueryVersion
     {
-        string RequestOpponentCurrentGameVersion(string opponentName);
+        string RequestOpponentCurrentGameVersion(string opponentJabberName, string myJabberName);
         string RequestOpponentCMVersion(string opponentName); 
     }
 }

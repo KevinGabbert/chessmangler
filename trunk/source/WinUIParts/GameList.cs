@@ -131,7 +131,7 @@ namespace ChessMangler.WinUIParts
             //This can also be done upon "Game Resume", which is planned later.
 
             //we've already chosen our game by this point
-            _comms.CommsHandler.RequestOpponentCurrentGameVersion(this.dgvOpponents.SelectedCells[1].Value.ToString());
+            _comms.CommsHandler.RequestOpponentCurrentGameVersion("clickedUserName", this.dgvOpponents.SelectedCells[1].Value.ToString());
 
             //things could pause at this point as we wait for a response from the other side.. it should be instantaneous,
             //but what if they are not online?
@@ -261,7 +261,9 @@ namespace ChessMangler.WinUIParts
                     OnlineType _onlineType = JabberHandler.GetItemPresence(item, this.presenceManager);
 
                     //TODO: param for if they have chessMangler
-                    opponentList.Add(new OpponentList(user, "GTalk", _onlineType, _comms.CommsHandler.RequestOpponentCurrentGameVersion(user))); //TODO: comms.GetOpponentVersion 
+
+                    //Sending our User name to contact will get us a version packet if they are running ChessMangler 
+                    opponentList.Add(new OpponentList(user, "GTalk", _onlineType, _comms.CommsHandler.RequestOpponentCurrentGameVersion(user, _comms.User))); 
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using System.Threading;
+using System.Collections.Generic;
 
 using ChessMangler.Communications.Types;
 
@@ -19,6 +20,8 @@ namespace ChessMangler.Communications.Handlers
     {
         // we will wait on this event until we're done sending
         static ManualResetEvent done = new ManualResetEvent(false);
+
+        static Dictionary<string, XmlElement> _potentialOpponents = new Dictionary<string, XmlElement>();
 
         #region Properties
 
@@ -178,35 +181,71 @@ namespace ChessMangler.Communications.Handlers
             }
             else
             {
-                //*** If DebugMode
-                //this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
-                Console.Beep(37, 70);
-                //*** If DebugMode
-
-                MovePacket recievedMove = new MovePacket(msg);
-
-                if (recievedMove.Invalid)
+                if (msg.Type != MessageType.error)
                 {
-                    //if we have problems here, send a REJECT packet or something
-                    //////this._squareHandlers.OutBox = recievedMove.GenerateRejectPacket();
+                    //We need to know who the hell this person is. so we need to read the friend name as well as 
+                    //packet type
 
-                    //so.. at this point, we are back to our previous state.  Nothing gained.
+                    
 
-                    //Tell the user about it, however..
 
-                    //Flash something yellow, like the title bar to the chat window or something.
-                    //This would be good for all erroneous move communication
+                    //is this a version packet?
 
-                    //also, cue up the chat window.  Select its tab.  Make the text red with asterisks.
-                    ///////this.AddChat("Invalid Move recieved. " + recievedMove.InvalidMoveReason + " Try again?");
-                }
-                else
-                {
-                    this.On_OpponentMove(recievedMove);
+                    //if(msg.blah blah is a version packet
+
+                    XmlElement version;
+
+                    //Who is this?
+
+                   // string opponent = version.Attributes["userName"].InnerText;
+                   // _potentialOpponents[opponent] = parseVersionFromMsg2();
+
+
+                    //Is this a Move Packet?
+
+
+
+
+                    //*** If DebugMode
+                    //this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
+                    Console.Beep(37, 70);
+                    //*** If DebugMode
+
+                    MovePacket recievedMove = new MovePacket(msg);
+
+                    if (recievedMove.Invalid)
+                    {
+                        //if we have problems here, send a REJECT packet or something
+                        //////this._squareHandlers.OutBox = recievedMove.GenerateRejectPacket();
+
+                        //so.. at this point, we are back to our previous state.  Nothing gained.
+
+                        //Tell the user about it, however..
+
+                        //Flash something yellow, like the title bar to the chat window or something.
+                        //This would be good for all erroneous move communication
+
+                        //also, cue up the chat window.  Select its tab.  Make the text red with asterisks.
+                        ///////this.AddChat("Invalid Move recieved. " + recievedMove.InvalidMoveReason + " Try again?");
+                    }
+                    else
+                    {
+                        this.On_OpponentMove(recievedMove);
+                    }
                 }
             }
 
             done.Set();
+        }
+
+        private XmlElement parseVersionFromMsg2()
+        {
+            throw new NotImplementedException();
+        }
+
+        private VersionPacket parseVersionFromMsg()
+        {
+            throw new NotImplementedException();
         }
         private void j_OnAuthenticate(object sender)
         {
@@ -222,7 +261,6 @@ namespace ChessMangler.Communications.Handlers
         {
             //call event.  this is for the client.
         }
-
 
         #endregion
         public static OnlineType GetItemPresence(Item item, PresenceManager presenceManager)
@@ -271,9 +309,12 @@ namespace ChessMangler.Communications.Handlers
 
 
         //TODO: This needs to be in the base class
-        public string RequestOpponentCurrentGameVersion(string opponentName)
+        public string RequestOpponentCurrentGameVersion(string opponentJabberName, string myJabberName)
         {
-            this.Write(opponentName, VersionPacket.Generate());
+            _potentialOpponents.Add(opponentJabberName, null);
+            XmlElement versionPacket = VersionPacket.GenerateMyVersion(myJabberName);
+
+            this.Write(myJabberName, versionPacket);
 
             //Do until (timeout (2 seconds? - set in options DB ~ remember this is gonna be called for all opponents in the DGV..)
             //{
@@ -281,9 +322,25 @@ namespace ChessMangler.Communications.Handlers
             //wait here..
             //}
 
+            int timeout = 1000;
+            System.Threading.Thread.Sleep(timeout); //temp hack for now.  j_OnMessage should tell us the answer
+
             //if we still don't know by this point, come back with version unknown
 
-            return "KH ROV Not Implemented Yet " + opponentName;
+            string opponentVersion = null;
+
+            XmlElement value;
+            _potentialOpponents.TryGetValue(opponentJabberName, out value);
+            
+            if (value != null) //so why won't this work?
+            {
+                if (!string.IsNullOrEmpty(_potentialOpponents[opponentJabberName].Attributes["version"].InnerText))
+                {
+                    opponentVersion = _potentialOpponents[opponentJabberName].Attributes["version"].InnerText;
+                }
+            }
+
+            return opponentVersion;
         }
 
         //TODO: This needs to be in the base class
