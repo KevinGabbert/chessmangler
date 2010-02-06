@@ -78,7 +78,7 @@ namespace ChessMangler.WinUIParts
 
         protected void button2_Click(object sender, EventArgs e)
         {
-            _comms.CommsHandler.RequestOpponentCurrentGameVersion("test.chess.mangler", _comms.User);
+            _comms.CommsHandler.RequestOpponentCurrentGameVersion("test.chess.mangler@gmail.com", _comms.User);
         }
 
         #region Events

@@ -202,7 +202,7 @@ namespace ChessMangler.WinUIParts.ChessGrid2D
             {
                 _comms.Write(this.Opponent, this._squareHandlers.OutBox, MessageType.normal);
 
-                this.Grid.UIBoard.Squares.Disable();  //Until we recieve a good packet from the opponent
+               // this.Grid.UIBoard.Squares.Disable();  //Until we recieve a good packet from the opponent
             }
         }
         private void btnChatSend_Click(object sender, EventArgs e)

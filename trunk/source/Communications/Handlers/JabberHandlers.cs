@@ -310,6 +310,8 @@ namespace ChessMangler.Communications.Handlers
             _jabberClient.Write(message);
 
             done.Set();
+
+            Console.Beep(200, 30);
         }
         public void Message(string to, string body)
         {

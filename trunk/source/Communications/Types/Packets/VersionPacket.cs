@@ -15,6 +15,10 @@ namespace ChessMangler.Communications.Types.Packets
             XmlDocument newDoc = new XmlDocument();
             XmlElement root = new JabberElement("prefix", new XmlQualifiedName("ChessMangler"), newDoc);
 
+            XmlElement __movePacket = new JabberElement("prefix", new XmlQualifiedName("VersionPacket"), newDoc);
+
+            root.AppendChild(__movePacket);
+
             XmlAttribute userNameID;
             userNameID = newDoc.CreateAttribute("userName");
             userNameID.InnerText = userName;
@@ -24,6 +28,7 @@ namespace ChessMangler.Communications.Types.Packets
             version.InnerText = "alpha";
 
             root.Attributes.Append(version);
+            root.Attributes.Append(userNameID);
 
             return root;
         }
