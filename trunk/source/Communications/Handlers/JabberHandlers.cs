@@ -18,9 +18,10 @@ namespace ChessMangler.Communications.Handlers
 {
     public class JabberHandler : IM_Handler_Base, ICommsHandler, IJabberCredentials
     {
+        public const string CHESSMANGLER_COMMS = "ChessManglerComms";
+
         // we will wait on this event until we're done sending
         static ManualResetEvent done = new ManualResetEvent(false);
-
         static Dictionary<string, XmlElement> _potentialOpponents = new Dictionary<string, XmlElement>();
 
         #region Properties
@@ -191,19 +192,18 @@ namespace ChessMangler.Communications.Handlers
         {
             if (msg.Type != MessageType.error)
             {
-                //We need to know who the hell this person is. so we need to read the friend name as well as 
-                //packet type
-
-                //is this a version packet?
-
-                //if(msg.blah blah is a version packet
-                if (msg.Attributes["something"].InnerText == "?")
+                if (msg.Value == CHESSMANGLER_COMMS)
                 {
-                    this.ParseVersionPacket(msg);
-                }
+                    //We need to know who the hell this person is. so we need to read the friend name as well as 
+                    //packet type
 
-                //Is this a Move Packet?
-                this.ParseMovePacket(msg);
+                    //is this a version packet?
+                    this.ParseVersionPacket(msg);
+
+                    //Is this a Move Packet?
+                    //.InnerText   movehashGameIDPawne7e6False
+                    this.ParseMovePacket(msg);
+                }
             }
         }
 
@@ -295,6 +295,7 @@ namespace ChessMangler.Communications.Handlers
             JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
             message.Type = type;
             message.To = new jabber.JID(opponent);
+            message.Value = CHESSMANGLER_COMMS;
             message.AddChild(stuffToWrite);
 
             _jabberClient.Write(message);
