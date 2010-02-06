@@ -175,9 +175,10 @@ namespace ChessMangler.Communications.Handlers
 
         private void j_OnMessage(object sender, jabber.protocol.client.Message msg)
         {
+            Console.Beep(37, 70);
+
             if (msg.Body != null)
             {
-                Console.Beep(37, 70);
                 this.On_OpponentChat_RCV(msg.Body);              
             }
             else
@@ -192,17 +193,27 @@ namespace ChessMangler.Communications.Handlers
         {
             if (msg.Type != MessageType.error)
             {
-                if (msg.Value == CHESSMANGLER_COMMS)
+                if (msg.HasAttributes)
                 {
+                    //*** If DebugMode
+                    //this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
+                    Console.Beep(37, 70);
+                    //*** If DebugMode
+
                     //We need to know who the hell this person is. so we need to read the friend name as well as 
                     //packet type
 
                     //is this a version packet?
-                    this.ParseVersionPacket(msg);
+                    if (msg.InnerText.Substring(1, 8) == "?")
+                    {
+                        this.ParseVersionPacket(msg);
+                    }
 
-                    //Is this a Move Packet?
-                    //.InnerText   movehashGameIDPawne7e6False
-                    this.ParseMovePacket(msg);
+                    //Is this a Move Packet? 
+                    if (msg.InnerText.Substring(0, 8) == "movehash") //the full string looks like this: movehashGameIDPawne7e6False
+                    {
+                        this.ParseMovePacket(msg);
+                    }
                 }
             }
         }
@@ -218,10 +229,9 @@ namespace ChessMangler.Communications.Handlers
         }
         private void ParseMovePacket(jabber.protocol.client.Message msg)
         {
-
             //*** If DebugMode
             //this.AddChat("Move Recieved from: " + this.JabberOpponent + "\r\n" + msg.OuterXml);
-            Console.Beep(37, 70);
+            Console.Beep(300, 50);
             //*** If DebugMode
 
             MovePacket recievedMove = new MovePacket(msg);
@@ -295,7 +305,6 @@ namespace ChessMangler.Communications.Handlers
             JabberMessage message = new JabberMessage(new XmlDocument()); //Should MovePacket be here??
             message.Type = type;
             message.To = new jabber.JID(opponent);
-            message.Value = CHESSMANGLER_COMMS;
             message.AddChild(stuffToWrite);
 
             _jabberClient.Write(message);
@@ -313,6 +322,7 @@ namespace ChessMangler.Communications.Handlers
         //TODO: This needs to be in the base class
         public string RequestOpponentCurrentGameVersion(string opponentJabberName, string myJabberName)
         {
+            _potentialOpponents.Clear();
             _potentialOpponents.Add(opponentJabberName, null);
             XmlElement versionPacket = VersionPacket.GenerateMyVersion(myJabberName);
 

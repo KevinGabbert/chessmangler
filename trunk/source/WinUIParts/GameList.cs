@@ -58,9 +58,27 @@ namespace ChessMangler.WinUIParts
         {
             InitializeComponent();
 
+
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(166, 308);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 12;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+
+            this.Controls.Add(this.button2);
+
             //TODO: Load up my version packet:  <ChessMangler version="alpha" />
 
             //ApplicationInfo.GetMyGameVersion(); //this is different than Comms.GetOpponentVersion
+        }
+
+        protected void button2_Click(object sender, EventArgs e)
+        {
+            _comms.CommsHandler.RequestOpponentCurrentGameVersion("test.chess.mangler", _comms.User);
         }
 
         #region Events
@@ -487,5 +505,6 @@ namespace ChessMangler.WinUIParts
         }
 
         #endregion
+
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.button2 = new System.Windows.Forms.Button();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameList));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.configList = new System.Windows.Forms.ListBox();
@@ -391,6 +392,7 @@
 
         #endregion
 
+        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ListBox configList;
         private System.Windows.Forms.Button btnOpenGrid;
