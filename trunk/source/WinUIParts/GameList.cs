@@ -21,6 +21,7 @@ namespace ChessMangler.WinUIParts
 {
     public partial class GameList : Form, IVersion
     {
+        #region Stuff to move into ICommsHandler
         //TODO: Jabber stuff to move into ICommsHandler
         protected JabberClient jc;
         protected RosterManager rosterManager;
@@ -30,35 +31,26 @@ namespace ChessMangler.WinUIParts
         protected IdleTime idler;
         protected JabberClient jabberClient = new JabberClient();
         //TODO: Jabber stuff to move into ICommsHandler
-
+        #endregion
         #region Properties
 
-        protected string _configFilePath;
-        public string ConfigFilePath
-        {
-            get
-            {
-                return _configFilePath;
-            }
-            set
-            {
-                _configFilePath = value;
-            }
-        }
-
+        public bool LoggedIn { get; set; }
+        public string ConfigFilePath { get; set; }
         public string Version { get; set; }
 
         #endregion
 
         protected Comms _comms = new Comms();
-        protected string _opponent;
         protected BindingList<OpponentList> opponentList = new BindingList<OpponentList>();
+        protected string _opponent;
 
         public GameList()
         {
             InitializeComponent();
 
+            this.LoggedIn = false;
 
+            #region Temporary test button (that will be removed later
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(166, 308);
@@ -71,19 +63,21 @@ namespace ChessMangler.WinUIParts
 
             this.Controls.Add(this.button2);
 
-            //TODO: Load up my version packet:  <ChessMangler version="alpha" />
+            #endregion
 
+            //TODO: Load up my version packet:  <ChessMangler version="alpha" />
             //ApplicationInfo.GetMyGameVersion(); //this is different than Comms.GetOpponentVersion
         }
 
+        #region Events
+        #region Form Events
+
+        //Temporary
         protected void button2_Click(object sender, EventArgs e)
         {
             _comms.CommsHandler.RequestOpponentCurrentGameVersion("test.chess.mangler@gmail.com", _comms.User);
         }
 
-        #region Events
-
-        #region Form Events
         protected void GameList_Load(object sender, EventArgs e)
         {
             //Looks through config directory, and list what Config files are found
@@ -172,6 +166,12 @@ namespace ChessMangler.WinUIParts
         }
         protected void configList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (this.LoggedIn == false)
+            {
+                MessageBox.Show("You need to be logged in to choose a game");
+                return;
+            }
+
             if (_opponent != null)
             {
                 this.OpenChosenConfigFile();
@@ -217,13 +217,9 @@ namespace ChessMangler.WinUIParts
         protected void GameListAuthenticate(object sender)
         {
             this.SetStatus("Authenticated @ " + DateTime.Now.ToString());
+            this.LoggedIn = true;
 
             ((JabberClient)this._comms.CommsHandler.originalHandler).Presence(PresenceType.available, "ChessMangler Start", "show", 2);
-
-            //TODO:  I'd like this to be here.. Right now it is in the JabberHandler.
-            //This means we are going to need to access the client somehow, so make a method in the interface to 
-            //deal with this.
-            //jabberClient.Presence(PresenceType.available, "ChessMangler Online", "show", 2);
         }
 
         protected delegate void StatusDelegate(string message);
@@ -321,7 +317,7 @@ namespace ChessMangler.WinUIParts
 
         #endregion
 
-        //TODO: this needs to be send to JabberHandlers
+        #region TODO: this needs to be send to JabberHandlers
         protected void jc_OnIQ(object sender, IQ iq)
         {
             if (iq.Type != IQType.get)
@@ -388,6 +384,8 @@ namespace ChessMangler.WinUIParts
                 }
             }
         }
+
+        #endregion
 
         protected bool ValidFreeFormGame()
         {
@@ -505,6 +503,5 @@ namespace ChessMangler.WinUIParts
         }
 
         #endregion
-
     }
 }

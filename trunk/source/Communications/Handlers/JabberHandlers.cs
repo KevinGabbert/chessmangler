@@ -336,7 +336,7 @@ namespace ChessMangler.Communications.Handlers
             //wait here..
             //}
 
-            int timeout = 1000;
+            int timeout = 50;
             System.Threading.Thread.Sleep(timeout); //temp hack for now.  j_OnMessage should tell us the answer
 
             //if we still don't know by this point, come back with version unknown
