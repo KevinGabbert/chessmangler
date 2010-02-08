@@ -306,6 +306,7 @@ namespace ChessMangler.Communications.Handlers
             message.Type = type;
             message.To = new jabber.JID(opponent);
             message.AddChild(stuffToWrite);
+            //message.Body = "ChessManglerComms vAlpha";
 
             _jabberClient.Write(message);
 
@@ -328,7 +329,7 @@ namespace ChessMangler.Communications.Handlers
             _potentialOpponents.Add(opponentJabberName, null);
             XmlElement versionPacket = VersionPacket.GenerateMyVersion(myJabberName);
 
-            this.Write(myJabberName, versionPacket, MessageType.normal);
+            this.Write(opponentJabberName, versionPacket, MessageType.normal);
 
             //Do until (timeout (2 seconds? - set in options DB ~ remember this is gonna be called for all opponents in the DGV..)
             //{
