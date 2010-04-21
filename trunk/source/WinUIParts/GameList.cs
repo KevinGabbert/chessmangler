@@ -77,7 +77,12 @@ namespace ChessMangler.WinUIParts
         {
             _comms.CommsHandler.RequestOpponentCurrentGameVersion("test.chess.mangler", _comms.User); //@gmail.com
         }
+        private void test_Click(object sender, EventArgs e)
+        {
+            //opens up a test form
+            this.StartGame(true);
 
+        }
         protected void GameList_Load(object sender, EventArgs e)
         {
             //Looks through config directory, and list what Config files are found
@@ -157,7 +162,7 @@ namespace ChessMangler.WinUIParts
             //If no response (and person is online) OR version = "Unknown"
             //      Tell user that their client is either not there or is broken
 
-            this.StartGame();
+            this.StartGame(false);
         }
 
         protected void configList_SelectedIndexChanged(object sender, EventArgs e)
@@ -174,7 +179,7 @@ namespace ChessMangler.WinUIParts
 
             if (_opponent != null)
             {
-                this.OpenChosenConfigFile();
+                this.OpenChosenConfigFile(false);
             }
             else
             {
@@ -208,7 +213,7 @@ namespace ChessMangler.WinUIParts
 
             this._opponent = cellContents + "@gmail.com";
 
-            this.StartGame();
+            this.StartGame(false);
         }
 
         #endregion
@@ -409,7 +414,7 @@ namespace ChessMangler.WinUIParts
         #endregion
         #region Functions
 
-        protected void StartGame()
+        protected void StartGame(bool testMode)
         {
             //TODO: we should probably send a quick chat to start the game.
             if (this.tabControlGames.SelectedTab == tabFreeForm)
@@ -430,7 +435,7 @@ namespace ChessMangler.WinUIParts
 
             if (this.tabControlGames.SelectedTab == tabRulesGame)
             {
-                this.OpenChosenConfigFile();
+                this.OpenChosenConfigFile(testMode);
             }
         }
 
@@ -468,22 +473,32 @@ namespace ChessMangler.WinUIParts
                                        (_opponent != null) &&
                                        (this.ValidSelectedFile());
         }
-        protected void OpenChosenConfigFile()
+        protected void OpenChosenConfigFile(bool testMode)
         {
-            ChessGrid2D_Form open = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, _opponent, this.Version);
+            ChessGrid2D_Form gridForm = null;
+
+            if (!testMode)
+            {
+                gridForm = new ChessGrid2D_Form(this.presenceManager, this._comms.CommsHandler, _opponent, this.Version);
+            }
+            else
+            {
+                gridForm = new ChessGrid2D_Form(new PresenceManager(), this._comms.CommsHandler, "Test Opponent", this.Version);
+            }
+
 
             if (this.configList.SelectedValue.ToString() != null)
             {
-                open.Grid.RulesFilePath = this.ConfigFilePath + "\\" + this.configList.SelectedValue.ToString() + ".config";
+                gridForm.Grid.RulesFilePath = this.ConfigFilePath + "\\" + this.configList.SelectedValue.ToString() + ".config";
 
                 if (!File.Exists(this.ConfigFilePath))
                 {
                     this.Visible = false;
-                    open.Show();
+                    gridForm.Show();
                 }
                 else
                 {
-                    MessageBox.Show("Config file not found: " + open.Grid.RulesFilePath);
+                    MessageBox.Show("Config file not found: " + gridForm.Grid.RulesFilePath);
                 }
 
             }

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.button2 = new System.Windows.Forms.Button();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameList));
+            this.button2 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.configList = new System.Windows.Forms.ListBox();
             this.btnOpenGrid = new System.Windows.Forms.Button();
@@ -59,6 +59,7 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.dgvOpponents = new System.Windows.Forms.DataGridView();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.test = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControlGames.SuspendLayout();
             this.tabRulesGame.SuspendLayout();
@@ -72,6 +73,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOpponents)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(0, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 0;
             // 
             // pictureBox1
             // 
@@ -90,8 +98,8 @@
             this.configList.Name = "configList";
             this.configList.Size = new System.Drawing.Size(276, 121);
             this.configList.TabIndex = 1;
-            this.configList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.configList_MouseDoubleClick);
             this.configList.SelectedIndexChanged += new System.EventHandler(this.configList_SelectedIndexChanged);
+            this.configList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.configList_MouseDoubleClick);
             // 
             // btnOpenGrid
             // 
@@ -299,13 +307,13 @@
             // connectionToolStripMenuItem
             // 
             this.connectionToolStripMenuItem.Name = "connectionToolStripMenuItem";
-            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.connectionToolStripMenuItem.Text = "Connection";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(56, 20);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(61, 20);
             this.toolStripMenuItem1.Text = "Options";
             // 
             // label7
@@ -353,11 +361,22 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // test
+            // 
+            this.test.Location = new System.Drawing.Point(122, 306);
+            this.test.Name = "test";
+            this.test.Size = new System.Drawing.Size(35, 19);
+            this.test.TabIndex = 12;
+            this.test.Text = "button3";
+            this.test.UseVisualStyleBackColor = true;
+            this.test.Click += new System.EventHandler(this.test_Click);
+            // 
             // GameList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(420, 355);
+            this.Controls.Add(this.test);
             this.Controls.Add(this.dgvOpponents);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnLogin);
@@ -421,5 +440,6 @@
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.DataGridView dgvOpponents;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button test;
     }
 }
