@@ -1,0 +1,86 @@
+﻿/*************************************
+GENERAL
+*************************************/
+body {
+	margin: 0;
+	padding: 0;
+	font: 12px/1.4em "Lucida Grande", Verdana, sans-serif;
+	color: #f8f5f5;
+	background-color: #696969;
+}
+
+.board
+{ 
+    border-collapse: collapse;
+    border: 2px solid black;
+    border-spacing: 0;
+}
+
+.chessodd 
+{
+    background-color: #999999;
+    width: 70px;
+    height: 70px;
+    padding: 0;
+    text-align: center;
+}
+    
+.chesseven {
+    
+    background-color: #CCC;
+    width: 70px;
+    height: 70px;
+    padding: 0;
+    text-align: center;
+}
+    
+.chessnostyle 
+{
+    background-color: #696969;
+    opacity:0.92;
+    z-index: -1;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    font: 12px/1.4em "Lucida Grande", Verdana, sans-serif;
+	color: #CCC;
+}
+
+.debug
+{
+    font: 12px/1.4em "Lucida Grande", Verdana, sans-serif;
+	color: #FFF;
+}
+    
+    
+/* These need to be done in JQuery, when reading the rules, setup or pieces file */
+.wk {
+        display: inline-block;
+        background-repeat: no-repeat;
+        width: 65px;
+        height: 65px;
+    }
+        
+.wq {
+        display: inline-block;
+        background-repeat: no-repeat;
+        width: 65px;
+        height: 65px;
+    }
+        
+.ui-state-highlight, .ui-widget-content .ui-state-highlight {
+    border: 1px solid #5cff61;
+    background: #5cff61; 
+    color: #363636;
+}
+
+.ui-state-highlight2 {
+    border: 0px solid #5cff61;
+    background: #FF6347; 
+    color: #363636;
+}
+
+.ui-droppable { }
+
+.thing { }
+

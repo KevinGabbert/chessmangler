@@ -1,0 +1,12 @@
+C:\Users\Kevin\Desktop\ChessMangler\trunk\ChessManglerWeb\ChessMangler\bin\ChessMangler.dll
+C:\Users\Kevin\Desktop\ChessMangler\trunk\ChessManglerWeb\ChessMangler\bin\ChessMangler.pdb
+C:\Users\Kevin\Desktop\ChessMangler\trunk\ChessManglerWeb\ChessMangler\bin\AWSSDK.xml
+C:\Users\Kevin\Desktop\ChessMangler\trunk\ChessManglerWeb\ChessMangler\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Kevin\Desktop\ChessMangler\trunk\ChessManglerWeb\ChessMangler\obj\Debug\ChessMangler.dll
+C:\Users\Kevin\Desktop\ChessMangler\trunk\ChessManglerWeb\ChessMangler\obj\Debug\ChessMangler.pdb
+C:\Users\Kevin\Desktop\GoogleMangler\Source\WebUI\ChessMangler\bin\ChessMangler.dll
+C:\Users\Kevin\Desktop\GoogleMangler\Source\WebUI\ChessMangler\bin\ChessMangler.pdb
+C:\Users\Kevin\Desktop\GoogleMangler\Source\WebUI\ChessMangler\bin\AWSSDK.xml
+C:\Users\Kevin\Desktop\GoogleMangler\Source\WebUI\ChessMangler\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Kevin\Desktop\GoogleMangler\Source\WebUI\ChessMangler\obj\Debug\ChessMangler.dll
+C:\Users\Kevin\Desktop\GoogleMangler\Source\WebUI\ChessMangler\obj\Debug\ChessMangler.pdb
