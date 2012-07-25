@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FEB21AC0-AB05-45B6-9856-54A575FC3354}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ChessMangler</RootNamespace>
+    <AssemblyName>ChessMangler</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AWSSDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\AWS SDK for .NET\bin\AWSSDK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Default.htm" />
+    <Content Include="google0940b8995cbc8242.html" />
+    <Content Include="images\Backgrounds\Wood\1.jpg" />
+    <Content Include="images\Backgrounds\Wood\10.jpg" />
+    <Content Include="images\Backgrounds\Wood\11.jpg" />
+    <Content Include="images\Backgrounds\Wood\12.jpg" />
+    <Content Include="images\Backgrounds\Wood\13.jpg" />
+    <Content Include="images\Backgrounds\Wood\14.jpg" />
+    <Content Include="images\Backgrounds\Wood\15.jpg" />
+    <Content Include="images\Backgrounds\Wood\16.jpg" />
+    <Content Include="images\Backgrounds\Wood\17.gif" />
+    <Content Include="images\Backgrounds\Wood\18.jpg" />
+    <Content Include="images\Backgrounds\Wood\19.jpg" />
+    <Content Include="images\Backgrounds\Wood\2.gif" />
+    <Content Include="images\Backgrounds\Wood\20.gif" />
+    <Content Include="images\Backgrounds\Wood\21.jpg" />
+    <Content Include="images\Backgrounds\Wood\22.jpg" />
+    <Content Include="images\Backgrounds\Wood\23.jpg" />
+    <Content Include="images\Backgrounds\Wood\24.jpg" />
+    <Content Include="images\Backgrounds\Wood\25.jpg" />
+    <Content Include="images\Backgrounds\Wood\3.jpg" />
+    <Content Include="images\Backgrounds\Wood\4.jpg" />
+    <Content Include="images\Backgrounds\Wood\5.jpg" />
+    <Content Include="images\Backgrounds\Wood\6.jpg" />
+    <Content Include="images\Backgrounds\Wood\7.jpg" />
+    <Content Include="images\Backgrounds\Wood\8.gif" />
+    <Content Include="images\Backgrounds\Wood\9.jpg" />
+    <Content Include="images\Backgrounds\Wood\license.txt" />
+    <Content Include="images\chessPieces\Chess.Merida\bb.png" />
+    <Content Include="images\chessPieces\Chess.Merida\bk.png" />
+    <Content Include="images\chessPieces\Chess.Merida\bn.png" />
+    <Content Include="images\chessPieces\Chess.Merida\bp%28short%29.png" />
+    <Content Include="images\chessPieces\Chess.Merida\bp%28tall%29.png" />
+    <Content Include="images\chessPieces\Chess.Merida\bp.png" />
+    <Content Include="images\chessPieces\Chess.Merida\bq.png" />
+    <Content Include="images\chessPieces\Chess.Merida\br.png" />
+    <Content Include="images\chessPieces\Chess.Merida\Original\LEEME__D.TXT" />
+    <Content Include="images\chessPieces\Chess.Merida\Original\README_D.TXT" />
+    <Content Include="images\chessPieces\Chess.Merida\wb.png" />
+    <Content Include="images\chessPieces\Chess.Merida\wk.png" />
+    <Content Include="images\chessPieces\Chess.Merida\wn.png" />
+    <Content Include="images\chessPieces\Chess.Merida\wp%28short%29.png" />
+    <Content Include="images\chessPieces\Chess.Merida\wp%28tall%29.png" />
+    <Content Include="images\chessPieces\Chess.Merida\wp.png" />
+    <Content Include="images\chessPieces\Chess.Merida\wq.png" />
+    <Content Include="images\chessPieces\Chess.Merida\wr.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\bb.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\bk.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\bn.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\bp.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\bq.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\br.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\wb.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\wk.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\wn.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\wp.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\wq.png" />
+    <Content Include="images\chessPieces\Fantasy.Chess\wr.png" />
+    <Content Include="images\chessPieces\Forms\ChessManglerIcon.png" />
+    <Content Include="images\chessPieces\Forms\wp.png" />
+    <Content Include="images\chessPieces\Forms\ww.png" />
+    <Content Include="images\chessPieces\Omega.Chess.Extras\bc.png" />
+    <Content Include="images\chessPieces\Omega.Chess.Extras\bw.png" />
+    <Content Include="images\chessPieces\Omega.Chess.Extras\wc.png" />
+    <Content Include="images\chessPieces\Omega.Chess.Extras\ww.png" />
+    <Content Include="images\database.png" />
+    <Content Include="images\drive.png" />
+    <Content Include="images\server.png" />
+    <Content Include="images\UnderConstruction.jpg" />
+    <Content Include="images\Under_Construction_Yellow.jpg" />
+    <Content Include="Scripts\JQuery\jquery-1.7.1.js" />
+    <Content Include="Scripts\JQuery\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\JQuery\jquery-ui-1.8.18.custom.min.js" />
+    <Content Include="Scripts\JQuery\jquery.tmpl.min.js" />
+    <Content Include="Scripts\Objects\BoardTwoD.js" />
+    <Content Include="Scripts\Objects\Class.js" />
+    <Content Include="Scripts\Objects\Debug.js" />
+    <Content Include="Scripts\Objects\Pieces.js" />
+    <Content Include="Scripts\Objects\Rules\Conditions.js" />
+    <Content Include="Scripts\Objects\Rules\EnforceRule.js" />
+    <Content Include="Scripts\Objects\Rules\Types\Capture.js" />
+    <Content Include="Scripts\Objects\Rules\Types\Movement.js" />
+    <Content Include="Scripts\Objects\Spots.js" />
+    <Content Include="Scripts\Objects\_globals.js" />
+    <Content Include="Scripts\Objects\Rules\Rules.js" />
+    <Content Include="Scripts\Rules\defaultRules.js" />
+    <Content Include="Scripts\Objects\Game.js" />
+    <Content Include="Scripts\JQuery\jquery-1.7-vsdoc.js" />
+    <Content Include="Scripts\JQuery\jquery.ui.touch-punch.min.js" />
+    <Content Include="Scripts\Objects\Spot.js" />
+    <Content Include="Scripts\Objects\Piece.js" />
+    <Content Include="styles\styles.css" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\chessPieces\Chess.Merida\AI\all.of.them.2.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\all.of.them.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\bb.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\bk.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\bn.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\bp%28short%29.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\bp%28tall%29.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\bq.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\br.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\wb.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\wk.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\wn.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\wp%28short%29.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\wp%28tall%29.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\wq.ai" />
+    <None Include="images\chessPieces\Chess.Merida\AI\wr.ai" />
+    <None Include="images\chessPieces\Chess.Merida\Original\CHESMERI.DOC" />
+    <None Include="images\chessPieces\Chess.Merida\Original\MERIFONT.TTF" />
+    <None Include="images\README" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50360</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
